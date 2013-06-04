@@ -1,7 +1,9 @@
 package com.ylbms.system.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +23,7 @@ import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.web.BaseController;
+import com.ylbms.system.model.Role;
 import com.ylbms.system.model.User;
 import com.ylbms.system.service.SystemService;
 import com.ylbms.system.service.UserSerivice;
@@ -73,6 +76,29 @@ public class UserController extends BaseController {
 	}
 
 	/**
+	 * to add roleInfo page
+	 * 
+	 * @param id
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/roleUi/{id}")
+	public String roleUi(@PathVariable("id") Long id,
+			HttpServletRequest request, Model model) {
+		// query currentUser's roleInfo
+		User user = systemService.getUser(id);
+		List<Role> roles = user.getRoleList();
+		String roleIds = "";
+		for (Role r : roles) {
+			roleIds += (r.getId() + ",");
+		}
+		model.addAttribute("roleIds", roleIds);
+		model.addAttribute("userId", id);
+		return "user/addRole";
+	}
+
+	/**
 	 * 跳转到修改页面
 	 * 
 	 * @param request
@@ -87,6 +113,32 @@ public class UserController extends BaseController {
 		User user = systemService.getUser(id);
 		model.addAttribute("obj", user);
 		return "user/edit";
+	}
+
+	/**
+	 * add roleInfo for user
+	 * 
+	 * @param user
+	 * @param roleIds
+	 * @return
+	 */
+	@RequestMapping(value = "/addRole")
+	@ResponseBody
+	public Map<String, Object> addRole(HttpServletRequest request, User user,
+			String roleIds) {
+		try {
+			List<Role> roleList = new ArrayList<Role>();
+			String[] role = roleIds.split(",");
+			for (int i = 0, len = role.length; i < len; i++) {
+				roleList.add(new Role(Long.parseLong(role[i])));
+			}
+			user.setRoleList(roleList);
+			systemService.saveUser(user);
+		} catch (Exception e) {
+			log.error("system error!!", e);
+			return DwzUtil.dialogAjaxDone(FAIL, "user", e.getMessage());
+		}
+		return DwzUtil.dialogAjaxDone(DwzUtil.OK, "user");
 	}
 
 	/**

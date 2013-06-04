@@ -3,10 +3,12 @@ package com.ylbms.system.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -22,8 +25,13 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.google.common.collect.Lists;
 import com.ylbms.common.model.BaseModel;
 import com.ylbms.common.orm.IdEntity;
 
@@ -60,7 +68,7 @@ public class User extends BaseModel implements Serializable {
 
 	private Org org;
 
-	private Set<Role> roles = new HashSet<Role>();
+	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
 
 	public User() {
 	}
@@ -145,20 +153,20 @@ public class User extends BaseModel implements Serializable {
 		this.enabled = enabled;
 	}
 
-	@ManyToMany
-	@JoinTable(name = "ylbms_sys_ROLE_USER", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
-	@Fetch(FetchMode.SUBSELECT)
-	public Set<Role> getRoles() {
-		if (roles == null) {
-			roles = new HashSet<Role>();
-		}
-		return roles;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "ylbms_sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
+	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
+	@OrderBy("id") @Fetch(FetchMode.SUBSELECT)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@NotEmpty
+	public List<Role> getRoleList() {
+		return roleList;
 	}
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
 	}
-
 
 	@ManyToOne
 	@JoinColumn(name = "org", nullable = true)

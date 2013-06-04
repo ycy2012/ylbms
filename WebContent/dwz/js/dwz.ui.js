@@ -295,8 +295,8 @@ function initUI(_box){
 	$('#itemselector').omItemSelector({
 		 availableTitle : '准备选择权限',
          selectedTitle : '已选择权限',
-         dataSource:'role/perm',
-         width:250,
+         dataSource:'role/roleData',
+         width:100,
          autoSore:true,
          onSuccess:function(data, textStatus, event){
        	  var roleIdArr = $("#roleIds").val().split(',');

@@ -56,8 +56,13 @@ public class Role extends BaseModel {
 	private List<User> userList = Lists.newArrayList(); // 拥有用户列表
 	private List<Menu> menuList = Lists.newArrayList(); // 拥有菜单列表
 
+	// 构造函数
 	public Role() {
 		this.delFlag = DEL_FLAG_NORMAL;
+	}
+
+	public Role(Long id) {
+		this.id = id;
 	}
 
 	public Role(Long id, String name) {

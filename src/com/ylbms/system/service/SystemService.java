@@ -45,6 +45,8 @@ public interface SystemService {
 
 	public void saveRole(Role role);
 
+	public List<Role> findAllRole();
+
 	public void deleteRole(Long roleID);
 
 	public Menu getMenu(Long menuID);

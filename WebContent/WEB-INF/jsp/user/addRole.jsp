@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="../inc/header.jsp"%>
 <div class="pageContent">
-	<form method="post" action="sys/addRole"
+	<form method="post" action="${ctx}/user/addRole"
 		class="pageForm required-validate"
 		onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="56">
-			<input type="hidden" name="roleIds" id="roleIds" value="${obj.roleIds}">
-			<input type="hidden" value="${obj.userID}" name="ID">
+			<input type="hidden" name="roleIds" id="roleIds" value="${roleIds}">
+			<input type="hidden" name="id"  value="${userId}" >
 			<!-- 华丽分界线-->
-			<div id="itemselector" class="om-itemselector om-widget"  ></div>
+			<div id="itemselector" class="om-itemselector om-widget" style="width: 80px;"></div>
 		</div>
 		<div class="formBar">
 			<ul>

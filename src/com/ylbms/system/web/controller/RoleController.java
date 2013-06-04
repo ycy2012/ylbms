@@ -1,6 +1,7 @@
 package com.ylbms.system.web.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +87,25 @@ public class RoleController {
 	}
 
 	/**
+	 * loading roleInfo for roleform
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/roleData")
+	@ResponseBody
+	public List<Map<String, Object>> roleInfo() {
+		List<Role> list = systemService.findAllRole();
+		List<Map<String, Object>> roleData = new ArrayList<Map<String, Object>>();
+		for (Role r : list) {
+			Map<String, Object> value = new HashMap<String, Object>();
+			value.put("text", r.getName());
+			value.put("value", r.getId());
+			roleData.add(value);
+		}
+		return roleData;
+	}
+
+	/**
 	 * add permInfo for role
 	 * 
 	 * @param request
@@ -105,7 +125,7 @@ public class RoleController {
 				mIds.add(i, Long.parseLong(menuIds[i]));
 			}
 			Role role = systemService.getRoleModel(roleID);
-			
+
 			role.setMenuIdList(mIds);
 			// 持久化
 			systemService.saveRole(role);

@@ -72,8 +72,8 @@
 					<td>${acc.enabled==0?'有效':'无效'}</td>
 				<td>
 				<a title="删除用户信息" target="ajaxTodo" href="${ctx}/user/delete/${acc.id}" class="btnDel">删除用户信息</a>
-				<a title="授权" target="dialog" href="role/permUi/${acc.id}" class="btnView">授权</a>
-				<a title="添加角色" target="dialog" href="Account/roleUi?ID=${acc.id}" class="btnPerm">添加角色</a>
+				<a title="授权" target="dialog" href="${ctx}/role/permUi/${acc.id}" class="btnView">授权</a>
+				<a title="添加角色" target="dialog" href="${ctx}/user/roleUi/${acc.id}" class="btnPerm">添加角色</a>
 				<a title="编辑用户信息" target="dialog" href="${ctx}/user/editUi/${acc.id}" class="btnEdit">编辑用户信息</a>
 				</td>
 				</tr>
