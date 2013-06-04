@@ -8,7 +8,6 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Component;
 
 import com.ylbms.common.orm.hibernate.HibernateDao;
-import com.ylbms.system.model.Authority;
 import com.ylbms.system.model.Menu;
 import com.ylbms.system.model.Role;
 import com.ylbms.system.model.User;

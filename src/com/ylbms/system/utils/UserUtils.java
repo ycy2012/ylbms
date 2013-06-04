@@ -14,10 +14,8 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Maps;
 import com.ylbms.system.dao.MenuDao;
-import com.ylbms.system.dao.ResourceDAO;
 import com.ylbms.system.dao.UserDAO;
 import com.ylbms.system.model.Menu;
-import com.ylbms.system.model.Resource;
 import com.ylbms.system.model.User;
 import com.ylbms.system.security.SystemRealm.Principal;
 

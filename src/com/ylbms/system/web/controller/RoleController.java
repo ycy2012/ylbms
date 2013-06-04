@@ -1,5 +1,6 @@
 package com.ylbms.system.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,11 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresUser;
+import org.junit.runners.Parameterized.Parameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ylbms.common.orm.Page;
@@ -73,9 +77,44 @@ public class RoleController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("/permUi")
-	public String permUi() {
+	@RequestMapping("/permUi/{id}")
+	public String permUi(@PathVariable("id") Long id, Model model) {
+		String json = roleService.getMenuByRoleID(id);
+		model.addAttribute("selectIds", json.replaceAll("", "")); // 将该角色目前拥有的权限展示给页面
+		model.addAttribute("roleId", id);
 		return "role/addPerm";
+	}
+
+	/**
+	 * add permInfo for role
+	 * 
+	 * @param request
+	 * @param ids
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/addPerm", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> addPerm(HttpServletRequest request,
+			@RequestParam("ids") String ids,
+			@RequestParam("roleID") Long roleID, Model model) {
+		try {
+			String[] menuIds = ids.split(",");
+			List<Long> mIds = new ArrayList<Long>();
+			for (int i = 0, len = menuIds.length; i < len; i++) {
+				mIds.add(i, Long.parseLong(menuIds[i]));
+			}
+			Role role = systemService.getRoleModel(roleID);
+			
+			role.setMenuIdList(mIds);
+			// 持久化
+			systemService.saveRole(role);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK, "role");
+		} catch (Exception e) {
+			if (log.isErrorEnabled())
+				log.error("system error!!" + e.getMessage());
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "role");
+		}
 	}
 
 	/**
@@ -111,7 +150,6 @@ public class RoleController {
 				.buildFromHttpRequest(request);
 		Page<Role> list = roleService.searchUser(page, filters);
 		model.addAttribute("page", list);
-
 		return "role/list";
 	}
 

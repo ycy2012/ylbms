@@ -62,8 +62,6 @@ public class User extends BaseModel implements Serializable {
 
 	private Set<Role> roles = new HashSet<Role>();
 
-	private Set<Authority> authorities = new HashSet<Authority>();
-
 	public User() {
 	}
 
@@ -161,20 +159,6 @@ public class User extends BaseModel implements Serializable {
 		this.roles = roles;
 	}
 
-	@ManyToMany
-	@JoinTable(name = "ylbms_sys_USER_AUTHORITY", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "AUTHORITY_ID") })
-	@Fetch(FetchMode.SUBSELECT)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public Set<Authority> getAuthorities() {
-		if (authorities == null) {
-			authorities = new HashSet<Authority>();
-		}
-		return authorities;
-	}
-
-	public void setAuthorities(Set<Authority> authorities) {
-		this.authorities = authorities;
-	}
 
 	@ManyToOne
 	@JoinColumn(name = "org", nullable = true)

@@ -18,7 +18,6 @@ import com.ylbms.system.dao.RoleDAO;
 import com.ylbms.system.dao.UserDAO;
 import com.ylbms.system.model.Menu;
 import com.ylbms.system.model.Org;
-import com.ylbms.system.model.Resource;
 import com.ylbms.system.model.Role;
 import com.ylbms.system.model.User;
 import com.ylbms.system.security.SystemRealm;

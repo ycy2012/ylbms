@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.ylbms.system.model.Menu;
 import com.ylbms.system.model.Org;
-import com.ylbms.system.model.Resource;
 import com.ylbms.system.model.Role;
 import com.ylbms.system.model.User;
 

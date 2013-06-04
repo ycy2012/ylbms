@@ -60,7 +60,7 @@
 					<td>${acc.delFlag==0?'有效':'无效'}</td>
 				<td>
 				<a title="删除角色信息" target="ajaxTodo" href="${ctx}/role/delete/${acc.id}" class="btnDel">删除角色信息</a>
-				<a title="添加权限信息" target="dialog" href="${ctx}/role/permUi" class="btnPerm" width="200px">添加权限</a>
+				<a title="添加权限信息" target="dialog" href="${ctx}/role/permUi/${acc.id}" class="btnPerm" width="250">添加权限</a>
 				<a title="编辑角色信息" target="dialog" href="${ctx}/role/editUi/${acc.id}" class="btnEdit">编辑角色信息</a>
 				</td>
 				</tr>
