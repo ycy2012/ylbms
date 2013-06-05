@@ -2,43 +2,42 @@
 	pageEncoding="UTF-8"%>
 <%@include file="../inc/header.jsp"%>
 <div class="pageContent">
-	<form method="post" action="${ctx}/user/add"
+	<form method="post" action="${ctx}/dict/add"
 		class="pageForm required-validate"
 		onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="56">
-			<input type="hidden" name="ID" value="${obj.ID}">
+			<input type="hidden" name="id" value="${obj.id}">
 			<p>
-				<label>登录ID：</label> <input name="loginName" type="text" size="30"
-					value="${obj.loginName}" class="required" maxlength="150" />
+				<label>标签：</label> <input name="label" type="text" size="30"
+					value="${obj.label}" class="required" maxlength="150" />
 			</p>
 			<p>
-				<label>真实姓名：</label> <input name="fullname" type="text" size="30"
-					value="${obj.fullname}" maxlength="255" />
+				<label>键值：</label> <input name="value" type="text" size="30"
+					value="${obj.value}" maxlength="100" class="required" />
 			</p>
 			<p>
-				<label>用户密码：</label> <input name="password" type="text" size="30"
-					value="${obj.password}" class="required" maxlength="150" />
+				<label>类型：</label><select class="combox required" name="type" >
+				         <option value="">选择类型</option>
+				         <option value="factory_type">厂家信息</option>
+				         <option value="class_type">资产种类</option>
+				         <option value="jltype_type">计量类别</option>
+				    </select>
 			</p>
-			<!--  
 			<p>
-				<label>部门信息：</label> <select name="organization" class="combox">
-					<c:forEach var="di" items="${obj.departmentInfoList}">
-						<option value="${di.dID}">${di.dName}</option>
-					</c:forEach>
-				</select>
+				<label>描述：</label> <input name="desciption" type="text" size="30"
+					value="${obj.desciption}" class="required" maxlength="150" />
 			</p>
-			
 			<p>
-			   <label>用户组：</label><input name="roleID" type="text" value="${obj.roleID}">
+				<label>排序：</label> <input name="sort" type="text" size="30"
+					value="${obj.sort}"  maxlength="150" />
 			</p>
-			
 			<p>
-				<label>用户状态：</label> <select name="en" class="combox">
+				<label>状态：</label> <select name="delFlag" class="combox">
 					<option value="0">有效</option>
 					<option value="1">无效</option>
 				</select>
 			</p>
--->
+
 		</div>
 		<div class="formBar">
 			<ul>

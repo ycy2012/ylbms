@@ -34,6 +34,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.google.common.collect.Lists;
 import com.ylbms.common.model.BaseModel;
 import com.ylbms.common.orm.IdEntity;
+import com.ylbms.common.utils.Collections3;
 
 @Entity
 @Table(name = "ylbms_sys_USER")
@@ -54,7 +55,7 @@ public class User extends BaseModel implements Serializable {
 
 	private String fullname;
 
-	private String usertype; // 0为管理员
+	private String usertype; // 1为管理员
 
 	private Date createDate;
 
@@ -155,11 +156,11 @@ public class User extends BaseModel implements Serializable {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "ylbms_sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
-	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-	@OrderBy("id") @Fetch(FetchMode.SUBSELECT)
+	@Where(clause = "del_flag='" + DEL_FLAG_NORMAL + "'")
+	@OrderBy("id")
+	@Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	@NotEmpty
 	public List<Role> getRoleList() {
 		return roleList;
 	}
@@ -194,6 +195,35 @@ public class User extends BaseModel implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+
+	@Transient
+	public List<Long> getRoleIdList() {
+		List<Long> roleIdList = Lists.newArrayList();
+		for (Role role : roleList) {
+			roleIdList.add(role.getId());
+		}
+		return roleIdList;
+	}
+
+	@Transient
+	public void setRoleIdList(List<Long> roleIdList) {
+		roleList = Lists.newArrayList();
+		for (Long roleId : roleIdList) {
+			Role role = new Role();
+			role.setId(roleId);
+			roleList.add(role);
+		}
+	}
+
+	/**
+	 * 用户拥有的角色名称字符串, 多个角色名称用','分隔.
+	 */
+	// 非持久化属性.
+	@Transient
+	public String getRoleNames() {
+		return Collections3.extractToString(roleList, "name", ", ");
 	}
 
 	@Transient

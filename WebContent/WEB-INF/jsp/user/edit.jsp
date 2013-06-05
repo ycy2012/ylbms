@@ -14,11 +14,11 @@
 			</p>
 			<p>
 				<label>真实姓名：</label> <input name="fullname" type="text" size="30"
-					value="${obj.fullname}" maxlength="255" />
+					value="${obj.fullname}" maxlength="100" />
 			</p>
 			<p>
 				<label>用户密码：</label> <input name="password" type="text" size="30"
-					value="${ui.password}"  maxlength="150" />
+					value=""  maxlength="100" />
 			</p>
 			<%--  
 			<p>
@@ -44,6 +44,7 @@
 					<option value="0">有效</option>
 					<option value="1">无效</option>
 				</select>
+				<input type="hidden" value="0" name="usertype">
 			</p>
 		</div>
 		<div class="formBar">

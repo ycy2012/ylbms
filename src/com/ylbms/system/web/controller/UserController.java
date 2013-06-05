@@ -1,6 +1,7 @@
 package com.ylbms.system.web.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.utils.DwzUtil;
+import com.ylbms.common.utils.Encodes;
 import com.ylbms.common.web.BaseController;
 import com.ylbms.system.model.Role;
 import com.ylbms.system.model.User;
@@ -66,9 +68,15 @@ public class UserController extends BaseController {
 	@RequiresUser
 	@RequestMapping("/addUi")
 	public String addUi(HttpServletRequest request, Model model) {
+		model.addAttribute("allRoles", systemService.findAllRole());
+
 		return "user/input";
 	}
-
+/**
+ * 
+ * @param request
+ * @return
+ */
 	@RequiresUser
 	@RequestMapping(value = "/editPwdUi")
 	public String editModify(HttpServletRequest request) {
@@ -152,6 +160,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> addUser(User user) {
 		try {
+			user.setCreateDate(new Date());
 			systemService.saveUser(user);
 		} catch (Exception e) {
 			log.error("system error!!", e);

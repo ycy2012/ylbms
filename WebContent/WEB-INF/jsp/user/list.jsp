@@ -37,10 +37,13 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			<li><a class="add" href="${ctx}/user/addUi" target="dialog" mask="true" title="添加用户信息"><span>添加</span></a></li>
+			<li class="line">line</li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="${ctx}/user/delByIds/{sid_user}" class="delete"><span>批量删除</span></a></li>
-			<li><a class="edit" href="Account/editUi?ID={sid_account}" target="dialog" mask="true" title="修改用户信息"><span>修改</span></a></li>
+			<li class="line">line</li>
+			<li><a class="edit" href="${ctx}/user/editUi/{sid_user}" target="dialog" mask="true" title="修改用户信息"><span>修改</span></a></li>
 			<li class="line">line</li>
 			<li><a class="icon" href="#" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+		    <li class="line">line</li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="138">
@@ -66,9 +69,9 @@
 					<td>${acc.fullname}</td>
 					<td>${acc.password}</td>
 					<td>${acc.usertype}</td>
-					<td>${acc.createDate}</td>
+					<td><fmt:formatDate value="${acc.createDate}" pattern="yyyy-MM-dd"/> </td>
 					<td>${acc.loginIP}</td>
-					<td>${acc.loginDate}</td>
+					<td><fmt:formatDate value="${acc.loginDate}" pattern="yyyy-MM-dd"/></td>
 					<td>${acc.enabled==0?'有效':'无效'}</td>
 				<td>
 				<a title="删除用户信息" target="ajaxTodo" href="${ctx}/user/delete/${acc.id}" class="btnDel">删除用户信息</a>

@@ -79,7 +79,9 @@ public class SystemServiceImpl implements SystemService {
 	 */
 	@Transactional(readOnly = false)
 	public void saveUser(User user) {
-		user.setPassword(entryptPassword(user.getPassword()));
+		if(StringUtils.isNotBlank(user.getPassword())){
+			user.setPassword(entryptPassword(user.getPassword()));
+		}
 		userDao.save(user);
 		systemRealm.clearCachedAuthorizationInfo(user.getFullname());
 	}

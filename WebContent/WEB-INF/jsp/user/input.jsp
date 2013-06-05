@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../inc/header.jsp"%>
 <div class="pageContent">
 	<form method="post" action="${ctx}/user/add"
@@ -19,7 +20,7 @@
 				<label>用户密码：</label> <input name="password" type="text" size="30"
 					value="${obj.password}" class="required" maxlength="150" />
 			</p>
-			<!--  
+			<%--  
 			<p>
 				<label>部门信息：</label> <select name="organization" class="combox">
 					<c:forEach var="di" items="${obj.departmentInfoList}">
@@ -27,18 +28,20 @@
 					</c:forEach>
 				</select>
 			</p>
-			
+			--%>
 			<p>
-			   <label>用户组：</label><input name="roleID" type="text" value="${obj.roleID}">
+				<label>用户角色：</label>
+				<c:forEach items="${allRoles}" var="r">
+				  ${r.name}<input type="checkbox" value="${r.id}" name="name">
+				</c:forEach>
 			</p>
-			
+
 			<p>
-				<label>用户状态：</label> <select name="en" class="combox">
+				<label>用户状态：</label> <select name=enabled class="combox">
 					<option value="0">有效</option>
 					<option value="1">无效</option>
-				</select>
+				</select> <input type="hidden" value="0" name="usertype">
 			</p>
--->
 		</div>
 		<div class="formBar">
 			<ul>
