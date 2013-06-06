@@ -43,9 +43,6 @@ public class User extends BaseModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final Integer TYPE_ADMIN = 0;
-
-	public static final Integer TYPE_GENERAL = 1;
 
 	private Long id;
 
@@ -147,7 +144,7 @@ public class User extends BaseModel implements Serializable {
 
 	@Column(name = "status", unique = false, nullable = true)
 	public String getEnabled() {
-		return enabled == null ? "1" : enabled;
+		return enabled == null ? "0" : enabled;
 	}
 
 	public void setEnabled(String enabled) {

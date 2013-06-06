@@ -115,7 +115,7 @@ public class Role extends BaseModel {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "ylbms_sys_user_role", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
-	@Where(clause = "del_flag='" + DEL_FLAG_NORMAL + "'")
+	@Where(clause = "status='" + DEL_FLAG_NORMAL + "'")
 	@OrderBy("id")
 	@Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)

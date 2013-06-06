@@ -289,6 +289,137 @@ function initUI(_box){
 	if ($.fn.itemDetail) $("table.itemDetail", $p).itemDetail();
 	if ($.fn.selectedTodo) $("a[target=selectedTodo]", $p).selectedTodo();
 	if ($.fn.pagerForm) $("form[rel=pagerForm]", $p).pagerForm({parentBox:$p});
+	
+
+	 //selectOne  ztree编辑时只能选择一项
+   $("a[target=ztreeEditSelectOne]", $p).each(function() {
+
+       $(this).click(function(event) {
+           var $this = $(this);
+           var title = $this.attr("title") || $this.text();
+           var rel = $this.attr("rel") || "ids";
+           var targetType = $this.attr("targetType");
+           var ids = "";
+           var $box = targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
+           //这里要根据你使用ztree的id查找ztree对象
+           var zTree = $.fn.zTree.getZTreeObj("tree"),
+		      nodes = zTree.getCheckedNodes(true), v = "";
+           var dept = "";
+           for (var i = 0, l = nodes.length; i < l; i++) {
+               v += nodes[i].name + ",";
+               dept += nodes[i].id + ",";
+           }
+           if (v.length > 0) {
+               v = v.substring(0, v.length - 1);
+               dept = dept.substring(0, dept.length - 1);
+           }
+           ids = dept;
+           if (!ids) {
+               alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+               return false;
+           }
+           if (ids.indexOf(',') != -1) {
+               alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+               return false;
+           }
+
+           var options = {};
+           var w = $this.attr("width");
+           var h = $this.attr("height");
+           if (w) options.width = w;
+           if (h) options.height = h;
+           //options.max = eval_r($this.attr("max") || "false");
+           options.mask = eval($this.attr("mask") || "false");
+           options.maxable = eval($this.attr("maxable") || "true");
+           options.minable = eval($this.attr("minable") || "true");
+           options.fresh = eval($this.attr("fresh") || "true");
+           options.resizable = eval($this.attr("resizable") || "true");
+           options.drawable = eval($this.attr("drawable") || "true");
+           options.close = eval($this.attr("close") || "");
+           options.param = $this.attr("param") || "";
+
+           var url = ($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
+           url = url + "&ids=" + ids;
+           DWZ.debug(url);
+           if (!url.isFinishedTm()) {
+               alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+               return false;
+           }
+           $.pdialog.open(url, rel, title, options);
+
+           return false;
+       });
+   })
+
+   $("a[target=ztreeDelAjaxTodo]", $p).each(function() {
+
+       $(this).click(function(event) {
+           var $this = $(this);
+           var title = $this.attr("title") || $this.text();
+           var rel = $this.attr("rel") || "ids";
+           var targetType = $this.attr("targetType");
+           var ids = "";
+           var $box = targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
+           //这里要根据你使用ztree的id查找ztree对象
+           var zTree = $.fn.zTree.getZTreeObj("tree"),
+		      nodes = zTree.getCheckedNodes(true), v = "";
+           var dept = "";
+           for (var i = 0, l = nodes.length; i < l; i++) {
+               v += nodes[i].name + ",";
+               dept += nodes[i].id + ",";
+           }
+           if (v.length > 0) {
+               v = v.substring(0, v.length - 1);
+               dept = dept.substring(0, dept.length - 1);
+           }
+           ids = dept;
+           //            if (!ids) {
+           //                alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+           //                return false;
+           //            }
+           //            if (ids.indexOf(',') != -1) {
+           //                alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+           //                return false;
+           //            }
+
+           var options = {};
+           var w = $this.attr("width");
+           var h = $this.attr("height");
+           if (w) options.width = w;
+           if (h) options.height = h;
+           //options.max = eval_r($this.attr("max") || "false");
+           options.mask = eval($this.attr("mask") || "false");
+           options.maxable = eval($this.attr("maxable") || "true");
+           options.minable = eval($this.attr("minable") || "true");
+           options.fresh = eval($this.attr("fresh") || "true");
+           options.resizable = eval($this.attr("resizable") || "true");
+           options.drawable = eval($this.attr("drawable") || "true");
+           options.close = eval($this.attr("close") || "");
+           options.param = $this.attr("param") || "";
+
+           var url = ($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
+           url = url + "&ids=" + ids;
+           var title = $this.attr("title");
+           if (title) {
+               alertMsg.confirm(title, {
+                   okCall: function() {
+                       ajaxTodo(url, $this.attr("callback"));
+                   }
+               });
+           } else {
+               ajaxTodo(url, $this.attr("callback"));
+           }
+           event.preventDefault();
+           //            DWZ.debug(url);
+           //            if (!url.isFinishedTm()) {
+           //                alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+           //                return false;
+           //            }
+           //            //(url, rel, title, options);
+           //            ajaxTodo(url, $this.attr("callback"));
+           //return false;
+       });
+   });
 
 	// 这里放其他第三方jQuery插件...
 	//oper
@@ -308,69 +439,7 @@ function initUI(_box){
          }
     });
 
-	//opermask tree 1
-	$("#roleTree").omTree({
-		dataSource:'menu/loadTree',
-		simpleDataModel:true,
-        showCheckbox:true,
-        cascadeCheck:true,
-		onSuccess: function(data){
-		var menuIds =$("#menuIds").val();
-            if(menuIds != ""){
-            	var node ;
-                var menuIdArr = menuIds.split(',');
-                for(var i=0;i<menuIdArr.length;i++){
-                    node = $('#roleTree').omTree('findNode','id',menuIdArr[i],"",true);
-                    if(node!=null){
-                    	 $('#roleTree').omTree('check',node);
-                    }
-                }
-            }
-		},
-		onCheck:function(nodeData){
-		    $('.checkbox_part').removeClass('checkbox_part').addClass('checkbox_full');
-			var target = $('#roleTree').omTree("findNode", "id", nodeData.id,"",true);
-			var nodeIds = "";
-         	var nodes = $("#roleTree").omTree('getChecked',true);
-         	for(var i=0;i<nodes.length;i++){
-					nodeIds += nodes[i].id + ",";                    	
-            }
-            if(nodeIds != ''){
-            	nodeIds = nodeIds.substr(0,nodeIds.length-1);
-            }
-            //add form input
-           $("#nodeIds").val(nodeIds);
-		}
-	});
-	//menu tree byUserID
-	$("#menuTree").omTree({
-		dataSource:'sys/loadMenuByUid',
-		simpleDataModel:true,
-        onClick:function(nodeData, event){
-        	event.stopPropagation();
-        	if(nodeData!=null){
-        		var url=typeof(nodeData.url)=='undefined'?"undefined":nodeData.url;
-        		var text=nodeData.text;
-        		var tabid=nodeData.rel || "_blank";
-        	    DWZ.debug(url);
-        	    if(url=="") return false;
-        		if (url=="undefined"||!url.isFinishedTm()) {
-    				alertMsg.error("该页面已经丢失，请联系管理员！" || DWZ.msg("alertSelectMsg"));
-    				return false;
-    			}
-        	 navTab.openTab(tabid,url,{title:text, fresh:true, external:false});
-             event.preventDefault();
-        	}
-        },
-        onError:function(xmlHttpRequest,textStatus,errorThrown,event){
-        	//未处理
-        },
-        onSuccess:function(data){
-        	if(typeof(data)=="undefined"||data=="")
-        		alertMsg.error("对不起您没有权限，请联系管理员！" || DWZ.msg("alertSelectMsg"));
-        }
-     });
-	//end 
+
 	
 }
 

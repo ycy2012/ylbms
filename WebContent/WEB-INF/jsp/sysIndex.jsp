@@ -20,7 +20,6 @@
 <!--[if IE]>
 <link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css" />
 <![endif]-->
-
 <script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery-1.7.2.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
@@ -31,7 +30,6 @@
 <script src="${ctx}/dwz/uploadify/scripts/swfobject.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.v2.1.0.js"
 	type="text/javascript"></script>
-
 <script src="${ctx}/dwz/js/dwz.core.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.util.date.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.validate.method.js" type="text/javascript"></script>
@@ -67,6 +65,9 @@
 -->
 <script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
 <script src="${ctx}/oper/js/operamasks-ui.js" type="text/javascript"></script>
+<link href="${ctx}/styles/ztree/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css"/>
+<script src="${ctx}/styles/ztree/js/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
+<script src="${ctx}/styles/ztree/js/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(function() {
 		DWZ.init("dwz.frag.xml", {
@@ -153,6 +154,7 @@
 									<li><a href="menu/list" target="navTab" rel="menu">菜单信息管理</a></li>
 									<li><a href="role/list" target="navTab" rel="role">角色信息管理</a></li> 
 									<li><a href="dict/list" target="navTab" rel="dict">字典信息管理</a></li> 
+									<li><a href="location/listUi" target="navTab" rel="location">位置信息管理</a></li> 
 								</ul></li>
 							<li><a>基础信息管理</a>
 								<ul>
