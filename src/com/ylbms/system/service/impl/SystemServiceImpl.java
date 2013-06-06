@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.common.orm.Page;
@@ -77,13 +78,23 @@ public class SystemServiceImpl implements SystemService {
 	 * 
 	 * @param user
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	public void saveUser(User user) {
-		if(StringUtils.isNotBlank(user.getPassword())){
+		if (StringUtils.isNotBlank(user.getPassword())) {
 			user.setPassword(entryptPassword(user.getPassword()));
 		}
 		userDao.save(user);
 		systemRealm.clearCachedAuthorizationInfo(user.getFullname());
+	}
+
+	/**
+	 * 更新user
+	 * 
+	 * @param user
+	 */
+	@Transactional(readOnly = false, rollbackFor = Exception.class)
+	public void updateUser(User user) {
+		userDao.save(user);
 	}
 
 	@Transactional(readOnly = false)
@@ -118,7 +129,7 @@ public class SystemServiceImpl implements SystemService {
 	/**
 	 * 生成安全的密码，生成随机的16位salt并经过1024次 sha-1 hash
 	 */
-	public static String entryptPassword(String plainPassword) {
+	public String entryptPassword(String plainPassword) {
 		byte[] salt = Digests.generateSalt(SALT_SIZE);
 		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), salt,
 				HASH_INTERATIONS);
@@ -209,7 +220,7 @@ public class SystemServiceImpl implements SystemService {
 		menuDao.saveMenu(list);
 		systemRealm.clearAllCachedAuthorizationInfo();
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void deleteMenu(Long id) {
 		menuDao.delete(id);

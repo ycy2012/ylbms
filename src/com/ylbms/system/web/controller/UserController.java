@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresUser;
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.utils.DwzUtil;
-import com.ylbms.common.utils.Encodes;
 import com.ylbms.common.web.BaseController;
 import com.ylbms.system.model.Role;
 import com.ylbms.system.model.User;
@@ -72,11 +71,12 @@ public class UserController extends BaseController {
 
 		return "user/input";
 	}
-/**
- * 
- * @param request
- * @return
- */
+
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 */
 	@RequiresUser
 	@RequestMapping(value = "/editPwdUi")
 	public String editModify(HttpServletRequest request) {
@@ -155,25 +155,34 @@ public class UserController extends BaseController {
 	 * @param user
 	 * @return
 	 */
-	@RequiresUser
 	@RequestMapping(value = "/add")
 	@ResponseBody
 	public Map<String, Object> addUser(User user) {
 		try {
+			if (systemService.getUserByLoginName(user.getLoginName()) != null) {
+				return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "user", "该用户已经存在！");
+			}
 			user.setCreateDate(new Date());
 			systemService.saveUser(user);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK, "user");
 		} catch (Exception e) {
 			log.error("system error!!", e);
 			return DwzUtil.dialogAjaxDone(FAIL, "user", e.getMessage());
 		}
-		return DwzUtil.dialogAjaxDone(DwzUtil.OK, "user");
+
 	}
 
 	@RequestMapping(value = "/update")
 	@ResponseBody
-	public Map<String, Object> updateUser(User user) {
+	public Map<String, Object> updateUser(User user, String oldPwd) {
 		try {
-			systemService.saveUser(user);
+			if(StringUtils.isNotBlank(user.getPassword())){
+				user.setPassword(systemService.entryptPassword(user.getPassword()));
+			}else{
+				log.info("-------------"+oldPwd);
+				user.setPassword(oldPwd);
+			}
+			systemService.updateUser(user);
 		} catch (Exception e) {
 			log.error("system error!!", e);
 			return DwzUtil.dialogAjaxDone(FAIL, "user", e.getMessage());

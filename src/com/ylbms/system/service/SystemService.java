@@ -35,6 +35,10 @@ public interface SystemService {
 
 	User getUser(Long userId);
 
+	void updateUser(User user);
+
+	String entryptPassword(String plainPassword);
+
 	List<Org> getAllOrg();
 
 	void saveMenu(Menu menu);

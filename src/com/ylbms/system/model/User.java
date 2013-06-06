@@ -126,7 +126,7 @@ public class User extends BaseModel implements Serializable {
 		this.createDate = createDate;
 	}
 
-	@Column(name = "login_ip", unique = false, nullable = true)
+	@Column(name = "login_ip", unique = false, nullable = true, updatable = false)
 	public String getLoginIP() {
 		return loginIP;
 	}
@@ -135,7 +135,7 @@ public class User extends BaseModel implements Serializable {
 		this.loginIP = loginIP;
 	}
 
-	@Column(name = "login_date", unique = false, nullable = true)
+	@Column(name = "login_date", unique = false, nullable = true, updatable = false)
 	@JSONField(format = "yyyy-mm-dd")
 	public Date getLoginDate() {
 		return loginDate;
@@ -196,7 +196,6 @@ public class User extends BaseModel implements Serializable {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
 
 	@Transient
 	public List<Long> getRoleIdList() {

@@ -3,7 +3,7 @@
  <%@include file="../inc/header.jsp"%>
 
 <div class="pageContent">
-	<form method="post" action="${ctx}/user/add"
+	<form method="post" action="${ctx}/user/update"
 		class="pageForm required-validate"
 		onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="56">
@@ -18,7 +18,8 @@
 			</p>
 			<p>
 				<label>用户密码：</label> <input name="password" type="text" size="30"
-					value=""  maxlength="100" />
+					value=""  maxlength="100" min="6" />
+					<input type="hidden" name="oldPwd" value="${obj.password}">
 			</p>
 			<%--  
 			<p>
