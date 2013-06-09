@@ -53,7 +53,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		 * 2、各项目组负责人，请安排好假日值班事宜. 3、值班人，请准时上下班，注意交通安全.
 		 * 4、大家在休息期间，时刻与公司保持联系（特别是大二线项目、卫星小站项目组）.
 		 */
-		log.info("-----------" + handler);
 	}
 
 	/**
@@ -69,6 +68,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				.getPrincipal();
 		String currentURL = request.getRequestURI();
 		if (currentURL.equalsIgnoreCase("/ylbms/a/login")
+				|| currentURL.equalsIgnoreCase("/ylbms/login_dialog.html")
 				|| currentURL.matches(IGNORE) || request.getSession() != null) {
 
 			flag = true;
@@ -80,7 +80,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				&& "XMLHttpRequest".equalsIgnoreCase(request
 						.getHeader("X-Requested-With"))
 				|| request.getParameter("ajax") != null) {
-			log.info("---1---" + principal);
 			if (request.getSession() == null || principal == null) {
 				Map<String, Object> ret = DwzUtil.dialogAjaxDoneTimeOut();
 				response.getWriter().print(JSON.toJSON(ret));
