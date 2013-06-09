@@ -43,7 +43,6 @@ public class User extends BaseModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-
 	private Long id;
 
 	private String loginName;
@@ -166,7 +165,7 @@ public class User extends BaseModel implements Serializable {
 		this.roleList = roleList;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "org", nullable = true)
 	public Org getOrg() {
 		return org;

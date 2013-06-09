@@ -6,7 +6,6 @@
 <head>
 <title>数据选择</title>
 <script src="${ctx}/dwz/js/jquery-1.7.2.js" type="text/javascript"></script>
-<%@include file="/WEB-INF/jsp/inc/ztree.jsp"%>
 <%@include file="/WEB-INF/jsp/inc/jBox.jsp"%>
 <script type="text/javascript">
 	var key, lastValue = "", nodeList = [];

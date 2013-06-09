@@ -2,13 +2,12 @@ package com.ylbms.system.dao;
 
 import java.util.Date;
 
-import org.hibernate.Query;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.ylbms.common.orm.hibernate.HibernateDao;
 import com.ylbms.system.model.User;
 
-@Component("userDao")
+@Repository("userDao")
 public class UserDAO extends HibernateDao<User, Long> {
 
 	public void updatePasswordById(String entryptPassword, Long id) {

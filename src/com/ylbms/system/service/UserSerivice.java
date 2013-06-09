@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.common.orm.Page;
@@ -11,7 +12,7 @@ import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.system.dao.UserDAO;
 import com.ylbms.system.model.User;
 
-@Component
+@Service
 @Transactional
 public class UserSerivice {
 

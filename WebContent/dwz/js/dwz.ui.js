@@ -293,17 +293,129 @@ function initUI(_box){
 
 	 //selectOne  ztree编辑时只能选择一项
    $("a[target=ztreeEditSelectOne]", $p).each(function() {
+       $(this).click(function(event) {
+           var $this = $(this);
+           var title = $this.attr("title") || $this.text();
+           var rel = $this.attr("rel") || "ids";
+           var targetType = $this.attr("targetType");
+           var ids = "",id="";
+           var $box = targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
+           //这里要根据你使用ztree的id查找ztree对象
+           var zTree = $.fn.zTree.getZTreeObj("tree"), nodes = zTree.getCheckedNodes(true), v = "";
+           var dept = ""; //位置对象
+           for (var i = 0, len = nodes.length; i < len; i++) {
+               v += nodes[i].name + ",";
+               dept += nodes[i].id + ",";
+           }
+           if (v.length > 0) {
+               v = v.substring(0, v.length - 1);
+               dept = dept.substring(0, dept.length - 1);
+           }
+           ids=dept;
+           if (!ids) {
+               alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+               return false;
+           }
+          /** if (ids.indexOf(',') != -1) {
+               alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+               return false;
+           }
+*/
+           var options = {};
+           var w = $this.attr("width");
+           var h = $this.attr("height");
+           if (w) options.width = w;
+           if (h) options.height = h;
+           //options.max = eval_r($this.attr("max") || "false");
+           options.mask = eval($this.attr("mask") || "false");
+           options.maxable = eval($this.attr("maxable") || "true");
+           options.minable = eval($this.attr("minable") || "true");
+           options.fresh = eval($this.attr("fresh") || "true");
+           options.resizable = eval($this.attr("resizable") || "true");
+           options.drawable = eval($this.attr("drawable") || "true");
+           options.close = eval($this.attr("close") || "");
+           options.param = $this.attr("param") || "";
+
+           var url = ($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
+           url = encodeURI(encodeURI(url + "/" + ids+"/"+v));
+           DWZ.debug(url);
+           if (!url.isFinishedTm()) {
+               alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+               return false;
+           }
+           $.pdialog.open(url, rel, title, options);
+
+           return false;
+       });
+   });
+   //通过ajax添加 ztree
+   $("a[target=ztreeAddAjaxTodo]", $p).each(function() {
+	   $(this).click(function(event){
+		   var $this=$(this);
+		   var title=$this.attr("title")|| $this.text();
+		   var rel = $this.attr("rel") || "ids";
+		   var targetType = $this.attr("targetType");
+		   var ids="",v="",location_id="",id="";
+		   var $box = targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
+		 //这里要根据你使用ztree的id查找ztree对象
+		   var zTree = $.fn.zTree.getZTreeObj("tree"), nodes = zTree.getCheckedNodes(true);
+		   for(var i=0,len=nodes.length;i<len;i++){
+			   if(nodes[i].pId!=null){
+				   v+=nodes[i].name+",";
+			   }
+			   location_id+=nodes[i].id+",";
+		   }
+		   if (v.length > 0) {
+               v = v.substring(0, v.length - 1);
+               location_id = location_id.substring(0, location_id.length - 1);
+           }
+		   ids=location_id;
+		   v=(v==""?"0":v);
+		   if (!ids||!v) {
+               alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+               return false;
+           }
+		   
+           var options = {};
+           var w = $this.attr("width");
+           var h = $this.attr("height");
+           if (w) options.width = w;
+           if (h) options.height = h;
+           //options.max = eval_r($this.attr("max") || "false");
+           options.mask = eval($this.attr("mask") || "false");
+           options.maxable = eval($this.attr("maxable") || "true");
+           options.minable = eval($this.attr("minable") || "true");
+           options.fresh = eval($this.attr("fresh") || "true");
+           options.resizable = eval($this.attr("resizable") || "true");
+           options.drawable = eval($this.attr("drawable") || "true");
+           options.close = eval($this.attr("close") || "");
+           options.param = $this.attr("param") || "";
+
+           var url = ($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
+           url =encodeURI( encodeURI(url + "/" + ids+"/"+v));
+           DWZ.debug(url);
+           if (!url.isFinishedTm()) {
+               alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+               return false;
+           }
+           $.pdialog.open(url, rel, title, options);
+
+           return false;
+		   
+	   });
+   });
+
+   $("a[target=ztreeDelAjaxTodo]", $p).each(function() {
 
        $(this).click(function(event) {
            var $this = $(this);
            var title = $this.attr("title") || $this.text();
            var rel = $this.attr("rel") || "ids";
            var targetType = $this.attr("targetType");
-           var ids = "";
+           var ids = "",v = "";
            var $box = targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
            //这里要根据你使用ztree的id查找ztree对象
-           var zTree = $.fn.zTree.getZTreeObj("tree"),
-		      nodes = zTree.getCheckedNodes(true), v = "";
+           var zTree = $.fn.zTree.getZTreeObj("tree"),nodes = zTree.getCheckedNodes(true);
            var dept = "";
            for (var i = 0, l = nodes.length; i < l; i++) {
                v += nodes[i].name + ",";
@@ -316,13 +428,14 @@ function initUI(_box){
            ids = dept;
            if (!ids) {
                alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
-               return false;
-           }
-           if (ids.indexOf(',') != -1) {
+                    return false;
+            }
+           /**
+           if (ids.indexOf(',') >3) {
                alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
-               return false;
+                   return false;
            }
-
+           */
            var options = {};
            var w = $this.attr("width");
            var h = $this.attr("height");
@@ -339,66 +452,7 @@ function initUI(_box){
            options.param = $this.attr("param") || "";
 
            var url = ($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
-           url = url + "&ids=" + ids;
-           DWZ.debug(url);
-           if (!url.isFinishedTm()) {
-               alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
-               return false;
-           }
-           $.pdialog.open(url, rel, title, options);
-
-           return false;
-       });
-   })
-
-   $("a[target=ztreeDelAjaxTodo]", $p).each(function() {
-
-       $(this).click(function(event) {
-           var $this = $(this);
-           var title = $this.attr("title") || $this.text();
-           var rel = $this.attr("rel") || "ids";
-           var targetType = $this.attr("targetType");
-           var ids = "";
-           var $box = targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
-           //这里要根据你使用ztree的id查找ztree对象
-           var zTree = $.fn.zTree.getZTreeObj("tree"),
-		      nodes = zTree.getCheckedNodes(true), v = "";
-           var dept = "";
-           for (var i = 0, l = nodes.length; i < l; i++) {
-               v += nodes[i].name + ",";
-               dept += nodes[i].id + ",";
-           }
-           if (v.length > 0) {
-               v = v.substring(0, v.length - 1);
-               dept = dept.substring(0, dept.length - 1);
-           }
-           ids = dept;
-           //            if (!ids) {
-           //                alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
-           //                return false;
-           //            }
-           //            if (ids.indexOf(',') != -1) {
-           //                alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
-           //                return false;
-           //            }
-
-           var options = {};
-           var w = $this.attr("width");
-           var h = $this.attr("height");
-           if (w) options.width = w;
-           if (h) options.height = h;
-           //options.max = eval_r($this.attr("max") || "false");
-           options.mask = eval($this.attr("mask") || "false");
-           options.maxable = eval($this.attr("maxable") || "true");
-           options.minable = eval($this.attr("minable") || "true");
-           options.fresh = eval($this.attr("fresh") || "true");
-           options.resizable = eval($this.attr("resizable") || "true");
-           options.drawable = eval($this.attr("drawable") || "true");
-           options.close = eval($this.attr("close") || "");
-           options.param = $this.attr("param") || "";
-
-           var url = ($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
-           url = url + "&ids=" + ids;
+           url = url + "/" + ids;
            var title = $this.attr("title");
            if (title) {
                alertMsg.confirm(title, {

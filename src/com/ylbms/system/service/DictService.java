@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.common.orm.Page;
@@ -18,7 +19,7 @@ import com.ylbms.system.model.Dict;
  * @version 1.0
  * @date 2013-6-4
  */
-@Component
+@Service
 @Transactional
 public class DictService {
 

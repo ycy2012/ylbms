@@ -17,11 +17,10 @@
 		check : {
 			enable : true,
 			nocheckInherit : true,
-			chkStyle : "checkbox",
-			chkboxType : {
-				"Y" : "p",
-				"N" : "s"
-			}
+			chkStyle: "checkbox",
+			chkboxType: { "Y": "p", "N": "s" },
+			radioType: "level",
+			chkDisabledInherit: true
 		},
 		data : {
 			simpleData : {
@@ -49,33 +48,19 @@
 	$(document).ready(
 			function() {
 				$.get("${ctx}/location/list?_=" + new Date().getTime(),
-								function(zNodes) {
-									// 初始化树结构
-									zTree = $.fn.zTree.init($("#tree"), setting,
-											zNodes);
-									// 默认展开一级节点
-									var nodes = zTree
-											.getNodesByParam("level", 0);
-									for ( var i = 0; i < nodes.length; i++) {
-										zTree.expandNode(nodes[i], true, false,
-												false);
-									}
-								});
+						function(zNodes) {
+							// 初始化树结构
+							zTree = $.fn.zTree
+									.init($("#tree"), setting, zNodes);
+							// 默认展开一级节点
+							var nodes = zTree.getNodesByParam("level", 0);
+							for ( var i = 0; i < nodes.length; i++) {
+								zTree.expandNode(nodes[i], true, false, false);
+							}
+						});
 				key = $("#key");
 				key.bind("focus", focusKey).bind("blur", blurKey).bind(
 						"change keydown cut input propertychange", searchNode);
-				//new setCheck();
-			$("#py").bind("change", setCheck);
-			$("#sy").bind("change", setCheck);
-			$("#pn").bind("change", setCheck);
-			$("#sn").bind("change", setCheck);
-//			setEdit();
-//			$("#remove").bind("change", setEdit);
-//			$("#rename").bind("change", setEdit);
-//			$("#removeTitle").bind("propertychange", setEdit)
-//			.bind("input", setEdit);
-//			$("#renameTitle").bind("propertychange", setEdit)
-//			.bind("input", setEdit);
 			});
 	function focusKey(e) {
 		if (key.hasClass("empty")) {
@@ -122,78 +107,21 @@
 		$("#txt").toggle();
 		$("#key").focus();
 	}
-	//新添加的
-		var code;
-		
-			function beforeDrag(treeId, treeNodes) {
-			return false;
-		}
-		function zTreeBeforeRemove(treeId, treeNode) {
-                var sNodes = treeNode.children;
-                if (sNodes!=null) {
-	                alert('请先删除子机构');
-	                return false;
-                }
-                else
-                {
-                return true;
-                }
-	          
-             }
-        function zTreeOnRemove(event, treeId, treeNode) {
-	          $.post("DeleteDept.ashx",{ids:treeNode.id},function(result){
-                //alert(result);
-             });
-	         // alert(treeNode.tId + ", " + treeNode.name);
-              }
-		function zTreeOnRename(event, treeId, treeNode) {
-	             alert(treeNode.tId + ", " + treeNode.name);
-           }
-       function zTreeBeforeRename(treeId, treeNode, newName) {
-	       return newName.length > 5;
-           }
-		function setCheck() {
-			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-			py = $("#py").attr("checked")? "p":"",
-			sy = $("#sy").attr("checked")? "s":"",
-			pn = $("#pn").attr("checked")? "p":"",
-			sn = $("#sn").attr("checked")? "s":"",
-			type = { "Y":py + sy, "N":pn + sn};
-			zTree.setting.check.chkboxType = type;
-			showCode('setting.check.chkboxType = { "Y" : "' + type.Y + '", "N" : "' + type.N + '" };');
-		}
-		function showCode(str) {
-			if (!code) code = $("#code");
-			code.empty();
-			code.append("<li>"+str+"</li>");
-		}
-		function setEdit() {
-			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-			remove = $("#remove").attr("checked"),
-			rename = $("#rename").attr("checked");
-			removeTitle = $.trim($("#removeTitle").value),
-			renameTitle = $.trim($("#renameTitle").value);
-			zTree.setting.edit.showRemoveBtn = remove;
-			zTree.setting.edit.showRenameBtn = rename;
-			zTree.setting.edit.removeTitle = removeTitle;
-			zTree.setting.edit.renameTitle = renameTitle;
-			showCode(['setting.edit.showRemoveBtn = ' + remove, 'setting.edit.showRenameBtn = ' + rename,
-				'setting.edit.removeTitle = "' + removeTitle +'"', 'setting.edit.renameTitle = "' + renameTitle + '"']);
-		}
 </script>
 </head>
 <body>
 	<div class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
-				<li><a class="add" href="${ctx}/location/addUi" target="dialog"
-					mask="true" title="添加角色信息"><span>添加</span></a></li>
+				<li><a class="add" href="${ctx}/location/addUi" target="ztreeAddAjaxTodo" rel="ids"
+					mask="true" title="添加位置信息" warn="请选择要添加的位置节点"><span>添加信息</span></a></li>
 				<li class="line">line</li>
-				<li><a class="edit" href="${ctx}/location/editUi/{sid_role}"
-					target="ztreeEditSelectOne" mask="true" title="修改角色信息"><span>修改</span></a></li>
+				<li><a class="edit" href="${ctx}/location/editUi" visible="false" name="editlink" id="editlink" rel="ids"
+					target="ztreeEditSelectOne" mask="true" warn="请选择且只能选择一个位置节点"
+					title="修改位置信息"><span>修改信息</span></a></li>
 				<li class="line">line</li>
-				<li><a class="delete" href="${ctx}/location/delete"
-					target="ztreeDelAjaxTodo" mask="true" title="删除角色信息"><span>删除</span></a></li>
+				<li><a class="delete" href="${ctx}/location/delete" rel="ids"
+					mask="true" target="ztreeDelAjaxTodo" mask="true" title="删除位置信息"><span>删除信息</span></a></li>
 				<li class="line">line</li>
 			</ul>
 		</div>
@@ -210,6 +138,9 @@
 					type="text" class="empty" id="key" name="key" maxlength="50"
 					style="width: 150px;">
 			</div>
+			<input type="hidden" name="id" id="id" />
+			<input type="hidden" name="ids" id="ids" />
+			<input type="hidden" name="allName" id="all" />
 			<div id="tree" class="ztree" style="padding: 15px 20px;"></div>
 		</div>
 	</div>

@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.base.location.dao.LocationDao;
@@ -17,7 +18,7 @@ import com.ylbms.base.location.model.Location;
  * @version 1.0
  * @date 2013-6-6
  */
-@Component
+@Service
 @Transactional
 public class LocationService {
 
@@ -30,4 +31,29 @@ public class LocationService {
 		return locationDao.getAll();
 	}
 
+	/**
+	 * save location
+	 * 
+	 * @param location
+	 */
+	@Transactional(readOnly = false)
+	public void saveLocation(Location location) {
+		locationDao.save(location);
+	}
+
+	public Location getLocationById(Long id) {
+		return locationDao.get(id);
+	}
+
+	@Transactional(readOnly=false,rollbackFor=RuntimeException.class)
+	public void deleteLocation(Long id){
+		locationDao.delete(id);
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Location> lookUpData() {
+		return locationDao.getAll();
+	}
 }

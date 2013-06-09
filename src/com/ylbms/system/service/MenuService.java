@@ -1,15 +1,12 @@
 package com.ylbms.system.service;
 
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ylbms.common.orm.Page;
-import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.system.dao.MenuDao;
 import com.ylbms.system.model.Menu;
 
@@ -19,7 +16,7 @@ import com.ylbms.system.model.Menu;
  * @version 1.0
  * @date 2013-5-31
  */
-@Component
+@Service
 @Transactional
 public class MenuService {
 

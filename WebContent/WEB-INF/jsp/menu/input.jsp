@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@include file="/WEB-INF/jsp/inc/ztree.jsp"%>
 <%@include file="/WEB-INF/jsp/inc/jBox.jsp"%>
 <link href="${ctx}/styles/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
 </head>

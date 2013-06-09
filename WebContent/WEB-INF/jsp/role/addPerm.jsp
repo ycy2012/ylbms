@@ -6,7 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>添加菜单信息</title>
-<%@include file="../inc/ztree.jsp"%>
 <link href="${ctx}/styles/bootstrap/css/bootstrap.css" rel="stylesheet"
 	type="text/css" />
 <script type="text/javascript">

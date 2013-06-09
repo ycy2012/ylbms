@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.hibernate.Query;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.ylbms.common.orm.hibernate.HibernateDao;
 import com.ylbms.system.model.Menu;
@@ -18,7 +19,7 @@ import com.ylbms.system.model.User;
  * @version 1.0
  * @date 2013-5-31
  */
-@Component
+@Repository
 public class MenuDao extends HibernateDao<Menu, Long> {
 	/**
 	 * 批量删除

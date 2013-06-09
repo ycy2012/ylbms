@@ -42,11 +42,15 @@
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
 
 	<!-- 开启controller注解支持 -->
-	<!-- 注：如果base-package=com.jack 则注解事务不起作用 TODO 读源码 -->
-	<context:component-scan base-package="com.ylbms.system.web.controller,com.ylbms.base">
+	<!-- 自动扫描且只扫描@Controller -->
+	<context:component-scan base-package="com.ylbms"
+		use-default-filters="false">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
 	</context:component-scan>
+
 	<!-- 设置请求映射编码，解决@ResponseBody乱码问题 -->
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
@@ -63,14 +67,13 @@
 			</list>
 		</property>
 	</bean>
-	<!-- <mvc:interceptors> -->
-	<!-- <bean class="cn.javass.test.interceptor.TestInterceptor"/> -->
-	<!-- <mvc:interceptor> -->
-	<!-- <mvc:mapping path="/edit.kz"/> -->
-	<!-- <bean class="cn.javass.test.interceptor.TestInterceptor"/> -->
-	<!-- </mvc:interceptor> -->
-	<!-- </mvc:interceptors> -->
 
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<bean class="com.ylbms.common.interceptor.SessionInterceptor"></bean>
+	</mvc:interceptors>
+
+	<!-- 跳转到首页 -->
 	<mvc:view-controller path="/" view-name="forward:/index" />
 
 	<!-- 当在web.xml 中 DispatcherServlet使用 <url-pattern>/</url-pattern> 映射时，能映射静态资源 -->

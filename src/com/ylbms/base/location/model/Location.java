@@ -16,12 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
@@ -45,20 +43,16 @@ public class Location extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long Id;
+	private Long id;
 
 	private Location parent;
 
 	private String parentIds;
 
-	private String locationName; // 全称信息
+	private String locationName; // 当前的信息
 
-	private String uintName;
-
-	private String teamName; // 队信息
-
-	private String willName; // 井信息
-
+	private String allName;// 全称信息
+	
 	private Date createDate;
 
 	private User user; // 添加人员信息
@@ -75,7 +69,7 @@ public class Location extends BaseModel {
 	}
 
 	public Location(Long id) {
-		Id = id;
+		this.id = id;
 	}
 
 	// getter setter
@@ -83,18 +77,17 @@ public class Location extends BaseModel {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BASE_LOCATION")
 	@SequenceGenerator(name = "SEQ_BASE_LOCATION", sequenceName = "SEQ_BASE_LOCATION")
 	public Long getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(Long id) {
-		Id = id;
+		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "parent_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	@NotNull
 	public Location getParent() {
 		return parent;
 	}
@@ -113,7 +106,7 @@ public class Location extends BaseModel {
 		this.parentIds = parentIds;
 	}
 
-	@Column(name="location_name",unique = true)
+	@Column(name = "current_name", unique = true)
 	@NotNull
 	public String getLocationName() {
 		return locationName;
@@ -123,32 +116,13 @@ public class Location extends BaseModel {
 		this.locationName = locationName;
 	}
 
-	@Column(unique = true)
-	public String getUintName() {
-		return uintName;
+	@Column(name="ALL_Name")
+	public String getAllName() {
+		return allName;
 	}
 
-	public void setUintName(String uintName) {
-		this.uintName = uintName;
-	}
-
-	@Column(unique = true)
-	public String getTeamName() {
-		return teamName;
-	}
-
-	public void setTeamName(String teamName) {
-		this.teamName = teamName;
-	}
-
-	@Column(unique = true)
-	@NotNull
-	public String getWillName() {
-		return willName;
-	}
-
-	public void setWillName(String willName) {
-		this.willName = willName;
+	public void setAllName(String allName) {
+		this.allName = allName;
 	}
 
 	@Column(name = "create_date", unique = false)
@@ -160,7 +134,7 @@ public class Location extends BaseModel {
 		this.createDate = createDate;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -186,7 +160,7 @@ public class Location extends BaseModel {
 	}
 
 	public void setStatus(String status) {
-		this.status = status;
+		this.status = DEL_FLAG_NORMAL;
 	}
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,

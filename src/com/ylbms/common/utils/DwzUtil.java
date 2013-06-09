@@ -50,12 +50,10 @@ public class DwzUtil {
 	 * @param navTabId
 	 * @return
 	 */
-	public static Map<String, Object> dialogAjaxDoneTimeOut(int statusCode,
-			String navTabId) {
+	public static Map<String, Object> dialogAjaxDoneTimeOut() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("statusCode", statusCode);
+		map.put("statusCode", DwzUtil.TIMEOUT);
 		map.put("message", "会话超时，请重新登录！");
-		map.put("navTabId", navTabId);
 		map.put("callbackType", "");
 		map.put("forwardUrl", "");
 

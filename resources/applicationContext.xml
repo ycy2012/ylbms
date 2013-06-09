@@ -10,16 +10,18 @@
        ">
 	<description>Spring Configuration</description>
 	<import resource="classpath:/spring-shiro.xml" />
-	
+
 	<!-- 加载配置属性文件 -->
 	<context:property-placeholder
 		ignore-unresolvable="true" location="classpath:resources.properties" />
 
 	<!-- 使用Annotation自动注册Bean，解决事物失效问题：在主容器中不扫描@Controller注解，在SpringMvc中只扫描@Controller注解。 -->
-	<!-- 扫描注解Bean -->
+	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
 	<context:component-scan base-package="com.ylbms">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
 	</context:component-scan>
 
 	<!-- 国际化的消息资源文件 -->
@@ -35,7 +37,7 @@
 		<property name="cacheSeconds" value="60" />
 	</bean>
 
-	<!-- 数据源配置, 使用 BoneCP 数据库连接池 -->
+	<!-- 数据源配置, 使用 druid 数据库连接池 -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
 		<!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
@@ -107,38 +109,27 @@
 	<!-- <aop:aspectj-autoproxy expose-proxy="true" /> -->
 
 	<!-- 开启注解事务 只对当前配置文件有效 -->
-	<tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
+	<tx:annotation-driven transaction-manager="txManager"
+		proxy-target-class="true" />
 
 	<bean id="txManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-<!-- 
-	<tx:advice id="txAdvice" transaction-manager="txManager">
-		<tx:attributes>
-			<tx:method name="save*" propagation="REQUIRED" />
-			<tx:method name="add*" propagation="REQUIRED" />
-			<tx:method name="create*" propagation="REQUIRED" />
-			<tx:method name="insert*" propagation="REQUIRED" />
-			<tx:method name="update*" propagation="REQUIRED" />
-			<tx:method name="merge*" propagation="REQUIRED" />
-			<tx:method name="del*" propagation="REQUIRED" />
-			<tx:method name="remove*" propagation="REQUIRED" />
-			<tx:method name="put*" propagation="REQUIRED" />
-			<tx:method name="use*" propagation="REQUIRED" />
-			hibernate4必须配置为开启事务 否则 getCurrentSession()获取不到
-			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="count*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="list*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="*" read-only="true" />
-		</tx:attributes>
-	</tx:advice>
-	<aop:config expose-proxy="true">
-		只对业务逻辑层实施事务
-		<aop:pointcut id="txPointcut"
-			expression="execution(* com.ylbms.service..*.*(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
-	</aop:config> -->
+	<!-- <tx:advice id="txAdvice" transaction-manager="txManager"> <tx:attributes> 
+		<tx:method name="save*" propagation="REQUIRED" /> <tx:method name="add*" 
+		propagation="REQUIRED" /> <tx:method name="create*" propagation="REQUIRED" 
+		/> <tx:method name="insert*" propagation="REQUIRED" /> <tx:method name="update*" 
+		propagation="REQUIRED" /> <tx:method name="merge*" propagation="REQUIRED" 
+		/> <tx:method name="del*" propagation="REQUIRED" /> <tx:method name="remove*" 
+		propagation="REQUIRED" /> <tx:method name="put*" propagation="REQUIRED" /> 
+		<tx:method name="use*" propagation="REQUIRED" /> hibernate4必须配置为开启事务 否则 getCurrentSession()获取不到 
+		<tx:method name="get*" propagation="REQUIRED" read-only="true" /> <tx:method 
+		name="count*" propagation="REQUIRED" read-only="true" /> <tx:method name="find*" 
+		propagation="REQUIRED" read-only="true" /> <tx:method name="list*" propagation="REQUIRED" 
+		read-only="true" /> <tx:method name="*" read-only="true" /> </tx:attributes> 
+		</tx:advice> <aop:config expose-proxy="true"> 只对业务逻辑层实施事务 <aop:pointcut id="txPointcut" 
+		expression="execution(* com.ylbms.service..*.*(..))" /> <aop:advisor advice-ref="txAdvice" 
+		pointcut-ref="txPointcut" /> </aop:config> -->
 
 </beans>
