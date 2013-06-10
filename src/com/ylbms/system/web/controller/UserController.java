@@ -144,7 +144,7 @@ public class UserController extends BaseController {
 			systemService.saveUser(user);
 		} catch (Exception e) {
 			log.error("system error!!", e);
-			return DwzUtil.dialogAjaxDone(FAIL, "user", e.getMessage());
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "user", e.getMessage());
 		}
 		return DwzUtil.dialogAjaxDone(DwzUtil.OK, "user");
 	}
@@ -167,7 +167,7 @@ public class UserController extends BaseController {
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, "user");
 		} catch (Exception e) {
 			log.error("system error!!", e);
-			return DwzUtil.dialogAjaxDone(FAIL, "user", e.getMessage());
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "user", e.getMessage());
 		}
 
 	}
@@ -185,9 +185,9 @@ public class UserController extends BaseController {
 			systemService.updateUser(user);
 		} catch (Exception e) {
 			log.error("system error!!", e);
-			return DwzUtil.dialogAjaxDone(FAIL, "user", e.getMessage());
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "user", e.getMessage());
 		}
-		return DwzUtil.dialogAjaxDone(OK, "user", "修改成功");
+		return DwzUtil.dialogAjaxDone(DwzUtil.OK, "user", "修改成功");
 	}
 
 	/**
@@ -204,9 +204,9 @@ public class UserController extends BaseController {
 			userService.deleteUser(id);
 		} catch (Exception e) {
 			log.error("system error!!", e);
-			return DwzUtil.dialogAjaxDone(FAIL, "user", e.getMessage());
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "user", e.getMessage());
 		}
-		return DwzUtil.dialogAjaxDone(OK);
+		return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 	}
 
 	/**
@@ -223,9 +223,9 @@ public class UserController extends BaseController {
 			userService.deleteUserByIds(ids);
 		} catch (Exception e) {
 			log.error("system error!!", e);
-			return DwzUtil.dialogAjaxDone(FAIL, "user", e.getMessage());
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "user", e.getMessage());
 		}
-		return DwzUtil.dialogAjaxDone(OK);
+		return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 	}
 
 	/**
