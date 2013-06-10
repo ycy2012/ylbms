@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -62,30 +63,31 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 
-		boolean flag = true;
 		response.setCharacterEncoding("UTF-8");
+
 		Principal principal = (Principal) SecurityUtils.getSubject()
 				.getPrincipal();
 		String currentURL = request.getRequestURI();
+		HttpSession session = request.getSession();
+
 		if (currentURL.equalsIgnoreCase("/ylbms/a/login")
 				|| currentURL.equalsIgnoreCase("/ylbms/login_dialog.html")
-				|| currentURL.matches(IGNORE) || request.getSession() != null) {
+				|| currentURL.matches(IGNORE) || session != null) {
 
-			flag = true;
-		} else {
-			response.sendRedirect(request.getContextPath() + "/a/login");
-			flag = false;
+			return true;
 		}
-		if (request != null
-				&& "XMLHttpRequest".equalsIgnoreCase(request
-						.getHeader("X-Requested-With"))
-				|| request.getParameter("ajax") != null) {
-			if (request.getSession() == null || principal == null) {
+
+		if (null == session && null == principal) {
+			if (request != null
+					&& "XMLHttpRequest".equalsIgnoreCase(request
+							.getHeader("X-Requested-With"))
+					|| request.getParameter("ajax") != null) {
 				Map<String, Object> ret = DwzUtil.dialogAjaxDoneTimeOut();
 				response.getWriter().print(JSON.toJSON(ret));
-				flag = false;
+			} else {
+				response.sendRedirect(request.getContextPath() + "/a/login");
 			}
 		}
-		return flag;
+		return false;
 	}
 }
