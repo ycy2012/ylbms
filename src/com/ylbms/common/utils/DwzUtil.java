@@ -53,7 +53,7 @@ public class DwzUtil {
 	public static Map<String, Object> dialogAjaxDoneTimeOut() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("statusCode", DwzUtil.TIMEOUT);
-		map.put("message", "会话超时，请重新登录！");
+		map.put("message", "系统登录会话超时，请您重新登录！");
 		map.put("callbackType", "");
 		map.put("forwardUrl", "");
 

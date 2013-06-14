@@ -72,7 +72,7 @@
 	$(function() {
 		DWZ.init("dwz.frag.xml", {
 			loginUrl : "login_dialog.html",
-			loginTitle : "重新登录", // 弹出登录对话框
+			loginTitle : "重新登系统", // 弹出登录对话框
 			statusCode : {
 				ok : 200,
 				error : 300,
@@ -158,7 +158,7 @@
 								</ul></li>
 							<li><a>基础信息管理</a>
 								<ul>
-									<li><a href="Job/list" target="navTab" rel="JobInfo">岗位信息管理</a></li>
+									<li><a href="bill/list" target="navTab" rel="bill">单据信息管理</a></li>
 									<li><a href="Department/list" target="navTab"
 										rel="department">部门信息管理</a></li>
 									<li><a href="Employee/list" target="navTab" rel="employee">员工信息管理</a></li>
