@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>规格型号</title>
+<title>����ͺ�</title>
 </head>
 <body>
 	<div class="pageContent">
@@ -17,22 +17,22 @@
 			<input type="hidden" name="speId" value="${obj.speId}">
 			<div class="pageFormContent" layoutH="56">
 				<p>
-					<label>规格型号名称：</label> <input name="speName" type="text" size="30"
+					<label>����ͺ����ƣ�</label> <input name="speName" type="text" size="30"
 						class="required" maxlength="150" value="${obj.speName }" />
 				</p>
 				<p>
-					<label>规格型号状态：</label> <select name="sort" class="required combox">
-						<option value="">请选择</option>
-						<option value="1">有效</option>
-						<option value="0" selected>无效</option>
+					<label>����ͺ�״̬��</label> <select name="sort" class="required combox">
+						<option value="">��ѡ��</option>
+						<option value="1">��Ч</option>
+						<option value="0" selected>��Ч</option>
 					</select>
 				</p>
 				<p>
-					<label>规格型号类别：</label> <input name="sort" type="text" size="30"
+					<label>����ͺ����</label> <input name="sort" type="text" size="30"
 						class="required" maxlength="150" value="${obj.sort}" />
 				</p>
 				<p>
-					<label>备注：</label>
+					<label>��ע��</label>
 					<textarea name="remark"></textarea>
 				</p>
 			</div>
@@ -40,13 +40,13 @@
 				<ul>
 					<li><div class="buttonActive">
 							<div class="buttonContent">
-								<button type="submit">保存</button>
+								<button type="submit">����</button>
 							</div>
 						</div></li>
 					<li>
 						<div class="button">
 							<div class="buttonContent">
-								<button type="button" class="close">取消</button>
+								<button type="button" class="close">ȡ��</button>
 							</div>
 						</div>
 					</li>
