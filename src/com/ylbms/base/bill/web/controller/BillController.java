@@ -35,7 +35,7 @@ public class BillController extends BaseController {
 
 	private static final Log log = LogFactory.getLog(BillController.class);
 
-	private static final String NAVTAB_ID = "bill";
+	private static final String NAV_TAB_ID = "bill";
 
 	@Autowired
 	BillHeadService billHService;
@@ -43,10 +43,10 @@ public class BillController extends BaseController {
 	public Map<String, Object> add(BillHeadModel bHead, BillTbodyModel djmx) {
 		try {
 
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAVTAB_ID);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {
 			log.error("system error" + e.getMessage());
-			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAVTAB_ID,
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
 					e.getMessage());
 		}
 	}
@@ -56,10 +56,10 @@ public class BillController extends BaseController {
 	public Map<String, Object> delete(@PathVariable("id") String id) {
 		try {
 			billHService.deleteBill(id);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAVTAB_ID);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {
 			log.error("system error" + e.getMessage());
-			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAVTAB_ID,
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
 					e.getMessage());
 		}
 	}

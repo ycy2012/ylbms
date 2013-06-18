@@ -69,6 +69,10 @@
 						$("#"+sTarget, $grid).val($tr.attr("rel"));
 					}
 				});
+				//添加双击事件
+			    $tr.dblclick(function(){                                        
+			        dbltable($tr.attr("target"),$tr.attr("rel"));
+			    });
 			});
 			
 			$(">td",ftr).each(function(i){
