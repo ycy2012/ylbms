@@ -18,52 +18,56 @@ import com.google.common.collect.Lists;
  * 
  * 注意所有序号从1开始.
  * 
- * @param <T> Page中记录的类型.
+ * @param <T>
+ *            Page中记录的类型.
  * 
  * @author calvin
+ * @author JackLiang 二〇一三年六月十八日 13:26:36 
  */
 public class Page<T> {
-	//-- 公共变量 --//
+	// -- 公共变量 --//
 	public static final String ASC = "asc";
 	public static final String DESC = "desc";
 	public static final int NON_PAGE = 0;
 
-	//-- 分页参数 --//
-	protected int pageNo = 1;
-	protected int pageSize = -1;
+	private static final int PAGE_SIZE = 20;
+
+	// -- 分页参数 --//
+	protected int pageNum = 1;
+	protected int numPerPage = -1;
 	protected String orderBy = null;
 	protected String order = null;
 	protected boolean autoCount = true;
 
-	//-- 返回结果 --//
+	// -- 返回结果 --//
 	protected List<T> result = Lists.newArrayList();
+
 	protected long totalCount = -1;
 
-	//-- 构造函数 --//
+	// -- 构造函数 --//
 	public Page() {
-		this.pageSize = 20;
 	}
 
-	public Page(int pageSize) {
-		this.pageSize = pageSize;
+	public Page(int numPerPage) {
+		this.numPerPage = PAGE_SIZE;
 	}
 
-	//-- 分页参数访问函数 --//
+	// -- 分页参数访问函数 --//
 	/**
 	 * 获得当前页的页号,序号从1开始,默认为1.
 	 */
-	public int getPageNo() {
-		return pageNo;
+	public int getPageNum() {
+		return pageNum;
 	}
 
 	/**
 	 * 设置当前页的页号,序号从1开始,低于1时自动调整为1.
 	 */
-	public void setPageNo(final int pageNo) {
-		this.pageNo = pageNo;
 
-		if (pageNo < 1) {
-			this.pageNo = 1;
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+		if (pageNum < 1) {
+			this.pageNum = 1;
 		}
 	}
 
@@ -71,29 +75,31 @@ public class Page<T> {
 	 * 返回Page对象自身的setPageNo函数,可用于连续设置。
 	 */
 	public Page<T> pageNo(final int thePageNo) {
-		setPageNo(thePageNo);
+		setPageNum(thePageNo);
 		return this;
 	}
 
 	/**
 	 * 获得每页的记录数量, 默认为-1.
 	 */
-	public int getPageSize() {
-		return pageSize;
+
+	public int getNumPerPage() {
+		return numPerPage;
 	}
 
 	/**
 	 * 设置每页的记录数量.
 	 */
-	public void setPageSize(final int pageSize) {
-		this.pageSize = pageSize;
+
+	public void setNumPerPage(int numPerPage) {
+		this.numPerPage = numPerPage;
 	}
 
 	/**
 	 * 返回Page对象自身的setPageSize函数,可用于连续设置。
 	 */
 	public Page<T> pageSize(final int thePageSize) {
-		setPageSize(thePageSize);
+		setNumPerPage(thePageSize);
 		return this;
 	}
 
@@ -101,7 +107,7 @@ public class Page<T> {
 	 * 根据pageNo和pageSize计算当前页第一条记录在总结果集中的位置,序号从1开始.
 	 */
 	public int getFirst() {
-		return ((pageNo - 1) * pageSize) + 1;
+		return ((pageNum - 1) * numPerPage) + 1;
 	}
 
 	/**
@@ -136,15 +142,17 @@ public class Page<T> {
 	/**
 	 * 设置排序方式向.
 	 * 
-	 * @param order 可选值为desc或asc,多个排序字段时用','分隔.
+	 * @param order
+	 *            可选值为desc或asc,多个排序字段时用','分隔.
 	 */
 	public void setOrder(final String order) {
 		String lowcaseOrder = StringUtils.lowerCase(order);
 
-		//检查order字符串的合法值
+		// 检查order字符串的合法值
 		String[] orders = StringUtils.split(lowcaseOrder, ',');
 		for (String orderStr : orders) {
-			if (!StringUtils.equals(DESC, orderStr) && !StringUtils.equals(ASC, orderStr)) {
+			if (!StringUtils.equals(DESC, orderStr)
+					&& !StringUtils.equals(ASC, orderStr)) {
 				throw new IllegalArgumentException("排序方向" + orderStr + "不是合法值");
 			}
 		}
@@ -164,7 +172,8 @@ public class Page<T> {
 	 * 是否已设置排序字段,无默认值.
 	 */
 	public boolean isOrderBySetted() {
-		return (StringUtils.isNotBlank(orderBy) && StringUtils.isNotBlank(order));
+		return (StringUtils.isNotBlank(orderBy) && StringUtils
+				.isNotBlank(order));
 	}
 
 	/**
@@ -189,7 +198,7 @@ public class Page<T> {
 		return this;
 	}
 
-	//-- 访问查询结果函数 --//
+	// -- 访问查询结果函数 --//
 
 	/**
 	 * 获得页内的记录列表.
@@ -227,8 +236,8 @@ public class Page<T> {
 			return -1;
 		}
 
-		long count = totalCount / pageSize;
-		if (totalCount % pageSize > 0) {
+		long count = totalCount / numPerPage;
+		if (totalCount % numPerPage > 0) {
 			count++;
 		}
 		return count;
@@ -238,18 +247,17 @@ public class Page<T> {
 	 * 是否还有下一页.
 	 */
 	public boolean isHasNext() {
-		return (pageNo + 1 <= getTotalPages());
+		return (pageNum + 1 <= getTotalPages());
 	}
 
 	/**
-	 * 取得下页的页号, 序号从1开始.
-	 * 当前页为尾页时仍返回尾页序号.
+	 * 取得下页的页号, 序号从1开始. 当前页为尾页时仍返回尾页序号.
 	 */
 	public int getNextPage() {
 		if (isHasNext()) {
-			return pageNo + 1;
+			return pageNum + 1;
 		} else {
-			return pageNo;
+			return pageNum;
 		}
 	}
 
@@ -257,18 +265,17 @@ public class Page<T> {
 	 * 是否还有上一页.
 	 */
 	public boolean isHasPre() {
-		return (pageNo - 1 >= 1);
+		return (pageNum - 1 >= 1);
 	}
 
 	/**
-	 * 取得上页的页号, 序号从1开始.
-	 * 当前页为首页时返回首页序号.
+	 * 取得上页的页号, 序号从1开始. 当前页为首页时返回首页序号.
 	 */
 	public int getPrePage() {
 		if (isHasPre()) {
-			return pageNo - 1;
+			return pageNum - 1;
 		} else {
-			return pageNo;
+			return pageNum;
 		}
 	}
 }
