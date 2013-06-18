@@ -42,6 +42,7 @@ import com.ylbms.common.utils.reflection.ReflectionUtils;
  * @param <PK> 主键类型
  * 
  * @author calvin
+ * @editor JackLiang
  */
 public class HibernateDao<T, PK extends Serializable> extends SimpleHibernateDao<T, PK> {
 	/**
@@ -159,11 +160,11 @@ public class HibernateDao<T, PK extends Serializable> extends SimpleHibernateDao
 	 */
 	protected Query setPageParameterToQuery(final Query q, final Page<T> page) {
 
-		Assert.isTrue(page.getPageSize() > 0, "Page Size must larger than zero");
+		Assert.isTrue(page.getNumPerPage() > 0, "Page Size must larger than zero");
 
 		//hibernate的firstResult的序号从0开始
 		q.setFirstResult(page.getFirst() - 1);
-		q.setMaxResults(page.getPageSize());
+		q.setMaxResults(page.getNumPerPage());
 		return q;
 	}
 
@@ -172,11 +173,11 @@ public class HibernateDao<T, PK extends Serializable> extends SimpleHibernateDao
 	 */
 	protected Criteria setPageParameterToCriteria(final Criteria c, final Page<T> page) {
 
-		Assert.isTrue(page.getPageSize() >= 0, "Page Size must larger than zero");
-		if(page.getPageSize() > 0) {
+		Assert.isTrue(page.getNumPerPage() >= 0, "Page Size must larger than zero");
+		if(page.getNumPerPage() > 0) {
 			//hibernate的firstResult的序号从0开始
 			c.setFirstResult(page.getFirst() - 1);
-			c.setMaxResults(page.getPageSize());
+			c.setMaxResults(page.getNumPerPage());
 		}
 
 		if (page.isOrderBySetted()) {
