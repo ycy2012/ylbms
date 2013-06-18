@@ -18,5 +18,10 @@ public class IndexController {
 	public String index(HttpServletRequest request) {
 		return "sysLogin";
 	}
+	
+	@RequestMapping(value="/reLogin")
+	public String reLogin(HttpServletRequest request){
+		return "login_dialog";
+	}
 
 }
