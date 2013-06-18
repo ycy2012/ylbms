@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../inc/header.jsp"%>
 <form id="pagerForm" method="post" action="${ctx}/dict/list">
-	<input type="hidden" name="page.pageNo" value="${page.pageNo}" /> 
-	<input type="hidden" name="page.pageSize" value="${page.pageSize}" />
+	<input type="hidden" name="pageNum" value="${page.pageNum}" /> 
+	<input type="hidden" name="numPerPage" value="${page.numPerPage}" />
 </form>
 <div class="pageHeader">
 	<form onsubmit="return navTabSearch(this);" action="${ctx}/dict/list" method="post">
@@ -82,11 +82,11 @@
 			<span>显示</span> 
 			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
 			<c:forEach begin="10" end="40" step="10" varStatus="s">
-				<option value="${s.index}" ${page.pageSize eq s.index ? 'selected="selected"' : ''}>${s.index}</option>
+				<option value="${s.index}" ${page.numPerPage eq s.index ? 'selected="selected"' : ''}>${s.index}</option>
 			</c:forEach>
 		</select>
 			<span>条，共${page.totalCount}条</span>
 		</div>
-		<div class="pagination" targetType="navTab" totalCount="${page.totalCount}" numPerPage="${page.pageSize}" pageNumShown="10" currentPage="${page.pageNo}"></div>
+		<div class="pagination" targetType="navTab" totalCount="${page.totalCount}" numPerPage="${page.numPerPage}" pageNumShown="10" currentPage="${page.pageNum}"></div>
 	</div>
 </div>
