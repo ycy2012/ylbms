@@ -46,6 +46,7 @@ public class Page<T> {
 
 	// -- 构造函数 --//
 	public Page() {
+		this.numPerPage=PAGE_SIZE;
 	}
 
 	public Page(int numPerPage) {
