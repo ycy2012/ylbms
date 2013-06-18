@@ -59,6 +59,22 @@ public class SpectypeController {
 	}
 
 	/**
+	 * 跳转到规格型号修改页面
+	 * 
+	 * @param request
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/edit/{id}")
+	public String editUi(HttpServletRequest request,
+			@PathVariable("id") int id, Model model) {
+		SpectypeInfo spectype = spectypeService.getSpetypeById(id);
+		model.addAttribute("obj", spectype);
+		return "base/spectype/edit";
+	}
+
+	/**
 	 * 增加规格型号
 	 * 
 	 * @param spectype
@@ -105,14 +121,15 @@ public class SpectypeController {
 	 */
 	@RequestMapping(value = "/spectype")
 	@ResponseBody
-	public Map<String, Object> updateSpectype(SpectypeInfo spectype) {
+	public Map<String, Object> updateSpectype(SpectypeInfo spectype,Model model) {
 		try {
-			spectypeService.updateSpectypeInfo(spectype);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, "spectype");
+			spectypeService.addSpectype(spectype);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
-			log.error("system error" + e.getMessage());
-			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "spetype",
-					e.getMessage());
+			if (log.isErrorEnabled()) {
+				log.error("system error!!" + e.getMessage());
+			}
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "spectype", e.getMessage());
 		}
 	}
 
@@ -158,4 +175,23 @@ public class SpectypeController {
 		return "basr/spectype/list";
 	}
 
+	
+	
+	/**
+	 * 根据id批量删除
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping(value = "/deletes/{ids}")
+	@ResponseBody
+	public Map<String, Object> delSpectype(@PathVariable("ids") String ids) {
+		try {
+			spectypeService.deleteSpectype(ids);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
+		} catch (Exception e) {
+			log.error("system error" + e);
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "spectype",
+					e.getMessage());
+		}
+	}
 }

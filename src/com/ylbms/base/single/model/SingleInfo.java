@@ -26,7 +26,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SingleInfo {
 
-	private Long mid;// 单件虚拟编号
+	private long mid;// 单件虚拟编号
 	private String owercode;// 物资编码
 	private String wzname;// 物资名称
 	private String spectype;// 规格型号
@@ -67,11 +67,11 @@ public class SingleInfo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_base_single_info")
 	@SequenceGenerator(name = "seq_base_single_info", sequenceName = "seq_base_single_info")
-	public Long getMid() {
+	public long getMid() {
 		return mid;
 	}
 
-	public void setMid(Long mid) {
+	public void setMid(long mid) {
 		this.mid = mid;
 	}
 
@@ -216,7 +216,7 @@ public class SingleInfo {
 	}
 
 	public void setUserTimes(int userTimes) {
-		this.userTimes = userTimes;
+		this.userTimes = 0;
 	}
 
 	@Column(nullable = false)

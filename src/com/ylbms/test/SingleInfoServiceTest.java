@@ -30,6 +30,7 @@ public class SingleInfoServiceTest extends AbstractJUnit4SpringContextTests {
 	public void test() {
 		SingleInfo singleinfo = new SingleInfo();
 		singleinfo.setAz_Location("zhafafsdfsadf");
+		singleinfo.setWzname("zhang");
 		singleInfoService.saveSingleInfo(singleinfo);
 	}
 }

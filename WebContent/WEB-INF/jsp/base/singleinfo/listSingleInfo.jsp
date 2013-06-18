@@ -1,24 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../../inc/taglib.jsp"%>
-<form id="pagerForm" method="post" action="${ctx}/spec/list">
+<form id="pagerForm" method="post" action="${ctx}/single/list">
 	<input type="hidden" name="page.pageNo" value="${page.pageNo}" /> <input
 		type="hidden" name="page.pageSize" value="${page.pageSize}" />
 </form>
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="${ctx}/spec/list"
+	<form onsubmit="return navTabSearch(this);" action="${ctx}/single/list"
 		method="post">
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
-					<td>单件名称：<input type="text" name="spename" /></td>
-					<td>单件状态： <select name="sort">
+					<td>物资编码：<input type="text" name="filter_LIKES_owercode"  value="${param['filter_LIKES_owercode']}"/></td>
+					<td>物资名称：<input type="text" name="filter_LIKES_wzname"  value="${param['filter_LIKES_wzname']}"/></td>
+					<td>当前位置：<input type="text" name="filter_LIKES_location"  value="${param['filter_LIKES_location']}"/></td>
+					<td>当前状态： <select name="filter_EQS_state" value="${param['filter_EQS_state']}">
 							<option value="1">无效</option>
 							<option value="0">有效</option>
 							<option value="" selected>请选择</option>
 					</select>
-
-					</td>
+				</td>
 					<%--
  			    	<td>组织机构：<input type="text" name="organization" value="${obj.o.organization}/></td> --%>
 					<%-- 			    	<td>创建人：<input type="text" name="createUser" value="${obj.o.createUser}/></td> --%>
@@ -44,12 +45,12 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="${ctx}/single/addUi" target="dialog"
+			<li><a class="add" href="${ctx}/single/addUi" target="navTab"
 				mask="true" title="添加单件信息"><span>添加</span></a></li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"
 				postType="string" href="${ctx}/user/delByIds/{sid_user}"
 				class="delete"><span>批量删除</span></a></li>
-			<li><a class="edit" href="${ctx}/spec/upadate?ID={sid_spectype}"
+			<li><a class="edit" href="${ctx}/single/edit/{sid_singleInfo}"
 				target="dialog" mask="true" title="修改单件信息"><span>修改</span></a></li>
 			<li class="line">line</li>
 			<li><a class="icon" href="#" target="dwzExport"
@@ -66,11 +67,11 @@
 				<th>规格型号</th>
 				<th>当前位置</th>
 				<th>当前状态</th>
-				<th>资产种类</th>
+			 <!-- <th>资产种类</th>
 				<th>生产厂家</th>
 				<th>出厂编号</th>
 				<th>检测日期</th>
-				<th>所属单位</th>
+			 <th>所属单位</th>
 				<th>有效日期</th>
 				<th>报废日期</th>
 				<th>启用日期</th>
@@ -91,20 +92,22 @@
 				<th>其他指标</th>
 				<th>录入人员</th>
 				<th>录入时间</th>
-				<th>状态信息</th>
-				<th>备注信息</th>
+				<th>状态信息</th>-->
+				<th>备注信息</th> 
+				<th>操作</th> 
+				
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${page.result}" var="acc">
-				<tr target="sid_spectype" rel="${acc.mid}">
+				<tr target="sid_singleInfo" rel="${acc.mid}">
 					<td><input name="ids" value="'${acc.mid}'" type="checkbox"></td>
 					<td>${acc.owercode}</td>
 					<td>${acc.wzname}</td>
 					<td>${acc.spectype}</td>
 					<td>${acc.location}</td>
 					<td>${acc.state==0?'有效':'无效'}</td>
-					<td>${acc.classId}</td>
+					<!-- <td>${acc.classId}</td>
 					<td>${acc.factory}</td>
 					<td>${acc.factoryCode}</td>
 					<td>${acc.jd_time}</td>
@@ -128,13 +131,13 @@
 					<td>${acc.other}</td>
 					<td>${acc.creater}</td>
 					<td>${acc.createDate}</td>
-					<td>${acc.status}</td>
-					<td>${acc.remark}</td>
+					<td>${acc.status}</td>-->
+					<td>${acc.remark}</td> 
 					<td><a title="删除单件信息" target="ajaxTodo"
-						href="${ctx}/spec/delete/${acc.mid}" class="btnDel">删除单件信息</a> <a
-						title="编辑单件信息" target="dialog"
-						href="${ctx}/spec/editUi/${acc.mid}" class="btnEdit">编辑单件信息</a>
-					</td>
+						href="${ctx}/single/delete/${acc.mid}" class="btnDel">删除单件信息</a>
+						 <a title="编辑单件信息" target="dialog"
+						href="${ctx}/single/edit/${acc.mid}" class="btnEdit">编辑单件信息</a>
+					</td> 
 				</tr>
 			</c:forEach>
 		</tbody>

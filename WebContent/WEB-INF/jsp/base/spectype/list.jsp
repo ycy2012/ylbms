@@ -11,8 +11,8 @@
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
-					<td>规格型号名称：<input type="text"  name="filter_LIKES_spename" value="${param['filter_LIKES_spename']}"/></td>
-					<td>规格型号状态： <select name="filter_LIKES__sort" value="${param['filter_LIKES__sort']}">
+					<td>规格型号名称：<input type="text"  name="filter_LIKES_speName" value="${param['filter_LIKES_speName']}"/></td>
+					<td>规格型号状态： <select name="filter_EQS_status" value="${param['filter_EQS_status']}">
 							<option value="1">无效</option>
 							<option value="0">有效</option>
 							<option value="" selected>请选择</option>
@@ -46,9 +46,9 @@
 			<li><a class="add" href="${ctx}/spec/addUi" target="dialog"
 				mask="true" title="添加规格型号信息"><span>添加</span></a></li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"
-				postType="string" href="${ctx}/user/delByIds/{sid_user}"
+				postType="string" href="${ctx}/spec/deletes/{sid_spectype}"
 				class="delete"><span>批量删除</span></a></li>
-			<li><a class="edit" href="${ctx}/spec/upadate?ID={sid_spectype}"
+			<li><a class="edit" href="${ctx}/spec/edit/{sid_spectype}"
 				target="dialog" mask="true" title="修改规格型号信息"><span>修改</span></a></li>
 			<li class="line">line</li>
 			<li><a class="icon" href="#" target="dwzExport"
@@ -78,7 +78,7 @@
 					<td><a title="删除规格型号信息" target="ajaxTodo"
 						href="${ctx}/spec/delete/${acc.speId}" class="btnDel">删除规格型号信息</a>
 						<a title="编辑规格型号信息" target="dialog"
-						href="${ctx}/spec/editUi/${acc.speId}" class="btnEdit">编辑规格型号信息</a>
+						href="${ctx}/spec/edit/${acc.speId}" class="btnEdit">编辑规格型号信息</a>
 					</td>
 				</tr>
 			</c:forEach>

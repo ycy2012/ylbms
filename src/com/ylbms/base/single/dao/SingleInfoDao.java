@@ -12,6 +12,6 @@ import com.ylbms.common.orm.hibernate.HibernateDao;
  * @date 2013-6-8
  */
 @Repository("SingleDao")
-public class SingleInfoDao extends HibernateDao<SingleInfo, String> {
+public class SingleInfoDao extends HibernateDao<SingleInfo, Long> {
 
 }

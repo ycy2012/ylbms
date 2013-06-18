@@ -14,11 +14,11 @@
 		<form method="post" action="${ctx}/spec/add"
 			class="pageForm required-validate"
 			onsubmit="return validateCallback(this, dialogAjaxDone);">
-			<input type="hidden" name="ID" value="${obj.ID}">
+			<!--<input type="hidden" name="speId" value="${obj.speId}">  -->
 			<div class="pageFormContent" layoutH="56">
 				<p>
 					<label>规格型号名称：</label> <input name="speName" type="text" size="30"
-						class="required" maxlength="150" value="${obj.speName}" />
+						class="required" maxlength="150" value="" />
 				</p>
 				<p>
 					<label>规格型号状态：</label>
@@ -30,7 +30,7 @@
 				</p>
 				<p>
 					<label>规格型号类别：</label> <input name="sort" type="text" size="30"
-						class="required" maxlength="150" /> 
+						class="required" maxlength="150" value="" /> 
 				</p>
 				<p>
 					<label>备注：</label>

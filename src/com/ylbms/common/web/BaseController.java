@@ -1,11 +1,15 @@
 package com.ylbms.common.web;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+
+import com.ylbms.common.utils.MyIntEditor;
 
 /**
  * 基控制器
@@ -28,6 +32,7 @@ public abstract class BaseController {
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(
 				dateFormat, true));
+		binder.registerCustomEditor(int.class, new MyIntEditor());
 	}
 
 	/**

@@ -11,14 +11,17 @@ import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ylbms.base.single.model.SingleInfo;
+import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.base.single.service.SingleInfoService;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.utils.DwzUtil;
+import com.ylbms.common.web.BaseController;
 
 /**
  * 
@@ -29,29 +32,44 @@ import com.ylbms.common.utils.DwzUtil;
 
 @Controller
 @RequestMapping("/single")
-public class SingleInfoController {
-	private static final Log log = LogFactory.getLog(SingleInfoController.class);
-	
+public class SingleInfoController extends BaseController {
+	private static final Log log = LogFactory
+			.getLog(SingleInfoController.class);
+
 	@Autowired
 	SingleInfoService singleInfoService;
-	
+
 	/**
 	 * 跳转到添加页面
+	 * 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/addUi")
+	@RequestMapping(value = "/addUi")
 	public String addUi(Model model) {
 		return "base/singleinfo/addSingleInfo";
 	}
 	
-	@RequestMapping(value = "/listUi")
-	public String editModify(HttpServletRequest request) {
-		return "base/singleinfo/listSingleInfo";
+	/**
+	 * 跳转到修改页面
+	 * @param request
+	 * @param mid
+	 * @param model
+	 * @return
+	 */
+
+	@RequestMapping(value = "/edit/{id}")
+	public String editUi(HttpServletRequest request,
+			@PathVariable("id") long mid, Model model) {
+		SingleInfo singleinfo=singleInfoService.getSingleById(mid);
+		model.addAttribute("obj", singleinfo);
+		return "base/singleinfo/addSingleInfo";
 	}
 	
+
 	/**
 	 * 添加单件明细
+	 * 
 	 * @param singleInfo
 	 * @return
 	 */
@@ -67,9 +85,10 @@ public class SingleInfoController {
 					e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * 修改单件明细
+	 * 
 	 * @param singleInfo
 	 * @return
 	 */
@@ -85,8 +104,10 @@ public class SingleInfoController {
 					e.getMessage());
 		}
 	}
+
 	/**
 	 * 单件明细展示页面
+	 * 
 	 * @param request
 	 * @param page
 	 * @param model
@@ -94,16 +115,31 @@ public class SingleInfoController {
 	 */
 
 	@RequestMapping(value = "/list")
-	public String list(HttpServletRequest request,
-			Page<SingleInfo> page, Model model) {
+	public String list(HttpServletRequest request, Page<SingleInfo> page,
+			Model model) {
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<SingleInfo> list =singleInfoService.findSingleInfo(page, filters);
+		Page<SingleInfo> list = singleInfoService.findSingleInfo(page, filters);
 		model.addAttribute("page", list);
 		return "base/singleinfo/listSingleInfo";
 	}
-	
-	
+
+	/**
+	 * 根据ID删除用户
+	 * 
+	 * @param mid
+	 * @return
+	 */
+	@RequestMapping(value = "/delete/{mid}")
+	@ResponseBody
+	public Map<String, Object> delSpectype(@PathVariable("mid") long mid) {
+		try {
+			singleInfoService.deleteSingleInfo(mid);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
+		} catch (Exception e) {
+			log.error("system error" + e);
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "singleInfo",
+					e.getMessage());
+		}
+	}
 }
-
-

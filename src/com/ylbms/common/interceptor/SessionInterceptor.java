@@ -28,11 +28,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 
 	private static final Log log = LogFactory.getLog(SessionInterceptor.class);
 
-	private static final String IGNORE = "^.+\\.(png|gif|jpg|js|css|jspx|jpeg|swf|ico|xml)$";
-
-	private static final String LOGIN_PAGE = "/ylbms/login_dialog.html";
-
-	private static final String LOGIN_URL = "/ylbms/a/login";
+	private static final String IGNORE = "^.+\\.(png|gif|jpg|js|css|jspx|jpeg|swf|ico)$";
 
 	/**
 	 * 可以根据ex是否为null判断是否发生了异常，进行日志记录。 在Controller方法后进行拦截
@@ -51,6 +47,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
+		// 后台session控制
 		/**
 		 * <h1>温馨提示：<h1>
 		 * 今天下午就开始放假，祝各位同志端午节快乐，注意安全，特别注意如下三点； 1、外出人员给办公室说一下，留好联系方式.
@@ -65,27 +62,32 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
+
 		response.setCharacterEncoding("UTF-8");
+
 		Principal principal = (Principal) SecurityUtils.getSubject()
-				.getPrincipal(); // 当前的用户信息
+				.getPrincipal();
 		String currentURL = request.getRequestURI();
-		
-		log.info("--------"+currentURL);
-		
-//		if(currentURL.equalsIgnoreCase(LOGIN_PAGE)||currentURL.equalsIgnoreCase(LOGIN_URL)){
-//			return true;
-//		}
-		if (request != null
-				&& "XMLHttpRequest".equalsIgnoreCase(request
-						.getHeader("X-Requested-With"))
-				|| request.getParameter("ajax") != null) {
-			if (request.getSession() == null || principal == null) {
+		HttpSession session = request.getSession();
+
+		if (currentURL.equalsIgnoreCase("/ylbms/a/login")
+				|| currentURL.equalsIgnoreCase("/ylbms/login_dialog.html")
+				|| currentURL.matches(IGNORE) || session != null) {
+
+			return true;
+		}
+
+		if (null == session && null == principal) {
+			if (request != null
+					&& "XMLHttpRequest".equalsIgnoreCase(request
+							.getHeader("X-Requested-With"))
+					|| request.getParameter("ajax") != null) {
 				Map<String, Object> ret = DwzUtil.dialogAjaxDoneTimeOut();
 				response.getWriter().print(JSON.toJSON(ret));
-				response.sendRedirect("ylbms/reLogin");
-				return false;
+			} else {
+				response.sendRedirect(request.getContextPath() + "/a/login");
 			}
 		}
-		 return super.preHandle(request, response, handler);  
+		return false;
 	}
 }

@@ -47,7 +47,7 @@ public class SpectypeService {
 	@Transactional(readOnly = false, noRollbackFor = RuntimeException.class)
 	public void deleteSpectype(String ids) {
 		spectypeDao
-				.delSpectypeInfo("delect from YLBMS_BAS_SPECTYPEINFO where id in("
+				.delSpectypeInfo("delect from YLBMS_BAS_SPECTYPEINFO where speid in("
 						+ ids + ")");
 	}
 
