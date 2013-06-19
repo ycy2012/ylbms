@@ -76,7 +76,7 @@ public class BillHeadModel extends BaseModel {
 	private List<BillTbodyModel> billTbody;
 
 	public BillHeadModel() {
-		
+		this.status=DEL_FLAG_NORMAL;
 	}
 
 	public BillHeadModel(String djId) {

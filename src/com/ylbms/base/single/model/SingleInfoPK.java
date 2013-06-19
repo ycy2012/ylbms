@@ -66,7 +66,7 @@ public class SingleInfoPK implements IdentifierGenerator, Configurable {
 			if (rs.next()) {
 				String old = rs.getString(1);
 				if (StringUtils.isNotBlank(old)) {
-					Long id = Long.parseLong(old.substring(2, old.length())) + 1L;
+					Long id = Long.parseLong(old.substring(3, old.length())) + 1L;
 					next = TILTE + id.toString();
 				} else {
 					next = "YLB1000000000000000";

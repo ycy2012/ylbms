@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.base.single.service.SingleInfoService;
+
 /**
  * 
  * @author zhangJl
@@ -28,9 +29,13 @@ public class SingleInfoServiceTest extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void test() {
-		SingleInfo singleinfo = new SingleInfo();
-		singleinfo.setAz_Location("zhafafsdfsadf");
-		singleinfo.setWzname("zhang");
-		singleInfoService.saveSingleInfo(singleinfo);
+		for (int i = 0; i < 10; i++) {
+			SingleInfo singleinfo = new SingleInfo();
+			singleinfo.setLocation("井控中心压力表具项目组");
+			singleinfo.setAz_Location("zhafafsdfsadf");
+			singleinfo.setWzname("zhang");
+			singleinfo.setState("010");
+			singleInfoService.saveSingleInfo(singleinfo);
+		}
 	}
 }

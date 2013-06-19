@@ -64,6 +64,7 @@ public class SingleInfo extends BaseModel {
 	private String remark;// 备注信息
 
 	public SingleInfo() {
+		this.status=DEL_FLAG_NORMAL;
 	}
 
 	public SingleInfo(String mid) {
@@ -348,7 +349,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	public void setStatus(String status) {
-		this.status = status;
+		this.status =status;
 	}
 
 	public String getRemark() {

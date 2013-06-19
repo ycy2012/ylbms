@@ -48,13 +48,30 @@
 			<dl>
 				<dt>供货方：</dt>
 				<dd>
-					<input name="sendLocation" type="text"   alt="供货方信息" class="required" />
+					<input name="sendLocation" type="text" alt="供货方信息" class="required" />
 				</dd>
 			</dl>
 			<dl>
 				<dt>接收方：</dt>
 				<dd>
-					<input name="acceptLocation" type="text" alt="接收方信息" class="required" />
+					<input name="acceptLocation" type="text" alt="接收方信息"
+						class="required" />
+				</dd>
+			</dl>
+			<dl>
+				<dt>领料人：</dt>
+				<dd>
+					<input name="llren" type="text" alt="领料人信息" class="required" />
+				</dd>
+			</dl>
+			<dl>
+				<dt>领料单位：</dt>
+				<dd>
+					<select name="lluint" class="combox">
+						<option value="轮南项目部">轮南项目部</option>
+						<option value="库车项目部">库车项目部</option>
+						<option value="塔中项目部">塔中项目部</option>
+					</select>
 				</dd>
 			</dl>
 			<dl class="nowrap">
@@ -64,7 +81,7 @@
 				</dd>
 			</dl>
 		</div>
-		<div class="pageContent" layoutH="160">
+		<div class="pageContent" layoutH="190">
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>
