@@ -160,8 +160,8 @@
 								<ul>
 									<li><a href="spec/list" target="navTab" rel="spectype">规格型号管理</a></li>
 									<li><a href="single/list" target="navTab" rel="singleInfo">单件明细管理</a></li>
-									<li><a href="bill/list" target="navTab" rel="employee">单据信息管理</a></li>
-									<li><a href="new/newUi" target="navTab" rel="trainSubject">入库信息管理</a></li>
+									<li><a href="bill/list" target="navTab" rel="bill">单据信息管理</a></li>
+									<li><a href="new/newUi" target="navTab" rel="newBill">入库信息管理</a></li>
 								</ul></li>
 							<li><a>题库信息管理</a>
 								<ul>

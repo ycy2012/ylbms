@@ -44,6 +44,28 @@ public class DwzUtil {
 	}
 
 	/**
+	 * 支持forwardUrl
+	 * 
+	 * @param statusCode
+	 * @param navTabId
+	 * @param message
+	 * @param forwardUrl
+	 * @return
+	 */
+	public static Map<String, Object> dialogAjaxDone(int statusCode,
+			String navTabId, String message, String forwardUrl) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("statusCode", statusCode);
+		map.put("message", message);
+		map.put("forwardUrl", forwardUrl);
+		if (StringUtils.isNotEmpty(navTabId)) {
+			map.put("navTabId", navTabId);
+			map.put("callbackType", "closeCurrent");
+		}
+		return map;
+	}
+
+	/**
 	 * dwzAjax服务器超时
 	 * 
 	 * @param statusCode

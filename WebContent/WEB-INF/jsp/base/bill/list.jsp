@@ -10,7 +10,7 @@
 			<table class="searchContent">
 				<tr>
 					<td>单据名称：<input type="text" name="filter_LIKES_fullname" value="${param['filter_LIKES_fullname']}"/></td>
-					<td>单据状态：<input type="text" name="filter_EQS_enabled" value="${param['filter_EQS_enabled']}"/></td>
+					<td>单据状态：<input type="text" name="filter_EQS_status" value="${param['filter_EQS_status']}"/></td>
 					<%--
  			    	<td>组织机构：<input type="text" name="organization" value="${obj.o.organization}/></td> --%>			        
 <%-- 			    	<td>创建人：<input type="text" name="createbill" value="${obj.o.createbill}/></td> --%>			        
@@ -45,17 +45,18 @@
 		    <li class="line">line</li>
 		</ul>
 	</div>
-	<table class="table" wdjIdth="100%" layoutH="138">
+	<table class="table" width="100%" layoutH="138">
 		<thead>
 			<tr>
 				<th width="26"><input type="checkbox" group="djIds" class="checkboxCtrl"></th>
-				<th>单据djId</th>
-				<th>真实姓名</th>
-				<th>当前密码</th>
-				<th>单据类型</th>
+				<th>单据名称</th>
+				<th>发出地点</th>
+				<th>接受地点</th>
+				<th>生效日期</th>
 				<th>创建时间</th>
-				<th>登录IP</th>
-				<th>备注信息</th>
+				<th>领料人</th>
+				<th>领料单位</th>
+				<th>备注</th>
 				<th>当前状态</th>
 				<th>操作</th>
 			</tr>
@@ -72,7 +73,7 @@
 					<td>${acc.llren}</td>
 					<td>${acc.llUnit}</td>
 					<td>${acc.remark}</td>
-					<td>${acc.enabled==0?'有效':'无效'}</td>
+					<td>${acc.status==0?'有效':'无效'}</td>
 				<td>
 				<a title="删除单据信息" target="ajaxTodo" href="${ctx}/bill/delete/${acc.djId}" class="btnDel">删除单据信息</a>
 				<a title="授权" target="dialog" href="${ctx}/role/permUi/${acc.djId}" class="btnView">授权</a>

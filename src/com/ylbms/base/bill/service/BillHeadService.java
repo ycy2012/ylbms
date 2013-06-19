@@ -49,7 +49,6 @@ public class BillHeadService {
 	@Transactional(readOnly = false)
 	public void saveBillHead(BillHeadModel bhm) {
 		billHDao.save(bhm);
-
 	}
 
 }

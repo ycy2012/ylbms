@@ -8,64 +8,68 @@
 <title>入库管理</title>
 <script type="text/javascript">
 <!--
-function addTr(value){
-	alert(value);
-	var otable = document.getElementById("mxTable");
-	for(var i=0,len=value.length;i<len;i++){
-		var temp = value[i].split("#");
-		var myTR = otable.insertRow(otable.rows.length);
-		var myTD1 = myTR.insertCell(0);
-		myTD1.innerHTML = "<input type='text' name='ids' value="+temp[0]+">";
-		var myTD2 = myTR.insertCell(1);
-		myTD2.innerHTML = "<input type='text' name='ids' value="+temp[1]+">";
-		var myTD3 = myTR.insertCell(2);
-		myTD3.innerHTML = "<input type='text' name='ids' value="+temp[2]+">";
-		var myTD4 = myTR.insertCell(3);
-		myTD4.innerHTML = "<input type='text' name='ids' value="+temp[3]+">";
-		var myTD5 = myTR.insertCell(4);
-		myTD5.innerHTML = "<input type='text' name='ids' value="+temp[4]+">";
-		var myTD5 = myTR.insertCell(5);
-		myTD5.innerHTML ="<input type='text' name='ids' value="+temp[5]+">";
-		var myTD6=myTR.insertCell(6);
-		myTD6.innerHTML="<a  title='删除' name='delete' href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
+	function addTr(value) {
+		var otable = document.getElementById("mxTable");
+		for ( var i = 0, len = value.length; i < len; i++) {
+			var temp = value[i].split("#");
+			var myTR = otable.insertRow(otable.rows.length);
+			var myTD1 = myTR.insertCell(0);
+			myTD1.innerHTML = "<input type='text' name='singles["+i+"].mid' value="+temp[0]+">";
+			var myTD2 = myTR.insertCell(1);
+			myTD2.innerHTML = "<input type='text'  value="+temp[1]+">";
+			var myTD3 = myTR.insertCell(2);
+			myTD3.innerHTML = "<input type='text' value="+temp[2]+">";
+			var myTD4 = myTR.insertCell(3);
+			myTD4.innerHTML = "<input type='text' name='singles["+i+"].location' value="+temp[3]+">";
+			var myTD5 = myTR.insertCell(4);
+			myTD5.innerHTML = "<input type='text' name='singles["+i+"].state' value="+temp[4]+">";
+			var myTD5 = myTR.insertCell(5);
+			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark' >";
+			var myTD6 = myTR.insertCell(6);
+			myTD6.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
+		}
 	}
-}
-function _deleteRow(rowID){
-	var otable=document.getElementById("addTable");
-    var i=rowID.parentNode.parentNode.rowIndex;
-	otable.deleteRow(parseInt(i));
-}
+	function _deleteRow(rowID) {
+		var otable = document.getElementById("mxTable");
+		var i = rowID.parentNode.parentNode.rowIndex;
+		otable.deleteRow(parseInt(i));
+	}
 //-->
 </script>
 </head>
 <body class="page">
-	<form action="">
-		<div class="pageHeader">
+	<form action="${ctx}/new/addBill" method="post"
+		class="pageForm required-validate"
+		onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent">
 			<div
 				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">新产品入库单</div>
 			<div class="divider"></div>
-			<table class="searchContent" width="100%">
-				<tr>
-					<td>供货方：</td>
-					<td><input type="text" name="sendLocation" /></td>
-					<td>接收方：</td>
-					<td><input type="text" name="acceptLocation" /></td>
-				</tr>
-				<tr>
-					<td>备     注：</td>
-					<td><input type="text" name="remark" /></td>
-				</tr>
-			</table>
+			<dl>
+				<dt>供货方：</dt>
+				<dd>
+					<input name="sendLocation" type="text"   alt="供货方信息" class="required" />
+				</dd>
+			</dl>
+			<dl>
+				<dt>接收方：</dt>
+				<dd>
+					<input name="acceptLocation" type="text" alt="接收方信息" class="required" />
+				</dd>
+			</dl>
+			<dl class="nowrap">
+				<dt>备注信息：</dt>
+				<dd>
+					<textarea name="remark" cols="80" rows="1"></textarea>
+				</dd>
+			</dl>
 		</div>
-		<div class="pageContent">
+		<div class="pageContent" layoutH="160">
 			<div class="panelBar">
 				<ul class="toolBar">
+					<li class="line">line</li>
 					<li><a class="add" href="${ctx}/new/addMx" target="dialog"
 						mask="true" title="添加单件信息"><span>添加明细</span></a></li>
-					<li class="line">line</li>
-					<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="djIds"
-						postType="string" href="${ctx}/bill/delBydjIds/{sdjId_bill}"
-						class="delete"><span>批量删除</span></a></li>
 					<li class="line">line</li>
 				</ul>
 			</div>
@@ -78,11 +82,28 @@ function _deleteRow(rowID){
 						<th>当前位置</th>
 						<th>当前状态</th>
 						<th>备注信息</th>
+						<th>操作</th>
 					</tr>
 				</thead>
 				<tbody>
 				</tbody>
 			</table>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive">
+						<div class="buttonContent">
+							<button type="submit">保存</button>
+						</div>
+					</div></li>
+				<li>
+					<div class="button">
+						<div class="buttonContent">
+							<button type="button" class="close">取消</button>
+						</div>
+					</div>
+				</li>
+			</ul>
 		</div>
 	</form>
 </body>

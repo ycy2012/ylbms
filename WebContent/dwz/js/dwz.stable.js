@@ -70,9 +70,11 @@
 					}
 				});
 				//添加双击事件
-			    $tr.dblclick(function(){                                        
+				/**
+			    $tr.dblclick(function(){
 			        dbltable($tr.attr("target"),$tr.attr("rel"));
 			    });
+			    */
 			});
 			
 			$(">td",ftr).each(function(i){

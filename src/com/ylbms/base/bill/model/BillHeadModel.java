@@ -1,19 +1,26 @@
 package com.ylbms.base.bill.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.ylbms.common.model.BaseModel;
+import com.ylbms.system.utils.UserUtils;
 
 /**
  * 
@@ -39,6 +46,8 @@ public class BillHeadModel extends BaseModel {
 	private Date sxDate; // 生效日期
 
 	private Date createDate; // 创建日期
+	
+	private String createUser;
 
 	private String llUnit;
 
@@ -64,7 +73,10 @@ public class BillHeadModel extends BaseModel {
 
 	private Date tempD2;
 
+	private List<BillTbodyModel> billTbody;
+
 	public BillHeadModel() {
+		
 	}
 
 	public BillHeadModel(String djId) {
@@ -127,6 +139,15 @@ public class BillHeadModel extends BaseModel {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	@Column(name="create_user")
+	public String getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(String createUser) {
+		this.createUser=UserUtils.getUser().getFullname();
 	}
 
 	public String getLlUnit() {
@@ -230,6 +251,17 @@ public class BillHeadModel extends BaseModel {
 
 	public void setTempD2(Date tempD2) {
 		this.tempD2 = tempD2;
+	}
+
+	@OneToMany(mappedBy = "billId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	public List<BillTbodyModel> getBillTbody() {
+		return billTbody;
+	}
+
+	public void setBillTbody(List<BillTbodyModel> billTbody) {
+		this.billTbody = billTbody;
 	}
 
 }

@@ -6,14 +6,14 @@
 function add(){
 	var $box = $.pdialog.getCurrent();
 	var ids = new Array();
-	$box.find("input").filter("[name='ids']").each(function(i) {
+	$box.find("input:checked").filter("[name='ids']").each(function(i) {
 				var val = $(this).val();
-				alert(val);
 				ids[i] = val;
 				i++;
 			});
 	if (ids.length > 0) {
 		window.parent.addTr(ids);
+		$.pdialog.closeCurrent();//关闭dialog
 	}
 }
 //-->
@@ -30,7 +30,7 @@ function add(){
 				<tr>
 					<td>物资名称：<input type="text" name="filter_LIKES_wzname"
 						value="${param['filter_LIKES_wzname']}" /></td>
-					<td>当前状态：</td>
+					<td>当前状态：<input type="hidden" name="filter_EQS_state" value="010"/></td>
 					<td><select name="filter_EQS_state" class="combox"
 						name="filter_EQS_state">
 							<option value="1">无效</option>
@@ -46,6 +46,7 @@ function add(){
 								<button type="submit">检索</button>
 							</div>
 						</div></li>
+						<li><a class="button" href="javascript:add();" title="提交到单据"><span>提交</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -63,20 +64,18 @@ function add(){
 				<th>当前位置</th>
 				<th>当前状态</th>
 				<th>备注信息</th>
-				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${page.result}" var="acc">
 				<tr target="sid_singleInfo" rel="${acc.mid}">
-					<td><input name="ids" value="${acc.mid}#${acc.owercode}#${acc.wzname}#${acc.spectype}#${acc.location}#${acc.state}#${acc.remark}" type="checkbox"></td>
+					<td><input name="ids" value="${acc.mid}#${acc.owercode}#${acc.wzname}#${acc.spectype}#${acc.location}#${acc.state}" type="checkbox"></td>
 					<td>${acc.owercode}</td>
 					<td>${acc.wzname}</td>
 					<td>${acc.spectype}</td>
 					<td>${acc.location}</td>
 					<td>${acc.state}</td>
 					<td>${acc.remark}</td>
-					<td><a class="button" href="javascript:add();"><span>添加</span></a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

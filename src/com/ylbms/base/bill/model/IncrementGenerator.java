@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
@@ -61,18 +62,18 @@ public class IncrementGenerator implements IdentifierGenerator, Configurable {
 		try {
 			PreparedStatement st = conn.prepareStatement(sql);
 			ResultSet rs = st.executeQuery();
-			
-			log.info("-----------------next1---------------" + rs);
+
 			if (rs.next()) {
 				String old = rs.getString(1);
-				log.info("-----------------next1---------------" + old);
-
-				Long id = Long.parseLong(old.substring(2, old.length())) + 1L;
-				next = "dj" + id.toString();
+				if (StringUtils.isNotBlank(old)) {
+					Long id = Long.parseLong(old.substring(2, old.length())) + 1L;
+					next = "dj" + id.toString();
+				} else {
+					next = "dj1000000000000000";
+				}
 			} else {
 				next = "dj1000000000000000";
 			}
-			log.info("-----------------next---------------" + next);
 		} catch (SQLException e) {
 			throw new HibernateException(e);
 		} finally {

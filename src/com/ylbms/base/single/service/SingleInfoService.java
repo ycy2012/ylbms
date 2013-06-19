@@ -1,6 +1,8 @@
 package com.ylbms.base.single.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,13 +40,14 @@ public class SingleInfoService {
 
 	/**
 	 * 获取ID
+	 * 
 	 * @param id
 	 * @return
 	 */
 	public SingleInfo getSingleById(long id) {
 		return singleDao.get(id);
 	}
-	
+
 	/**
 	 * 修改单件明细
 	 * 
