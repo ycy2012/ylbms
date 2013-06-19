@@ -5,28 +5,31 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.GenericGenerator;
+
+import com.ylbms.common.model.BaseModel;
 
 /**
- * 
+ * 修改内容：修改主键策略
  * @author zhangjl
  * @version 1.0
  * @date 2013-6-8
+ * @editor: JackLiang
+ * @date 2013-06-19 15:45:20
  */
 
 @Entity
 @Table(name = "ylbms_bas_single_info")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class SingleInfo {
+public class SingleInfo extends BaseModel {
 
-	private long mid;// 单件虚拟编号
+	private static final long serialVersionUID = 1L;
+	
+	private String mid;// 单件虚拟编号
 	private String owercode;// 物资编码
 	private String wzname;// 物资名称
 	private String spectype;// 规格型号
@@ -63,22 +66,30 @@ public class SingleInfo {
 	public SingleInfo() {
 	}
 
-	// getter setter
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_base_single_info")
-	@SequenceGenerator(name = "seq_base_single_info", sequenceName = "seq_base_single_info")
-	public long getMid() {
-		return mid;
-	}
-
-	public void setMid(long mid) {
+	public SingleInfo(String mid) {
 		this.mid = mid;
 	}
 
+	// getter setter
+	@Id
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_base_single_info")
+//	@SequenceGenerator(name = "seq_base_single_info", sequenceName = "seq_base_single_info")
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "com.ylbms.base.single.model.SingleInfoPK")
+	@Column(nullable = false)
+	public String getMid() {
+		return mid;
+	}
+
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
 	@Column(nullable = false)
 	public String getOwercode() {
 		return owercode;
 	}
+
+
 
 	public void setOwercode(String owercode) {
 		this.owercode = owercode;
