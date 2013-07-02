@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="../inc/header.jsp"%>
+<%@include file="../../inc/taglib.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,7 +17,7 @@
 		check : {
 			enable : true,
 			nocheckInherit : true,
-			chkStyle : "checkbox",
+			chkStyle : "radio",
 			chkboxType : {
 				"Y" : "p",
 				"N" : "s"
@@ -48,10 +48,10 @@
 	};
 	$(document).ready(
 			function() {
-				$.get("${ctx}/menu/treeData?_=" + new Date().getTime(),
+				$.get("${ctx}/location/list?_=" + new Date().getTime(),
 								function(zNodes) {
 									// 初始化树结构
-									tree = $.fn.zTree.init($("#tree1"), setting,
+									tree = $.fn.zTree.init($("#commonTree"), setting,
 											zNodes);
 									// 默认展开一级节点
 									var nodes = tree.getNodesByParam("level", 0);
@@ -72,22 +72,13 @@
 				key = $("#key");
 				key.bind("focus", focusKey).bind("blur", blurKey).bind(
 						"change keydown cut input propertychange", searchNode);
-
-				//addPerm method
+				//取得当前选中的地点信息
 				$("#button").click(function(){
-					var $data=getMenuIds();
-					if($data!=null){
-						$.ajax({
-							type:"post",
-							url:"${ctx}/role/addPerm",
-							data:{ids:$data,roleID:${roleId}},
-							dataType: "json",
-							success:function(data){
-								DWZ.ajaxDone(data);
-								$.pdialog.closeCurrent();
-							}
-						});
-					}//
+					var zTree = $.fn.zTree.getZTreeObj("commonTree"), nodes = zTree.getCheckedNodes(true);
+					var id=nodes[0].id;
+					var name=nodes[0].name;
+					window.parent.setWzInfo(id,name);
+					$.pdialog.closeCurrent();//关闭dialog
 				});
 			});
 	function focusKey(e) {
@@ -135,9 +126,8 @@
 		$("#txt").toggle();
 		$("#key").focus();
 	}
-	function getMenuIds() {
-		var result = '', zTree = $.fn.zTree.getZTreeObj("tree1");
-		var nodes = zTree.getCheckedNodes(true);
+	function getSelectNodes() {
+		
 		for ( var i = 0, len = nodes.length; i < len; i++) {
 			result += nodes[i].id + ',';
 		}
@@ -146,7 +136,7 @@
 </script>
 </head>
 <body class="page">
-	<div class="pageContent" style="height: 230px; overflow: auto;">
+	<div class="pageContent" style="height: 325px; overflow: auto;">
 		<div
 			style="position: absolute; right: 8px; top: 5px; cursor: pointer;"
 			onclick="search();">
@@ -159,7 +149,7 @@
 				type="text" class="empty" id="key" name="key" maxlength="50"
 				style="width: 150px;">
 		</div>
-		<div id="tree1" class="ztree" style="padding: 15px 20px;"></div>
+		<div id="commonTree" class="ztree" style="padding: 15px 20px;"></div>
 	</div>
 	<div class="formBar">
 		<ul>

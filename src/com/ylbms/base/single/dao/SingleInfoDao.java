@@ -26,19 +26,24 @@ public class SingleInfoDao extends HibernateDao<SingleInfo, Long> {
 	 * 
 	 * @author JackLiang
 	 * @param page
-	 * @param filters 其他的参数
-	 * @param mids 已添加的mid集合
+	 * @param filters
+	 *            其他的参数
+	 * @param mids
+	 *            已添加的mid集合
 	 * @return
 	 */
 	public Page<SingleInfo> findPageNotInMids(Page<SingleInfo> page,
-			List<PropertyFilter> filters, String mids) {
+			List<PropertyFilter> filters, String mids, String state) {
 
 		Criterion[] criterions = buildCriterionByPropertyFilter(filters);
 		Criteria c = createCriteria(criterions);
 
+		Criterion stateEQ = Restrictions.eq("state", state); // 状态
+		c.add(stateEQ);
+		
 		if (StringUtils.isNotBlank(mids)) {
 			String[] values = mids.split(",");
-			Criterion cIn = Restrictions.not(Restrictions.in("mid", values));
+			Criterion cIn = Restrictions.not(Restrictions.in("mid", values)); //已选择的
 			c.add(cIn);
 		}
 		if (page.isAutoCount()) {

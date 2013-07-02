@@ -40,6 +40,11 @@ public class LocationController {
 	@Autowired
 	LocationService locationService;
 
+	@RequestMapping(value = "/commUi")
+	public String toCommUi() {
+		return "base/location/commonTree";
+	}
+
 	/**
 	 * to add location page
 	 * 
@@ -51,7 +56,7 @@ public class LocationController {
 	public String addUi(@PathVariable("ids") String ids,
 			@PathVariable("all") String all, HttpServletRequest request,
 			Model model) {
-		String allName=getAllName(URLDecoder.decode(all)); //解码
+		String allName = getAllName(URLDecoder.decode(all)); // 解码
 		String[] id = ids.split(",");
 		Location l = locationService.getLocationById(Long
 				.parseLong(id[id.length - 1]));
@@ -73,27 +78,13 @@ public class LocationController {
 			@PathVariable("all") String all, HttpServletRequest request,
 			Model model) {
 		String[] id = ids.split(",");
-		String allName = subAllName(URLDecoder.decode(all));  //解码
+		String allName = subAllName(URLDecoder.decode(all)); // 解码
 		Location location = locationService.getLocationById(Long
 				.parseLong(id[id.length - 1]));
 		model.addAttribute("obj", location);
 		model.addAttribute("all", allName);
 
 		return "base/location/edit";
-	}
-
-	/**
-	 * 主从关系
-	 * 
-	 * @param model
-	 * @return
-	 */
-	@RequiresUser
-	@RequestMapping(value = "/lookUpUi")
-	public String lookUpUi(Model model) {
-		List<Location> list = locationService.lookUpData();
-		model.addAttribute("trees", list);
-		return "base/location/treeLookup";
 	}
 
 	/**
@@ -110,6 +101,7 @@ public class LocationController {
 	}
 
 	/**
+	 * 添加
 	 * 
 	 * @param request
 	 * @param location
@@ -120,7 +112,7 @@ public class LocationController {
 	public Map<String, Object> add(HttpServletRequest request, Location location) {
 		try {
 			location.setCreateDate(new Date());
-			location.setAllName((location.getAllName()+ location
+			location.setAllName((location.getAllName() + location
 					.getLocationName()));
 			locationService.saveLocation(location);
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, "location");
@@ -174,6 +166,7 @@ public class LocationController {
 			map.put("id", l.getId());
 			map.put("pId", l.getParent() != null ? l.getParent().getId() : 0);
 			map.put("name", l.getLocationName());
+			map.put("allName", l.getAllName()==null?"":l.getAllName());
 			mapList.add(map);
 		}
 		return mapList;
@@ -193,15 +186,17 @@ public class LocationController {
 		}
 		return temp == null ? "" : temp;
 	}
+
 	/**
 	 * 截取比较特殊
+	 * 
 	 * @param values
 	 * @return
 	 */
-	public String subAllName(String values){
-		String temp="";
-		String[] all=values.split(",");
-		for (int i = 1, len = all.length-1; i < len; i++) {
+	public String subAllName(String values) {
+		String temp = "";
+		String[] all = values.split(",");
+		for (int i = 1, len = all.length - 1; i < len; i++) {
 			temp += all[i];
 		}
 		return temp == null ? "" : temp;

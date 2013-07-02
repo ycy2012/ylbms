@@ -45,12 +45,16 @@
 		var url=$("a[class='add']").attr("href");
 		return url;
 	}
+	function setWzInfo(id,name){
+		$("#wzInfo").val(id);
+		$("#wzName").val(name);
+	}
 	$(document).ready(function(){
 		$("a[class='add']").click(function(){
 			if(getMids()!=""&&getMids()!=null){
-				$(this).attr("href","${ctx}/new/addMx?mids="+getMids());
+				$(this).attr("href","${ctx}/ckgl/addMx?mids="+getMids());
 			}else{
-				$(this).attr("href","${ctx}/new/addMx?mids=");
+				$(this).attr("href","${ctx}/ckgl/addMx?mids=");
 			}
 		});
 	});
@@ -63,20 +67,21 @@
 		onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent">
 			<div
-				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">新产品入库单</div>
-				<input type="hidden" name="djTitle" value="新产品入库单">
+				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">领料凭证</div>
+				<input type="hidden" name="djTitle" value="领料凭证">
 			<div class="divider"></div>
 			<dl>
-				<dt>供货方：</dt>
+				<dt>发料单位：</dt>
 				<dd>
-					<input name="sendLocation" type="text" alt="供货方信息" class="required" />
+					<input name="sendLocation" type="text" alt="供货方信息" value="基地" class="required" />
 				</dd>
 			</dl>
 			<dl>
-				<dt>接收方：</dt>
+				<dt>领料单位：</dt>
 				<dd>
-					<input name="acceptLocation" type="text" alt="接收方信息" value="基地"
-						class="required" />
+					<input name="acceptLocation" type="hidden" id="wzInfo" />
+			        <input type="text"  readonly="readonly" id="wzName" class="required">
+						<a class="btnLook" href="${ctx}/location/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	
 				</dd>
 			</dl>
 			<dl>
@@ -86,7 +91,7 @@
 				</dd>
 			</dl>
 			<dl>
-				<dt>领料单位：</dt>
+				<dt>领料部门：</dt>
 				<dd>
 					<select name="lluint" class="combox">
 						<option value="轮南项目部">轮南项目部</option>
@@ -106,7 +111,7 @@
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>
-					<li><a class="add" href="${ctx}/new/addMx" target="dialog"
+					<li><a class="add"  target="dialog"
 						mask="true" title="添加单件信息"><span>添加明细</span></a></li>
 					<li class="line">line</li>
 				</ul>

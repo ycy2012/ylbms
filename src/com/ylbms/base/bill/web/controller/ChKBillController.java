@@ -24,19 +24,19 @@ import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.web.BaseController;
 
 /**
- * 新品合格入库单
+ * 出库信息管理模块
  * 
  * @author JackLiang
  * @version 1.0
- * @date 2013-6-18
+ * @date 2013-7-2
  */
 @Controller
-@RequestMapping(value = "/new")
-public class NewInBillController extends BaseController {
+@RequestMapping(value = "/ckgl")
+public class ChKBillController extends BaseController {
 
-	private static final Log log = LogFactory.getLog(NewInBillController.class);
+	private static final Log log = LogFactory.getLog(ChKBillController.class);
 
-	private static final String NAV_TAB_ID = "newBill";
+	private static final String NAV_TAB_ID = "ckglBill";
 
 	@Autowired
 	SingleInfoService singleService;
@@ -45,19 +45,20 @@ public class NewInBillController extends BaseController {
 	BillService billservice;
 
 	/**
+	 * 跳转出库信息管理页面
 	 * 
-	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/newUi")
-	public String newUi(Model model) {
-		return "base/bill/newInput";
+	@RequestMapping(value = "/addUi")
+	public String addUi() {
+		return "base/bill/chkInput";
 	}
 
 	/**
-	 * 添加单件明细内容
+	 * 添加明细
 	 * 
 	 * @param request
+	 * @param mids
 	 * @param page
 	 * @param model
 	 * @return
@@ -68,10 +69,12 @@ public class NewInBillController extends BaseController {
 			Model model) {
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<SingleInfo> list = singleService.findSingleNotInMids(page, filters, mids, "010");
+		Page<SingleInfo> list = singleService.findSingleNotInMids(page,
+				filters, mids, "020");
 		model.addAttribute("page", list);
 
 		return "base/bill/addMx";
+
 	}
 
 	/**
@@ -86,7 +89,7 @@ public class NewInBillController extends BaseController {
 	public Map<String, Object> addNewBill(SingleForm singles, BillHeadModel bill) {
 		try {
 			// save billheadInfo
-			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "020");
+			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "030");
 
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {

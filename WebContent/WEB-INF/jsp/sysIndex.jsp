@@ -162,21 +162,8 @@
 									<li><a href="single/list" target="navTab" rel="singleInfo">单件明细管理</a></li>
 									<li><a href="bill/list" target="navTab" rel="bill">单据信息管理</a></li>
 									<li><a href="new/newUi" target="navTab" rel="newBill">入库信息管理</a></li>
+									<li><a href="ckgl/addUi" target="navTab" rel="ckglBill">出库信息管理</a></li>
 								</ul></li>
-							<li><a>题库信息管理</a>
-								<ul>
-
-									<li><a href="blanks/list" target="navTab" rel="blanks">填空题信息管理</a></li>
-
-									<li><a href="Judge/list" target="navTab" rel="judge">判断题信息管理</a></li>
-									<li><a href="Option/list" target="navTab" rel="option">选择题信息管理</a></li>
-									<li><a href="Jdt/list" target="navTab" rel="eaxmjdt">解答题信息管理</a></li>
-								</ul></li>
-							<li><a>试卷信息管理</a>
-								<ul>
-									<li><a href="ExamMain/list" target="navTab" rel="examMain">试卷信息管理</a></li>
-								</ul></li>
-						
 					</div>
 				</div>
 			</div>

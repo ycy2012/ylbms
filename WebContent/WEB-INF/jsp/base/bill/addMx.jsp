@@ -18,7 +18,8 @@
 	}
 	$(document).ready(function() {
 		var mids = window.parent.getMids();
-		$("form").attr("action", "${ctx}/new/addMx?mids=" + mids);
+		var url=window.parent.getURL();
+		$("form").attr("action", url);
 	});
 //-->
 </script>
@@ -33,8 +34,7 @@
 				<tr>
 					<td>物资名称：<input type="text" name="filter_LIKES_wzname"
 						value="${param['filter_LIKES_wzname']}" /></td>
-					<td>当前状态：<input type="hidden" name="filter_EQS_state"
-						value="010" /></td>
+					<td>当前状态:</td>
 					<td><select class="combox" name="filter_EQS_status">
 							<option value="1">无效</option>
 							<option value="0">有效</option>
