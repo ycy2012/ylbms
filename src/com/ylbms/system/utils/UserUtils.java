@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Maps;
 import com.ylbms.system.dao.MenuDao;
-import com.ylbms.system.dao.UserDAO;
+import com.ylbms.system.dao.UserDao;
 import com.ylbms.system.model.Menu;
 import com.ylbms.system.model.User;
 import com.ylbms.system.security.SystemRealm.Principal;
@@ -30,7 +30,7 @@ public class UserUtils implements ApplicationContextAware {
 
 	private static final Log log = LogFactory.getLog(UserUtils.class);
 
-	private static UserDAO userDao;
+	private static UserDao userDao;
 	private static MenuDao menuDao;
 
 	public static User getUser() {
@@ -96,7 +96,7 @@ public class UserUtils implements ApplicationContextAware {
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
-		userDao = (UserDAO) applicationContext.getBean("userDao");
+		userDao = (UserDao) applicationContext.getBean("userDao");
 		menuDao = (MenuDao) applicationContext.getBean("menuDao");
 	}
 

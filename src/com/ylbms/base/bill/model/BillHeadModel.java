@@ -147,7 +147,7 @@ public class BillHeadModel extends BaseModel {
 	}
 
 	public void setCreateUser(String createUser) {
-		this.createUser=UserUtils.getUser().getFullname();
+		this.createUser=createUser;
 	}
 
 	public String getLlUnit() {

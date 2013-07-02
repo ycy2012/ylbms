@@ -3,36 +3,39 @@
 <%@include file="../../inc/taglib.jsp"%>
 <script type="text/javascript">
 <!--
-function add(){
-	var $box = $.pdialog.getCurrent();
-	var ids = new Array();
-	$box.find("input:checked").filter("[name='ids']").each(function(i) {
-				var val = $(this).val();
-				ids[i] = val;
-				i++;
-			});
-	if (ids.length > 0) {
-		window.parent.addTr(ids);
-		$.pdialog.closeCurrent();//关闭dialog
+	function add() {
+		var $box = $.pdialog.getCurrent();
+		var ids = new Array();
+		$box.find("input:checked").filter("[name='ids']").each(function(i) {
+			var val = $(this).val();
+			ids[i] = val;
+			i++;
+		});
+		if (ids.length > 0) {
+			window.parent.addTr(ids);
+			$.pdialog.closeCurrent();//关闭dialog
+		}
 	}
-}
+	$(document).ready(function() {
+		var mids = window.parent.getMids();
+		$("form").attr("action", "${ctx}/new/addMx?mids=" + mids);
+	});
 //-->
 </script>
-<form id="pagerForm" method="post" action="${ctx}/single/list">
+<form id="pagerForm" method="post" >
 	<input type="hidden" name="pageNum" value="${page.pageNum}" /> <input
 		type="hidden" name="numPerPage" value="${page.numPerPage}" />
 </form>
 <div class="pageHeader">
-	<form onsubmit="return dialogSearch(this);" action="${ctx}/new/addMx"
-		method="post">
+	<form onsubmit="return dialogSearch(this);" method="post">
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
 					<td>物资名称：<input type="text" name="filter_LIKES_wzname"
 						value="${param['filter_LIKES_wzname']}" /></td>
-					<td>当前状态：<input type="hidden" name="filter_EQS_state" value="010"/></td>
-					<td><select name="filter_EQS_state" class="combox"
-						name="filter_EQS_state">
+					<td>当前状态：<input type="hidden" name="filter_EQS_state"
+						value="010" /></td>
+					<td><select class="combox" name="filter_EQS_status">
 							<option value="1">无效</option>
 							<option value="0">有效</option>
 							<option value="" selected>请选择</option>
@@ -46,7 +49,7 @@ function add(){
 								<button type="submit">检索</button>
 							</div>
 						</div></li>
-						<li><a class="button" href="javascript:add();" title="提交到单据"><span>提交</span></a></li>
+					<li><a class="button" href="javascript:add();" title="提交到单据"><span>提交</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -69,7 +72,9 @@ function add(){
 		<tbody>
 			<c:forEach items="${page.result}" var="acc">
 				<tr target="sid_singleInfo" rel="${acc.mid}">
-					<td><input name="ids" value="${acc.mid}#${acc.owercode}#${acc.wzname}#${acc.spectype}#${acc.location}#${acc.state}" type="checkbox"></td>
+					<td><input name="ids"
+						value="${acc.mid}#${acc.owercode}#${acc.wzname}#${acc.spectype}#${acc.location}#${acc.state}"
+						type="checkbox"></td>
 					<td>${acc.owercode}</td>
 					<td>${acc.wzname}</td>
 					<td>${acc.spectype}</td>

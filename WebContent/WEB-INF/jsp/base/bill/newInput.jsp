@@ -14,15 +14,15 @@
 			var temp = value[i].split("#");
 			var myTR = otable.insertRow(otable.rows.length);
 			var myTD1 = myTR.insertCell(0);
-			myTD1.innerHTML = "<input type='text' name='singles["+i+"].mid' value="+temp[0]+">";
+			myTD1.innerHTML = "<input type='text' id='mid'  readonly='readonly'  name='singles["+i+"].mid' value="+temp[0]+">";
 			var myTD2 = myTR.insertCell(1);
-			myTD2.innerHTML = "<input type='text'  value="+temp[1]+">";
+			myTD2.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[2]+">";
 			var myTD3 = myTR.insertCell(2);
-			myTD3.innerHTML = "<input type='text' value="+temp[2]+">";
+			myTD3.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[3]+">";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input type='text' name='singles["+i+"].location' value="+temp[3]+">";
+			myTD4.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].location' value="+temp[4]+">";
 			var myTD5 = myTR.insertCell(4);
-			myTD5.innerHTML = "<input type='text' name='singles["+i+"].state' value="+temp[4]+">";
+			myTD5.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].state' value="+temp[5]+">";
 			var myTD5 = myTR.insertCell(5);
 			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark' >";
 			var myTD6 = myTR.insertCell(6);
@@ -34,6 +34,22 @@
 		var i = rowID.parentNode.parentNode.rowIndex;
 		otable.deleteRow(parseInt(i));
 	}
+	function getMids(){
+		var mids="";
+		$("#mxTable").find("input[id=mid]").each(function(){
+			mids+=$(this).val()+",";
+		});
+		return mids;
+	}
+	$(document).ready(function(){
+		$("a[class='add']").click(function(){
+			if(getMids()!=""&&getMids()!=null){
+				$(this).attr("href","${ctx}/new/addMx?mids="+getMids());
+			}else{
+				$(this).attr("href","${ctx}/new/addMx?mids=");
+			}
+		});
+	});
 //-->
 </script>
 </head>
@@ -44,6 +60,7 @@
 		<div class="pageFormContent">
 			<div
 				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">新产品入库单</div>
+				<input type="hidden" name="djTitle" value="新产品入库单">
 			<div class="divider"></div>
 			<dl>
 				<dt>供货方：</dt>

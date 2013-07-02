@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
-import com.ylbms.system.dao.UserDAO;
+import com.ylbms.system.dao.UserDao;
 import com.ylbms.system.model.User;
 
 @Service
@@ -17,7 +17,7 @@ import com.ylbms.system.model.User;
 public class UserSerivice {
 
 	@Autowired
-	private UserDAO userDao;
+	private UserDao userDao;
 
 	@Transactional(readOnly = true)
 	public Page<User> searchUser(final Page<User> page,

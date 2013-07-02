@@ -8,7 +8,7 @@ import com.ylbms.common.orm.hibernate.HibernateDao;
 import com.ylbms.system.model.User;
 
 @Repository("userDao")
-public class UserDAO extends HibernateDao<User, Long> {
+public class UserDao extends HibernateDao<User, Long> {
 
 	public void updatePasswordById(String entryptPassword, Long id) {
 		User user = get(id);

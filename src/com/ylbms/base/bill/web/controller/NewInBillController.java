@@ -1,6 +1,5 @@
 package com.ylbms.base.bill.web.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ylbms.base.bill.model.BillHeadModel;
-import com.ylbms.base.bill.service.BillHeadService;
 import com.ylbms.base.bill.service.BillService;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.base.single.service.SingleInfoService;
@@ -45,7 +44,6 @@ public class NewInBillController extends BaseController {
 	@Autowired
 	BillService billservice;
 
-
 	/**
 	 * 
 	 * @param model
@@ -65,16 +63,17 @@ public class NewInBillController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/addMx")
-	public String addMx(HttpServletRequest request, Page<SingleInfo> page,
+	public String addMx(HttpServletRequest request,
+			@RequestParam("mids") String mids, Page<SingleInfo> page,
 			Model model) {
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-
-		Page<SingleInfo> list = singleService.findSingleInfo(page, filters);
+		Page<SingleInfo> list = singleService.findSingleNotInMids(page,
+				filters, mids);
 		model.addAttribute("page", list);
 
 		return "base/bill/addMx";
-		
+
 	}
 
 	/**
@@ -86,12 +85,11 @@ public class NewInBillController extends BaseController {
 	 */
 	@RequestMapping(value = "/addBill")
 	@ResponseBody
-	public Map<String, Object> addNewBill(SingleForm singles,
-			BillHeadModel bill) {
+	public Map<String, Object> addNewBill(SingleForm singles, BillHeadModel bill) {
 		try {
 			// save billheadInfo
 			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "020");
-			
+
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {

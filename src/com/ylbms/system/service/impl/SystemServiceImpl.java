@@ -16,7 +16,7 @@ import com.ylbms.common.utils.Encodes;
 import com.ylbms.system.dao.MenuDao;
 import com.ylbms.system.dao.OrgDAO;
 import com.ylbms.system.dao.RoleDAO;
-import com.ylbms.system.dao.UserDAO;
+import com.ylbms.system.dao.UserDao;
 import com.ylbms.system.model.Menu;
 import com.ylbms.system.model.Org;
 import com.ylbms.system.model.Role;
@@ -43,7 +43,7 @@ public class SystemServiceImpl implements SystemService {
 	public static final int SALT_SIZE = 8;
 
 	@Autowired
-	private UserDAO userDao;
+	private UserDao userDao;
 	@Autowired
 	private RoleDAO roleDao;
 	@Autowired

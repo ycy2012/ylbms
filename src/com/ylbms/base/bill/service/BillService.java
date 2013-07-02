@@ -13,6 +13,7 @@ import com.ylbms.base.bill.dao.BillTbodyDao;
 import com.ylbms.base.bill.model.BillHeadModel;
 import com.ylbms.base.bill.model.BillTbodyModel;
 import com.ylbms.base.single.model.SingleInfo;
+import com.ylbms.system.utils.UserUtils;
 
 /**
  * 
@@ -39,6 +40,7 @@ public class BillService {
 	@Transactional(readOnly = false, rollbackFor = RuntimeException.class)
 	public void saveBillHeadAndBody(List<SingleInfo> singles, BillHeadModel bhm,String newState) {
 		bhm.setSxDate(new Date());
+		bhm.setCreateUser(UserUtils.getUser().getFullname());
 		List<BillTbodyModel> list=new ArrayList<BillTbodyModel>(); //保存对象用的
 		for (int i = 0, len = singles.size(); i < len; i++) {
 			BillTbodyModel btm = new BillTbodyModel();

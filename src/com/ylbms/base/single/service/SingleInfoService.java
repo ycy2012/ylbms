@@ -1,17 +1,13 @@
 package com.ylbms.base.single.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.base.single.dao.SingleInfoDao;
 import com.ylbms.base.single.model.SingleInfo;
-import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 
@@ -77,6 +73,19 @@ public class SingleInfoService {
 	@Transactional(readOnly = false)
 	public void deleteSingleInfo(long id) {
 		singleDao.delete(id);
+	}
+
+	/**
+	 * 添加明细查询
+	 * 
+	 * @param page
+	 * @param filters
+	 * @param mids
+	 * @return
+	 */
+	public Page<SingleInfo> findSingleNotInMids(Page<SingleInfo> page,
+			List<PropertyFilter> filters, String mids) {
+		return singleDao.findPageNotInMids(page, filters, mids);
 	}
 
 	/**
