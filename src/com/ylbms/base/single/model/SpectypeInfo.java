@@ -1,13 +1,24 @@
 package com.ylbms.base.single.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.ylbms.common.model.BaseModel;
 
@@ -25,11 +36,10 @@ public class SpectypeInfo extends BaseModel {
 	private int speId;// 规格型号id
 	private String speName;// 规格型号名称
 	private String status;// 规格型号状态
-
 	private int sort;// 规格型号类别
-	
 	private String remark;// 备注信息
 	
+	private List<SingleInfo> singles; //one to many
 	
 	public SpectypeInfo() {
 	}
@@ -81,13 +91,24 @@ public class SpectypeInfo extends BaseModel {
 		this.sort = sort;
 	}
 
-	@Column(length=50)
+	@Column(length=100)
 	public String getRemark() {
 		return remark;
 	}
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="spectype")
+	@NotFound(action = NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	public List<SingleInfo> getSingles() {
+		return singles;
+	}
+
+	public void setSingles(List<SingleInfo> singles) {
+		this.singles = singles;
 	}
 
 }

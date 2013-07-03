@@ -166,7 +166,7 @@ public class LocationController {
 			map.put("id", l.getId());
 			map.put("pId", l.getParent() != null ? l.getParent().getId() : 0);
 			map.put("name", l.getLocationName());
-			map.put("allName", l.getAllName()==null?"":l.getAllName());
+			map.put("fullName", l.getAllName()==null?"":l.getAllName());
 			mapList.add(map);
 		}
 		return mapList;

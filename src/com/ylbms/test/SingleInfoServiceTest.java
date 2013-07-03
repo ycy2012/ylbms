@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ylbms.base.single.dao.SingleInfoDao;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.base.single.service.SingleInfoService;
 
@@ -26,16 +27,23 @@ import com.ylbms.base.single.service.SingleInfoService;
 public class SingleInfoServiceTest extends AbstractJUnit4SpringContextTests {
 	@Autowired
 	private SingleInfoService singleInfoService;
+	
+	private SingleInfoDao singleDao;
 
 	@Test
 	public void test() {
 		for (int i = 0; i < 10; i++) {
 			SingleInfo singleinfo = new SingleInfo();
 			singleinfo.setLocation("基地");
-			singleinfo.setAz_Location("zhafafsdfsadf");
-			singleinfo.setWzname("zhang");
-			singleinfo.setState("010");
+			singleinfo.setWzname("压力表SZ型号");
+			singleinfo.setState("020");
 			singleInfoService.saveSingleInfo(singleinfo);
 		}
+	}
+	
+	@Test
+	public void updateSingle() {
+		String hql="update SingleInfo set owercode=? where state='20' ";
+	    singleDao.batchExecute(hql, "00000000");
 	}
 }

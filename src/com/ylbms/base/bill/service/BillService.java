@@ -13,6 +13,7 @@ import com.ylbms.base.bill.dao.BillTbodyDao;
 import com.ylbms.base.bill.model.BillHeadModel;
 import com.ylbms.base.bill.model.BillTbodyModel;
 import com.ylbms.base.single.model.SingleInfo;
+import com.ylbms.base.single.service.SingleInfoService;
 import com.ylbms.system.utils.UserUtils;
 
 /**
@@ -31,15 +32,19 @@ public class BillService {
 	@Autowired
 	BillTbodyDao billTbodyDao;
 
+	@Autowired
+	SingleInfoService singleService;
+
 	/**
 	 * 保存单据
+	 * 
 	 * @param singles
 	 * @param bhm
 	 * @param newState
 	 */
 	@Transactional(readOnly = false, rollbackFor = RuntimeException.class)
 	public void saveBillHeadAndBody(List<SingleInfo> singles,
-			BillHeadModel bhm, String newState) {
+			BillHeadModel bhm, String newState,String wzInfo) {
 		bhm.setSxDate(new Date());
 		bhm.setCreateUser(UserUtils.getUser().getFullname());
 		List<BillTbodyModel> list = new ArrayList<BillTbodyModel>(); // 保存对象用的
@@ -59,8 +64,26 @@ public class BillService {
 			btm.setBillId(bhm);
 			list.add(btm);
 		}
-
 		bhm.setBillTbody(list);
 		billHDao.save(bhm);
+		// 更新单件信息
+		updateSingle(singles, newState, wzInfo);
 	}
+
+	/**
+	 * update singleInfo
+	 * 
+	 * @param single
+	 */
+	@Transactional(readOnly = false, rollbackFor = RuntimeException.class)
+	public void updateSingle(List<SingleInfo> singles, String newState,String wzInfo) {
+		for (SingleInfo s : singles) {
+			SingleInfo single=singleService.getSingleById(s.getMid());
+			single.setState(newState);
+			single.setQy_Time(new Date());
+			single.setLocation(wzInfo);
+			singleService.updateSingleInfo(single);
+		}
+	}
+
 }

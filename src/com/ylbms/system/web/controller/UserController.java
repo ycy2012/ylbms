@@ -179,7 +179,6 @@ public class UserController extends BaseController {
 			if(StringUtils.isNotBlank(user.getPassword())){
 				user.setPassword(systemService.entryptPassword(user.getPassword()));
 			}else{
-				log.info("-------------"+oldPwd);
 				user.setPassword(oldPwd);
 			}
 			systemService.updateUser(user);

@@ -36,7 +36,7 @@ public class ChKBillController extends BaseController {
 
 	private static final Log log = LogFactory.getLog(ChKBillController.class);
 
-	private static final String NAV_TAB_ID = "ckglBill";
+	private static final String NAV_TAB_ID = "billgl";
 
 	@Autowired
 	SingleInfoService singleService;
@@ -89,7 +89,7 @@ public class ChKBillController extends BaseController {
 	public Map<String, Object> addNewBill(SingleForm singles, BillHeadModel bill) {
 		try {
 			// save billheadInfo
-			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "030");
+			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "030",bill.getAcceptLocation());
 
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {

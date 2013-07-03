@@ -161,8 +161,8 @@
 									<li><a href="spec/list" target="navTab" rel="spectype">规格型号管理</a></li>
 									<li><a href="single/list" target="navTab" rel="singleInfo">单件明细管理</a></li>
 									<li><a href="bill/list" target="navTab" rel="bill">单据信息管理</a></li>
-									<li><a href="new/newUi" target="navTab" rel="newBill">入库信息管理</a></li>
-									<li><a href="ckgl/addUi" target="navTab" rel="ckglBill">出库信息管理</a></li>
+									<li><a href="new/newUi" target="navTab" rel="billgl">入库信息管理</a></li>
+									<li><a href="ckgl/addUi" target="navTab" rel="billgl">出库信息管理</a></li>
 								</ul></li>
 					</div>
 				</div>

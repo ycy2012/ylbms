@@ -19,7 +19,7 @@
 	$(document).ready(function() {
 		var mids = window.parent.getMids();
 		var url=window.parent.getURL();
-		$("form").attr("action", url);
+		$("#form").attr("action", url);
 	});
 //-->
 </script>
@@ -28,7 +28,7 @@
 		type="hidden" name="numPerPage" value="${page.numPerPage}" />
 </form>
 <div class="pageHeader">
-	<form onsubmit="return dialogSearch(this);" method="post">
+	<form onsubmit="return dialogSearch(this);" id="pagerForm" method="post">
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>

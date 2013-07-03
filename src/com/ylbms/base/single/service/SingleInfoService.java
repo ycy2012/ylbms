@@ -40,7 +40,7 @@ public class SingleInfoService {
 	 * @param id
 	 * @return
 	 */
-	public SingleInfo getSingleById(long id) {
+	public SingleInfo getSingleById(String id) {
 		return singleDao.get(id);
 	}
 
@@ -71,7 +71,7 @@ public class SingleInfoService {
 	 * @param id
 	 */
 	@Transactional(readOnly = false)
-	public void deleteSingleInfo(long id) {
+	public void deleteSingleInfo(String id) {
 		singleDao.delete(id);
 	}
 
@@ -98,6 +98,16 @@ public class SingleInfoService {
 	public Page<SingleInfo> findSingleInfo(Page<SingleInfo> page,
 			List<PropertyFilter> filters) {
 		return singleDao.findPage(page, filters);
+	}
+
+	/**
+	 * 批量删除
+	 * 
+	 * @param ids
+	 */
+	public void delByIds(String ids) {
+		String delHQL = "delete SingleInfo where mid in(" + ids + ")";
+		singleDao.createQuery(delHQL, "");
 	}
 
 }

@@ -2,19 +2,28 @@ package com.ylbms.base.single.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.ylbms.common.model.BaseModel;
 
 /**
  * 修改内容：修改主键策略
+ * 
  * @author zhangjl
  * @version 1.0
  * @date 2013-6-8
@@ -28,11 +37,11 @@ import com.ylbms.common.model.BaseModel;
 public class SingleInfo extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String mid;// 单件虚拟编号
 	private String owercode;// 物资编码
 	private String wzname;// 物资名称
-	private String spectype;// 规格型号
+	private SpectypeInfo spectype;// 规格型号
 	private String location;// 当前位置
 	private String state;// 当前状态
 	private int classId;// 资产种类
@@ -64,7 +73,7 @@ public class SingleInfo extends BaseModel {
 	private String remark;// 备注信息
 
 	public SingleInfo() {
-		this.status=DEL_FLAG_NORMAL;
+		this.status = DEL_FLAG_NORMAL;
 	}
 
 	public SingleInfo(String mid) {
@@ -73,8 +82,10 @@ public class SingleInfo extends BaseModel {
 
 	// getter setter
 	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_base_single_info")
-//	@SequenceGenerator(name = "seq_base_single_info", sequenceName = "seq_base_single_info")
+	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+	// "seq_base_single_info")
+	// @SequenceGenerator(name = "seq_base_single_info", sequenceName =
+	// "seq_base_single_info")
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "com.ylbms.base.single.model.SingleInfoPK")
 	@Column(nullable = false)
@@ -85,12 +96,11 @@ public class SingleInfo extends BaseModel {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
+
 	@Column(nullable = false)
 	public String getOwercode() {
 		return owercode;
 	}
-
-
 
 	public void setOwercode(String owercode) {
 		this.owercode = owercode;
@@ -105,12 +115,15 @@ public class SingleInfo extends BaseModel {
 		this.wzname = wzname;
 	}
 
-	@Column(nullable = false)
-	public String getSpectype() {
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "spectype", nullable = false ,referencedColumnName="speID")
+	@NotFound(action = NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	public SpectypeInfo getSpectype() {
 		return spectype;
 	}
 
-	public void setSpectype(String spectype) {
+	public void setSpectype(SpectypeInfo spectype) {
 		this.spectype = spectype;
 	}
 
@@ -349,7 +362,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	public void setStatus(String status) {
-		this.status =status;
+		this.status = status;
 	}
 
 	public String getRemark() {

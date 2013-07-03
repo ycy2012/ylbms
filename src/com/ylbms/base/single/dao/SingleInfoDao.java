@@ -20,7 +20,7 @@ import com.ylbms.common.orm.hibernate.HibernateDao;
  * @date 2013-6-8
  */
 @Repository("SingleDao")
-public class SingleInfoDao extends HibernateDao<SingleInfo, Long> {
+public class SingleInfoDao extends HibernateDao<SingleInfo, String> {
 	/**
 	 * 在制作单据时添加明细的时候，防止信息重复添加
 	 * 

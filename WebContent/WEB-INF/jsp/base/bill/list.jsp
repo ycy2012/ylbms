@@ -55,7 +55,6 @@
 				<th>生效日期</th>
 				<th>创建时间</th>
 				<th>领料人</th>
-				<th>领料单位</th>
 				<th>备注</th>
 				<th>当前状态</th>
 				<th>操作</th>
@@ -71,12 +70,11 @@
 					<td><fmt:formatDate value="${acc.sxDate}" pattern="yyyy-MM-dd"/></td>
 					<td><fmt:formatDate value="${acc.createDate}" pattern="yyyy-MM-dd"/> </td>
 					<td>${acc.llren}</td>
-					<td>${acc.llUnit}</td>
 					<td>${acc.remark}</td>
 					<td>${acc.status==0?'有效':'无效'}</td>
 				<td>
 				<a title="删除单据信息" target="ajaxTodo" href="${ctx}/bill/delete/${acc.djId}" class="btnDel">删除单据信息</a>
-				<a title="授权" target="dialog" href="${ctx}/role/permUi/${acc.djId}" class="btnView">授权</a>
+				<a title="查看单据信息" target="dialog" href="${ctx}/role/permUi/${acc.djId}" class="btnView">查看单据信息</a>
 				<a title="编辑单据信息" target="dialog" href="${ctx}/bill/editUi/${acc.djId}" class="btnEdit">编辑单据信息</a>
 				</td>
 				</tr>

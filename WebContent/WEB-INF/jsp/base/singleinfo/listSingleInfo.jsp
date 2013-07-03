@@ -48,7 +48,7 @@
 			<li><a class="add" href="${ctx}/single/addUi" target="navTab"
 				mask="true" title="添加单件信息"><span>添加</span></a></li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"
-				postType="string" href="${ctx}/user/delByIds/{sid_user}"
+				postType="string" href="${ctx}/single/delByIds/{sid_single}"
 				class="delete"><span>批量删除</span></a></li>
 			<li><a class="edit" href="${ctx}/single/edit/{sid_singleInfo}"
 				target="dialog" mask="true" title="修改单件信息"><span>修改</span></a></li>
@@ -100,7 +100,7 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${page.result}" var="acc">
-				<tr target="sid_singleInfo" rel="${acc.mid}">
+				<tr target="sid_single" rel="${acc.mid}">
 					<td><input name="ids" value="'${acc.mid}'" type="checkbox"></td>
 					<td>${acc.owercode}</td>
 					<td>${acc.wzname}</td>

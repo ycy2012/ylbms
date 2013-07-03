@@ -26,6 +26,9 @@
 		data : {
 			simpleData : {
 				enable : true
+			},
+			key:{
+				title: "fullName"
 			}
 		},
 		view : {
@@ -76,7 +79,7 @@
 				$("#button").click(function(){
 					var zTree = $.fn.zTree.getZTreeObj("commonTree"), nodes = zTree.getCheckedNodes(true);
 					var id=nodes[0].id;
-					var name=nodes[0].name;
+					var name=nodes[0].fullName;
 					window.parent.setWzInfo(id,name);
 					$.pdialog.closeCurrent();//关闭dialog
 				});

@@ -36,7 +36,7 @@ public class NewInBillController extends BaseController {
 
 	private static final Log log = LogFactory.getLog(NewInBillController.class);
 
-	private static final String NAV_TAB_ID = "newBill";
+	private static final String NAV_TAB_ID = "billgl";
 
 	@Autowired
 	SingleInfoService singleService;
@@ -86,8 +86,8 @@ public class NewInBillController extends BaseController {
 	public Map<String, Object> addNewBill(SingleForm singles, BillHeadModel bill) {
 		try {
 			// save billheadInfo
-			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "020");
-
+			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "020","基地");
+			
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {

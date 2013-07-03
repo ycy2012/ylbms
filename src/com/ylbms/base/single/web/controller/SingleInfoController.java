@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ylbms.base.single.model.SingleInfo;
@@ -49,9 +50,10 @@ public class SingleInfoController extends BaseController {
 	public String addUi(Model model) {
 		return "base/singleinfo/addSingleInfo";
 	}
-	
+
 	/**
 	 * 跳转到修改页面
+	 * 
 	 * @param request
 	 * @param mid
 	 * @param model
@@ -60,12 +62,11 @@ public class SingleInfoController extends BaseController {
 
 	@RequestMapping(value = "/edit/{id}")
 	public String editUi(HttpServletRequest request,
-			@PathVariable("id") long mid, Model model) {
-		SingleInfo singleinfo=singleInfoService.getSingleById(mid);
+			@PathVariable("id") String mid, Model model) {
+		SingleInfo singleinfo = singleInfoService.getSingleById(mid);
 		model.addAttribute("obj", singleinfo);
 		return "base/singleinfo/addSingleInfo";
 	}
-	
 
 	/**
 	 * 添加单件明细
@@ -132,9 +133,28 @@ public class SingleInfoController extends BaseController {
 	 */
 	@RequestMapping(value = "/delete/{mid}")
 	@ResponseBody
-	public Map<String, Object> delSpectype(@PathVariable("mid") long mid) {
+	public Map<String, Object> delSpectype(@PathVariable("mid") String mid) {
 		try {
 			singleInfoService.deleteSingleInfo(mid);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
+		} catch (Exception e) {
+			log.error("system error" + e);
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "singleInfo",
+					e.getMessage());
+		}
+	}
+
+	/**
+	 * 批量删除单件信息
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping(value = "/delByIds/{ids}")
+	@ResponseBody
+	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {
+		try {
+			singleInfoService.delByIds(ids);
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
 			log.error("system error" + e);

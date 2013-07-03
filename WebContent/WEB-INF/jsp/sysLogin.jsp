@@ -71,6 +71,10 @@
 						<label>密&nbsp;&nbsp;&nbsp;码：</label> <input type="password"
 							name="password" size="20" class="login_input" />
 					</p>
+					<p>
+						<label for="rememberMe" title="下次不需要再登录"><input
+							type="checkbox" id="rememberMe" name="rememberMe" /> 记住我</label>
+					</p>
 					<!--  
 					<p>
 						<label>验证码：</label>
