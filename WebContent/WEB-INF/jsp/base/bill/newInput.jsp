@@ -45,15 +45,6 @@
 		var url=$("a[class='add']").attr("href");
 		return url;
 	}
-	$(document).ready(function(){
-		$("a[class='add']").click(function(){
-			if(getMids()!=""&&getMids()!=null){
-				$(this).attr("href","${ctx}/new/addMx?mids="+getMids());
-			}else{
-				$(this).attr("href","${ctx}/new/addMx?mids=");
-			}
-		});
-	});
 //-->
 </script>
 </head>
@@ -88,7 +79,8 @@
 			<dl>
 				<dt>领料单位：</dt>
 				<dd>
-					<select name="lluint" class="combox">
+					<select name="lluint" class="combox" class="required">
+					    <option value="">请选择信息</option>
 						<option value="轮南项目部">轮南项目部</option>
 						<option value="库车项目部">库车项目部</option>
 						<option value="塔中项目部">塔中项目部</option>
@@ -106,8 +98,7 @@
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>
-					<li><a class="add" href="${ctx}/new/addMx" target="dialog"
-						mask="true" title="添加单件信息"><span>添加明细</span></a></li>
+					<li><a class="add" href="${ctx}/new/addMx"  target="addMxAjaxTodo" title="添加单件信息" warn="有红色星号标识的选项必填！"><span>添加明细</span></a></li>
 					<li class="line">line</li>
 				</ul>
 			</div>

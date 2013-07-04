@@ -64,11 +64,11 @@ public class NewInBillController extends BaseController {
 	 */
 	@RequestMapping(value = "/addMx")
 	public String addMx(HttpServletRequest request,
-			@RequestParam("mids") String mids, Page<SingleInfo> page,
+			@RequestParam("mids") String mids,@RequestParam("wz")String wzName, Page<SingleInfo> page,
 			Model model) {
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<SingleInfo> list = singleService.findSingleNotInMids(page, filters, mids, "010");
+		Page<SingleInfo> list = singleService.findSingleNotInMids(page, filters, mids, "010",wzName);
 		model.addAttribute("page", list);
 
 		return "base/bill/addMx";

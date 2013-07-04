@@ -65,12 +65,12 @@ public class ChKBillController extends BaseController {
 	 */
 	@RequestMapping(value = "/addMx")
 	public String addMx(HttpServletRequest request,
-			@RequestParam("mids") String mids, Page<SingleInfo> page,
+			@RequestParam("mids") String mids,@RequestParam String wzName, Page<SingleInfo> page,
 			Model model) {
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
 		Page<SingleInfo> list = singleService.findSingleNotInMids(page,
-				filters, mids, "020");
+				filters, mids, "020",wzName);
 		model.addAttribute("page", list);
 
 		return "base/bill/addMx";

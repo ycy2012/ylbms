@@ -106,7 +106,7 @@
 					<td>${acc.wzname}</td>
 					<td>${acc.spectype}</td>
 					<td>${acc.location}</td>
-					<td>${acc.state==0?'有效':'无效'}</td>
+					<td>${acc.state}</td>
 					<!-- <td>${acc.classId}</td>
 					<td>${acc.factory}</td>
 					<td>${acc.factoryCode}</td>

@@ -33,19 +33,23 @@ public class SingleInfoDao extends HibernateDao<SingleInfo, String> {
 	 * @return
 	 */
 	public Page<SingleInfo> findPageNotInMids(Page<SingleInfo> page,
-			List<PropertyFilter> filters, String mids, String state) {
+			List<PropertyFilter> filters, String mids, String state,String wzName) {
 
 		Criterion[] criterions = buildCriterionByPropertyFilter(filters);
 		Criteria c = createCriteria(criterions);
 
-		Criterion stateEQ = Restrictions.eq("state", state); // 状态
+		Criterion stateEQ = Restrictions.eq("state", state); // 状态信息
 		c.add(stateEQ);
+		
+		Criterion wzEQ=Restrictions.eq("location", wzName);  //位置信息
+		c.add(wzEQ);
 		
 		if (StringUtils.isNotBlank(mids)) {
 			String[] values = mids.split(",");
 			Criterion cIn = Restrictions.not(Restrictions.in("mid", values)); //已选择的
 			c.add(cIn);
 		}
+		
 		if (page.isAutoCount()) {
 			long totalCount = countCriteriaResult(c);
 			page.setTotalCount(totalCount);

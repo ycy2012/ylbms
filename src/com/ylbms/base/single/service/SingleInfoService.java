@@ -84,8 +84,8 @@ public class SingleInfoService {
 	 * @return
 	 */
 	public Page<SingleInfo> findSingleNotInMids(Page<SingleInfo> page,
-			List<PropertyFilter> filters, String mids, String state) {
-		return singleDao.findPageNotInMids(page, filters, mids, state);
+			List<PropertyFilter> filters, String mids, String state,String wzName) {
+		return singleDao.findPageNotInMids(page, filters, mids, state,wzName);
 	}
 
 	/**
