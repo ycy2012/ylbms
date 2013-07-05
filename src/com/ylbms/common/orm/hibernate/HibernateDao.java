@@ -100,7 +100,7 @@ public class HibernateDao<T, PK extends Serializable> extends
 
 		setPageParameterToQuery(q, page);
 
-		List result = q.list();
+		List<T> result = q.list();
 		page.setResult(result);
 		return page;
 	}
@@ -131,7 +131,7 @@ public class HibernateDao<T, PK extends Serializable> extends
 
 		setPageParameterToQuery(q, page);
 
-		List result = q.list();
+		List<T> result = q.list();
 		page.setResult(result);
 		return page;
 	}

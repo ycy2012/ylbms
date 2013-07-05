@@ -104,7 +104,7 @@
 					<td><input name="ids" value="'${acc.mid}'" type="checkbox"></td>
 					<td>${acc.owercode}</td>
 					<td>${acc.wzname}</td>
-					<td>${acc.spectype}</td>
+					<td>${acc.spectype.speName}</td>
 					<td>${acc.location}</td>
 					<td>${acc.state}</td>
 					<!-- <td>${acc.classId}</td>

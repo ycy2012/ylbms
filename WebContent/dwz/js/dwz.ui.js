@@ -497,7 +497,7 @@ function initUI(_box){
            options.param = $this.attr("param") || "";
            var flwz=$("input[name='sendLocation']").val();
            var url = ($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
-           url=url+"?mids="+getMids()+"&wz="+flwz; //这个是页面一个方法
+           url=encodeURI(encodeURI(url+"?mids="+getMids()+"&wz="+flwz)); //这个是页面一个方法
            // 添加一些处理方法
            $("div[class='pageFormContent']").find(".required").each(function(){
 				var v=$(this).val();

@@ -66,8 +66,7 @@
 			<dl>
 				<dt>接收方：</dt>
 				<dd>
-					<input name="acceptLocation" type="text" alt="接收方信息" value="基地"
-						class="required" />
+					<input name="acceptLocation" type="text" readonly="readonly" value="基地" />
 				</dd>
 			</dl>
 			<dl>

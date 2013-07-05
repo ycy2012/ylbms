@@ -13,6 +13,7 @@ import com.ylbms.base.bill.dao.BillTbodyDao;
 import com.ylbms.base.bill.model.BillHeadModel;
 import com.ylbms.base.bill.model.BillTbodyModel;
 import com.ylbms.base.single.model.SingleInfo;
+import com.ylbms.base.single.model.StateInfo;
 import com.ylbms.base.single.service.SingleInfoService;
 import com.ylbms.system.utils.UserUtils;
 
@@ -50,17 +51,12 @@ public class BillService {
 		List<BillTbodyModel> list = new ArrayList<BillTbodyModel>(); // 保存对象用的
 		for (int i = 0, len = singles.size(); i < len; i++) {
 			BillTbodyModel btm = new BillTbodyModel();
-			btm.setMid(singles.get(i).getMid() == null ? "" : singles.get(i)
-					.getMid());
-			btm.setOldState(singles.get(i).getState() == null ? "" : singles
-					.get(i).getState());
+			btm.setMid(singles.get(i).getMid() == null ? "" : singles.get(i).getMid());
+			btm.setOldState(singles.get(i).getState() == null ? "" : singles.get(i).getState());
 			btm.setNewState(newState == null ? "" : newState);
-			btm.setOldWz(singles.get(i).getLocation() == null ? "" : singles
-					.get(i).getLocation());
-			btm.setNewWz(bhm.getAcceptLocation() == null ? "" : bhm
-					.getAcceptLocation());
-			btm.setRemark(singles.get(i).getRemark() == null ? "" : singles
-					.get(i).getRemark());
+			btm.setOldWz(singles.get(i).getLocation() == null ? "" : singles.get(i).getLocation());
+			btm.setNewWz(bhm.getAcceptLocation() == null ? "" : bhm.getAcceptLocation());
+			btm.setRemark(singles.get(i).getRemark() == null ? "" : singles.get(i).getRemark());
 			btm.setBillId(bhm);
 			list.add(btm);
 		}

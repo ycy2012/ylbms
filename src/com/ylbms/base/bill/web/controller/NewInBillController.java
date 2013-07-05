@@ -1,5 +1,6 @@
 package com.ylbms.base.bill.web.controller;
 
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -64,8 +65,9 @@ public class NewInBillController extends BaseController {
 	 */
 	@RequestMapping(value = "/addMx")
 	public String addMx(HttpServletRequest request,
-			@RequestParam("mids") String mids,@RequestParam("wz")String wzName, Page<SingleInfo> page,
+			@RequestParam("mids") String ids,@RequestParam("wz")String wz, Page<SingleInfo> page,
 			Model model) {
+		String wzName=URLDecoder.decode(wz),mids=URLDecoder.decode(ids);
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
 		Page<SingleInfo> list = singleService.findSingleNotInMids(page, filters, mids, "010",wzName);
@@ -73,7 +75,7 @@ public class NewInBillController extends BaseController {
 
 		return "base/bill/addMx";
 	}
-
+	
 	/**
 	 * 添加单据
 	 * 

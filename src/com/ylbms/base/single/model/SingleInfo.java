@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -71,7 +69,7 @@ public class SingleInfo extends BaseModel {
 	private Date createDate;// 录入时间
 	private String status;// 状态信息
 	private String remark;// 备注信息
-
+	
 	public SingleInfo() {
 		this.status = DEL_FLAG_NORMAL;
 	}
@@ -82,10 +80,6 @@ public class SingleInfo extends BaseModel {
 
 	// getter setter
 	@Id
-	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-	// "seq_base_single_info")
-	// @SequenceGenerator(name = "seq_base_single_info", sequenceName =
-	// "seq_base_single_info")
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "com.ylbms.base.single.model.SingleInfoPK")
 	@Column(nullable = false)
@@ -116,7 +110,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "spectype", nullable = false ,referencedColumnName="speID")
+	@JoinColumn(name = "spectype", nullable = false, referencedColumnName = "speID")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public SpectypeInfo getSpectype() {
@@ -136,7 +130,8 @@ public class SingleInfo extends BaseModel {
 		this.location = location;
 	}
 
-	@Column(nullable = false)
+
+	@Column(nullable=false)
 	public String getState() {
 		return state;
 	}
@@ -372,5 +367,4 @@ public class SingleInfo extends BaseModel {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
 }

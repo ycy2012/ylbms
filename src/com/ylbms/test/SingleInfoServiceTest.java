@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.base.single.dao.SingleInfoDao;
 import com.ylbms.base.single.model.SingleInfo;
+import com.ylbms.base.single.model.StateInfo;
 import com.ylbms.base.single.service.SingleInfoService;
 
 /**
@@ -32,18 +33,19 @@ public class SingleInfoServiceTest extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void test() {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 5; i++) {
 			SingleInfo singleinfo = new SingleInfo();
+			StateInfo state=new StateInfo();
 			singleinfo.setLocation("基地");
 			singleinfo.setWzname("压力表SZ型号");
-			singleinfo.setState("020");
+			singleinfo.setState("010");
 			singleInfoService.saveSingleInfo(singleinfo);
 		}
 	}
 	
-	@Test
 	public void updateSingle() {
 		String hql="update SingleInfo set owercode=? where state='20' ";
 	    singleDao.batchExecute(hql, "00000000");
 	}
+	
 }

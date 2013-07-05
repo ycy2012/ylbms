@@ -1,6 +1,7 @@
 package com.ylbms.base.single.model;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,11 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -30,6 +29,7 @@ import com.ylbms.common.model.BaseModel;
  */
 @Entity
 @Table(name = "YLBMS_BAS_SPECTYPEINFO")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SpectypeInfo extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
@@ -39,7 +39,7 @@ public class SpectypeInfo extends BaseModel {
 	private int sort;// 规格型号类别
 	private String remark;// 备注信息
 	
-	private List<SingleInfo> singles; //one to many
+	private Set<SingleInfo> singles=new HashSet<SingleInfo>(); //one to many
 	
 	public SpectypeInfo() {
 	}
@@ -100,15 +100,16 @@ public class SpectypeInfo extends BaseModel {
 		this.remark = remark;
 	}
 
+
+
 	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="spectype")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public List<SingleInfo> getSingles() {
+	public Set<SingleInfo> getSingles() {
 		return singles;
 	}
 
-	public void setSingles(List<SingleInfo> singles) {
+	public void setSingles(Set<SingleInfo> singles) {
 		this.singles = singles;
 	}
-
 }
