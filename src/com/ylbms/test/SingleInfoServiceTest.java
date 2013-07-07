@@ -34,11 +34,11 @@ public class SingleInfoServiceTest extends AbstractJUnit4SpringContextTests {
 	@Test
 	public void test() {
 		for (int i = 0; i < 5; i++) {
+			StateInfo s=new StateInfo("010");
 			SingleInfo singleinfo = new SingleInfo();
-			StateInfo state=new StateInfo();
 			singleinfo.setLocation("基地");
 			singleinfo.setWzname("压力表SZ型号");
-			singleinfo.setState("010");
+			singleinfo.setState(s);
 			singleInfoService.saveSingleInfo(singleinfo);
 		}
 	}

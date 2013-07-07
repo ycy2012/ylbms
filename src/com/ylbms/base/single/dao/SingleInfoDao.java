@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.ylbms.base.single.model.SingleInfo;
-import com.ylbms.base.single.model.StateInfo;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.orm.hibernate.HibernateDao;
@@ -27,10 +27,16 @@ public class SingleInfoDao extends HibernateDao<SingleInfo, String> {
 	public Page<SingleInfo> findPage(Page<SingleInfo> page,
 			List<PropertyFilter> filters) {
 		Criterion[] criterions = buildCriterionByPropertyFilter(filters);
-		Criteria c = createCriteria(criterions);
-		
-		// TODO Auto-generated method stub
-		return super.findPage(page, filters);
+		Criteria c = createCriteria(criterions).setFetchMode("state", FetchMode.JOIN);
+		if (page.isAutoCount()) {
+			long totalCount = countCriteriaResult(c);
+			page.setTotalCount(totalCount);
+		}
+		setPageParameterToCriteria(c, page);
+		@SuppressWarnings("unchecked")
+		List<SingleInfo> result = c.list();
+		page.setResult(result);
+		return page;
 	}
 
 	/**

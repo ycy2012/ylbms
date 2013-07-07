@@ -22,7 +22,7 @@ import com.google.common.collect.Lists;
  *            Page中记录的类型.
  * 
  * @author calvin
- * @author JackLiang 二〇一三年六月十八日 13:26:36 
+ * @author JackLiang 二〇一三年六月十八日 13:26:36
  */
 public class Page<T> {
 	// -- 公共变量 --//
@@ -46,7 +46,7 @@ public class Page<T> {
 
 	// -- 构造函数 --//
 	public Page() {
-		this.numPerPage=PAGE_SIZE;
+		this.numPerPage = PAGE_SIZE;
 	}
 
 	public Page(int numPerPage) {
@@ -278,5 +278,9 @@ public class Page<T> {
 		} else {
 			return pageNum;
 		}
+	}
+
+	public boolean isDisabled() {
+		return this.pageNum == -1;
 	}
 }

@@ -8,16 +8,21 @@
 package com.ylbms.common.orm.hibernate;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -26,6 +31,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.internal.CriteriaImpl;
 import org.hibernate.transform.ResultTransformer;
+import org.hibernate.transform.Transformers;
 import org.springframework.util.Assert;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
@@ -43,7 +49,7 @@ import com.ylbms.common.utils.reflection.ReflectionUtils;
  *            主键类型
  * 
  * @author calvin
- * @editor JackLiang
+ * @editor JackLiang 2013年7月6日 12:39:02
  */
 public class HibernateDao<T, PK extends Serializable> extends
 		SimpleHibernateDao<T, PK> {
@@ -105,6 +111,213 @@ public class HibernateDao<T, PK extends Serializable> extends
 		return page;
 	}
 
+	// -------------- Criteria --------------
+	/**
+	 * 使用检索标准对象分页查询
+	 * @param page
+	 * @param detachedCriteria
+	 * @param resultTransformer
+	 * @return
+	 */
+	public Page<T> find(Page<T> page, DetachedCriteria detachedCriteria) {
+		return find(page, detachedCriteria, Criteria.DISTINCT_ROOT_ENTITY);
+	}
+	/**
+	 * 使用检索标准对象分页查询
+	 * 
+	 * @param page
+	 * @param detachedCriteria
+	 * @param resultTransformer
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public Page<T> find(Page<T> page, DetachedCriteria detachedCriteria,
+			ResultTransformer resultTransformer) {
+		// get count
+		if (page.isAutoCount()) {
+			page.setTotalCount(count(detachedCriteria));
+			if (page.getTotalCount()< 1) {
+				return page;
+			}
+		}
+		Criteria criteria = detachedCriteria
+				.getExecutableCriteria(getSession());
+		criteria.setResultTransformer(resultTransformer);
+		// set page
+		if (!page.isDisabled()) {
+			criteria.setFirstResult(page.getFirst()-1);
+			criteria.setMaxResults(page.getNumPerPage());
+		}
+		// order by
+		if (StringUtils.isNotBlank(page.getOrderBy())) {
+			for (String order : StringUtils.split(page.getOrderBy(), ",")) {
+				String[] o = StringUtils.split(order, " ");
+				if (o.length == 1) {
+					criteria.addOrder(Order.asc(o[0]));
+				} else if (o.length == 2) {
+					if ("DESC".equals(o[1].toUpperCase())) {
+						criteria.addOrder(Order.desc(o[0]));
+					} else {
+						criteria.addOrder(Order.asc(o[0]));
+					}
+				}
+			}
+		}
+		page.setResult(criteria.list());
+		return page;
+	}
+	/**
+	 * 使用检索标准对象查询记录数
+	 * @param detachedCriteria
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	public long count(DetachedCriteria detachedCriteria) {
+		Criteria criteria = detachedCriteria.getExecutableCriteria(getSession());
+		long totalCount = 0;
+		try {
+			// Get orders
+			Field field = CriteriaImpl.class.getDeclaredField("orderEntries");
+			field.setAccessible(true);
+			List orderEntrys = (List)field.get(criteria);
+			// Remove orders
+			field.set(criteria, new ArrayList());
+			// Get count
+			criteria.setProjection(Projections.rowCount());
+			totalCount = Long.valueOf(criteria.uniqueResult().toString());
+			// Clean count
+			criteria.setProjection(null);
+			// Restore orders
+			field.set(criteria, orderEntrys);
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return totalCount;
+	}
+	/**
+	 * 使用检索标准对象查询
+	 * @param detachedCriteria
+	 * @return
+	 */
+	public List<T> find(DetachedCriteria detachedCriteria) {
+		return find(detachedCriteria, Criteria.DISTINCT_ROOT_ENTITY);
+	}
+	
+	/**
+	 * 使用检索标准对象查询
+	 * @param detachedCriteria
+	 * @param resultTransformer
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<T> find(DetachedCriteria detachedCriteria, ResultTransformer resultTransformer) {
+		Criteria criteria = detachedCriteria.getExecutableCriteria(getSession());
+		criteria.setResultTransformer(resultTransformer);
+		return criteria.list(); 
+	}
+	
+	// -------------- SQL Query --------------
+	/**
+	 * SQL 分页查询
+	 * 
+	 * @param page
+	 * @param sqlString
+	 * @param parameter
+	 * @return
+	 */
+	public Page<T> findBySql(Page<T> page, String sqlString,
+			Object... parameter) {
+		return findBySql(page, sqlString, null, parameter);
+	}
+
+	/**
+	 * SQL 分页查询
+	 * 
+	 * @param page
+	 * @param sqlString
+	 * @param resultClass
+	 * @param parameter
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public <E> Page<E> findBySql(Page<E> page, String sqlString,
+			Class<?> resultClass, Object... parameter) {
+		Assert.notNull(page, "page不能为空");
+		// get count
+		if (page.isAutoCount()) {
+			String countSqlString = "select count(*) "
+					+ removeSelect(removeOrders(sqlString));
+			Query query = createSqlQuery(countSqlString, parameter);
+			List<Object> list = query.list();
+			if (list.size() > 0) {
+				page.setTotalCount(Long.valueOf(list.get(0).toString()));
+			} else {
+				page.setTotalCount(list.size());
+			}
+			if (page.getTotalCount() < 1) {
+				return page;
+			}
+		}
+		// order by
+		String sql = sqlString;
+		if (StringUtils.isNotBlank(page.getOrderBy())) {
+			sql += " order by " + page.getOrderBy();
+		}
+		SQLQuery query = createSqlQuery(sql, parameter);
+		// set page
+		query.setFirstResult(page.getFirst() - 1);
+		query.setMaxResults(page.getNumPerPage());
+		setResultTransformer(query, resultClass);
+		page.setResult(query.list());
+		return page;
+	}
+
+	/**
+	 * SQL 查询
+	 * 
+	 * @param sqlString
+	 * @param resultClass
+	 * @param parameter
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<T> findBySql(String sqlString, Class<?> resultClass,
+			Object... parameter) {
+		SQLQuery query = createSqlQuery(sqlString, parameter);
+		setResultTransformer(query, resultClass);
+		return query.list();
+	}
+
+	/**
+	 * 创建 SQL 查询对象
+	 * 
+	 * @param sqlString
+	 * @param parameter
+	 * @return
+	 */
+	public SQLQuery createSqlQuery(String sqlString, Object... parameter) {
+		SQLQuery query = getSession().createSQLQuery(sqlString);
+		setParameter(query, parameter);
+		return query;
+	}
+
+	/**
+	 * 设置查询参数
+	 * 
+	 * @param query
+	 * @param parameter
+	 */
+	private void setParameter(Query query, Object... parameter) {
+		if (parameter != null) {
+			for (int i = 0; i < parameter.length; i++) {
+				query.setParameter(i, parameter[i]);
+			}
+		}
+	}
+
+	// ----------HQL query---------
 	/**
 	 * 按HQL分页查询.
 	 * 
@@ -384,4 +597,64 @@ public class HibernateDao<T, PK extends Serializable> extends
 		}
 		return criterionList.toArray(new Criterion[criterionList.size()]);
 	}
+
+	/**
+	 * 去除hql的orderBy子句。
+	 * 
+	 * @param hql
+	 * @return
+	 */
+	private String removeOrders(String qlString) {
+		Pattern p = Pattern.compile("order\\s*by[\\w|\\W|\\s|\\S]*",
+				Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(qlString);
+		StringBuffer sb = new StringBuffer();
+		while (m.find()) {
+			m.appendReplacement(sb, "");
+		}
+		m.appendTail(sb);
+		return sb.toString();
+	}
+
+	/**
+	 * 去除qlString的select子句。
+	 * 
+	 * @param hql
+	 * @return
+	 */
+	private String removeSelect(String qlString) {
+		int beginPos = qlString.toLowerCase().indexOf("from");
+		return qlString.substring(beginPos);
+	}
+
+	/**
+	 * 设置查询结果类型
+	 * 
+	 * @param query
+	 * @param resultClass
+	 */
+	private void setResultTransformer(SQLQuery query, Class<?> resultClass) {
+		if (resultClass != null) {
+			if (resultClass == Map.class) {
+				query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+			} else if (resultClass == List.class) {
+				query.setResultTransformer(Transformers.TO_LIST);
+			} else {
+				query.addEntity(resultClass);
+			}
+		}
+	}
+	/**
+	 * 创建与会话无关的检索标准对象
+	 * @param criterions Restrictions.eq("name", value);
+	 * @return 
+	 */
+	public DetachedCriteria createDetachedCriteria(Criterion... criterions) {
+		DetachedCriteria dc = DetachedCriteria.forClass(entityClass);
+		for (Criterion c : criterions) {
+			dc.add(c);
+		}
+		return dc;
+	}
+	
 }

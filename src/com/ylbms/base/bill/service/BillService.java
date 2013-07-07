@@ -52,7 +52,7 @@ public class BillService {
 		for (int i = 0, len = singles.size(); i < len; i++) {
 			BillTbodyModel btm = new BillTbodyModel();
 			btm.setMid(singles.get(i).getMid() == null ? "" : singles.get(i).getMid());
-			btm.setOldState(singles.get(i).getState() == null ? "" : singles.get(i).getState());
+			btm.setOldState(singles.get(i).getState() == null ? "" : singles.get(i).getState().getId());
 			btm.setNewState(newState == null ? "" : newState);
 			btm.setOldWz(singles.get(i).getLocation() == null ? "" : singles.get(i).getLocation());
 			btm.setNewWz(bhm.getAcceptLocation() == null ? "" : bhm.getAcceptLocation());
@@ -75,7 +75,7 @@ public class BillService {
 	public void updateSingle(List<SingleInfo> singles, String newState,String wzInfo) {
 		for (SingleInfo s : singles) {
 			SingleInfo single=singleService.getSingleById(s.getMid());
-			single.setState(newState);
+			single.setState(new StateInfo("010"));
 			single.setQy_Time(new Date());
 			single.setLocation(wzInfo);
 			singleService.updateSingleInfo(single);

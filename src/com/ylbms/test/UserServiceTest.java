@@ -13,6 +13,7 @@ import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Sha1Hash;
 import org.apache.shiro.util.ByteSource;
+import org.hibernate.Criteria;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ylbms.system.dao.UserDao;
+import com.ylbms.system.model.User;
 import com.ylbms.system.security.SystemRealm;
 import com.ylbms.system.service.SystemService;
 
@@ -36,6 +39,9 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
 
 	@Autowired
 	private SystemService systemService;
+	
+	@Autowired
+	private UserDao userDao;
 
 	@Test
 	public void testBackwardsCompatibleSaltedAuthenticationInfo() {
@@ -76,4 +82,5 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
 		assertTrue(matcher.doCredentialsMatch(token, account));
 	}
 
+	
 }

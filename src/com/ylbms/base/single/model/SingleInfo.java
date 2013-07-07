@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -41,7 +44,7 @@ public class SingleInfo extends BaseModel {
 	private String wzname;// 物资名称
 	private SpectypeInfo spectype;// 规格型号
 	private String location;// 当前位置
-	private String state;// 当前状态
+	private StateInfo state;// 当前状态
 	private int classId;// 资产种类
 	private int factory;// 生产厂家
 	private String factoryCode;// 出厂编号
@@ -130,13 +133,16 @@ public class SingleInfo extends BaseModel {
 		this.location = location;
 	}
 
-
-	@Column(nullable=false)
-	public String getState() {
+	@ManyToOne
+	@JoinColumn(name="id")
+	@JsonIgnore
+	@NotFound(action = NotFoundAction.IGNORE)
+	@NotNull(message="归属部门不能为空")
+	public StateInfo getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(StateInfo state) {
 		this.state = state;
 	}
 
