@@ -36,12 +36,16 @@ public class SpectypeInfo extends BaseModel {
 	private int speId;// 规格型号id
 	private String speName;// 规格型号名称
 	private String status;// 规格型号状态
-	private int sort;// 规格型号类别
+	private int sort;// 规格顺序
 	private String remark;// 备注信息
 	
 	private Set<SingleInfo> singles=new HashSet<SingleInfo>(); //one to many
 	
 	public SpectypeInfo() {
+	}
+
+	public SpectypeInfo(int speId) {
+		this.speId = speId;
 	}
 
 	public SpectypeInfo(int speId, String speName, String status, int sort,

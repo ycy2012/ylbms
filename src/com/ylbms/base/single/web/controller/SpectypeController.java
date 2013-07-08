@@ -124,7 +124,7 @@ public class SpectypeController {
 	public Map<String, Object> updateSpectype(SpectypeInfo spectype,Model model) {
 		try {
 			spectypeService.addSpectype(spectype);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK,"spectype");
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error("system error!!" + e.getMessage());

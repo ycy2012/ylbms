@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -23,22 +22,6 @@ import com.ylbms.common.orm.hibernate.HibernateDao;
 @Repository("SingleDao")
 public class SingleInfoDao extends HibernateDao<SingleInfo, String> {
 
-	@Override
-	public Page<SingleInfo> findPage(Page<SingleInfo> page,
-			List<PropertyFilter> filters) {
-		Criterion[] criterions = buildCriterionByPropertyFilter(filters);
-		Criteria c = createCriteria(criterions).setFetchMode("state", FetchMode.JOIN);
-		if (page.isAutoCount()) {
-			long totalCount = countCriteriaResult(c);
-			page.setTotalCount(totalCount);
-		}
-		setPageParameterToCriteria(c, page);
-		@SuppressWarnings("unchecked")
-		List<SingleInfo> result = c.list();
-		page.setResult(result);
-		return page;
-	}
-
 	/**
 	 * 在制作单据时添加明细的时候，防止信息重复添加
 	 * 
@@ -56,7 +39,7 @@ public class SingleInfoDao extends HibernateDao<SingleInfo, String> {
 		Criterion[] criterions = buildCriterionByPropertyFilter(filters);
 		Criteria c = createCriteria(criterions);
 		
-		Criterion stateEQ = Restrictions.eq("state", state); // 状态信息
+		Criterion stateEQ = Restrictions.eq("state.id", state); // 状态信息
 		c.add(stateEQ);
 		Criterion wzEQ = Restrictions.eq("location", wzName); // 位置信息
 		c.add(wzEQ);

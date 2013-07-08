@@ -21,16 +21,15 @@
 						class="required" maxlength="150" value="" />
 				</p>
 				<p>
-					<label>规格型号状态：</label>
-					<select name="sort" class="required combox">
-					<option value="">请选择</option>
-					<option value="1">有效</option>
-					<option value="0" selected>无效</option>
-				</select>
+					<label>显示顺序：</label> <input name="sort" type="text" size="30"
+						class="required" maxlength="150" value="10" /> 
 				</p>
-				<p>
-					<label>规格型号类别：</label> <input name="sort" type="text" size="30"
-						class="required" maxlength="150" value="" /> 
+					<p>
+					<label>状态：</label>
+					<select name="sort" class="required combox">
+					<option value="0">有效</option>
+					<option value="1" selected>无效</option>
+				</select>
 				</p>
 				<p>
 					<label>备注：</label>

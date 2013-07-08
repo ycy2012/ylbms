@@ -134,7 +134,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="state")
 	@JsonIgnore
 	@NotFound(action = NotFoundAction.IGNORE)
 	@NotNull(message="归属部门不能为空")

@@ -186,7 +186,7 @@ public class UserController extends BaseController {
 			log.error("system error!!", e);
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "user", e.getMessage());
 		}
-		return DwzUtil.dialogAjaxDone(DwzUtil.OK, "user", "修改成功");
+		return DwzUtil.dialogAjaxDone(DwzUtil.OK, "user", "用户信息修改成功");
 	}
 
 	/**

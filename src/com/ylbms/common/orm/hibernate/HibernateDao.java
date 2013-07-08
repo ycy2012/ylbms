@@ -487,7 +487,6 @@ public class HibernateDao<T, PK extends Serializable> extends
 		} catch (Exception e) {
 			logger.error("不可能抛出的异常:{}", e.getMessage());
 		}
-
 		// 执行Count查询
 		Long totalCountObject = (Long) c.setProjection(Projections.rowCount())
 				.uniqueResult();
@@ -558,7 +557,6 @@ public class HibernateDao<T, PK extends Serializable> extends
 			criterion = Restrictions.like(propertyName, (String) propertyValue,
 					MatchMode.ANYWHERE);
 			break;
-
 		case LE:
 			criterion = Restrictions.le(propertyName, propertyValue);
 			break;

@@ -108,7 +108,7 @@ public class SingleInfoService {
 	 */
 	public void delByIds(String ids) {
 		String delHQL = "delete SingleInfo where mid in(" + ids + ")";
-		singleDao.createQuery(delHQL, "");
+		singleDao.getSession().createQuery(delHQL).executeUpdate();
 	}
 
 }
