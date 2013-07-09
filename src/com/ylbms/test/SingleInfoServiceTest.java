@@ -39,7 +39,7 @@ public class SingleInfoServiceTest extends AbstractJUnit4SpringContextTests {
 			SpectypeInfo sp=new SpectypeInfo(5050);
 			SingleInfo singleinfo = new SingleInfo();
 			singleinfo.setOwercode("78996385"+i);
-			singleinfo.setLocation("基地");
+//			singleinfo.setLocation("基地");
 			singleinfo.setSpectype(sp);
 			singleinfo.setWzname("压力表SZ型号");
 			singleinfo.setState(s);

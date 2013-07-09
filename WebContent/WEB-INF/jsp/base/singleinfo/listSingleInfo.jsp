@@ -105,7 +105,7 @@
 					<td>${acc.owercode}</td>
 					<td>${acc.wzname}</td>
 					<td>${acc.spectype.speName}</td>
-					<td>${acc.location}</td>
+					<td>${acc.location.allName}</td>
 					<td>${acc.state.stateName}</td>
 					<!-- <td>${acc.classId}</td>
 					<td>${acc.factory}</td>

@@ -63,6 +63,7 @@ public class NewInBillController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/addMx")
 	public String addMx(HttpServletRequest request,
 			@RequestParam("mids") String ids,@RequestParam("wz")String wz, Page<SingleInfo> page,
@@ -88,7 +89,7 @@ public class NewInBillController extends BaseController {
 	public Map<String, Object> addNewBill(SingleForm singles, BillHeadModel bill) {
 		try {
 			// save billheadInfo
-			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "020","基地");
+			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "020",bill.getAcceptLocation());
 			
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {

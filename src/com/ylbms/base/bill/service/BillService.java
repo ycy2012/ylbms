@@ -12,6 +12,7 @@ import com.ylbms.base.bill.dao.BillHeadDao;
 import com.ylbms.base.bill.dao.BillTbodyDao;
 import com.ylbms.base.bill.model.BillHeadModel;
 import com.ylbms.base.bill.model.BillTbodyModel;
+import com.ylbms.base.location.model.Location;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.base.single.model.StateInfo;
 import com.ylbms.base.single.service.SingleInfoService;
@@ -45,7 +46,7 @@ public class BillService {
 	 */
 	@Transactional(readOnly = false, rollbackFor = RuntimeException.class)
 	public void saveBillHeadAndBody(List<SingleInfo> singles,
-			BillHeadModel bhm, String newState,String wzInfo) {
+			BillHeadModel bhm, String newState,Location wzInfo) {
 		bhm.setSxDate(new Date());
 		bhm.setCreateUser(UserUtils.getUser().getFullname());
 		List<BillTbodyModel> list = new ArrayList<BillTbodyModel>(); // 保存对象用的
@@ -54,8 +55,8 @@ public class BillService {
 			btm.setMid(singles.get(i).getMid() == null ? "" : singles.get(i).getMid());
 			btm.setOldState(singles.get(i).getState() == null ? "" : singles.get(i).getState().getId());
 			btm.setNewState(newState == null ? "" : newState);
-			btm.setOldWz(singles.get(i).getLocation() == null ? "" : singles.get(i).getLocation());
-			btm.setNewWz(bhm.getAcceptLocation() == null ? "" : bhm.getAcceptLocation());
+			btm.setOldWz(singles.get(i).getLocation() == null ? "" : singles.get(i).getLocation().getId().toString());
+			btm.setNewWz(bhm.getAcceptLocation() == null ? "" : bhm.getAcceptLocation().getId().toString());
 			btm.setRemark(singles.get(i).getRemark() == null ? "" : singles.get(i).getRemark());
 			btm.setBillId(bhm);
 			list.add(btm);
@@ -72,10 +73,10 @@ public class BillService {
 	 * @param single
 	 */
 	@Transactional(readOnly = false, rollbackFor = RuntimeException.class)
-	public void updateSingle(List<SingleInfo> singles, String newState,String wzInfo) {
+	public void updateSingle(List<SingleInfo> singles, String newState,Location wzInfo) {
 		for (SingleInfo s : singles) {
 			SingleInfo single=singleService.getSingleById(s.getMid());
-			single.setState(new StateInfo("010"));
+			single.setState(new StateInfo(newState));
 			single.setQy_Time(new Date());
 			single.setLocation(wzInfo);
 			singleService.updateSingleInfo(single);

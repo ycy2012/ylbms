@@ -65,8 +65,8 @@
 				<tr target="sdjId_bill" rel="${acc.djId }">
 				<td><input name="djIds" value="'${acc.djId}'" type="checkbox"></td>
 					<td>${acc.djTitle}</td>
-					<td>${acc.sendLocation}</td>
-					<td>${acc.acceptLocation}</td>
+					<td>${acc.sendLocation.locationName}</td>
+					<td>${acc.acceptLocation.locationName}</td>
 					<td><fmt:formatDate value="${acc.sxDate}" pattern="yyyy-MM-dd"/></td>
 					<td><fmt:formatDate value="${acc.createDate}" pattern="yyyy-MM-dd"/> </td>
 					<td>${acc.llren}</td>

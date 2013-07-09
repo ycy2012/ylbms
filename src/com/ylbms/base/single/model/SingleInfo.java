@@ -20,6 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.ylbms.base.location.model.Location;
 import com.ylbms.common.model.BaseModel;
 
 /**
@@ -43,7 +44,7 @@ public class SingleInfo extends BaseModel {
 	private String owercode;// 物资编码
 	private String wzname;// 物资名称
 	private SpectypeInfo spectype;// 规格型号
-	private String location;// 当前位置
+	private Location location;// 当前位置
 	private StateInfo state;// 当前状态
 	private int classId;// 资产种类
 	private int factory;// 生产厂家
@@ -112,7 +113,7 @@ public class SingleInfo extends BaseModel {
 		this.wzname = wzname;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade ={CascadeType.MERGE,CascadeType.REFRESH})
 	@JoinColumn(name = "spectype", nullable = false, referencedColumnName = "speID")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -124,12 +125,15 @@ public class SingleInfo extends BaseModel {
 		this.spectype = spectype;
 	}
 
-	@Column(nullable = false)
-	public String getLocation() {
+	@ManyToOne(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH})
+	@JoinColumn(name="location",referencedColumnName="id")
+	@NotFound(action=NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	public Location getLocation() {
 		return location;
 	}
 
-	public void setLocation(String location) {
+	public void setLocation(Location location) {
 		this.location = location;
 	}
 

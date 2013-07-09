@@ -372,8 +372,7 @@ public class HibernateDao<T, PK extends Serializable> extends
 
 		setPageParameterToCriteria(c, page);
 
-		List<T> result = c.list();
-		page.setResult(result);
+		page.setResult(c.list());
 		return page;
 	}
 

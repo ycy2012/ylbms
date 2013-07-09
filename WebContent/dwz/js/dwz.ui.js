@@ -477,7 +477,7 @@ function initUI(_box){
 	   $(this).click(function(event) {
            var $this = $(this);
            var title = $this.attr("title") || $this.text();
-           var rel = $this.attr("rel") || "ids";
+           var rel = $this.attr("rel") || "ids",flag=0;
            var targetType = $this.attr("targetType");
            var $box = targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
            
@@ -502,17 +502,19 @@ function initUI(_box){
            $("div[class='pageFormContent']").find(".required").each(function(){
 				var v=$(this).val();
 				if(typeof(v)=='undefined'||v==null||v==""){
-					$(this).focus();
 					alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
-					return false;
+					flag+=1;  //用来判断有几个是必须填写的选项是空的
 				}
-		         DWZ.debug(url);
-		            if (!url.isFinishedTm()) {
-		            alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
-		            return false;
-		            }
-				$.pdialog.open(url, rel, title, options);
            });
+           if(flag > 0){
+				return false;
+			}
+	         DWZ.debug(url);
+	            if (!url.isFinishedTm()) {
+	            alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+	            return false;
+	            }
+			$.pdialog.open(url, rel, title, options);
            event.preventDefault();
        }); 
    });

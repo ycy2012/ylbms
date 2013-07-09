@@ -20,12 +20,10 @@
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[3]+">";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].location' value="+temp[4]+">";
+			myTD4.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].location' value="+temp[4]+"> <input type='hidden'  name='singles["+i+"].state' value="+temp[5]+">";
 			var myTD5 = myTR.insertCell(4);
-			myTD5.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].state' value="+temp[5]+">";
-			var myTD5 = myTR.insertCell(5);
 			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark' >";
-			var myTD6 = myTR.insertCell(6);
+			var myTD6 = myTR.insertCell(5);
 			myTD6.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
 		}
 	}
@@ -108,7 +106,6 @@
 						<th>物资名称</th>
 						<th>规格型号</th>
 						<th>当前位置</th>
-						<th>当前状态</th>
 						<th>备注信息</th>
 						<th>操作</th>
 					</tr>

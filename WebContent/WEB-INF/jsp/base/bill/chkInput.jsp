@@ -20,12 +20,10 @@
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[3]+">";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].location' value="+temp[4]+">";
+			myTD4.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].location' value="+temp[4]+"><input type='hidden' name='singles["+i+"].state' value="+temp[5]+">";
 			var myTD5 = myTR.insertCell(4);
-			myTD5.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].state' value="+temp[5]+">";
-			var myTD5 = myTR.insertCell(5);
 			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark' >";
-			var myTD6 = myTR.insertCell(6);
+			var myTD6 = myTR.insertCell(5);
 			myTD6.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
 		}
 	}
@@ -49,20 +47,11 @@
 		$("#wzInfo").val(id);
 		$("#wzName").val(name);
 	}
-	$(document).ready(function(){
-		$("a[class='add']").click(function(){
-			if(getMids()!=""&&getMids()!=null){
-				$(this).attr("href","${ctx}/ckgl/addMx?mids="+getMids());
-			}else{
-				$(this).attr("href","${ctx}/ckgl/addMx?mids=");
-			}
-		});
-	});
 //-->
 </script>
 </head>
 <body class="page">
-	<form action="${ctx}/new/addBill" method="post"
+	<form action="${ctx}/ckgl/addBill" method="post"
 		class="pageForm required-validate"
 		onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent">
@@ -73,7 +62,7 @@
 			<dl>
 				<dt>发料单位：</dt>
 				<dd>
-					<input name="sendLocation" type="text" alt="供货方信息" value="基地" class="required" />
+					<input name="sendLocation" type="text" value="基地" class="required" readonly="readonly" />
 				</dd>
 			</dl>
 			<dl>
@@ -93,7 +82,7 @@
 			<dl>
 				<dt>领料部门：</dt>
 				<dd>
-					<select name="lluint" class="combox">
+					<select name="lluint" class="combox" class="required">
 						<option value="轮南项目部">轮南项目部</option>
 						<option value="库车项目部">库车项目部</option>
 						<option value="塔中项目部">塔中项目部</option>
@@ -111,8 +100,7 @@
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>
-					<li><a class="add"  target="dialog"
-						mask="true" title="添加单件信息"><span>添加明细</span></a></li>
+					<li><a class="add" href="${ctx}/ckgl/addMx"  target="addMxAjaxTodo" title="添加单件信息" warn="有红色星号标识的选项必填！"><span>添加明细</span></a></li>
 					<li class="line">line</li>
 				</ul>
 			</div>
@@ -123,7 +111,6 @@
 						<th>物资名称</th>
 						<th>规格型号</th>
 						<th>当前位置</th>
-						<th>当前状态</th>
 						<th>备注信息</th>
 						<th>操作</th>
 					</tr>
