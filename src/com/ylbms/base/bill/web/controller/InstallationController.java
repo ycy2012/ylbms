@@ -25,40 +25,34 @@ import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.web.BaseController;
 
 /**
- * 新品合格入库单
+ * 压力表安装记录填写
  * 
  * @author JackLiang
  * @version 1.0
- * @date 2013-6-18
+ * @date 2013-7-8
  */
 @Controller
-@RequestMapping(value = "/new")
-public class NewInBillController extends BaseController {
-
-	private static final Log log = LogFactory.getLog(NewInBillController.class);
-
+@RequestMapping(value = "install")
+public class InstallationController extends BaseController {
+	
+	private static final Log log = LogFactory.getLog(InstallationController.class);
 	private static final String NAV_TAB_ID = "billgl";
-
+	
 	@Autowired
-	SingleInfoService singleService;
-
+	private SingleInfoService  singleService;
+	
 	@Autowired
-	BillService billservice;
-
-	/**
-	 * 
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "/newUi")
-	public String newUi(Model model) {
-		return "base/bill/newInput";
+	private BillService billservice;
+	
+	@RequestMapping(value="inputUi")
+	public String installUi(Model model){
+		return "base/bill/installNotes";
 	}
-
 	/**
-	 * 添加单件明细内容
+	 * 添加明细
 	 * 
 	 * @param request
+	 * @param mids
 	 * @param page
 	 * @param model
 	 * @return
@@ -66,31 +60,32 @@ public class NewInBillController extends BaseController {
 	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/addMx")
 	public String addMx(HttpServletRequest request,
-			@RequestParam("mids") String ids,@RequestParam("wz")String wz, Page<SingleInfo> page,
+			@RequestParam("mids") String mids,@RequestParam("wz") String wzName, Page<SingleInfo> page,
 			Model model) {
-		String wzName=URLDecoder.decode(wz),mids=URLDecoder.decode(ids);
+		mids=URLDecoder.decode(mids);wzName=URLDecoder.decode(wzName); //解码处理
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<SingleInfo> list = singleService.findSingleNotInMids(page, filters, mids, "010",wzName);
+		Page<SingleInfo> list = singleService.findSingleNotInMids(page,
+				filters, mids, "030",wzName);
 		model.addAttribute("page", list);
 
 		return "base/bill/addMx";
+
 	}
 	
 	/**
-	 * 添加单据
-	 * 
-	 * @param single
-	 * @param billHead
+	 * 添加单据记录
+	 * @param singles
+	 * @param bill
 	 * @return
 	 */
 	@RequestMapping(value = "/addBill")
 	@ResponseBody
-	public Map<String, Object> addBill(SingleForm singles, BillHeadModel bill) {
+	public Map<String, Object> addNewBill(SingleForm singles, BillHeadModel bill) {
 		try {
 			// save billheadInfo
-			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "020",bill.getAcceptLocation());
-			
+			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "040",bill.getAcceptLocation());
+
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
@@ -100,5 +95,4 @@ public class NewInBillController extends BaseController {
 					e.getMessage());
 		}
 	}
-
 }

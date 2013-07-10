@@ -41,7 +41,7 @@ public class SingleInfoDao extends HibernateDao<SingleInfo, String> {
 		
 		Criterion stateEQ = Restrictions.eq("state.id", state); // 状态信息
 		c.add(stateEQ);
-		Criterion wzEQ = Restrictions.eq("location", wzName); // 位置信息
+		Criterion wzEQ = Restrictions.eq("location.id", Long.parseLong(wzName)); // 位置信息
 		c.add(wzEQ);
 		if (StringUtils.isNotBlank(mids)) {
 			String[] values = mids.split(",");

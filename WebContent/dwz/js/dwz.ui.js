@@ -495,7 +495,7 @@ function initUI(_box){
            options.drawable = eval($this.attr("drawable") || "true");
            options.close = eval($this.attr("close") || "");
            options.param = $this.attr("param") || "";
-           var flwz=$("input[name='sendLocation']").val();
+           var flwz=$("input[name='sendLocation.id']").val();
            var url = ($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
            url=encodeURI(encodeURI(url+"?mids="+getMids()+"&wz="+flwz)); //这个是页面一个方法
            // 添加一些处理方法

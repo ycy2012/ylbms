@@ -73,12 +73,12 @@
 			<c:forEach items="${page.result}" var="acc">
 				<tr target="sid_singleInfo" rel="${acc.mid}">
 					<td><input name="ids"
-						value="${acc.mid}#${acc.owercode}#${acc.wzname}#${acc.spectype.speName}#${acc.location}#${acc.state.id}"
+						value="${acc.mid}#${acc.owercode}#${acc.wzname}#${acc.spectype.speName}#${acc.location.id}#${acc.state.id}"
 						type="checkbox"></td>
 					<td>${acc.owercode}</td>
 					<td>${acc.wzname}</td>
 					<td>${acc.spectype.speName}</td>
-					<td>${acc.location}</td>
+					<td>${acc.location.locationName}</td>
 					<td>${acc.state.stateName}</td>
 					<td>${acc.remark}</td>
 				</tr>

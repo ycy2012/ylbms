@@ -20,7 +20,7 @@
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[3]+">";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].location' value="+temp[4]+"> <input type='hidden'  name='singles["+i+"].state' value="+temp[5]+">";
+			myTD4.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].location.id' value="+temp[4]+"> <input type='hidden'  name='singles["+i+"].state' value="+temp[5]+">";
 			var myTD5 = myTR.insertCell(4);
 			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark' >";
 			var myTD6 = myTR.insertCell(5);
@@ -43,6 +43,10 @@
 		var url=$("a[class='add']").attr("href");
 		return url;
 	}
+	function setWzInfo(id,name){
+		$("#wzInfo").val(id);
+		$("#wzName").val(name);
+	}
 //-->
 </script>
 </head>
@@ -50,7 +54,7 @@
 	<form action="${ctx}/new/addBill" method="post"
 		class="pageForm required-validate"
 		onsubmit="return validateCallback(this, dialogAjaxDone);">
-		<div class="pageFormContent">
+		<div class="pageFormContent" layoutH="600">
 			<div
 				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">新产品入库单</div>
 				<input type="hidden" name="djTitle" value="新产品入库单">
@@ -58,13 +62,15 @@
 			<dl>
 				<dt>供货方：</dt>
 				<dd>
-					<input name="sendLocation" type="text" alt="供货方信息" class="required" />
+					<input name="sendLocation.id" type="text" alt="供货方信息" class="required" />
 				</dd>
 			</dl>
 			<dl>
 				<dt>接收方：</dt>
 				<dd>
-					<input name="acceptLocation" type="text" readonly="readonly" value="基地" />
+					<input name="acceptLocation.id" type="hidden" id="wzInfo" />
+			        <input type="text"  readonly="readonly" id="wzName" class="required">
+					<a class="btnLook" href="${ctx}/location/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	
 				</dd>
 			</dl>
 			<dl>
@@ -91,7 +97,7 @@
 				</dd>
 			</dl>
 		</div>
-		<div class="pageContent" layoutH="190">
+		<div class="pageContent" layoutH="200">
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>

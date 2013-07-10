@@ -39,10 +39,10 @@ public class BillService {
 
 	/**
 	 * 保存单据
-	 * 
-	 * @param singles
-	 * @param bhm
-	 * @param newState
+	 * @param singles 明细
+	 * @param bhm 表头信息
+	 * @param newState 新状态
+	 * @param wzInfo 位置信息
 	 */
 	@Transactional(readOnly = false, rollbackFor = RuntimeException.class)
 	public void saveBillHeadAndBody(List<SingleInfo> singles,

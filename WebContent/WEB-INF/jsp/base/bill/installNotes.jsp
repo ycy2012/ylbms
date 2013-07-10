@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>入库管理</title>
+<title>安装记录添加</title>
 <script type="text/javascript">
 <!--
 	function addTr(value) {
@@ -20,7 +20,7 @@
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[3]+">";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].location.id' value="+temp[4]+"><input type='hidden' name='singles["+i+"].state' value="+temp[5]+">";
+			myTD4.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].location.id' value="+temp[4]+"> <input type='hidden'  name='singles["+i+"].state' value="+temp[5]+">";
 			var myTD5 = myTR.insertCell(4);
 			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark' >";
 			var myTD6 = myTR.insertCell(5);
@@ -51,38 +51,41 @@
 </script>
 </head>
 <body class="page">
-	<form action="${ctx}/ckgl/addBill" method="post"
+	<form action="${ctx}/install/addBill" method="post"
 		class="pageForm required-validate"
 		onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageHeader">
 		<div class="pageFormContent" layoutH="600">
 			<div
-				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">领料凭证</div>
-				<input type="hidden" name="djTitle" value="领料凭证">
+				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">安装信息记录表</div>
+				<input type="hidden" name="djTitle" value="安装信息记录表">
 			<div class="divider"></div>
 			<dl>
-				<dt>发料单位：</dt>
-				<dd> <input name="sendLocation.id" type="hidden" value="2051"/>
-					 <input  type="text" value="基地" class="required" readonly="readonly" /> 
-				</dd>
-			</dl>
-			<dl>
-				<dt>领料单位：</dt>
+				<dt>供货方：</dt>
 				<dd>
-					<input name="acceptLocation.id" type="hidden" id="wzInfo" />
+				    <input name="sendLocation.id" type="hidden" id="wzInfo" />
 			        <input type="text"  readonly="readonly" id="wzName" class="required">
 					<a class="btnLook" href="${ctx}/location/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	
 				</dd>
 			</dl>
 			<dl>
-				<dt>领料人：</dt>
+				<dt>接收方：</dt>
 				<dd>
-					<input name="llren" type="text" alt="领料人信息" class="required" />
+				   <input name="acceptLocation.id" type="hidden"  value="2051" />
+					<input  type="text" readonly="readonly" value="基地" />
 				</dd>
 			</dl>
 			<dl>
-				<dt>领料部门：</dt>
+				<dt>安装人员：</dt>
+				<dd>
+					<input name="llren" type="text" alt="安装人员信息" class="required" />
+				</dd>
+			</dl>
+			<dl>
+				<dt>领料单位：</dt>
 				<dd>
 					<select name="lluint" class="combox" class="required">
+					    <option value="">请选择信息</option>
 						<option value="轮南项目部">轮南项目部</option>
 						<option value="库车项目部">库车项目部</option>
 						<option value="塔中项目部">塔中项目部</option>
@@ -92,15 +95,16 @@
 			<dl class="nowrap">
 				<dt>备注信息：</dt>
 				<dd>
-					<textarea name="remark" cols="80" rows="1"></textarea>
+					<textarea name="remark" cols="80" rows="2"></textarea>
 				</dd>
 			</dl>
 		</div>
-		<div class="pageContent" layoutH="200">
+		</div>
+		<div class="pageContent" layoutH="208">
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>
-					<li><a class="add" href="${ctx}/ckgl/addMx"  target="addMxAjaxTodo" title="添加单件信息" warn="有红色星号标识的选项必填！"><span>添加明细</span></a></li>
+					<li><a class="add" href="${ctx}/install/addMx"  target="addMxAjaxTodo" title="添加单件信息" warn="有红色星号标识的选项必填！"><span>添加明细</span></a></li>
 					<li class="line">line</li>
 				</ul>
 			</div>
@@ -110,7 +114,8 @@
 						<th>单件虚拟编号</th>
 						<th>物资名称</th>
 						<th>规格型号</th>
-						<th>当前位置</th>
+						<th>安装位置</th>
+						<th>安装时间</th>
 						<th>备注信息</th>
 						<th>操作</th>
 					</tr>

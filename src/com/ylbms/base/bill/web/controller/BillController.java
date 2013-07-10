@@ -40,23 +40,45 @@ public class BillController extends BaseController {
 	@Autowired
 	BillHeadService billHService;
 
-	public Map<String, Object> add(BillHeadModel bHead, BillTbodyModel djmx) {
-		try {
-
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
-		} catch (Exception e) {
-			log.error("system error" + e.getMessage());
-			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
-					e.getMessage());
-		}
+	/**
+	 * 修改单据信息
+	 * 
+	 * @param djID
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "editUi/{djId}")
+	public String editUi(@PathVariable("djId") String djId, Model model) {
+		BillHeadModel billH=billHService.getBillHeadByID(djId);
+		model.addAttribute("bill", billH); 
+		return "base/bill/editBill";
 	}
 
+	/**
+	 * 查看单件详细信息
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "viewUi/{djId}")
+	public String viewUi(@PathVariable("djId") String djId, Model model) {
+		BillHeadModel billH=billHService.getBillHeadByID(djId);
+		model.addAttribute("billH", billH);
+		return "base/bill/viewBill";
+	}
+
+	/**
+	 * 删除单据
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/delete/{id}")
 	@ResponseBody
 	public Map<String, Object> delete(@PathVariable("id") String id) {
 		try {
 			billHService.deleteBill(id);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
 			log.error("system error" + e.getMessage());
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
