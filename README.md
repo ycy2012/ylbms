@@ -1,5 +1,5 @@
 ##ylbms version1.0
 =====
-###springMVC_spring_hibernate_shiro
+###框架选择：springMVC_spring_hibernate_shiro
 =====
 ###纯属娱乐
