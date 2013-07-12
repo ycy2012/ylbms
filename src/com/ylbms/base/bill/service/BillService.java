@@ -64,21 +64,38 @@ public class BillService {
 		bhm.setBillTbody(list);
 		billHDao.save(bhm);
 		// 更新单件信息
+		if(bhm.getDjTitle().indexOf("安装")>0){
+			updateSingleByInstallNotes(singles);
+		}
 		updateSingle(singles, newState, wzInfo);
 	}
 
 	/**
-	 * update singleInfo
+	 * update singleInfo otherInfos
 	 * 
 	 * @param single
 	 */
-	@Transactional(readOnly = false, rollbackFor = RuntimeException.class)
+	@Transactional(readOnly=false)
 	public void updateSingle(List<SingleInfo> singles, String newState,Location wzInfo) {
 		for (SingleInfo s : singles) {
 			SingleInfo single=singleService.getSingleById(s.getMid());
 			single.setState(new StateInfo(newState));
 			single.setQy_Time(new Date());
 			single.setLocation(wzInfo);
+			singleService.updateSingleInfo(single);
+		}
+	}
+	/**
+	 * 更新安装位置  ----根据安装记录填写信息更新
+	 * @param singles
+	 */
+	@Transactional(readOnly=false)
+	public void updateSingleByInstallNotes(List<SingleInfo> singles){
+		for (SingleInfo s : singles) {
+			SingleInfo single=singleService.getSingleById(s.getMid());
+			single.setAz_Location(s.getAz_Location()==null?"":s.getAz_Location());
+			single.setIsAnz("1");
+			single.setRemark(s.getRemark()==null?"":s.getRemark());
 			singleService.updateSingleInfo(single);
 		}
 	}

@@ -13,7 +13,7 @@
 				<tr>
 					<td>物资编码：<input type="text" name="filter_LIKES_owercode"  value="${param['filter_LIKES_owercode']}"/></td>
 					<td>物资名称：<input type="text" name="filter_LIKES_wzname"  value="${param['filter_LIKES_wzname']}"/></td>
-					<td>当前位置：<input type="text" name="filter_LIKES_location"  value="${param['filter_LIKES_location']}"/></td>
+					<td>当前位置：<input type="text" name="filter_EQS_location.id"  value="${param['filter_LIKES_location']}"/></td>
 					<td>当前状态： <select name="filter_EQS_state" value="${param['filter_EQS_state']}">
 							<option value="1">无效</option>
 							<option value="0">有效</option>
@@ -113,7 +113,7 @@
 					<td>${acc.jd_time}</td>
 					<td>${acc.sc_unit}</td>
 					<td>${acc.yx_Time}</td>
-					<td>${acc.bf_Time}</td>
+					<td>${acc.bfTime}</td>
 					<td>${acc.qy_Time}</td>
 					<td>${acc.type_Id}</td>
 					<td>${acc.zqd}</td>
@@ -135,7 +135,7 @@
 					<td>${acc.remark}</td> 
 					<td><a title="删除单件信息" target="ajaxTodo"
 						href="${ctx}/single/delete/${acc.mid}" class="btnDel">删除单件信息</a>
-						 <a title="编辑单件信息" target="dialog"
+						 <a title="编辑单件信息" target="navTab"
 						href="${ctx}/single/edit/${acc.mid}" class="btnEdit">编辑单件信息</a>
 					</td> 
 				</tr>

@@ -65,7 +65,7 @@ public class InstallationController extends BaseController {
 		mids=URLDecoder.decode(mids);wzName=URLDecoder.decode(wzName); //解码处理
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<SingleInfo> list = singleService.findSingleNotInMids(page,
+		Page<SingleInfo> list = singleService.findSingleByInstall(page,
 				filters, mids, "030",wzName);
 		model.addAttribute("page", list);
 
@@ -84,7 +84,7 @@ public class InstallationController extends BaseController {
 	public Map<String, Object> addNewBill(SingleForm singles, BillHeadModel bill) {
 		try {
 			// save billheadInfo
-			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "040",bill.getAcceptLocation());
+			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "030",bill.getAcceptLocation());
 
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {

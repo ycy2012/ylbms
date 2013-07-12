@@ -69,7 +69,7 @@ public class RecheackController extends BaseController {
 		String wzName=URLDecoder.decode(wz),mids=URLDecoder.decode(ids);
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<SingleInfo> list = singleService.findSingleNotInMids(page, filters, mids, "010",wzName);
+		Page<SingleInfo> list = singleService.findSingleNotInMids(page, filters, mids, "030",wzName);
 		model.addAttribute("page", list);
 
 		return "base/bill/addMx";
@@ -87,7 +87,7 @@ public class RecheackController extends BaseController {
 	public Map<String, Object> addBill(SingleForm singles, BillHeadModel bill) {
 		try {
 			// save billheadInfo
-			billService.saveBillHeadAndBody(singles.getSingles(), bill, "020",bill.getAcceptLocation());
+			billService.saveBillHeadAndBody(singles.getSingles(), bill, "040",bill.getAcceptLocation());
 			
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {

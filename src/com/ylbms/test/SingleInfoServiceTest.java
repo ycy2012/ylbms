@@ -30,9 +30,9 @@ public class SingleInfoServiceTest extends AbstractJUnit4SpringContextTests {
 	@Autowired
 	private SingleInfoService singleInfoService;
 	
+	@Autowired
 	private SingleInfoDao singleDao;
 
-	@Test
 	public void test() {
 		for (int i = 0; i < 20; i++) {
 			StateInfo s=new StateInfo("010");
@@ -47,9 +47,11 @@ public class SingleInfoServiceTest extends AbstractJUnit4SpringContextTests {
 		}
 	}
 	
+	@Test
 	public void updateSingle() {
-		String hql="update SingleInfo set owercode=? where state='20' ";
-	    singleDao.batchExecute(hql, "00000000");
+//		String hql="update SingleInfo set owercode=? where state='20' ";
+//	    singleDao.batchExecute(hql, "00000000");
+		singleInfoService.test();
 	}
 	
 }

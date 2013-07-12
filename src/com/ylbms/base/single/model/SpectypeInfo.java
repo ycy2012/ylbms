@@ -42,6 +42,7 @@ public class SpectypeInfo extends BaseModel {
 	private Set<SingleInfo> singles=new HashSet<SingleInfo>(); //one to many
 	
 	public SpectypeInfo() {
+		this.status=DEL_FLAG_NORMAL;
 	}
 
 	public SpectypeInfo(int speId) {

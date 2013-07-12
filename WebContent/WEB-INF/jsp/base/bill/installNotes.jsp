@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../../inc/taglib.jsp"%>
+<%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,9 +21,9 @@
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[3]+">";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].location.id' value="+temp[4]+"> <input type='hidden'  name='singles["+i+"].state' value="+temp[5]+">";
+			myTD4.innerHTML = "<input type='text'  name='singles["+i+"].az_Location' > <input type='hidden'  name='singles["+i+"].state' value="+temp[5]+">";
 			var myTD5 = myTR.insertCell(4);
-			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark' >";
+			myTD5.innerHTML = "<input  type='text' name='singles["+i+"].remark'> <input type='hidden'  name='singles["+i+"].location.id' value="+temp[4]+">";
 			var myTD6 = myTR.insertCell(5);
 			myTD6.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
 		}
@@ -61,7 +62,7 @@
 				<input type="hidden" name="djTitle" value="安装信息记录表">
 			<div class="divider"></div>
 			<dl>
-				<dt>供货方：</dt>
+				<dt>当前位置：</dt>
 				<dd>
 				    <input name="sendLocation.id" type="hidden" id="wzInfo" />
 			        <input type="text"  readonly="readonly" id="wzName" class="required">
@@ -115,7 +116,6 @@
 						<th>物资名称</th>
 						<th>规格型号</th>
 						<th>安装位置</th>
-						<th>安装时间</th>
 						<th>备注信息</th>
 						<th>操作</th>
 					</tr>

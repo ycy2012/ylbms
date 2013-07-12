@@ -46,6 +46,7 @@
 	function setWzInfo(id,name){
 		$("#wzInfo").val(id);
 		$("#wzName").val(name);
+		$("#ss").val(name);
 	}
 //-->
 </script>
@@ -57,8 +58,8 @@
 		<div class="pageHeader">
 		<div class="pageFormContent" layoutH="600">
 			<div
-				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">安装信息记录表</div>
-				<input type="hidden" name="djTitle" value="安装信息记录表">
+				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">回收送检记录表</div>
+				<input type="hidden" name="djTitle" value="回收送检记录表">
 			<div class="divider"></div>
 			<dl>
 				<dt>发料地点：</dt>
@@ -82,14 +83,9 @@
 				</dd>
 			</dl>
 			<dl>
-				<dt>领料单位：</dt>
+				<dt>送料单位：</dt>
 				<dd>
-					<select name="lluint" class="combox" class="required">
-					    <option value="">请选择信息</option>
-						<option value="轮南项目部">轮南项目部</option>
-						<option value="库车项目部">库车项目部</option>
-						<option value="塔中项目部">塔中项目部</option>
-					</select>
+				    <input name="lluint" type="text" id="ss">
 				</dd>
 			</dl>
 			<dl class="nowrap">
