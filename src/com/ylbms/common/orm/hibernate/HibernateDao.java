@@ -30,6 +30,7 @@ import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.internal.CriteriaImpl;
+import org.hibernate.internal.CriteriaImpl.OrderEntry;
 import org.hibernate.transform.ResultTransformer;
 import org.hibernate.transform.Transformers;
 import org.springframework.util.Assert;
@@ -480,7 +481,7 @@ public class HibernateDao<T, PK extends Serializable> extends
 
 		List<CriteriaImpl.OrderEntry> orderEntries = null;
 		try {
-			orderEntries = (List) ReflectionUtils.getFieldValue(impl,
+			orderEntries = (List<OrderEntry>) ReflectionUtils.getFieldValue(impl,
 					"orderEntries");
 			ReflectionUtils
 					.setFieldValue(impl, "orderEntries", new ArrayList());
