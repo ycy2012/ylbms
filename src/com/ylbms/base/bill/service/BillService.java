@@ -13,9 +13,9 @@ import com.ylbms.base.bill.dao.BillTbodyDao;
 import com.ylbms.base.bill.model.BillHeadModel;
 import com.ylbms.base.bill.model.BillTbodyModel;
 import com.ylbms.base.location.model.Location;
+import com.ylbms.base.single.dao.SingleInfoDao;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.base.single.model.StateInfo;
-import com.ylbms.base.single.service.SingleInfoService;
 import com.ylbms.system.utils.UserUtils;
 
 /**
@@ -35,7 +35,7 @@ public class BillService {
 	BillTbodyDao billTbodyDao;
 
 	@Autowired
-	SingleInfoService singleService;
+	SingleInfoDao singleDao;
 
 	/**
 	 * 保存单据
@@ -75,28 +75,26 @@ public class BillService {
 	 * 
 	 * @param single
 	 */
-	@Transactional(readOnly=false)
 	public void updateSingle(List<SingleInfo> singles, String newState,Location wzInfo) {
 		for (SingleInfo s : singles) {
-			SingleInfo single=singleService.getSingleById(s.getMid());
+			SingleInfo single=singleDao.get(s.getMid());
 			single.setState(new StateInfo(newState));
 			single.setQy_Time(new Date());
 			single.setLocation(wzInfo);
-			singleService.updateSingleInfo(single);
+			singleDao.save(single);
 		}
 	}
 	/**
 	 * 更新安装位置  ----根据安装记录填写信息更新
 	 * @param singles
 	 */
-	@Transactional(readOnly=false)
 	public void updateSingleByInstallNotes(List<SingleInfo> singles){
 		for (SingleInfo s : singles) {
-			SingleInfo single=singleService.getSingleById(s.getMid());
+			SingleInfo single=singleDao.get(s.getMid());
 			single.setAz_Location(s.getAz_Location()==null?"":s.getAz_Location());
 			single.setIsAnz("1");
 			single.setRemark(s.getRemark()==null?"":s.getRemark());
-			singleService.updateSingleInfo(single);
+			singleDao.save(single);
 		}
 	}
 
