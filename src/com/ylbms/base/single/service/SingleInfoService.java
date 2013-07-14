@@ -3,6 +3,9 @@ package com.ylbms.base.single.service;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +16,15 @@ import com.ylbms.base.single.dao.SingleInfoDao;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
+import com.ylbms.common.utils.StringUtils;
 
 /**
  * 
  * @author zhangjl
  * @version 1.0
  * @date 2013-6-8
+ * @editor jackLiang
+ * @date  2013年7月14日 10:29:33
  */
 @Service
 @Transactional
@@ -107,14 +113,30 @@ public class SingleInfoService {
 
 	/**
 	 * 根据分页查询单件明细
-	 * 
+	 * @author JackLiang 2013年7月14日 10:34:46
 	 * @param page
 	 * @param filters
 	 * @return
 	 */
-	public Page<SingleInfo> findSingleInfo(Page<SingleInfo> page,
-			List<PropertyFilter> filters) {
-		return singleDao.findPage(page, filters);
+	public Page<SingleInfo> findSingleInfo(Page<SingleInfo> page,SingleInfo single) {
+		DetachedCriteria dc = singleDao.createDetachedCriteria();
+		dc.createAlias("location", "l");
+		if(single.getLocation()!=null&& single.getLocation().getId()!=null){
+			dc.add(Restrictions.eq("location.id", single.getLocation().getId()));
+		}
+		if(single.getSpectype()!=null&&single.getSpectype().getSpeId()!=null){
+			dc.add(Restrictions.eq("spectype.speId", single.getSpectype().getSpeId()));
+		}
+		if(StringUtils.isNotEmpty(single.getMid())){
+			dc.add(Restrictions.eq("mid", single.getMid()));
+		}
+		if(StringUtils.isNotEmpty(single.getWzname())){
+			dc.add(Restrictions.like("wzName", single.getWzname(), MatchMode.ANYWHERE));
+		}
+		if (!StringUtils.isNotEmpty(page.getOrderBy())){
+			dc.addOrder(Order.asc("company.code")).addOrder(Order.asc("office.code")).addOrder(Order.desc("id"));
+		}
+		return singleDao.find(page, dc);
 	}
 
 	/**

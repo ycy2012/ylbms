@@ -116,11 +116,9 @@ public class SingleInfoController extends BaseController {
 	 */
 
 	@RequestMapping(value = "/list")
-	public String list(HttpServletRequest request, Page<SingleInfo> page,
+	public String list(HttpServletRequest request, Page<SingleInfo> page,SingleInfo single,
 			Model model) {
-		List<PropertyFilter> filters = PropertyFilter
-				.buildFromHttpRequest(request);
-		Page<SingleInfo> list = singleInfoService.findSingleInfo(page, filters);
+		Page<SingleInfo> list = singleInfoService.findSingleInfo(page, single);
 		model.addAttribute("page", list);
 		return "base/singleinfo/listSingleInfo";
 	}
