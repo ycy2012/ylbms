@@ -16,10 +16,16 @@ import javax.validation.constraints.NotNull;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.FilterJoinTable;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.ylbms.base.location.model.Location;
 import com.ylbms.common.model.BaseModel;
 
 /**
@@ -43,7 +49,7 @@ public class SingleInfo extends BaseModel {
 	private String owercode;// 物资编码
 	private String wzname;// 物资名称
 	private SpectypeInfo spectype;// 规格型号
-	private String location;// 当前位置
+	private Location location;// 当前位置
 	private StateInfo state;// 当前状态
 	private int classId;// 资产种类
 	private int factory;// 生产厂家
@@ -51,7 +57,7 @@ public class SingleInfo extends BaseModel {
 	private Date jd_time;// 检测日期
 	private String sc_unit;// 所属单位
 	private Date yx_Time;// 有效日期
-	private Date bf_Time;// 报废日期
+	private Date bfTime;// 报废日期
 	private Date qy_Time;// 启用日期
 	private int type_Id;// 计量类别
 	private Float zqd;// 精确度
@@ -65,6 +71,7 @@ public class SingleInfo extends BaseModel {
 	private String gdzc_Code;// 固定资产编码
 	private String tx_Code;// 条码号
 	private String az_Location;// 安装位置
+	private String isAnz;  // 是否安装  其中1表示安装了，0表示没有安装
 	private Date gr_Date;// 购入日期
 	private String shdw;// 四位定号
 	private String other;// 其他指标
@@ -75,6 +82,7 @@ public class SingleInfo extends BaseModel {
 	
 	public SingleInfo() {
 		this.status = DEL_FLAG_NORMAL;
+		this.isAnz=DEL_FLAG_NORMAL;
 	}
 
 	public SingleInfo(String mid) {
@@ -112,9 +120,10 @@ public class SingleInfo extends BaseModel {
 		this.wzname = wzname;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade ={CascadeType.MERGE,CascadeType.REFRESH})
 	@JoinColumn(name = "spectype", nullable = false, referencedColumnName = "speID")
 	@NotFound(action = NotFoundAction.IGNORE)
+	@Fetch(FetchMode.JOIN)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public SpectypeInfo getSpectype() {
 		return spectype;
@@ -124,17 +133,21 @@ public class SingleInfo extends BaseModel {
 		this.spectype = spectype;
 	}
 
-	@Column(nullable = false)
-	public String getLocation() {
+	@ManyToOne(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH})
+	@JoinColumn(name="location")
+	@Fetch(FetchMode.JOIN)
+	@NotFound(action=NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	public Location getLocation() {
 		return location;
 	}
 
-	public void setLocation(String location) {
+	public void setLocation(Location location) {
 		this.location = location;
 	}
 
 	@ManyToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="state")
 	@JsonIgnore
 	@NotFound(action = NotFoundAction.IGNORE)
 	@NotNull(message="归属部门不能为空")
@@ -200,13 +213,14 @@ public class SingleInfo extends BaseModel {
 		this.yx_Time = yx_Time;
 	}
 
-	@Column(nullable = false)
-	public Date getBf_Time() {
-		return bf_Time;
+	@Column(name="bf_time")
+	@JSONField(format = "yyyy-mm-dd")
+	public Date getBfTime() {
+		return bfTime;
 	}
 
-	public void setBf_Time(Date bf_Time) {
-		this.bf_Time = bf_Time;
+	public void setBfTime(Date bfTime) {
+		this.bfTime = bfTime;
 	}
 
 	@Column(nullable = false)
@@ -316,6 +330,14 @@ public class SingleInfo extends BaseModel {
 
 	public void setAz_Location(String az_Location) {
 		this.az_Location = az_Location;
+	}
+
+	public String getIsAnz() {
+		return isAnz;
+	}
+
+	public void setIsAnz(String isAnz) {
+		this.isAnz = isAnz;
 	}
 
 	public Date getGr_Date() {

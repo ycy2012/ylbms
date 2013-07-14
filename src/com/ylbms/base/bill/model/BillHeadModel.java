@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,14 +21,15 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.ylbms.base.location.model.Location;
 import com.ylbms.common.model.BaseModel;
-import com.ylbms.system.utils.UserUtils;
 
 /**
  * 
  * @author JackLiang
  * @version 1.0
  * @date 2013-6-14
+ * @modify JackLiang 2013年7月8日 16:48:45
  */
 @Entity
 @Table(name = "ylbms_dj_thead")
@@ -39,9 +42,9 @@ public class BillHeadModel extends BaseModel {
 
 	private String djTitle;
 
-	private String sendLocation;
+	private Location sendLocation;
 
-	private String acceptLocation;
+	private Location acceptLocation;
 
 	private Date sxDate; // 生效日期
 
@@ -76,6 +79,7 @@ public class BillHeadModel extends BaseModel {
 	private List<BillTbodyModel> billTbody;
 
 	public BillHeadModel() {
+		this.createDate=new Date();
 		this.status=DEL_FLAG_NORMAL;
 	}
 
@@ -105,19 +109,27 @@ public class BillHeadModel extends BaseModel {
 		this.djTitle = djTitle;
 	}
 
-	public String getSendLocation() {
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.LAZY)
+	@JoinColumn(name="sendLocation",nullable=false)
+	@NotFound(action=NotFoundAction.IGNORE)
+	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+	public Location getSendLocation() {
 		return sendLocation;
 	}
 
-	public void setSendLocation(String sendLocation) {
+	public void setSendLocation(Location sendLocation) {
 		this.sendLocation = sendLocation;
 	}
 
-	public String getAcceptLocation() {
+	@ManyToOne(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH})
+	@JoinColumn(name="acceptLocation",nullable=false)
+	@NotFound(action=NotFoundAction.IGNORE)
+	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+	public Location getAcceptLocation() {
 		return acceptLocation;
 	}
 
-	public void setAcceptLocation(String acceptLocation) {
+	public void setAcceptLocation(Location acceptLocation) {
 		this.acceptLocation = acceptLocation;
 	}
 

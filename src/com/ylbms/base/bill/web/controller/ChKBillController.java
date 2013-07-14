@@ -1,5 +1,6 @@
 package com.ylbms.base.bill.web.controller;
 
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -63,10 +64,13 @@ public class ChKBillController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/addMx")
 	public String addMx(HttpServletRequest request,
-			@RequestParam("mids") String mids,@RequestParam String wzName, Page<SingleInfo> page,
+			@RequestParam("mids") String mids,@RequestParam("wz") String wzName, Page<SingleInfo> page,
 			Model model) {
+		wzName=URLDecoder.decode(wzName);mids=URLDecoder.decode(mids);   //解码处理
+		
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
 		Page<SingleInfo> list = singleService.findSingleNotInMids(page,

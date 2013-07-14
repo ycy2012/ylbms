@@ -12,6 +12,7 @@ import com.ylbms.base.bill.dao.BillHeadDao;
 import com.ylbms.base.bill.dao.BillTbodyDao;
 import com.ylbms.base.bill.model.BillHeadModel;
 import com.ylbms.base.bill.model.BillTbodyModel;
+import com.ylbms.base.location.model.Location;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.base.single.model.StateInfo;
 import com.ylbms.base.single.service.SingleInfoService;
@@ -38,14 +39,14 @@ public class BillService {
 
 	/**
 	 * 保存单据
-	 * 
-	 * @param singles
-	 * @param bhm
-	 * @param newState
+	 * @param singles 明细
+	 * @param bhm 表头信息
+	 * @param newState 新状态
+	 * @param wzInfo 位置信息
 	 */
 	@Transactional(readOnly = false, rollbackFor = RuntimeException.class)
 	public void saveBillHeadAndBody(List<SingleInfo> singles,
-			BillHeadModel bhm, String newState,String wzInfo) {
+			BillHeadModel bhm, String newState,Location wzInfo) {
 		bhm.setSxDate(new Date());
 		bhm.setCreateUser(UserUtils.getUser().getFullname());
 		List<BillTbodyModel> list = new ArrayList<BillTbodyModel>(); // 保存对象用的
@@ -54,8 +55,8 @@ public class BillService {
 			btm.setMid(singles.get(i).getMid() == null ? "" : singles.get(i).getMid());
 			btm.setOldState(singles.get(i).getState() == null ? "" : singles.get(i).getState().getId());
 			btm.setNewState(newState == null ? "" : newState);
-			btm.setOldWz(singles.get(i).getLocation() == null ? "" : singles.get(i).getLocation());
-			btm.setNewWz(bhm.getAcceptLocation() == null ? "" : bhm.getAcceptLocation());
+			btm.setOldWz(singles.get(i).getLocation() == null ? "" : singles.get(i).getLocation().getId().toString());
+			btm.setNewWz(bhm.getAcceptLocation() == null ? "" : bhm.getAcceptLocation().getId().toString());
 			btm.setRemark(singles.get(i).getRemark() == null ? "" : singles.get(i).getRemark());
 			btm.setBillId(bhm);
 			list.add(btm);
@@ -63,21 +64,38 @@ public class BillService {
 		bhm.setBillTbody(list);
 		billHDao.save(bhm);
 		// 更新单件信息
+		if(bhm.getDjTitle().indexOf("安装")>0){
+			updateSingleByInstallNotes(singles);
+		}
 		updateSingle(singles, newState, wzInfo);
 	}
 
 	/**
-	 * update singleInfo
+	 * update singleInfo otherInfos
 	 * 
 	 * @param single
 	 */
-	@Transactional(readOnly = false, rollbackFor = RuntimeException.class)
-	public void updateSingle(List<SingleInfo> singles, String newState,String wzInfo) {
+	@Transactional(readOnly=false)
+	public void updateSingle(List<SingleInfo> singles, String newState,Location wzInfo) {
 		for (SingleInfo s : singles) {
 			SingleInfo single=singleService.getSingleById(s.getMid());
-			single.setState(new StateInfo("010"));
+			single.setState(new StateInfo(newState));
 			single.setQy_Time(new Date());
 			single.setLocation(wzInfo);
+			singleService.updateSingleInfo(single);
+		}
+	}
+	/**
+	 * 更新安装位置  ----根据安装记录填写信息更新
+	 * @param singles
+	 */
+	@Transactional(readOnly=false)
+	public void updateSingleByInstallNotes(List<SingleInfo> singles){
+		for (SingleInfo s : singles) {
+			SingleInfo single=singleService.getSingleById(s.getMid());
+			single.setAz_Location(s.getAz_Location()==null?"":s.getAz_Location());
+			single.setIsAnz("1");
+			single.setRemark(s.getRemark()==null?"":s.getRemark());
 			singleService.updateSingleInfo(single);
 		}
 	}

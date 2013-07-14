@@ -28,7 +28,7 @@
 					</select>
 				</p>
 				<p>
-					<label>规格型号类别：</label> <input name="sort" type="text" size="30"
+					<label>显示顺序：</label> <input name="sort" type="text" size="30"
 						class="required" maxlength="150" value="${obj.sort}" />
 				</p>
 				<p>

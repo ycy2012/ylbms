@@ -67,12 +67,12 @@ public class IncrementGenerator implements IdentifierGenerator, Configurable {
 				String old = rs.getString(1);
 				if (StringUtils.isNotBlank(old)) {
 					Long id = Long.parseLong(old.substring(2, old.length())) + 1L;
-					next = "dj" + id.toString();
+					next = "DJ" + id.toString();
 				} else {
-					next = "dj1000000000000000";
+					next = "DJ1000000000000000";
 				}
 			} else {
-				next = "dj1000000000000000";
+				next = "DJ1000000000000000";
 			}
 		} catch (SQLException e) {
 			throw new HibernateException(e);

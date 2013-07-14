@@ -25,36 +25,34 @@ import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.web.BaseController;
 
 /**
- * 新品合格入库单
+ * 送检信息记录管理
  * 
  * @author JackLiang
  * @version 1.0
- * @date 2013-6-18
+ * @date 2013-7-8
  */
 @Controller
-@RequestMapping(value = "/new")
-public class NewInBillController extends BaseController {
-
-	private static final Log log = LogFactory.getLog(NewInBillController.class);
-
+@RequestMapping(value = "cheack")
+public class RecheackController extends BaseController {
+	private static final Log log = LogFactory.getLog(RecheackController.class);
 	private static final String NAV_TAB_ID = "billgl";
-
+	
 	@Autowired
-	SingleInfoService singleService;
-
+	private BillService billService;
+	
 	@Autowired
-	BillService billservice;
+	private SingleInfoService singleService;
 
 	/**
+	 * to cheack notes page
 	 * 
-	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/newUi")
-	public String newUi(Model model) {
-		return "base/bill/newInput";
+	@RequestMapping(value = "cheackUi")
+	public String toCheackUi() {
+		return "base/bill/recheackNotes";
 	}
-
+	
 	/**
 	 * 添加单件明细内容
 	 * 
@@ -71,7 +69,7 @@ public class NewInBillController extends BaseController {
 		String wzName=URLDecoder.decode(wz),mids=URLDecoder.decode(ids);
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<SingleInfo> list = singleService.findSingleNotInMids(page, filters, mids, "010",wzName);
+		Page<SingleInfo> list = singleService.findSingleNotInMids(page, filters, mids, "030",wzName);
 		model.addAttribute("page", list);
 
 		return "base/bill/addMx";
@@ -80,8 +78,8 @@ public class NewInBillController extends BaseController {
 	/**
 	 * 添加单据
 	 * 
-	 * @param single
-	 * @param billHead
+	 * @param single 
+	 * @param billHead 表头信息
 	 * @return
 	 */
 	@RequestMapping(value = "/addBill")
@@ -89,7 +87,7 @@ public class NewInBillController extends BaseController {
 	public Map<String, Object> addBill(SingleForm singles, BillHeadModel bill) {
 		try {
 			// save billheadInfo
-			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "020",bill.getAcceptLocation());
+			billService.saveBillHeadAndBody(singles.getSingles(), bill, "040",bill.getAcceptLocation());
 			
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {
@@ -100,5 +98,6 @@ public class NewInBillController extends BaseController {
 					e.getMessage());
 		}
 	}
+
 
 }

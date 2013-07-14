@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -22,22 +22,6 @@ import com.ylbms.common.orm.hibernate.HibernateDao;
  */
 @Repository("SingleDao")
 public class SingleInfoDao extends HibernateDao<SingleInfo, String> {
-
-	@Override
-	public Page<SingleInfo> findPage(Page<SingleInfo> page,
-			List<PropertyFilter> filters) {
-		Criterion[] criterions = buildCriterionByPropertyFilter(filters);
-		Criteria c = createCriteria(criterions).setFetchMode("state", FetchMode.JOIN);
-		if (page.isAutoCount()) {
-			long totalCount = countCriteriaResult(c);
-			page.setTotalCount(totalCount);
-		}
-		setPageParameterToCriteria(c, page);
-		@SuppressWarnings("unchecked")
-		List<SingleInfo> result = c.list();
-		page.setResult(result);
-		return page;
-	}
 
 	/**
 	 * 在制作单据时添加明细的时候，防止信息重复添加
@@ -56,9 +40,43 @@ public class SingleInfoDao extends HibernateDao<SingleInfo, String> {
 		Criterion[] criterions = buildCriterionByPropertyFilter(filters);
 		Criteria c = createCriteria(criterions);
 		
-		Criterion stateEQ = Restrictions.eq("state", state); // 状态信息
+		Criterion stateEQ = Restrictions.eq("state.id", state); // 状态信息
 		c.add(stateEQ);
-		Criterion wzEQ = Restrictions.eq("location", wzName); // 位置信息
+		Criterion wzEQ = Restrictions.eq("location.id", Long.parseLong(wzName)); // 位置信息
+		c.add(wzEQ);
+		if (StringUtils.isNotBlank(mids)) {
+			String[] values = mids.split(",");
+			Criterion cIn = Restrictions.not(Restrictions.in("mid", values)); // 已选择的
+			c.add(cIn);
+		}
+		if (page.isAutoCount()) {
+			long totalCount = countCriteriaResult(c);
+			page.setTotalCount(totalCount);
+		}
+		setPageParameterToCriteria(c, page);
+		@SuppressWarnings("unchecked")
+		List<SingleInfo> result = c.list();
+		page.setResult(result);
+		return page;
+	}
+	/**
+	 * 未安装记录信息添加明细定制
+	 * @param page
+	 * @param filters
+	 * @param mids
+	 * @param state
+	 * @param wzName
+	 * @return
+	 */
+	public Page<SingleInfo> findPageByInstall(Page<SingleInfo> page,
+			List<PropertyFilter> filters, String mids, String state,
+			String wzName){
+		Criterion[] criterions = buildCriterionByPropertyFilter(filters);
+		Criteria c = createCriteria(criterions).add(Restrictions.eq("isAnz", "0"));
+		Criterion stateEQ = Restrictions.eq("state.id", state); // 状态信息
+		c.add(stateEQ);
+		
+		Criterion wzEQ = Restrictions.eq("location.id", Long.parseLong(wzName)); // 位置信息
 		c.add(wzEQ);
 		if (StringUtils.isNotBlank(mids)) {
 			String[] values = mids.split(",");

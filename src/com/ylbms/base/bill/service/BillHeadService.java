@@ -50,5 +50,13 @@ public class BillHeadService {
 	public void saveBillHead(BillHeadModel bhm) {
 		billHDao.save(bhm);
 	}
+	/***
+	 * 根据djID来查询
+	 * @param id
+	 * @return
+	 */
+	public BillHeadModel getBillHeadByID(String djId){
+		return billHDao.get(djId);
+	}
 
 }

@@ -34,8 +34,6 @@ public class StateInfo extends BaseModel {
 	private String remark;
 	private String status;
 
-	private List<SingleInfo> singles;
-
 	public StateInfo() {
 		this.status = DEL_FLAG_NORMAL;
 	}
@@ -78,15 +76,15 @@ public class StateInfo extends BaseModel {
 		this.status = status;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE}, mappedBy = "state")
-	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public List<SingleInfo> getSingles() {
-		return singles;
-	}
-
-	public void setSingles(List<SingleInfo> singles) {
-		this.singles = singles;
-	}
+//	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE}, mappedBy = "state")
+//	@NotFound(action = NotFoundAction.IGNORE)
+//	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//	public List<SingleInfo> getSingles() {
+//		return singles;
+//	}
+//
+//	public void setSingles(List<SingleInfo> singles) {
+//		this.singles = singles;
+//	}
 
 }

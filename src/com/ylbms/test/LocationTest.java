@@ -1,6 +1,5 @@
 package com.ylbms.test;
 
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ylbms.base.location.model.Location;
 import com.ylbms.base.location.service.LocationService;
 
 /**
@@ -38,14 +36,6 @@ public class LocationTest extends AbstractJUnit4SpringContextTests {
 	
 	public void getAllLocation(){
 		locationService.getAllLocation();
-	}
-	
-	@Test
-	public void lookUpdata(){
-		List<Location> list=locationService.lookUpData();
-		for(Location l:list){
-			System.out.println(l.getChildList().get(0).getLocationName());
-		}
 	}
 	
 }

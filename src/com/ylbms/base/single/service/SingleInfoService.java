@@ -2,6 +2,9 @@ package com.ylbms.base.single.service;
 
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +52,7 @@ public class SingleInfoService {
 	 * 
 	 * @param singleInfo
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false,noRollbackFor=RuntimeException.class)
 	public void updateSingleInfo(SingleInfo singleInfo) {
 		singleDao.save(singleInfo);
 	}
@@ -88,6 +91,19 @@ public class SingleInfoService {
 			String wzName) {
 		return singleDao.findPageNotInMids(page, filters, mids, state, wzName);
 	}
+	/**
+	 * 给安装记录添加单件明细
+	 * @param page
+	 * @param filters
+	 * @param mids
+	 * @param state
+	 * @param wzName
+	 * @return
+	 */
+	public Page<SingleInfo> findSingleByInstall(Page<SingleInfo> page,List<PropertyFilter> filters, String mids, String state,
+			String wzName){
+		return singleDao.findPageByInstall(page, filters, mids, state, wzName);
+	}
 
 	/**
 	 * 根据分页查询单件明细
@@ -106,9 +122,22 @@ public class SingleInfoService {
 	 * 
 	 * @param ids
 	 */
+	@Transactional(readOnly=false)
 	public void delByIds(String ids) {
 		String delHQL = "delete SingleInfo where mid in(" + ids + ")";
-		singleDao.createQuery(delHQL, "");
+		singleDao.getSession().createQuery(delHQL).executeUpdate();
 	}
 
+	/**
+	 * 测试的玩意儿！！不要当真
+	 */
+	public void test(){
+		Session session=singleDao.getSession();
+		 List cats = session.createCriteria(SingleInfo.class)
+			     .createAlias("location", "l",JoinType.LEFT_OUTER_JOIN)
+			     .add( Restrictions.like("l.id", 1400L) )
+			     .list();
+		 
+		 System.out.print("------"+cats.size());
+	}
 }

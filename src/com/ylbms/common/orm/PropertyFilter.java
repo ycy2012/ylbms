@@ -129,7 +129,7 @@ public class PropertyFilter {
 			String value = (String) entry.getValue();
 			// 如果value值为空,则忽略此filter.
 			if (StringUtils.isNotBlank(value)) {
-				PropertyFilter filter = new PropertyFilter(filterName, value);
+				PropertyFilter filter = new PropertyFilter(filterName, value.trim());
 				filterList.add(filter);
 			}
 		}

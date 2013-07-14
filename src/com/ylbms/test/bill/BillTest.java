@@ -41,8 +41,8 @@ public class BillTest extends AbstractJUnit4SpringContextTests {
 	@Transactional
 	public void createBill() {
 		BillHeadModel bhm = new BillHeadModel();
-		bhm.setSendLocation("测试位置");
-		bhm.setAcceptLocation("测试位置");
+//		bhm.setSendLocation("测试位置");
+//		bhm.setAcceptLocation("测试位置");
 		bhm.setDjTitle("测试单据");
 		bhm.setCreateDate(new Date());
 

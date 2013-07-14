@@ -49,11 +49,12 @@
 		<thead>
 			<tr>
 				<th width="26"><input type="checkbox" group="djIds" class="checkboxCtrl"></th>
+				<th>单据编号</th>
 				<th>单据名称</th>
 				<th>发出地点</th>
 				<th>接受地点</th>
 				<th>生效日期</th>
-				<th>创建时间</th>
+				<th>制单时间</th>
 				<th>领料人</th>
 				<th>备注</th>
 				<th>当前状态</th>
@@ -64,9 +65,10 @@
 			<c:forEach items="${page.result}" var="acc">
 				<tr target="sdjId_bill" rel="${acc.djId }">
 				<td><input name="djIds" value="'${acc.djId}'" type="checkbox"></td>
+				    <td>${acc.djId}</td>
 					<td>${acc.djTitle}</td>
-					<td>${acc.sendLocation}</td>
-					<td>${acc.acceptLocation}</td>
+					<td>${acc.sendLocation.locationName}</td>
+					<td>${acc.acceptLocation.locationName}</td>
 					<td><fmt:formatDate value="${acc.sxDate}" pattern="yyyy-MM-dd"/></td>
 					<td><fmt:formatDate value="${acc.createDate}" pattern="yyyy-MM-dd"/> </td>
 					<td>${acc.llren}</td>
@@ -74,8 +76,8 @@
 					<td>${acc.status==0?'有效':'无效'}</td>
 				<td>
 				<a title="删除单据信息" target="ajaxTodo" href="${ctx}/bill/delete/${acc.djId}" class="btnDel">删除单据信息</a>
-				<a title="查看单据信息" target="dialog" href="${ctx}/role/permUi/${acc.djId}" class="btnView">查看单据信息</a>
-				<a title="编辑单据信息" target="dialog" href="${ctx}/bill/editUi/${acc.djId}" class="btnEdit">编辑单据信息</a>
+				<a title="查看单据信息" target="navTab" href="${ctx}/bill/viewUi/${acc.djId}" class="btnView">查看单据信息</a>
+				<a title="编辑单据信息" target="navTab" href="${ctx}/bill/editUi/${acc.djId}" class="btnEdit">编辑单据信息</a>
 				</td>
 				</tr>
 			</c:forEach>

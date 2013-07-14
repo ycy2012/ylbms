@@ -37,6 +37,7 @@ import org.springframework.util.Assert;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.orm.PropertyFilter.MatchType;
+import com.ylbms.common.orm.PropertyFilter.PropertyType;
 import com.ylbms.common.utils.reflection.ReflectionUtils;
 
 /**
@@ -373,8 +374,7 @@ public class HibernateDao<T, PK extends Serializable> extends
 
 		setPageParameterToCriteria(c, page);
 
-		List<T> result = c.list();
-		page.setResult(result);
+		page.setResult(c.list());
 		return page;
 	}
 
@@ -488,10 +488,8 @@ public class HibernateDao<T, PK extends Serializable> extends
 		} catch (Exception e) {
 			logger.error("不可能抛出的异常:{}", e.getMessage());
 		}
-
 		// 执行Count查询
-		Long totalCountObject = (Long) c.setProjection(Projections.rowCount())
-				.uniqueResult();
+		Long totalCountObject = (Long) c.setProjection(Projections.rowCount()).uniqueResult();
 		long totalCount = (totalCountObject != null) ? totalCountObject : 0;
 
 		// 将之前的Projection,ResultTransformer和OrderBy条件重新设回去
@@ -545,6 +543,9 @@ public class HibernateDao<T, PK extends Serializable> extends
 
 	/**
 	 * 按属性条件参数创建Criterion,辅助函数.
+	 * @editor JackLiang  
+	 * @date 2013年7月12日 12:49:29
+	 * @category 添加PropertyType属性
 	 */
 	protected Criterion buildCriterion(final String propertyName,
 			final Object propertyValue, final MatchType matchType) {
@@ -559,7 +560,6 @@ public class HibernateDao<T, PK extends Serializable> extends
 			criterion = Restrictions.like(propertyName, (String) propertyValue,
 					MatchMode.ANYWHERE);
 			break;
-
 		case LE:
 			criterion = Restrictions.le(propertyName, propertyValue);
 			break;
