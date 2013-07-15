@@ -100,6 +100,7 @@
 	<div id="layout">
 		<div id="header">
 			<div class="headerNav">
+			   <a class="logo">标志</a>
 				<ul class="nav">
 					<li id="switchEnvBox">
 					<a> 欢迎使用[<shiro:principal property="name"/>]</a>
