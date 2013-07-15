@@ -11,10 +11,10 @@
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
-					<td>物资编码：<input type="text" name="filter_LIKES_owercode"  /></td>
-					<td>物资名称：<input type="text" name="filter_LIKES_wzname"  /></td>
-					<td>当前位置：<input type="text" name="filter_LIKES_location" /></td>
-					<td>当前状态： <select name="filter_EQS_state">
+					<td>物资编码：<input type="text" name="owercode"  /></td>
+					<td>物资名称：<input type="text" name="wzname"/></td>
+					<td>当前位置：<input type="text" name="location.id" /></td>
+					<td>当前状态： <select name="status">
 							<option value="1">无效</option>
 							<option value="0">有效</option>
 							<option value="" selected>请选择</option>

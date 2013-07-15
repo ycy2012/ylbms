@@ -132,6 +132,9 @@ public class SingleInfoService {
 		if(StringUtils.isNotEmpty(single.getMid())){
 			dc.add(Restrictions.eq("mid", single.getMid()));
 		}
+		if(StringUtils.isNotEmpty(single.getOwercode())){
+			dc.add(Restrictions.eq("owercode", single.getOwercode()));
+		}
 		if(StringUtils.isNotEmpty(single.getWzname())){
 			dc.add(Restrictions.like("wzname", single.getWzname(), MatchMode.ANYWHERE));
 		}
