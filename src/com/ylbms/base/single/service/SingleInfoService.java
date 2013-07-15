@@ -135,7 +135,7 @@ public class SingleInfoService {
 			dc.add(Restrictions.like("wzName", single.getWzname(), MatchMode.ANYWHERE));
 		}
 		if (!StringUtils.isNotEmpty(page.getOrderBy())){
-			dc.addOrder(Order.asc("company.code")).addOrder(Order.asc("office.code")).addOrder(Order.desc("id"));
+			dc.addOrder(Order.asc("spetype.speId"));
 		}
 		return singleDao.find(page, dc);
 	}
