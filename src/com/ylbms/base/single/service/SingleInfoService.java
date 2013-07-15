@@ -134,6 +134,10 @@ public class SingleInfoService {
 		if(StringUtils.isNotEmpty(single.getWzname())){
 			dc.add(Restrictions.like("wzName", single.getWzname(), MatchMode.ANYWHERE));
 		}
+		
+		if(StringUtils.isNotEmpty(single.getStatus())){
+			dc.add(Restrictions.eq("status", single.getState()));
+		}
 		if (!StringUtils.isNotEmpty(page.getOrderBy())){
 			dc.addOrder(Order.asc("spetype.speId"));
 		}
