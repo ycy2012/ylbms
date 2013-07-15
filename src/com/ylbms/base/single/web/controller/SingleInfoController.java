@@ -69,18 +69,6 @@ public class SingleInfoController extends BaseController {
 	}
 
 	/**
-	 * 跳转到高级查询页面
-	 * 
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "/advanced")
-	public String advanced(Model model) {
-		return "base/singleinfo/advanced_query";
-
-	}
-
-	/**
 	 * 添加单件明细
 	 * 
 	 * @param singleInfo
@@ -128,8 +116,8 @@ public class SingleInfoController extends BaseController {
 	 */
 
 	@RequestMapping(value = "/list")
-	public String list(HttpServletRequest request, Page<SingleInfo> page,
-			SingleInfo single, Model model) {
+	public String list(HttpServletRequest request, Page<SingleInfo> page,SingleInfo single,
+			Model model) {
 		Page<SingleInfo> list = singleInfoService.findSingleInfo(page, single);
 		model.addAttribute("page", list);
 		return "base/singleinfo/listSingleInfo";
@@ -172,5 +160,4 @@ public class SingleInfoController extends BaseController {
 					e.getMessage());
 		}
 	}
-	
 }

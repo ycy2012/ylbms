@@ -54,25 +54,25 @@ public class SingleInfo extends BaseModel {
 	private int classId;// 资产种类
 	private int factory;// 生产厂家
 	private String factoryCode;// 出厂编号
-	private Date jdtime;// 检测日期
-	private String scunit;// 所属单位
-	private Date yxTime;// 有效日期
+	private Date jd_time;// 检测日期
+	private String sc_unit;// 所属单位
+	private Date yx_Time;// 有效日期
 	private Date bfTime;// 报废日期
-	private Date qyTime;// 启用日期
-	private int typeId;// 计量类别
+	private Date qy_Time;// 启用日期
+	private int type_Id;// 计量类别
 	private Float zqd;// 精确度
 	private int userTimes;// 使用次数
 	private Float price;// 价格
 	private String isnyqj;// 是否能源器具
 	private Float clfw;// 测量范围
 	private String isqj;// 是否强检
-	private Date chcDate;// 出厂日期
+	private Date chc_Date;// 出厂日期
 	private String form;// ABC形式
-	private String gdzcCode;// 固定资产编码
-	private String txCode;// 条码号
-	private String azLocation;// 安装位置
+	private String gdzc_Code;// 固定资产编码
+	private String tx_Code;// 条码号
+	private String az_Location;// 安装位置
 	private String isAnz;  // 是否安装  其中1表示安装了，0表示没有安装
-	private Date grDate;// 购入日期
+	private Date gr_Date;// 购入日期
 	private String shdw;// 四位定号
 	private String other;// 其他指标
 	private String creater;// 录入人员
@@ -121,7 +121,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade ={CascadeType.MERGE,CascadeType.REFRESH})
-	@JoinColumn(name = "spectype", nullable = false, referencedColumnName = "speId")
+	@JoinColumn(name = "spectype", nullable = false, referencedColumnName = "speID")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Fetch(FetchMode.JOIN)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -186,32 +186,31 @@ public class SingleInfo extends BaseModel {
 		this.factoryCode = factoryCode;
 	}
 
-	@Column(nullable = false,name="jd_time")
-	public Date getJdtime() {
-		return jdtime;
+	@Column(nullable = false)
+	public Date getJd_time() {
+		return jd_time;
 	}
 
-	public void setJdtime(Date jdtime) {
-		this.jdtime = jdtime;
+	public void setJd_time(Date jd_time) {
+		this.jd_time = jd_time;
 	}
 
-	@Column(nullable = false,name="sc_unit")
-	public String getScunit() {
-		return scunit;
+	@Column(nullable = false)
+	public String getSc_unit() {
+		return sc_unit;
 	}
 
-	public void setScunit(String scunit) {
-		this.scunit = scunit;
+	public void setSc_unit(String sc_unit) {
+		this.sc_unit = sc_unit;
 	}
 
-	@Column(nullable = false,name="yx_Time")
-	public Date getYxTime() {
-		return yxTime;
+	@Column(nullable = false)
+	public Date getYx_Time() {
+		return yx_Time;
 	}
 
-	@Column(name="yx_Time")
-	public void setYxTime(Date yxTime) {
-		this.yxTime = yxTime;
+	public void setYx_Time(Date yx_Time) {
+		this.yx_Time = yx_Time;
 	}
 
 	@Column(name="bf_time")
@@ -224,22 +223,22 @@ public class SingleInfo extends BaseModel {
 		this.bfTime = bfTime;
 	}
 
-	@Column(nullable = false,name="qy_Time")
-	public Date getQyTime() {
-		return qyTime;
+	@Column(nullable = false)
+	public Date getQy_Time() {
+		return qy_Time;
 	}
 
-	public void setQyTime(Date qyTime) {
-		this.qyTime = qyTime;
+	public void setQy_Time(Date qy_Time) {
+		this.qy_Time = qy_Time;
 	}
 
-	@Column(nullable = false,name="type_Id")
-	public int getTypeId() {
-		return typeId;
+	@Column(nullable = false)
+	public int getType_Id() {
+		return type_Id;
 	}
 
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
+	public void setType_Id(int type_Id) {
+		this.type_Id = type_Id;
 	}
 
 	@Column(nullable = false)
@@ -293,13 +292,12 @@ public class SingleInfo extends BaseModel {
 		this.isqj = isqj;
 	}
 
-	@Column(name="chc_Date")
-	public Date getChcDate() {
-		return chcDate;
+	public Date getChc_Date() {
+		return chc_Date;
 	}
 
-	public void setChcDate(Date chcDate) {
-		this.chcDate = chcDate;
+	public void setChc_Date(Date chc_Date) {
+		this.chc_Date = chc_Date;
 	}
 
 	public String getForm() {
@@ -310,31 +308,28 @@ public class SingleInfo extends BaseModel {
 		this.form = form;
 	}
 
-	@Column(name="gdzc_Code")
-	public String getGdzcCode() {
-		return gdzcCode;
+	public String getGdzc_Code() {
+		return gdzc_Code;
 	}
 
-	public void setGdzcCode(String gdzcCode) {
-		this.gdzcCode = gdzcCode;
+	public void setGdzc_Code(String gdzc_Code) {
+		this.gdzc_Code = gdzc_Code;
 	}
 
-	@Column(name="tx_Code")
-	public String getTxCode() {
-		return txCode;
+	public String getTx_Code() {
+		return tx_Code;
 	}
 
-	public void setTxCode(String txCode) {
-		this.txCode = txCode;
+	public void setTx_Code(String tx_Code) {
+		this.tx_Code = tx_Code;
 	}
 
-	@Column(name="az_Location")
-	public String getAzLocation() {
-		return azLocation;
+	public String getAz_Location() {
+		return az_Location;
 	}
 
-	public void setAzLocation(String azLocation) {
-		this.azLocation = azLocation;
+	public void setAz_Location(String az_Location) {
+		this.az_Location = az_Location;
 	}
 
 	public String getIsAnz() {
@@ -345,13 +340,12 @@ public class SingleInfo extends BaseModel {
 		this.isAnz = isAnz;
 	}
 
-	@Column(name="gr_Date")
-	public Date getGrDate() {
-		return grDate;
+	public Date getGr_Date() {
+		return gr_Date;
 	}
 
-	public void setGrDate(Date grDate) {
-		this.grDate = grDate;
+	public void setGr_Date(Date gr_Date) {
+		this.gr_Date = gr_Date;
 	}
 
 	public String getShdw() {
