@@ -107,7 +107,7 @@ public class SingleInfoController extends BaseController {
 	}
 
 	/**
-	 * 单件明细展示页面
+	 * 分页查询
 	 * 
 	 * @param request
 	 * @param page

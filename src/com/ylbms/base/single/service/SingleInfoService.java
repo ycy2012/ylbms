@@ -2,6 +2,7 @@ package com.ylbms.base.single.service;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
@@ -133,9 +134,10 @@ public class SingleInfoService {
 	 */
 	public void test(){
 		Session session=singleDao.getSession();
+		Criteria c=session.createCriteria(SingleInfo.class);
 		 List cats = session.createCriteria(SingleInfo.class)
-			     .createAlias("location", "l",JoinType.LEFT_OUTER_JOIN)
-			     .add( Restrictions.like("l.id", 1400L) )
+//			     .createAlias("location", "l",JoinType.LEFT_OUTER_JOIN)
+			     .add( Restrictions.like("location", 1400L) )
 			     .list();
 		 
 		 System.out.print("------"+cats.size());
