@@ -11,10 +11,10 @@
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
-					<td>物资编码：<input type="text" name="filter_LIKES_owercode"  value="${param['filter_LIKES_owercode']}"/></td>
-					<td>物资名称：<input type="text" name="filter_LIKES_wzname"  value="${param['filter_LIKES_wzname']}"/></td>
-					<td>当前位置：<input type="text" name="filter_EQS_location.id"  value="${param['filter_LIKES_location']}"/></td>
-					<td>当前状态： <select name="filter_EQS_state" value="${param['filter_EQS_state']}">
+					<td>物资编码：<input type="text" name="filter_LIKES_owercode"  /></td>
+					<td>物资名称：<input type="text" name="filter_LIKES_wzname"  /></td>
+					<td>当前位置：<input type="text" name="filter_LIKES_location" /></td>
+					<td>当前状态： <select name="filter_EQS_state">
 							<option value="1">无效</option>
 							<option value="0">有效</option>
 							<option value="" selected>请选择</option>
@@ -35,7 +35,7 @@
 								<button type="submit">检索</button>
 							</div>
 						</div></li>
-					<li><a class="button" href="Account/queryUi" target="dialog"
+					<li><a class="button" href="${ctx}/single/advanced" target="dialog"
 						mask="true" title="查询框"><span>高级检索</span></a></li>
 				</ul>
 			</div>
@@ -107,31 +107,31 @@
 					<td>${acc.spectype.speName}</td>
 					<td>${acc.location.allName}</td>
 					<td>${acc.state.stateName}</td>
-					<!-- <td>${acc.classId}</td>
+					<%--  <td>${acc.classId}</td>
 					<td>${acc.factory}</td>
 					<td>${acc.factoryCode}</td>
-					<td>${acc.jd_time}</td>
-					<td>${acc.sc_unit}</td>
-					<td>${acc.yx_Time}</td>
+					<td>${acc.jdtime}</td>
+					<td>${acc.scunit}</td>
+					<td>${acc.yxTime}</td>
 					<td>${acc.bfTime}</td>
-					<td>${acc.qy_Time}</td>
-					<td>${acc.type_Id}</td>
+					<td>${acc.qyTime}</td>
+					<td>${acc.typeId}</td>
 					<td>${acc.zqd}</td>
 					<td>${acc.userTimes}</td>
 					<td>${acc.price}</td>
 					<td>${acc.isnyqj}</td>
 					<td>${acc.clfw}</td>
 					<td>${acc.isqj}</td>
-					<td>${acc.chc_Date}</td>
-					<td>${acc.gdzc_Code}</td>
-					<td>${acc.tx_Code}</td>
-					<td>${acc.az_Location}</td>
-					<td>${acc.gr_Date}</td>
+					<td>${acc.chcDate}</td>
+					<td>${acc.gdzcCode}</td>
+					<td>${acc.txCode}</td>
+					<td>${acc.azLocation}</td>
+					<td>${acc.grDate}</td>
 					<td>${acc.shdw}</td>
 					<td>${acc.other}</td>
 					<td>${acc.creater}</td>
 					<td>${acc.createDate}</td>
-					<td>${acc.status}</td>-->
+					<td>${acc.status}</td>--%>
 					<td>${acc.remark}</td> 
 					<td><a title="删除单件信息" target="ajaxTodo"
 						href="${ctx}/single/delete/${acc.mid}" class="btnDel">删除单件信息</a>

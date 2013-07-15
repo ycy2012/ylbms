@@ -79,7 +79,7 @@ public class BillService {
 		for (SingleInfo s : singles) {
 			SingleInfo single=singleDao.get(s.getMid());
 			single.setState(new StateInfo(newState));
-			single.setQy_Time(new Date());
+			single.setQyTime(new Date());
 			single.setLocation(wzInfo);
 			singleDao.save(single);
 		}
@@ -91,7 +91,7 @@ public class BillService {
 	public void updateSingleByInstallNotes(List<SingleInfo> singles){
 		for (SingleInfo s : singles) {
 			SingleInfo single=singleDao.get(s.getMid());
-			single.setAz_Location(s.getAz_Location()==null?"":s.getAz_Location());
+			single.setAzLocation(s.getAzLocation()==null?"":s.getAzLocation());
 			single.setIsAnz("1");
 			single.setRemark(s.getRemark()==null?"":s.getRemark());
 			singleDao.save(single);

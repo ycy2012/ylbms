@@ -121,6 +121,7 @@ public class SingleInfoService {
 	 */
 	public Page<SingleInfo> findSingleInfo(Page<SingleInfo> page,SingleInfo single) {
 		DetachedCriteria dc = singleDao.createDetachedCriteria();
+		
 		dc.createAlias("location", "l");
 		if(single.getLocation()!=null&& single.getLocation().getId()!=null){
 			dc.add(Restrictions.eq("location.id", single.getLocation().getId()));
@@ -128,14 +129,22 @@ public class SingleInfoService {
 		if(single.getSpectype()!=null&&single.getSpectype().getSpeId()!=null){
 			dc.add(Restrictions.eq("spectype.speId", single.getSpectype().getSpeId()));
 		}
+		//根据主键
 		if(StringUtils.isNotEmpty(single.getMid())){
 			dc.add(Restrictions.eq("mid", single.getMid()));
 		}
 		if(StringUtils.isNotEmpty(single.getWzname())){
-			dc.add(Restrictions.like("wzName", single.getWzname(), MatchMode.ANYWHERE));
+			dc.add(Restrictions.like("wzname", single.getWzname(), MatchMode.ANYWHERE));
 		}
+		
+		if(StringUtils.isNotEmpty(single.getStatus())){
+			dc.add(Restrictions.like("status",single.getStatus()));
+		}
+		/**
+		 * order 排序
+		 */
 		if (!StringUtils.isNotEmpty(page.getOrderBy())){
-			dc.addOrder(Order.asc("spetype.speId"));
+			dc.addOrder(Order.asc("spectype.speId"));
 		}
 		return singleDao.find(page, dc);
 	}
@@ -163,5 +172,10 @@ public class SingleInfoService {
 			     .list();
 		 
 		 System.out.print("------"+cats.size());
+	}
+	
+	public Page<SingleInfo> getFind(final Page<SingleInfo> page,
+			final List<PropertyFilter> filters){
+		return null;
 	}
 }
