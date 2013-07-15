@@ -36,7 +36,7 @@ public class SingleInfoServiceTest extends AbstractJUnit4SpringContextTests {
 	public void test() {
 		for (int i = 0; i < 20; i++) {
 			StateInfo s=new StateInfo("010");
-			SpectypeInfo sp=new SpectypeInfo(5050);
+			SpectypeInfo sp=new SpectypeInfo((long) 5050);
 			SingleInfo singleinfo = new SingleInfo();
 			singleinfo.setOwercode("78996385"+i);
 //			singleinfo.setLocation("基地");

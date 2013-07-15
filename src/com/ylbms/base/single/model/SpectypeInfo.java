@@ -33,7 +33,7 @@ import com.ylbms.common.model.BaseModel;
 public class SpectypeInfo extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
-	private int speId;// 规格型号id
+	private Long speId;// 规格型号id
 	private String speName;// 规格型号名称
 	private String status;// 规格型号状态
 	private int sort;// 规格顺序
@@ -45,11 +45,11 @@ public class SpectypeInfo extends BaseModel {
 		this.status=DEL_FLAG_NORMAL;
 	}
 
-	public SpectypeInfo(int speId) {
+	public SpectypeInfo(Long speId) {
 		this.speId = speId;
 	}
 
-	public SpectypeInfo(int speId, String speName, String status, int sort,
+	public SpectypeInfo(Long speId, String speName, String status, int sort,
 			String remark) {
 		this.speId = speId;
 		this.speName = speName;
@@ -62,11 +62,11 @@ public class SpectypeInfo extends BaseModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_base_spectypeinfo")
 	@SequenceGenerator(name = "seq_base_spectypeinfo", sequenceName = "seq_base_spectypeinfo")
-	public int getSpeId() {
+	public Long getSpeId() {
 		return speId;
 	}
 	
-	public void setSpeId(int speId) {
+	public void setSpeId(Long speId) {
 		this.speId = speId;
 	}
 
