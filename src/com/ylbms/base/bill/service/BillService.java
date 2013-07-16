@@ -44,7 +44,7 @@ public class BillService {
 	 * @param newState 新状态
 	 * @param wzInfo 位置信息
 	 */
-	@Transactional(readOnly = false, rollbackFor = RuntimeException.class)
+	@Transactional(readOnly = false, rollbackFor =Exception.class)
 	public void saveBillHeadAndBody(List<SingleInfo> singles,
 			BillHeadModel bhm, String newState,Location wzInfo) {
 		bhm.setSxDate(new Date());
@@ -64,10 +64,14 @@ public class BillService {
 		bhm.setBillTbody(list);
 		billHDao.save(bhm);
 		// 更新单件信息
-		if(bhm.getDjTitle().indexOf("安装")>0){
+		/**
+		 * 判断是不是安装记录
+		 */
+		if(newState!=null&&newState.equals(singles.get(0).getState().getId())){
 			updateSingleByInstallNotes(singles);
+		}else{
+			updateSingle(singles, newState, wzInfo);
 		}
-		updateSingle(singles, newState, wzInfo);
 	}
 
 	/**
@@ -93,7 +97,6 @@ public class BillService {
 			SingleInfo single=singleDao.get(s.getMid());
 			single.setAzLocation(s.getAzLocation()==null?"":s.getAzLocation());
 			single.setIsAnz("1");
-			single.setRemark(s.getRemark()==null?"":s.getRemark());
 			singleDao.save(single);
 		}
 	}

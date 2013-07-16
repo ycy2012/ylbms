@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ylbms.base.bill.model.BillHeadModel;
 import com.ylbms.base.bill.model.BillTbodyModel;
 import com.ylbms.base.bill.service.BillHeadService;
-import com.ylbms.base.bill.service.BillTbodyService;
 
 /**
  * 
@@ -34,8 +33,6 @@ public class BillTest extends AbstractJUnit4SpringContextTests {
 	@Autowired
 	BillHeadService billHDao;
 	
-	@Autowired
-	BillTbodyService billTService;
 
 	@Test
 	@Transactional

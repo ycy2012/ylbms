@@ -21,7 +21,7 @@
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[3]+">";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input type='text'  name='singles["+i+"].az_Location' > <input type='hidden'  name='singles["+i+"].state' value="+temp[5]+">";
+			myTD4.innerHTML = "<input type='text'  name='singles["+i+"].azLocation' > <input type='hidden'  name='singles["+i+"].state' value="+temp[5]+">";
 			var myTD5 = myTR.insertCell(4);
 			myTD5.innerHTML = "<input  type='text' name='singles["+i+"].remark'> <input type='hidden'  name='singles["+i+"].location.id' value="+temp[4]+">";
 			var myTD6 = myTR.insertCell(5);
@@ -70,7 +70,7 @@
 				</dd>
 			</dl>
 			<dl>
-				<dt>接收方：</dt>
+				<dt>作业方：</dt>
 				<dd>
 				   <input name="acceptLocation.id" type="hidden"  value="2051" />
 					<input  type="text" readonly="readonly" value="基地" />
@@ -80,17 +80,6 @@
 				<dt>安装人员：</dt>
 				<dd>
 					<input name="llren" type="text" alt="安装人员信息" class="required" />
-				</dd>
-			</dl>
-			<dl>
-				<dt>领料单位：</dt>
-				<dd>
-					<select name="lluint" class="combox" class="required">
-					    <option value="">请选择信息</option>
-						<option value="轮南项目部">轮南项目部</option>
-						<option value="库车项目部">库车项目部</option>
-						<option value="塔中项目部">塔中项目部</option>
-					</select>
 				</dd>
 			</dl>
 			<dl class="nowrap">

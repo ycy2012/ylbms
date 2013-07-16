@@ -14,9 +14,14 @@ import javax.persistence.MappedSuperclass;
 public class BaseModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	// 删除标记（0：正常；1：删除）
 	public static final String DEL_FLAG_NORMAL = "0";
 	public static final String DEL_FLAG_DELETE = "1";
+	
+	// 是否有检测数据
+	public static final String CHECKED_YES = "是";
+	public static final String CHECKED_NO = "否";
 
 	// 显示/隐藏
 	public static final String SHOW = "1";

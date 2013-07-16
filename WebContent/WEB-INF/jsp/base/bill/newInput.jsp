@@ -82,7 +82,7 @@
 			<dl>
 				<dt>领料单位：</dt>
 				<dd>
-					<select name="lluint" class="combox" class="required">
+					<select name="llUnit" class="combox" class="required">
 					    <option value="">请选择信息</option>
 						<option value="轮南项目部">轮南项目部</option>
 						<option value="库车项目部">库车项目部</option>

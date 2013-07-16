@@ -66,6 +66,7 @@ public class SingleInfo extends BaseModel {
 	private String isnyqj;// 是否能源器具
 	private Float clfw;// 测量范围
 	private String isqj;// 是否强检
+	private String isCheck; //是否有检测数据
 	private Date chcDate;// 出厂日期
 	private String form;// ABC形式
 	private String gdzcCode;// 固定资产编码
@@ -83,6 +84,7 @@ public class SingleInfo extends BaseModel {
 	public SingleInfo() {
 		this.status = DEL_FLAG_NORMAL;
 		this.isAnz=DEL_FLAG_NORMAL;
+		this.isCheck=CHECKED_NO;
 	}
 
 	public SingleInfo(String mid) {
@@ -291,6 +293,14 @@ public class SingleInfo extends BaseModel {
 
 	public void setIsqj(String isqj) {
 		this.isqj = isqj;
+	}
+
+	public String getIsCheck() {
+		return isCheck;
+	}
+
+	public void setIsCheck(String isCheck) {
+		this.isCheck = isCheck;
 	}
 
 	@Column(name="chc_Date")

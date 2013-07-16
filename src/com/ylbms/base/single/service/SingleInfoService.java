@@ -58,7 +58,7 @@ public class SingleInfoService {
 	 * 
 	 * @param singleInfo
 	 */
-	@Transactional(readOnly = false,noRollbackFor=RuntimeException.class)
+	@Transactional(readOnly = false)
 	public void updateSingleInfo(SingleInfo singleInfo) {
 		singleDao.save(singleInfo);
 	}

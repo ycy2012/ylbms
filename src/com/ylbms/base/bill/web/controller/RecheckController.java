@@ -32,9 +32,9 @@ import com.ylbms.common.web.BaseController;
  * @date 2013-7-8
  */
 @Controller
-@RequestMapping(value = "cheack")
-public class RecheackController extends BaseController {
-	private static final Log log = LogFactory.getLog(RecheackController.class);
+@RequestMapping(value = "check")
+public class RecheckController extends BaseController {
+	private static final Log log = LogFactory.getLog(RecheckController.class);
 	private static final String NAV_TAB_ID = "billgl";
 	
 	@Autowired
