@@ -46,12 +46,10 @@ public class BillTest extends AbstractJUnit4SpringContextTests {
 		BillTbodyModel btm = new BillTbodyModel();
 		btm.setNewState("dddddd");
 		btm.setBillId(bhm);
-		btm.setMid("77777777777777777");
 		
 		BillTbodyModel btm1 = new BillTbodyModel();
 		btm1.setNewState("dddddd");
 		btm1.setBillId(bhm);
-		btm1.setMid("11111111111111111");
 		
 		
 		List<BillTbodyModel> billTbody = new ArrayList<BillTbodyModel>();

@@ -155,17 +155,27 @@
 									<li><a href="menu/list" target="navTab" rel="menu">菜单信息管理</a></li>
 									<li><a href="role/list" target="navTab" rel="role">角色信息管理</a></li> 
 									<li><a href="dict/list" target="navTab" rel="dict">字典信息管理</a></li> 
-									<li><a href="location/listUi" target="navTab" rel="location">位置信息管理</a></li> 
+								
 								</ul></li>
 							<li><a>基础信息管理</a>
 								<ul>
+									<li><a href="location/listUi" target="navTab" rel="location">位置信息管理</a></li> 
 									<li><a href="spec/list" target="navTab" rel="spectype">规格型号管理</a></li>
 									<li><a href="single/list" target="navTab" rel="singleInfo">单件明细管理</a></li>
-									<li><a href="bill/list" target="navTab" rel="bill">单据信息管理</a></li>
-									<li><a href="new/newUi" target="navTab" rel="billgl">入库信息管理</a></li>
-									<li><a href="ckgl/addUi" target="navTab" rel="billgl">出库信息管理</a></li>
-									<li><a href="install/inputUi" target="navTab" rel="billgl">安装信息管理</a></li>
-									<li><a href="check/cheackUi" target="navTab" rel="billgl">送检信息管理</a></li>
+								</ul></li>
+							<li><a>单据信息管理</a>
+								    <ul>
+									<li><a href="bill/list" target="navTab" rel="bill">单据 管理</a></li>
+									<li><a href="new/newUi" target="navTab" rel="billgl">入库单制作</a></li>
+									<li><a href="ckgl/addUi" target="navTab" rel="billgl">出库单制作</a></li>
+									<li><a href="install/inputUi" target="navTab" rel="billgl">安装单制作</a></li>
+									<li><a href="check/checkUi" target="navTab" rel="billgl">回收单制作</a></li>
+								</ul></li>
+						   <li><a>检测信息管理</a>
+								    <ul>
+									<li><a href="bill/list" target="navTab" rel="bill">检定记录管理</a></li>
+									<li><a href="bill/list" target="navTab" rel="bill">检定证书管理</a></li>
+									<li><a href="bill/list" target="navTab" rel="bill">检定记录添加</a></li>
 								</ul></li>
 					</div>
 				</div>

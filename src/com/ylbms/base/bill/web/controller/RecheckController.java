@@ -25,7 +25,7 @@ import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.web.BaseController;
 
 /**
- * 送检信息记录管理
+ * 送检信息记录管理(回收在检)
  * 
  * @author JackLiang
  * @version 1.0
@@ -48,9 +48,9 @@ public class RecheckController extends BaseController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "cheackUi")
+	@RequestMapping(value = "checkUi")
 	public String toCheackUi() {
-		return "base/bill/recheackNotes";
+		return "base/bill/recheckNotes";
 	}
 	
 	/**

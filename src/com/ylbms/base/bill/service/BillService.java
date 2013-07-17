@@ -52,7 +52,7 @@ public class BillService {
 		List<BillTbodyModel> list = new ArrayList<BillTbodyModel>(); // 保存对象用的
 		for (int i = 0, len = singles.size(); i < len; i++) {
 			BillTbodyModel btm = new BillTbodyModel();
-			btm.setMid(singles.get(i).getMid() == null ? "" : singles.get(i).getMid());
+			btm.setMid( new SingleInfo(singles.get(i).getMid()));
 			btm.setOldState(singles.get(i).getState() == null ? "" : singles.get(i).getState().getId());
 			btm.setNewState(newState == null ? "" : newState);
 			btm.setOldWz(singles.get(i).getLocation() == null ? "" : singles.get(i).getLocation().getId().toString());
