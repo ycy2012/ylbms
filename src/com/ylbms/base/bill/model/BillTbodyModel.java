@@ -4,19 +4,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
+import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.common.model.BaseModel;
 
 /**
@@ -26,14 +21,15 @@ import com.ylbms.common.model.BaseModel;
  * @date 2013-6-14
  */
 @Entity
-@IdClass(BillTbodyPK.class) // 复合主键
+@IdClass(BillTbodyPK.class)
+// 复合主键
 @Table(name = "ylbms_dj_tbody")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BillTbodyModel extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
 
-	private String mid;
+	private SingleInfo mid;
 
 	private BillHeadModel billId;
 
@@ -67,20 +63,15 @@ public class BillTbodyModel extends BaseModel {
 	public BillTbodyModel() {
 	}
 
-	public BillTbodyModel(String mid) {
-		this.mid = mid;
-	}
-
 	// setter getter
 	@Id
-	public String getMid() {
+	public SingleInfo getMid() {
 		return mid;
 	}
 
-	public void setMid(String mid) {
+	public void setMid(SingleInfo mid) {
 		this.mid = mid;
 	}
-
 	@Id
 	public BillHeadModel getBillId() {
 		return billId;

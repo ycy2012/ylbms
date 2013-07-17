@@ -2,8 +2,8 @@ package com.ylbms.base.bill.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -12,6 +12,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.ylbms.base.single.model.SingleInfo;
 
 /**
  * 单据单件明细之复合主键
@@ -24,42 +25,41 @@ public class BillTbodyPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String mid;
+	private SingleInfo mid;
 	private BillHeadModel billId;
 
 	public BillTbodyPK() {
 	}
 
-
-	public BillTbodyPK(String mid, BillHeadModel billId) {
+	public BillTbodyPK(SingleInfo mid, BillHeadModel billId) {
 		this.mid = mid;
 		this.billId = billId;
 	}
 
-
 	// setter getter
-	@Column(name = "MID",unique = false,nullable=false)  
-	public String getMid() {
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
+	@JoinColumn(name = "mid")
+	@NotFound(action=NotFoundAction.EXCEPTION)
+	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+	public SingleInfo getMid() {
 		return mid;
 	}
 
-	public void setMid(String mid) {
+	public void setMid(SingleInfo mid) {
 		this.mid = mid;
 	}
 
 	@ManyToOne
 	@JoinColumn(name = "dj_id")
-	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@NotFound(action = NotFoundAction.EXCEPTION)
+	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	public BillHeadModel getBillId() {
 		return billId;
 	}
 
-
 	public void setBillId(BillHeadModel billId) {
 		this.billId = billId;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -75,11 +75,12 @@ public class BillTbodyPK implements Serializable {
 			return true;
 		}
 		BillTbodyPK other = (BillTbodyPK) obj;
-		if (mid == null && other.mid != null || !mid.equals(other.mid)) {
+		if (mid == null || other.mid != null && !mid.equals(other.mid)) {
 			return false;
 		}
-		if (billId == null && other.billId != null
-				|| !billId.equals(other.billId)) {
+		if (billId == null || other.billId != null
+				&& !billId.equals(other.billId)
+				|| (!billId.getDjId().equals(other.getBillId().getDjId()))) {
 			return false;
 		}
 
