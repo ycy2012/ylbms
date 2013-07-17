@@ -168,7 +168,6 @@ public class SingleInfo extends BaseModel {
 		this.classId = classId;
 	}
 
-	@Column(nullable = false)
 	public int getFactory() {
 		return factory;
 	}

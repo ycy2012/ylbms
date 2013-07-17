@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import sun.swing.StringUIClientPropertyKey;
+
 import com.ylbms.base.single.dao.SingleInfoDao;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.common.orm.Page;
@@ -128,13 +130,16 @@ public class SingleInfoService {
 		if(single.getSpectype()!=null&&single.getSpectype().getSpeId()!=null){
 			dc.add(Restrictions.eq("spectype.speId", single.getSpectype().getSpeId()));
 		}
+		
 		//根据主键
 		if(StringUtils.isNotEmpty(single.getMid())){
 			dc.add(Restrictions.eq("mid", single.getMid()));
 		}
+		
 		if(StringUtils.isNotEmpty(single.getOwercode())){
 			dc.add(Restrictions.eq("owercode", single.getOwercode()));
 		}
+		
 		if(StringUtils.isNotEmpty(single.getWzname())){
 			dc.add(Restrictions.like("wzname", single.getWzname(), MatchMode.ANYWHERE));
 		}
@@ -142,12 +147,22 @@ public class SingleInfoService {
 		if(StringUtils.isNotEmpty(single.getStatus())){
 			dc.add(Restrictions.like("status",single.getStatus()));
 		}
-		/**
-		 * order 排序
-		 */
+		
+	    if(single.getJdtime()!=null){
+		   dc.add(Restrictions.like("jdtime", single.getJdtime()));
+	    }
+	    
+	   if(StringUtils.isNotEmpty(single.getGdzcCode())){
+		   dc.add(Restrictions.like("gdzcCode", single.getGdzcCode()));
+	   }
+	 // if(single.getFactory()!=null){
+	   dc.add(Restrictions.like("factory",single.getFactory()));
+	//  }
+	   
 		if (!StringUtils.isNotEmpty(page.getOrderBy())){
 			dc.addOrder(Order.asc("spectype.speId"));
 		}
+		
 		return singleDao.find(page, dc);
 	}
 

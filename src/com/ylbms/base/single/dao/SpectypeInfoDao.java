@@ -12,7 +12,7 @@ import com.ylbms.common.orm.hibernate.HibernateDao;
  * @date 2013-6-5
  */
 @Repository("spectypeDao")
-public class SpectypeInfoDao extends HibernateDao<SpectypeInfo, Integer> {
+public class SpectypeInfoDao extends HibernateDao<SpectypeInfo, Long> {
 	/**
 	 * 批量删除
 	 * @param ids
