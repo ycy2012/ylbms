@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ylbms.base.bill.model.BillHeadModel;
 import com.ylbms.base.bill.model.BillTbodyModel;
 import com.ylbms.base.bill.service.BillHeadService;
-import com.ylbms.base.bill.service.BillTbodyService;
 
 /**
  * 
@@ -34,8 +33,6 @@ public class BillTest extends AbstractJUnit4SpringContextTests {
 	@Autowired
 	BillHeadService billHDao;
 	
-	@Autowired
-	BillTbodyService billTService;
 
 	@Test
 	@Transactional
@@ -49,12 +46,10 @@ public class BillTest extends AbstractJUnit4SpringContextTests {
 		BillTbodyModel btm = new BillTbodyModel();
 		btm.setNewState("dddddd");
 		btm.setBillId(bhm);
-		btm.setMid("77777777777777777");
 		
 		BillTbodyModel btm1 = new BillTbodyModel();
 		btm1.setNewState("dddddd");
 		btm1.setBillId(bhm);
-		btm1.setMid("11111111111111111");
 		
 		
 		List<BillTbodyModel> billTbody = new ArrayList<BillTbodyModel>();

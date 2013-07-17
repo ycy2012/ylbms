@@ -25,16 +25,16 @@ import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.web.BaseController;
 
 /**
- * 送检信息记录管理
+ * 送检信息记录管理(回收在检)
  * 
  * @author JackLiang
  * @version 1.0
  * @date 2013-7-8
  */
 @Controller
-@RequestMapping(value = "cheack")
-public class RecheackController extends BaseController {
-	private static final Log log = LogFactory.getLog(RecheackController.class);
+@RequestMapping(value = "check")
+public class RecheckController extends BaseController {
+	private static final Log log = LogFactory.getLog(RecheckController.class);
 	private static final String NAV_TAB_ID = "billgl";
 	
 	@Autowired
@@ -48,9 +48,9 @@ public class RecheackController extends BaseController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "cheackUi")
+	@RequestMapping(value = "checkUi")
 	public String toCheackUi() {
-		return "base/bill/recheackNotes";
+		return "base/bill/recheckNotes";
 	}
 	
 	/**

@@ -16,8 +16,9 @@
 		},
 		check : {
 			enable : true,
-			nocheckInherit : true,
+			nocheckInherit : false,
 			chkStyle : "radio",
+			radioType : "level",
 			chkboxType : {
 				"Y" : "p",
 				"N" : "s"

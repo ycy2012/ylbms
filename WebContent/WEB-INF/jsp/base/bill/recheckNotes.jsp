@@ -85,7 +85,7 @@
 			<dl>
 				<dt>送料单位：</dt>
 				<dd>
-				    <input name="lluint" type="text" id="ss">
+				    <input name="llUnit" readonly="readonly" type="text" id="ss">
 				</dd>
 			</dl>
 			<dl class="nowrap">
