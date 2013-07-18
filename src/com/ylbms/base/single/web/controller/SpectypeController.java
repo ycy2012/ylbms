@@ -103,7 +103,7 @@ public class SpectypeController extends BaseController {
 
 	@RequestMapping(value = "/delete/{id}")
 	@ResponseBody
-	public Map<String, Object> delSpectype(@PathVariable("id") int id) {
+	public Map<String, Object> delSpectype(@PathVariable("id") Long id) {
 		try {
 			spectypeService.deleteSpectype(id);
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK);

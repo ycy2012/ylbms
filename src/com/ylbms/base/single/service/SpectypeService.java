@@ -36,7 +36,7 @@ public class SpectypeService {
 		UserUtils.removeCache("spectypes");
 	}
 
-	public SpectypeInfo getSpetypeById(int id) {
+	public SpectypeInfo getSpetypeById(long  id) {
 		return spectypeDao.get(id);
 	}
 
@@ -60,7 +60,7 @@ public class SpectypeService {
 	 * @param id
 	 */
 	@Transactional(readOnly = false)
-	public void deleteSpectype(int id) {
+	public void deleteSpectype(Long id) {
 		spectypeDao.delete(id);
 		UserUtils.removeCache("spectypes");
 	}

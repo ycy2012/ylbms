@@ -6,13 +6,13 @@
 	<form method="post" action="${ctx}/single/list" class="pageForm" onsubmit="return navTabSearch(this);">
 		<div class="pageFormContent" layoutH="58">
 			<div class="unit">
-				<label>物资名称：</label>
-				<input type="text" size="25" name=wzname"/>
+				<label>固定资产编码：</label>
+				<input type="text" size="25" name="gdzcCode"/>
 				<span class="inputInfo">关键字或全称</span>
 			</div>
 			<div class="unit">
-				<label>当前状态：</label>
-				<input type="text" size="25" name="stateName" class="lettersonly"/>
+				<label>规格型号：</label>
+				<input type="text" size="25" name="spectype.id" class="lettersonly"/>
 				<span class="inputInfo">关键字或全称</span>
 			</div>
 			<div class="unit">
@@ -24,16 +24,6 @@
 				<label>检测日期：</label>
 				<input type="text" size="25" name="jdtime" class="date"/>
 				<span class="inputInfo">填写全称</span>
-			</div>
-			<div class="unit">
-				<label>固定资产编码：</label>
-				<input type="text" size="25" name="gdzcCode"/>
-				<span class="inputInfo">关键字或全称</span>
-			</div>
-			<div class="unit">
-				<label>条码号：</label>
-				<input type="text" size="25" name="txCode"/>
-				<span class="inputInfo">关键字或全称</span>
 			</div>
 			<%-- 
 			<div class="unit">
