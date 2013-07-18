@@ -74,7 +74,7 @@ public class CheckNotesController extends BaseController {
 	}
 
 	/**
-	 * save checkNotes
+	 * save checkNotes 
 	 * 
 	 * @return
 	 */

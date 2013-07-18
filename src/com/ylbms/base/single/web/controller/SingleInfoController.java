@@ -1,5 +1,6 @@
 package com.ylbms.base.single.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.base.single.service.SingleInfoService;
+import com.ylbms.base.single.service.SpectypeService;
 import com.ylbms.common.orm.Page;
-import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.web.BaseController;
 
@@ -40,6 +40,9 @@ public class SingleInfoController extends BaseController {
 	@Autowired
 	SingleInfoService singleInfoService;
 
+	@Autowired
+	SpectypeService spectypeService;
+
 	/**
 	 * 跳转到添加页面
 	 * 
@@ -48,6 +51,15 @@ public class SingleInfoController extends BaseController {
 	 */
 	@RequestMapping(value = "/addUi")
 	public String addUi(Model model) {
+		List<SpectypeInfo> list = spectypeService.getAllSpectype();
+		Map<String, Object> spectypes = new HashMap<String, Object>();
+		for (SpectypeInfo s : list) {
+			spectypes.put("text", s.getSpeName());
+			spectypes.put("value", s.getSpeId());
+		}
+		// 将值放入model
+		model.addAttribute("spectypes", spectypes);
+		
 		return "base/singleinfo/addSingleInfo";
 	}
 
@@ -172,5 +184,5 @@ public class SingleInfoController extends BaseController {
 					e.getMessage());
 		}
 	}
-	
+
 }

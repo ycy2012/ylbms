@@ -20,6 +20,7 @@ import com.ylbms.base.single.service.SpectypeService;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.utils.DwzUtil;
+import com.ylbms.common.web.BaseController;
 
 /**
  * 
@@ -29,7 +30,7 @@ import com.ylbms.common.utils.DwzUtil;
  */
 @Controller
 @RequestMapping("/spec")
-public class SpectypeController {
+public class SpectypeController extends BaseController {
 
 	private static final Log log = LogFactory.getLog(SpectypeController.class);
 
@@ -121,15 +122,16 @@ public class SpectypeController {
 	 */
 	@RequestMapping(value = "/spectype")
 	@ResponseBody
-	public Map<String, Object> updateSpectype(SpectypeInfo spectype,Model model) {
+	public Map<String, Object> updateSpectype(SpectypeInfo spectype, Model model) {
 		try {
 			spectypeService.addSpectype(spectype);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK,"spectype");
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK, "spectype");
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error("system error!!" + e.getMessage());
 			}
-			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "spectype", e.getMessage());
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "spectype",
+					e.getMessage());
 		}
 	}
 
@@ -154,31 +156,8 @@ public class SpectypeController {
 	}
 
 	/**
-	 * 根据可变参数查询
-	 * 
-	 * @param request
-	 * @param page
-	 * @param model
-	 * @param spename
-	 * @param sort
-	 * @return
-	 */
-	@RequiresUser
-	@RequestMapping(value = "getlist")
-	public String getlist(HttpServletRequest request, Page<SpectypeInfo> page,
-			Model model, @PathVariable("spcname") String spename,
-			@PathVariable("sort") int sort) {
-		List<PropertyFilter> filters = PropertyFilter
-				.buildFromHttpRequest(request);
-		Page<SpectypeInfo> list = spectypeService.getSpectypeInfo(page,
-				spename, sort);
-		return "basr/spectype/list";
-	}
-
-	
-	
-	/**
 	 * 根据id批量删除
+	 * 
 	 * @param ids
 	 * @return
 	 */
