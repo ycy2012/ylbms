@@ -50,7 +50,7 @@ public class BillHeadModel extends BaseModel {
 
 	private Date createDate; // 创建日期
 	
-	private String createUser;
+	private String createUser;  //单据制作人员信息
 
 	private String llUnit;
 

@@ -173,7 +173,7 @@
 								</ul></li>
 						   <li><a>检测信息管理</a>
 								    <ul>
-									<li><a href="bill/list" target="navTab" rel="bill">检定记录管理</a></li>
+									<li><a href="jd/list" target="navTab" rel="jdnotes">检定记录管理</a></li>
 									<li><a href="bill/list" target="navTab" rel="bill">检定证书管理</a></li>
 									<li><a href="bill/list" target="navTab" rel="bill">检定记录添加</a></li>
 								</ul></li>
@@ -203,41 +203,37 @@
 				<div class="navTab-panel tabsPageContent layoutBox">
 					<div class="page unitBox">
 						<div class="accountInfo">
-						<!--  -->
-						<br/>
-						<h1>工程技术部考核题库管理系统beta版本</h1>
+							<!--  -->
+							<br />
+							<h1>压力表具信息管理系统beta版本</h1>
 						</div>
 						<div class="pageFormContent" layoutH="80"
 							style="margin-right: 230px">
-							<h2>常见问题及解决:</h2>
-							<pre style="margin: 5px; line-height: 1.4em">
-Error loading XML document: dwz.frag.xml
-直接用IE打开index.html弹出一个对话框：Error loading XML document: dwz.frag.xml
-原因：没有加载成功dwz.frag.xml。IE ajax laod本地文件有限制, 是ie安全级别的问题, 不是框架的问题。
-解决方法：用firefox打开或部署到apache下。
-</pre>
-
-							<div class="divider"></div>
-							<h2>有意见请联系:</h2>
-							<pre style="margin: 5px; line-height: 1.4em;">
-							电话号码：0996-2179284<br />
-                                                        信息中心， 技术支持
-                            </pre>
+							<div class="panel collapse" minH="100" defH="150">
+								<h1>信息提示</h1>
+								<div>
+									<p>本版本为测试版本，针对软件的相关和想法，请及时与我们交流！</p>
+									<p>电话号码：0996-2179284</p>
+									<p>信息中心， 技术支持</p>
+								</div>
+							</div>
+							<div class="panel collapse" minH="100" defH="150">
+								<h1>压力表使用情况统计</h1>
+								<div>
+									<p>测试</p>
+								</div>
+							</div>
 						</div>
-
 						<div style="width: 230px; position: absolute; top: 60px; right: 0"
 							layoutH="80"></div>
 					</div>
-
 				</div>
 			</div>
 		</div>
-
 	</div>
-
+	
 	<div id="footer">
 		Copyright &copy; 2012  塔里木油田工程技术部信息中心
 	</div>
-
 </body>
 </html>

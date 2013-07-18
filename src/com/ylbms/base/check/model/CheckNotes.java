@@ -1,8 +1,7 @@
 package com.ylbms.base.check.model;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -52,7 +51,7 @@ public class CheckNotes extends BaseModel {
 	private String remark; // 备注信息
 	private String status; // 状态
 
-	private Set<CheckNotesInfo> notesInfo = new HashSet<CheckNotesInfo>();
+	private List<CheckNotesInfo> notesInfo;
 
 	// 构造函数
 	public CheckNotes() {
@@ -123,6 +122,7 @@ public class CheckNotes extends BaseModel {
 		this.createUser = createUser;
 	}
 
+	@Column(name="create_date")
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -151,11 +151,11 @@ public class CheckNotes extends BaseModel {
 			CascadeType.REFRESH, CascadeType.REMOVE, CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public Set<CheckNotesInfo> getNotesInfo() {
+	public List<CheckNotesInfo> getNotesInfo() {
 		return notesInfo;
 	}
 
-	public void setNotesInfo(Set<CheckNotesInfo> notesInfo) {
+	public void setNotesInfo(List<CheckNotesInfo> notesInfo) {
 		this.notesInfo = notesInfo;
 	}
 
