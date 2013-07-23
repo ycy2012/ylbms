@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ylbms.base.check.model.CheckNotes;
-import com.ylbms.base.check.model.CheckNotesInfo;
 import com.ylbms.base.check.service.CheckNotesService;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.base.single.model.StateInfo;
@@ -45,6 +44,7 @@ public class CheckNotesController extends BaseController {
 	@Autowired
 	private CheckNotesService checkNotesService;
 
+	@Autowired
 	private SingleInfoService singleService;
 
 	/**
@@ -62,15 +62,18 @@ public class CheckNotesController extends BaseController {
 
 	/**
 	 * 添加明细
+	 * 
 	 * @param page
 	 * @param single
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "addMx")
-	public String addMx(Page<SingleInfo> page, SingleInfo single, Model model) {
-		single.setState(new StateInfo("040")); //设置要查询的单件信息的状态
-		Page<SingleInfo> list = singleService.findSingleInfo(page, single);
+	public String addMx(@RequestParam("mids") String mids,
+			Page<SingleInfo> page, SingleInfo single, Model model) {
+		single.setState(new StateInfo("040")); // 设置要查询的单件信息的状态
+		Page<SingleInfo> list = singleService
+				.findSingleInfo(page, single, mids);
 		model.addAttribute("page", list);
 		return "base/check/addMx";
 	}
@@ -158,25 +161,6 @@ public class CheckNotesController extends BaseController {
 		Page<CheckNotes> list = checkNotesService.findPage(page, filters);
 		model.addAttribute("page", list);
 		return "base/check/list";
-	}
-
-	/**
-	 * 内部类
-	 * 
-	 * @author JackLiang
-	 * @version 1.0
-	 * @date 2013-7-18
-	 */
-	public class NotesModel {
-		private List<CheckNotesInfo> notes;
-
-		public List<CheckNotesInfo> getNotes() {
-			return notes;
-		}
-
-		public void setNotes(List<CheckNotesInfo> notes) {
-			this.notes = notes;
-		}
 	}
 
 }

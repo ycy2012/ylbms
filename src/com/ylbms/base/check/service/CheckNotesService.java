@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ylbms.base.check.dao.CheckNotesDao;
 import com.ylbms.base.check.model.CheckNotes;
 import com.ylbms.base.check.model.CheckNotesInfo;
-import com.ylbms.base.check.web.controller.CheckNotesController.NotesModel;
+import com.ylbms.base.check.web.controller.NotesModel;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.system.model.User;
@@ -33,10 +33,10 @@ public class CheckNotesService {
 	 * @param checkNotes
 	 */
 	@Transactional(readOnly = false)
-	public void saveCheckNotes(CheckNotes checkNotes,NotesModel notes) {
-		User user=UserUtils.getUser();
-		checkNotes.setCreateUser(user); //添加制作人员信息
-		for(CheckNotesInfo c:notes.getNotes()){
+	public void saveCheckNotes(CheckNotes checkNotes, NotesModel notes) {
+		User user = UserUtils.getUser();
+		checkNotes.setCreateUser(user); // 添加制作人员信息
+		for (CheckNotesInfo c : notes.getNotes()) {
 			c.setCheckNotes(checkNotes);
 		}
 		checkNotes.setNotesInfo(notes.getNotes());
@@ -66,6 +66,7 @@ public class CheckNotesService {
 
 	/**
 	 * 批量删除
+	 * 
 	 * @param ids
 	 */
 	@Transactional(readOnly = false)

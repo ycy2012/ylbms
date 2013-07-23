@@ -1,5 +1,6 @@
 package com.ylbms.base.single.web.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,10 +53,12 @@ public class SingleInfoController extends BaseController {
 	@RequestMapping(value = "/addUi")
 	public String addUi(Model model) {
 		List<SpectypeInfo> list = spectypeService.getAllSpectype();
-		Map<String, Object> spectypes = new HashMap<String, Object>();
+		List<Map<String,Object>> spectypes=new ArrayList<Map<String,Object>>();
 		for (SpectypeInfo s : list) {
-			spectypes.put("text", s.getSpeName());
-			spectypes.put("value", s.getSpeId());
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("text", s.getSpeName());
+			map.put("value", s.getSpeId());
+			spectypes.add(map);
 		}
 		// 将值放入model
 		model.addAttribute("spectypes", spectypes);
@@ -142,7 +145,7 @@ public class SingleInfoController extends BaseController {
 	@RequestMapping(value = "/list")
 	public String list(HttpServletRequest request, Page<SingleInfo> page,
 			SingleInfo single, Model model) {
-		Page<SingleInfo> list = singleInfoService.findSingleInfo(page, single);
+		Page<SingleInfo> list = singleInfoService.findSingleInfo(page, single,"");
 		model.addAttribute("page", list);
 		return "base/singleinfo/listSingleInfo";
 	}

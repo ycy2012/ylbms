@@ -10,32 +10,38 @@
 <script type="text/javascript">
 <!--
 	function addTr(value) {
-		var otable = document.getElementById("mxTable");
+		var otable = document.getElementById("mxTable1");
 		for ( var i = 0, len = value.length; i < len; i++) {
 			var temp = value[i].split("#");
 			var myTR = otable.insertRow(otable.rows.length);
 			var myTD1 = myTR.insertCell(0);
-			myTD1.innerHTML = "<input type='text' id='mid'  readonly='readonly'  name='notes["+i+"].mid' value="+temp[0]+">";
+			myTD1.innerHTML = "<input type='text' style='width:100px' readonly='readonly'  value="+temp[1]+"><input type='hidden' id='mid' name='notes["+i+"].mid' value="+temp[0]+">";
 			var myTD2 = myTR.insertCell(1);
-			myTD2.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[2]+">";
+			myTD2.innerHTML = "<input type='text' style='width:100px'  readonly='readonly'  value="+temp[2]+">";
 			var myTD3 = myTR.insertCell(2);
-			myTD3.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[3]+">";
+			myTD3.innerHTML = "<input id=\"d4312\" type='text' class='Wdate' name='notes["+i+"].jdDate' onfocus=\"WdatePicker()\" readonly='true'>";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input type='text'  name='notes["+i+"].azLocation' > <input type='hidden'  name='notes["+i+"].state' value="+temp[5]+">";
+			myTD4.innerHTML = "<input  id='d' type='text' class='Wdate' name='notes["+i+"].yxDate' onfocus='WdatePicker()' readonly='true'>";
 			var myTD5 = myTR.insertCell(4);
-			myTD5.innerHTML = "<input  type='text' name='notes["+i+"].remark'> <input type='hidden'  name='notes["+i+"].location.id' value="+temp[4]+">";
+			myTD5.innerHTML = "<input type='text'  name='notes["+i+"].azLocation' value='"+temp[3]+"'>";
 			var myTD6 = myTR.insertCell(5);
-			myTD6.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
+			myTD6.innerHTML = "<input  type='text' name='notes["+i+"].jmbCode'> ";
+			var myTD7 = myTR.insertCell(6);
+			myTD7.innerHTML = "<input  type='text' name='notes["+i+"].shbCode'> ";
+			var myTD8 = myTR.insertCell(7);
+			myTD8.innerHTML = "<input  type='text' name='notes["+i+"].remark'> ";
+			var myTD9 = myTR.insertCell(8);
+			myTD9.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
 		}
 	}
 	function _deleteRow(rowID) {
-		var otable = document.getElementById("mxTable");
+		var otable = document.getElementById("mxTable1");
 		var i = rowID.parentNode.parentNode.rowIndex;
 		otable.deleteRow(parseInt(i));
 	}
 	function getMids(){
 		var mids="";
-		$("#mxTable").find("input[id=mid]").each(function(){
+		$("#mxTable1").find("input[id=mid]").each(function(){
 			mids+=$(this).val()+",";
 		});
 		return mids;
@@ -49,15 +55,14 @@
 		$("#wzName").val(name);
 	}
 	$(document).ready(function(){
-		var date=new Date(),title;
+		var date=new Date(),title,url;
 		title=date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate()+"检定记录信息卡";
-		$("#title").val(title);
 	});
 //-->
 </script>
 </head>
 <body class="page">
-	<form action="${ctx}/install/addBill" method="post"
+	<form action="${ctx}/jd/save" method="post"
 		class="pageForm required-validate"
 		onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageHeader">
@@ -95,11 +100,11 @@
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>
-					<li><a class="add" href="${ctx}/install/addMx"  target="dialog" title="添加单件信息" warn="有红色星号标识的选项必填！"><span>添加明细</span></a></li>
+					<li><a class="add"  href="${ctx}/jd/addMx"  target="addMxAjaxTodo" isE="jd" title="添加单件信息"><span>添加明细</span></a></li>
 					<li class="line">line</li>
 				</ul>
 			</div>
-			<table class="list" width="100%" id="mxTable">
+			<table class="list" width="130%" id="mxTable1">
 				<thead>
 					<tr>
 						<th>物资名称</th>

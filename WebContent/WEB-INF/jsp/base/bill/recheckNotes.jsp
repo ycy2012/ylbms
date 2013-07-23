@@ -20,9 +20,9 @@
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[3]+">";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input type='text'  readonly='readonly'  name='singles["+i+"].location.id' value="+temp[4]+"> <input type='hidden'  name='singles["+i+"].state' value="+temp[5]+">";
+			myTD4.innerHTML = "<input type='text'  value="+temp[4]+"> <input type='hidden'  name='singles["+i+"].state' value="+temp[6]+">";
 			var myTD5 = myTR.insertCell(4);
-			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark' >";
+			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark' > <input type='hidden' name='singles["+i+"].location.id' value="+temp[5]+">";
 			var myTD6 = myTR.insertCell(5);
 			myTD6.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
 		}
@@ -52,7 +52,7 @@
 </script>
 </head>
 <body class="page">
-	<form action="${ctx}/install/addBill" method="post"
+	<form action="${ctx}/check/addBill" method="post"
 		class="pageForm required-validate"
 		onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageHeader">
@@ -100,7 +100,7 @@
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>
-					<li><a class="add" href="${ctx}/install/addMx"  target="addMxAjaxTodo" title="添加单件信息" warn="有红色星号标识的选项必填！"><span>添加明细</span></a></li>
+					<li><a class="add" href="${ctx}/check/addMx"  target="addMxAjaxTodo" title="添加单件信息" warn="有红色星号标识的选项必填！"><span>添加明细</span></a></li>
 					<li class="line">line</li>
 				</ul>
 			</div>
@@ -110,8 +110,7 @@
 						<th>单件虚拟编号</th>
 						<th>物资名称</th>
 						<th>规格型号</th>
-						<th>安装位置</th>
-						<th>安装时间</th>
+						<th>当前位置</th>
 						<th>备注信息</th>
 						<th>操作</th>
 					</tr>
