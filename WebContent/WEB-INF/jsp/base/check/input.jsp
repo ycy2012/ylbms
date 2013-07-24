@@ -15,7 +15,7 @@
 			var temp = value[i].split("#");
 			var myTR = otable.insertRow(otable.rows.length);
 			var myTD1 = myTR.insertCell(0);
-			myTD1.innerHTML = "<input type='text' style='width:100px' readonly='readonly'  value="+temp[1]+"><input type='hidden' id='mid' name='notes["+i+"].mid' value="+temp[0]+">";
+			myTD1.innerHTML = "<input type='text' style='width:100px' readonly='readonly'  value="+temp[1]+"><input type='hidden' id='mid' name='notes["+i+"].single.mid' value="+temp[0]+">";
 			var myTD2 = myTR.insertCell(1);
 			myTD2.innerHTML = "<input type='text' style='width:100px'  readonly='readonly'  value="+temp[2]+">";
 			var myTD3 = myTR.insertCell(2);
@@ -57,6 +57,7 @@
 	$(document).ready(function(){
 		var date=new Date(),title,url;
 		title=date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate()+"检定记录信息卡";
+		$("#title").val(title);
 	});
 //-->
 </script>
@@ -64,9 +65,9 @@
 <body class="page">
 	<form action="${ctx}/jd/save" method="post"
 		class="pageForm required-validate"
-		onsubmit="return validateCallback(this, dialogAjaxDone);">
+		onsubmit="return validateCallback(this, navTabAjaxDone);">
 		<div class="pageHeader">
-		<div class="pageFormContent" layoutH="630">
+		<div class="pageFormContent" layoutH="600">
 			<div
 				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">压力表具检定记录信息卡</div>
 				<input type="hidden" name="title" id="title">
@@ -88,6 +89,12 @@
 					<input  type="text" name="jdLocation" readonly="readonly" style="width: 150px;" value="工程技术部压力表检定室" />
 				</dd>
 			</dl>
+				<dl>
+				<dt>制单日期：</dt>
+				<dd>
+					<input  type="text" name="createDate" class="date required" readonly="true"  />
+				</dd>
+			</dl>
 			<dl class="nowrap">
 				<dt>备注信息：</dt>
 				<dd>
@@ -96,11 +103,11 @@
 			</dl>
 		</div>
 		</div>
-		<div class="pageContent" layoutH="180">
+		<div class="pageContent" layoutH="210">
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>
-					<li><a class="add"  href="${ctx}/jd/addMx"  target="addMxAjaxTodo" isE="jd" title="添加单件信息"><span>添加明细</span></a></li>
+					<li><a class="add"  href="${ctx}/jd/addMx"  target="addMxAjaxTodo"  rel="addJd" title="添加单件信息"><span>添加明细</span></a></li>
 					<li class="line">line</li>
 				</ul>
 			</div>

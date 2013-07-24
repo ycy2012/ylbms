@@ -1,5 +1,6 @@
 package com.ylbms.base.check.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,18 @@ public class CheckNotesService {
 	 * @param checkNotes
 	 */
 	@Transactional(readOnly = false)
-	public void saveCheckNotes(CheckNotes checkNotes, NotesModel notes) {
+	public void saveCheckNotes(CheckNotes master, NotesModel notes) {
+		Long i = 1L;
 		User user = UserUtils.getUser();
-		checkNotes.setCreateUser(user); // 添加制作人员信息
+		master.setCreateUser(user); // 添加制作人员信息
+		List<CheckNotesInfo> list = new ArrayList<CheckNotesInfo>();
 		for (CheckNotesInfo c : notes.getNotes()) {
-			c.setCheckNotes(checkNotes);
+			c.setCheckNotes(master);
+			c.setOrder(i++);
+			list.add(c);
 		}
-		checkNotes.setNotesInfo(notes.getNotes());
-		checkNotesDao.save(checkNotes);
+		master.setNotesInfo(list);
+		checkNotesDao.save(master);
 	}
 
 	/**
@@ -73,6 +78,16 @@ public class CheckNotesService {
 	public void delByIds(String ids) {
 		String delHQL = "delete CheckNotes where jdID in(" + ids + ")";
 		checkNotesDao.getSession().createQuery(delHQL).executeUpdate();
+	}
+
+	/**
+	 * 通过ID查询检定记录信息
+	 * 
+	 * @param jdId
+	 * @return
+	 */
+	public CheckNotes getCheckById(String jdId) {
+		return checkNotesDao.get(jdId);
 	}
 
 }

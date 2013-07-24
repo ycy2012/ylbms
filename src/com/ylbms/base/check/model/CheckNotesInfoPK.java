@@ -41,9 +41,9 @@ public class CheckNotesInfoPK implements Serializable {
 	}
 
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.REMOVE })
-	@JoinColumn(name = "jd_id")
+	@JoinColumn(name = "jd_id",nullable=false)
 	@NotFound(action = NotFoundAction.EXCEPTION)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	public CheckNotes getCheckNotes() {
 		return checkNotes;
 	}

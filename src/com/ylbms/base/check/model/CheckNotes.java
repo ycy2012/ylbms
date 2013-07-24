@@ -35,7 +35,7 @@ import com.ylbms.system.model.User;
  * @date 2013-7-16
  */
 @Entity
-@Table(name = "ylbms_jc_jdnotes")
+@Table(name = "YLBMS_JC_JDMASTER")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class CheckNotes extends BaseModel {
 
@@ -56,6 +56,7 @@ public class CheckNotes extends BaseModel {
 	// 构造函数
 	public CheckNotes() {
 		this.sxDate = new Date();
+		this.status=DEL_FLAG_NORMAL;
 	}
 
 	public CheckNotes(String jdID) {
@@ -122,7 +123,7 @@ public class CheckNotes extends BaseModel {
 		this.createUser = createUser;
 	}
 
-	@Column(name="create_date")
+	@Column(name = "create_date")
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -147,8 +148,7 @@ public class CheckNotes extends BaseModel {
 		this.status = status;
 	}
 
-	@OneToMany(mappedBy = "checkNotes", cascade = { CascadeType.MERGE,
-			CascadeType.REFRESH, CascadeType.REMOVE, CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "checkNotes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<CheckNotesInfo> getNotesInfo() {

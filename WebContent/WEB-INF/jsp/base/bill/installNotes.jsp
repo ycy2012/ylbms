@@ -21,9 +21,9 @@
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[3]+">";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input type='text'  name='singles["+i+"].azLocation' > <input type='hidden'  name='singles["+i+"].state' value="+temp[5]+">";
+			myTD4.innerHTML = "<input type='text'  name='singles["+i+"].azLocation' > <input type='hidden'  name='singles["+i+"].state' value="+temp[6]+">";
 			var myTD5 = myTR.insertCell(4);
-			myTD5.innerHTML = "<input  type='text' name='singles["+i+"].remark'> <input type='hidden'  name='singles["+i+"].location.id' value="+temp[4]+">";
+			myTD5.innerHTML = "<input  type='text' name='singles["+i+"].remark'> <input type='hidden'  name='singles["+i+"].location.id' value="+temp[5]+">";
 			var myTD6 = myTR.insertCell(5);
 			myTD6.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
 		}
@@ -54,7 +54,7 @@
 <body class="page">
 	<form action="${ctx}/install/addBill" method="post"
 		class="pageForm required-validate"
-		onsubmit="return validateCallback(this, dialogAjaxDone);">
+		onsubmit="return validateCallback(this, navTabAjaxDone);">
 		<div class="pageHeader">
 		<div class="pageFormContent" layoutH="600">
 			<div

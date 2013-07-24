@@ -10,6 +10,8 @@ public class DwzUtil {
 	public static final int FAIL = 300;
 	public static final int TIMEOUT = 301;
 
+	public static final String CLALL_BACK_TYPE = "";
+
 	/**
 	 * DwzAjax服务器端响应
 	 * 
@@ -24,19 +26,27 @@ public class DwzUtil {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("statusCode", statusCode);
 		map.put("message", (statusCode == OK) ? "操作成功！" : "操作失败！");
-		if (StringUtils.isNotEmpty(navTabId)) {
+		if (StringUtils.isNotBlank(navTabId)) {
 			map.put("navTabId", navTabId);
 			map.put("callbackType", "closeCurrent");
 		}
 		return map;
 	}
 
+	/**
+	 * 自定义消息
+	 * 
+	 * @param statusCode
+	 * @param navTabId
+	 * @param message
+	 * @return
+	 */
 	public static Map<String, Object> dialogAjaxDone(int statusCode,
 			String navTabId, String message) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("statusCode", statusCode);
 		map.put("message", message);
-		if (StringUtils.isNotEmpty(navTabId)) {
+		if (StringUtils.isNotBlank(navTabId)) {
 			map.put("navTabId", navTabId);
 			map.put("callbackType", "closeCurrent");
 		}
@@ -56,11 +66,15 @@ public class DwzUtil {
 			String navTabId, String message, String forwardUrl) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("statusCode", statusCode);
-		map.put("message", message);
+		if(StringUtils.isNotBlank(message)){
+			map.put("message", message);
+		}else{
+			map.put("message", (statusCode == OK) ? "操作成功！" : "操作失败！");
+		}
 		map.put("forwardUrl", forwardUrl);
-		if (StringUtils.isNotEmpty(navTabId)) {
+		if (StringUtils.isNotBlank(navTabId)) {
 			map.put("navTabId", navTabId);
-			map.put("callbackType", "closeCurrent");
+			map.put("callbackType", "forward");
 		}
 		return map;
 	}

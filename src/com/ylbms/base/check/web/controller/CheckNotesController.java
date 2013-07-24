@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,7 @@ public class CheckNotesController extends BaseController {
 	private static final String NAV_TAB_ID = "jdnotes";
 
 	@Autowired
-	private CheckNotesService checkNotesService;
+	private CheckNotesService checkService;
 
 	@Autowired
 	private SingleInfoService singleService;
@@ -88,7 +89,7 @@ public class CheckNotesController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> delete(@PathVariable("id") String djId) {
 		try {
-			checkNotesService.deleteNotesById(djId);
+			checkService.deleteNotesById(djId);
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
@@ -112,29 +113,8 @@ public class CheckNotesController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> save(CheckNotes cheack, NotesModel notes) {
 		try {
-			checkNotesService.saveCheckNotes(cheack, notes);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
-		} catch (Exception e) {
-			if (log.isErrorEnabled()) {
-				log.error("system error!", e.getCause());
-			}
-			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
-					e.getMessage());
-		}
-	}
-
-	/**
-	 * 批量删除
-	 * 
-	 * @param ids
-	 * @return
-	 */
-	@RequestMapping(value = "delByIds")
-	@ResponseBody
-	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {
-		try {
-			checkNotesService.delByIds(ids);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
+			checkService.saveCheckNotes(cheack, notes);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK,  NAV_TAB_ID);
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error("system error!", e.getCause());
@@ -158,9 +138,44 @@ public class CheckNotesController extends BaseController {
 			Model model) {
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<CheckNotes> list = checkNotesService.findPage(page, filters);
+		Page<CheckNotes> list = checkService.findPage(page, filters);
 		model.addAttribute("page", list);
 		return "base/check/list";
 	}
 
+	/**
+	 * 展示单件信息明细
+	 * 
+	 * @param jdId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "viewUi/{jdId}")
+	@RequiresUser
+	public String viewUi(@PathVariable("jdId") String jdId, Model model) {
+		CheckNotes master = checkService.getCheckById(jdId);
+		model.addAttribute("master", master);
+		return "base/check/view";
+	}
+
+	/**
+	 * 批量删除
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping(value = "delByIds")
+	@ResponseBody
+	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {
+		try {
+			checkService.delByIds(ids);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error("system error!", e.getCause());
+			}
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
+					e.getMessage());
+		}
+	}
 }

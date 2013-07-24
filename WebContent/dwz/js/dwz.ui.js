@@ -478,7 +478,6 @@ function initUI(_box){
            var $this = $(this);
            var title = $this.attr("title") || $this.text();
            var rel = $this.attr("rel") || "ids",flag=0;
-           var isE=$this.attr("isE")||"";  //该属性只是为了方便判断，懒的产物，同时也是代码的复用
            var targetType = $this.attr("targetType");
            var $box = targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
            
@@ -498,7 +497,7 @@ function initUI(_box){
            options.param = $this.attr("param") || "";
            var flwz=$("input[name='sendLocation.id']").val();
            var url = ($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
-           if(isE!=""&&isE=="jd"){
+           if(rel!=""&&rel=="addJd"){
         	   url=encodeURI(encodeURI(url+"?mids="+getMids())); //这个是页面一个方法
            }else{
         	   url=encodeURI(encodeURI(url+"?mids="+getMids()+"&wz="+flwz)); //这个是页面一个方法

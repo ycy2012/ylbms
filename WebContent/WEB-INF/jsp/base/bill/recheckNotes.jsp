@@ -54,7 +54,7 @@
 <body class="page">
 	<form action="${ctx}/check/addBill" method="post"
 		class="pageForm required-validate"
-		onsubmit="return validateCallback(this, dialogAjaxDone);">
+		onsubmit="return validateCallback(this, navTabAjaxDone);">
 		<div class="pageHeader">
 		<div class="pageFormContent" layoutH="600">
 			<div

@@ -166,7 +166,7 @@
 								</ul></li>
 							<li><a>单据信息管理</a>
 								    <ul>
-									<li><a href="bill/list" target="navTab" rel="bill">单据 管理</a></li>
+									<li><a href="bill/list" target="navTab" rel="bill">单据信息管理</a></li>
 									<li><a href="new/newUi" target="navTab" rel="billgl">入库单制作</a></li>
 									<li><a href="ckgl/addUi" target="navTab" rel="billgl">出库单制作</a></li>
 									<li><a href="install/inputUi" target="navTab" rel="billgl">安装单制作</a></li>
