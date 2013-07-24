@@ -12,6 +12,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.ylbms.base.single.model.SingleInfo;
+import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.common.model.BaseModel;
 
 /**
@@ -64,6 +65,8 @@ public class BillTbodyModel extends BaseModel {
 	}
 
 	// setter getter
+	
+	
 	@Id
 	public SingleInfo getMid() {
 		return mid;

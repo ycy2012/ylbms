@@ -19,7 +19,7 @@
 					type="text" size="30" value="${obj.wzname}" />
 			</p>
 			<p>
-				<label>规格型号：</label> <select name="sepctype.speId" class="required">
+				<label>规格型号：</label> <select name="speId" class="required">
 					<option value="">请选择规格型号</option>
 					<c:forEach items="${spectypes}" var="sp">
 						<option value="${sp.value}">${sp.text}</option>
@@ -27,15 +27,20 @@
 				</select> 
 			</p>
 			<p>
-				<label>当前位置：</label> <input type="text" name="location"
-					class="textInput" value="${obj.location}">
+				<label>当前位置：</label>
+					<select name="id" class="required">
+						<option value="">请选择当前位置</option>
+						<c:forEach items="${mapLocation}" var="ml">
+							<option value="${ml.id}">${ml.locationName}</option>
+						</c:forEach>
+					</select>
 			</p>
 			<p>
-				<label>当前状态：</label> <select name="state" class="required combox"
+				<label>当前状态：</label> <select name="id" class="required combox"
 					value="${obj.state}">
 					<option value="" selected>请选择</option>
-					<option value="1">无效</option>
-					<option value="0">有效</option>
+					<option value="1">已租</option>
+					<option value="0">待租</option>
 				</select>
 			</p>
 			<p>
@@ -130,16 +135,16 @@
 					value="${obg.form}" />
 			</p>
 			<p>
-				<label>固定资产编码：</label> <input readonly="readonly" type="text"
+				<label>固定资产编码：</label> <input   type="text"
 					size="30" name="gdzc_Code" value="${obg.gdzc_Code}" />
 			</p>
 			<!-- <div class="divider"></div> -->
 			<p>
-				<label>条码号：</label> <input readonly="readonly" type="text" size="30"
+				<label>条码号：</label> <input   type="text" size="30"
 					name="tx_Code" value="${obg.tx_Code}" />
 			</p>
 			<p>
-				<label>安装位置：</label> <input readonly="readonly" type="text"
+				<label>安装位置：</label> <input   type="text"
 					size="30" name="az_Location" value="${obg.az_Location}" />
 			</p>
 			<p>
@@ -148,15 +153,15 @@
 					href="javascript:;">选择</a>
 			</p>
 			<p>
-				<label>四号定位：</label> <input readonly="readonly" type="text"
+				<label>四号定位：</label> <input   type="text"
 					size="30" name="shdw" value="${obg.shdw}" />
 			</p>
 			<p>
-				<label>其他指标：</label> <input readonly="readonly" type="text"
+				<label>其他指标：</label> <input   type="text"
 					size="30" name="other" value="${obg.other}" />
 			</p>
 			<p>
-				<label>录入人员：</label> <input readonly="readonly" type="text"
+				<label>录入人员：</label> <input   type="text"
 					size="30" name="creater" value="${obg.creater}" />
 			</p>
 			<p>
@@ -165,8 +170,13 @@
 					class="inputDateButton" href="javascript:;">选择</a>
 			</p>
 			<p>
-				<label>状态信息：</label> <input readonly="readonly" type="text"
-					size="30" name="status" value="${obg.status}" />
+				<label>状态信息：</label> 
+				<select name="status" class="required combox"
+					>
+					<option value="" selected>请选择</option>
+					<option value="1">无效</option>
+					<option value="0">有效</option>
+				</select>
 			</p>
 			<p>
 				<label>备注信息：</label>

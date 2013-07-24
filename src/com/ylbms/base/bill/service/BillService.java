@@ -15,6 +15,7 @@ import com.ylbms.base.bill.model.BillTbodyModel;
 import com.ylbms.base.location.model.Location;
 import com.ylbms.base.single.dao.SingleInfoDao;
 import com.ylbms.base.single.model.SingleInfo;
+import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.base.single.model.StateInfo;
 import com.ylbms.system.utils.UserUtils;
 
@@ -36,6 +37,7 @@ public class BillService {
 
 	@Autowired
 	SingleInfoDao singleDao;
+	
 
 	/**
 	 * 保存单据

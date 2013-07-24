@@ -50,7 +50,7 @@
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"
 				postType="string" href="${ctx}/single/delByIds/{sid_single}"
 				class="delete"><span>批量删除</span></a></li>
-			<li><a class="edit" href="${ctx}/single/edit/{sid_singleInfo}"
+			<li><a class="edit" href="${ctx}/single/edit/{sid_single}"
 				target="dialog" mask="true" title="修改单件信息"><span>修改</span></a></li>
 			<li class="line">line</li>
 			<li><a class="icon" href="#" target="dwzExport"
