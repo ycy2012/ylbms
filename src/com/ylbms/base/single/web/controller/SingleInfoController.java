@@ -180,7 +180,7 @@ public class SingleInfoController extends BaseController {
 	@RequestMapping(value = "/list")
 	public String list(HttpServletRequest request, Page<SingleInfo> page,
 			SingleInfo single, Model model) {
-		Page<SingleInfo> list = singleInfoService.findSingleInfo(page, single);
+		Page<SingleInfo> list = singleInfoService.findSingleInfo(page, single,"");
 		model.addAttribute("page", list);
 		return "base/singleinfo/listSingleInfo";
 	}

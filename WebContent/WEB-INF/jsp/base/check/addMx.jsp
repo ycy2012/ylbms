@@ -18,7 +18,7 @@
 	}
 	$(document).ready(function() {
 		var mids = window.parent.getMids();
-		var url=window.parent.getURL();
+		var url=window.parent.getURL()+mids;
 		$("#form").attr("action", url);
 	});
 //-->
@@ -73,7 +73,7 @@
 			<c:forEach items="${page.result}" var="acc">
 				<tr target="sid_singleInfo" rel="${acc.mid}">
 					<td><input name="ids"
-						value="${acc.mid}#${acc.owercode}#${acc.wzname}#${acc.spectype.speName}#${acc.location.id}#${acc.state.id}"
+						value="${acc.mid}#${acc.wzname}#${acc.spectype.speName}#${acc.azLocation}"
 						type="checkbox"></td>
 					<td>${acc.owercode}</td>
 					<td>${acc.wzname}</td>

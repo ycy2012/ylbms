@@ -125,7 +125,7 @@ public class SingleInfoService {
 	 * @return
 	 */
 	public Page<SingleInfo> findSingleInfo(Page<SingleInfo> page,
-			SingleInfo single) {
+			SingleInfo single,String mids) {
 
 		DetachedCriteria dc = singleDao.createDetachedCriteria();
 		if (single.getLocation() != null
@@ -137,10 +137,20 @@ public class SingleInfoService {
 			dc.add(Restrictions.eq("spectype.speId", single.getSpectype()
 					.getSpeId()));
 		}
-
+		if (null != single.getState() && single.getState().getId() != null) {
+			dc.add(Restrictions.eq("state.id", single.getState().getId()));
+		}
 		// 根据主键
 		if (StringUtils.isNotEmpty(single.getMid())) {
 			dc.add(Restrictions.eq("mid", single.getMid()));
+		}
+		/**
+		 * 重新添加的！
+		 * @author JackinLiang
+		 */
+		if(StringUtils.isNotBlank(mids)){
+			String[] mid=mids.split(",");
+			dc.add(Restrictions.not(Restrictions.in("mid", mid)));
 		}
 
 		if (StringUtils.isNotEmpty(single.getOwercode())) {
@@ -153,7 +163,7 @@ public class SingleInfoService {
 		}
 
 		if (StringUtils.isNotEmpty(single.getStatus())) {
-			dc.add(Restrictions.like("status", single.getStatus()));
+			dc.add(Restrictions.eq("status", single.getStatus()));
 		}
 
 		if (single.getJdtime() != null) {
@@ -163,14 +173,13 @@ public class SingleInfoService {
 		if (StringUtils.isNotEmpty(single.getGdzcCode())) {
 			dc.add(Restrictions.like("gdzcCode", single.getGdzcCode()));
 		}
-		// if(single.getFactory()!=null){
-		dc.add(Restrictions.like("factory", single.getFactory()));
-		// }
+		if (single.getFactory() > 0) {
+			dc.add(Restrictions.like("factory", single.getFactory()));
+		}
 
 		if (!StringUtils.isNotEmpty(page.getOrderBy())) {
 			dc.addOrder(Order.asc("spectype.speId"));
 		}
-
 		return singleDao.find(page, dc);
 	}
 

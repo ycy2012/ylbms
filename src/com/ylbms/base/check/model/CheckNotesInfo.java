@@ -73,7 +73,6 @@ public class CheckNotesInfo extends BaseModel {
 	}
 
 	@Column(name = "jd_date")
-	@NotNull
 	public Date getJdDate() {
 		return jdDate;
 	}
@@ -109,7 +108,7 @@ public class CheckNotesInfo extends BaseModel {
 		this.jmbCode = jmbCode;
 	}
 
-	@Column(name = "zsh_code")
+	@Column(name = "zshu_code")
 	public String getzShuCode() {
 		return zShuCode;
 	}

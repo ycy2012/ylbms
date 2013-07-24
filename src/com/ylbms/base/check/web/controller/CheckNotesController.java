@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ylbms.base.check.model.CheckNotes;
-import com.ylbms.base.check.model.CheckNotesInfo;
 import com.ylbms.base.check.service.CheckNotesService;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.base.single.model.StateInfo;
@@ -43,8 +43,9 @@ public class CheckNotesController extends BaseController {
 	private static final String NAV_TAB_ID = "jdnotes";
 
 	@Autowired
-	private CheckNotesService checkNotesService;
+	private CheckNotesService checkService;
 
+	@Autowired
 	private SingleInfoService singleService;
 
 	/**
@@ -62,15 +63,18 @@ public class CheckNotesController extends BaseController {
 
 	/**
 	 * 添加明细
+	 * 
 	 * @param page
 	 * @param single
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "addMx")
-	public String addMx(Page<SingleInfo> page, SingleInfo single, Model model) {
-		single.setState(new StateInfo("040")); //设置要查询的单件信息的状态
-		Page<SingleInfo> list = singleService.findSingleInfo(page, single);
+	public String addMx(@RequestParam("mids") String mids,
+			Page<SingleInfo> page, SingleInfo single, Model model) {
+		single.setState(new StateInfo("040")); // 设置要查询的单件信息的状态
+		Page<SingleInfo> list = singleService
+				.findSingleInfo(page, single, mids);
 		model.addAttribute("page", list);
 		return "base/check/addMx";
 	}
@@ -85,7 +89,7 @@ public class CheckNotesController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> delete(@PathVariable("id") String djId) {
 		try {
-			checkNotesService.deleteNotesById(djId);
+			checkService.deleteNotesById(djId);
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
@@ -109,29 +113,8 @@ public class CheckNotesController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> save(CheckNotes cheack, NotesModel notes) {
 		try {
-			checkNotesService.saveCheckNotes(cheack, notes);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
-		} catch (Exception e) {
-			if (log.isErrorEnabled()) {
-				log.error("system error!", e.getCause());
-			}
-			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
-					e.getMessage());
-		}
-	}
-
-	/**
-	 * 批量删除
-	 * 
-	 * @param ids
-	 * @return
-	 */
-	@RequestMapping(value = "delByIds")
-	@ResponseBody
-	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {
-		try {
-			checkNotesService.delByIds(ids);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
+			checkService.saveCheckNotes(cheack, notes);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK,  NAV_TAB_ID);
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error("system error!", e.getCause());
@@ -155,28 +138,44 @@ public class CheckNotesController extends BaseController {
 			Model model) {
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<CheckNotes> list = checkNotesService.findPage(page, filters);
+		Page<CheckNotes> list = checkService.findPage(page, filters);
 		model.addAttribute("page", list);
 		return "base/check/list";
 	}
 
 	/**
-	 * 内部类
+	 * 展示单件信息明细
 	 * 
-	 * @author JackLiang
-	 * @version 1.0
-	 * @date 2013-7-18
+	 * @param jdId
+	 * @param model
+	 * @return
 	 */
-	public class NotesModel {
-		private List<CheckNotesInfo> notes;
-
-		public List<CheckNotesInfo> getNotes() {
-			return notes;
-		}
-
-		public void setNotes(List<CheckNotesInfo> notes) {
-			this.notes = notes;
-		}
+	@RequestMapping(value = "viewUi/{jdId}")
+	@RequiresUser
+	public String viewUi(@PathVariable("jdId") String jdId, Model model) {
+		CheckNotes master = checkService.getCheckById(jdId);
+		model.addAttribute("master", master);
+		return "base/check/view";
 	}
 
+	/**
+	 * 批量删除
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping(value = "delByIds")
+	@ResponseBody
+	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {
+		try {
+			checkService.delByIds(ids);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error("system error!", e.getCause());
+			}
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
+					e.getMessage());
+		}
+	}
 }
