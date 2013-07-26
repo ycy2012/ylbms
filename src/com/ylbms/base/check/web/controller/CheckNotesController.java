@@ -113,7 +113,7 @@ public class CheckNotesController extends BaseController {
 	public Map<String, Object> save(CheckNotes cheack, NotesModel notes) {
 		try {
 			checkService.saveCheckNotes(cheack, notes);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK,  NAV_TAB_ID);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error("system error!", e.getCause());

@@ -183,8 +183,8 @@
 						   <li><a>检测信息管理</a>
 								    <ul>
 									<li><a href="jd/list" target="navTab" rel="jdnotes">检定记录管理</a></li>
-									<li><a href="bill/list" target="navTab" rel="bill">检定证书管理</a></li>
-									<li><a href="bill/list" target="navTab" rel="bill">检定记录添加</a></li>
+									<li><a href="jdzhs/list" target="navTab" rel="jdzhs">检定证书管理</a></li>
+									<li><a href="bill/list" target="navTab" rel="addbill">检定记录添加</a></li>
 								</ul></li>
 					</div>
 				</div>

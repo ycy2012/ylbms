@@ -2,8 +2,10 @@ package com.ylbms.base.check.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +31,7 @@ import com.ylbms.system.model.User;
  * @date 2013-7-26
  */
 @Entity
-@Table(name = "ylbms_jc_jmbInfo")
+@Table(name = "ylbms_base_jmbInfo")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class JmylbModel extends BaseModel {
 
@@ -53,6 +55,7 @@ public class JmylbModel extends BaseModel {
 	private String status; // 是否有效
 
 	public JmylbModel() {
+		this.status = DEL_FLAG_NORMAL;
 	}
 
 	public JmylbModel(Long jmbID) {
@@ -163,7 +166,7 @@ public class JmylbModel extends BaseModel {
 		this.yxDate = yxDate;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH})
 	@JoinColumn(name = "creater")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
