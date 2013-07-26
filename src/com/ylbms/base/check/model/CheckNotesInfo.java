@@ -32,14 +32,14 @@ public class CheckNotesInfo extends BaseModel {
 
 	private SingleInfo single;// 单件虚拟编号
 	private CheckNotes checkNotes; // 检定记录编码
-	private String clfw;// 测量范围
 	private Date jdDate;// 检定日期
 	private Date yxDate;// 有效日期
 	private String azLocation;// 安装位置
 	private String jmbCode;// 精密表编码
 	private String zShuCode;// 证书 编码
-	private Date  zsyxDate;  //证书有效日期
+	private Date zsyxDate; // 证书有效日期
 	private String shbCode; // 设备编码
+	private String grade; // 检定等级
 	private Long order;// 排序
 	private String remark;// 备注信息
 
@@ -63,14 +63,6 @@ public class CheckNotesInfo extends BaseModel {
 
 	public void setCheckNotes(CheckNotes checkNotes) {
 		this.checkNotes = checkNotes;
-	}
-
-	public String getClfw() {
-		return clfw;
-	}
-
-	public void setClfw(String clfw) {
-		this.clfw = clfw;
 	}
 
 	@Column(name = "jd_date")
@@ -120,7 +112,7 @@ public class CheckNotesInfo extends BaseModel {
 		this.zShuCode = zShuCode;
 	}
 
-	@Column(name="zsyx_date")
+	@Column(name = "zsyx_date")
 	@JSONField(format = "yyyy-mm-dd")
 	public Date getZsyxDate() {
 		return zsyxDate;
@@ -137,6 +129,14 @@ public class CheckNotesInfo extends BaseModel {
 
 	public void setShbCode(String shbCode) {
 		this.shbCode = shbCode;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 
 	@Column(name = "sort")

@@ -18,9 +18,9 @@ import com.ylbms.system.model.User;
  * @version 1.0
  * @date 2013-7-24
  */
-//@Entity
-//@Table(name = "ylbms_jc_zhshInfo")
-//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+// @Entity
+// @Table(name = "ylbms_jc_zhshInfo")
+// @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class CheckZhShuModel extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
@@ -33,8 +33,9 @@ public class CheckZhShuModel extends BaseModel {
 	private User pzren;// 批准人
 	private User veriRen;// 核验员
 	private User jdRen;// 检定人员
-	private Date jdDate;
+	private Date jdDate; //
 	private Date yxDate;
-	
-
+	private JmylbModel jmbInfo;
+	private String status;
+	private String remark;
 }
