@@ -64,15 +64,15 @@ public class SingleInfo extends BaseModel {
 	private int userTimes;// 使用次数
 	private Float price;// 价格
 	private String isnyqj;// 是否能源器具
-	private Float clfw;// 测量范围
+	private String clfw;// 测量范围
 	private String isqj;// 是否强检
-	private String isCheck; //是否有检测数据
+	private String isCheck; // 是否有检测数据
 	private Date chcDate;// 出厂日期
 	private String form;// ABC形式
 	private String gdzcCode;// 固定资产编码
 	private String txCode;// 条码号
 	private String azLocation;// 安装位置
-	private String isAnz;  // 是否安装  其中1表示安装了，0表示没有安装
+	private String isAnz; // 是否安装 其中1表示安装了，0表示没有安装
 	private Date grDate;// 购入日期
 	private String shdw;// 四位定号
 	private String other;// 其他指标
@@ -80,11 +80,11 @@ public class SingleInfo extends BaseModel {
 	private Date createDate;// 录入时间
 	private String status;// 状态信息
 	private String remark;// 备注信息
-	
+
 	public SingleInfo() {
 		this.status = DEL_FLAG_NORMAL;
-		this.isAnz=DEL_FLAG_NORMAL;
-		this.isCheck=CHECKED_NO;
+		this.isAnz = DEL_FLAG_NORMAL;
+		this.isCheck = CHECKED_NO;
 	}
 
 	public SingleInfo(String mid) {
@@ -122,7 +122,8 @@ public class SingleInfo extends BaseModel {
 		this.wzname = wzname;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade ={CascadeType.MERGE,CascadeType.REFRESH})
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
+			CascadeType.REFRESH })
 	@JoinColumn(name = "spectype", nullable = false, referencedColumnName = "speId")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Fetch(FetchMode.JOIN)
@@ -135,10 +136,11 @@ public class SingleInfo extends BaseModel {
 		this.spectype = spectype;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH})
-	@JoinColumn(name="location")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
+			CascadeType.REFRESH })
+	@JoinColumn(name = "location")
 	@Fetch(FetchMode.JOIN)
-	@NotFound(action=NotFoundAction.IGNORE)
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public Location getLocation() {
 		return location;
@@ -149,10 +151,10 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="state")
+	@JoinColumn(name = "state")
 	@JsonIgnore
 	@NotFound(action = NotFoundAction.IGNORE)
-	@NotNull(message="归属部门不能为空")
+	@NotNull(message = "归属部门不能为空")
 	public StateInfo getState() {
 		return state;
 	}
@@ -187,7 +189,7 @@ public class SingleInfo extends BaseModel {
 		this.factoryCode = factoryCode;
 	}
 
-	@Column(nullable = false,name="jd_time")
+	@Column(nullable = false, name = "jd_time")
 	public Date getJdtime() {
 		return jdtime;
 	}
@@ -196,7 +198,7 @@ public class SingleInfo extends BaseModel {
 		this.jdtime = jdtime;
 	}
 
-	@Column(nullable = false,name="sc_unit")
+	@Column(nullable = false, name = "sc_unit")
 	public String getScunit() {
 		return scunit;
 	}
@@ -205,17 +207,17 @@ public class SingleInfo extends BaseModel {
 		this.scunit = scunit;
 	}
 
-	@Column(nullable = false,name="yx_Time")
+	@Column(nullable = false, name = "yx_Time")
 	public Date getYxTime() {
 		return yxTime;
 	}
 
-	@Column(name="yx_Time")
+	@Column(name = "yx_Time")
 	public void setYxTime(Date yxTime) {
 		this.yxTime = yxTime;
 	}
 
-	@Column(name="bf_time")
+	@Column(name = "bf_time")
 	@JSONField(format = "yyyy-mm-dd")
 	public Date getBfTime() {
 		return bfTime;
@@ -225,7 +227,7 @@ public class SingleInfo extends BaseModel {
 		this.bfTime = bfTime;
 	}
 
-	@Column(nullable = false,name="qy_Time")
+	@Column(nullable = false, name = "qy_Time")
 	public Date getQyTime() {
 		return qyTime;
 	}
@@ -234,7 +236,7 @@ public class SingleInfo extends BaseModel {
 		this.qyTime = qyTime;
 	}
 
-	@Column(nullable = false,name="type_Id")
+	@Column(nullable = false, name = "type_Id")
 	public int getTypeId() {
 		return typeId;
 	}
@@ -278,11 +280,11 @@ public class SingleInfo extends BaseModel {
 		this.isnyqj = isnyqj;
 	}
 
-	public Float getClfw() {
+	public String getClfw() {
 		return clfw;
 	}
 
-	public void setClfw(Float clfw) {
+	public void setClfw(String clfw) {
 		this.clfw = clfw;
 	}
 
@@ -302,7 +304,7 @@ public class SingleInfo extends BaseModel {
 		this.isCheck = isCheck;
 	}
 
-	@Column(name="chc_Date")
+	@Column(name = "chc_Date")
 	public Date getChcDate() {
 		return chcDate;
 	}
@@ -319,7 +321,7 @@ public class SingleInfo extends BaseModel {
 		this.form = form;
 	}
 
-	@Column(name="gdzc_Code")
+	@Column(name = "gdzc_Code")
 	public String getGdzcCode() {
 		return gdzcCode;
 	}
@@ -328,7 +330,7 @@ public class SingleInfo extends BaseModel {
 		this.gdzcCode = gdzcCode;
 	}
 
-	@Column(name="tx_Code")
+	@Column(name = "tx_Code")
 	public String getTxCode() {
 		return txCode;
 	}
@@ -337,7 +339,7 @@ public class SingleInfo extends BaseModel {
 		this.txCode = txCode;
 	}
 
-	@Column(name="az_Location")
+	@Column(name = "az_Location")
 	public String getAzLocation() {
 		return azLocation;
 	}
@@ -354,7 +356,7 @@ public class SingleInfo extends BaseModel {
 		this.isAnz = isAnz;
 	}
 
-	@Column(name="gr_Date")
+	@Column(name = "gr_Date")
 	public Date getGrDate() {
 		return grDate;
 	}

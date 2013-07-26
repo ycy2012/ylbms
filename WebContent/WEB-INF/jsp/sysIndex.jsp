@@ -175,7 +175,9 @@
 									<li><a href="bill/list" target="navTab" rel="bill">单据信息管理</a></li>
 									<li><a href="new/newUi" target="navTab" rel="billgl">入库单制作</a></li>
 									<li><a href="ckgl/addUi" target="navTab" rel="billgl">出库单制作</a></li>
+									<%-- 
 									<li><a href="install/inputUi" target="navTab" rel="billgl">安装单制作</a></li>
+									 --%>
 									<li><a href="check/checkUi" target="navTab" rel="billgl">回收单制作</a></li>
 								</ul></li>
 						   <li><a>检测信息管理</a>
