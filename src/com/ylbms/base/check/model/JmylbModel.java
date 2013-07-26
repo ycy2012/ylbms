@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -66,6 +67,7 @@ public class JmylbModel extends BaseModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_jd_jmbinfo")
 	@SequenceGenerator(name = "seq_jd_jmbinfo", sequenceName = "seq_jd_jmbinfo")
+	@Column(name="jmb_id")
 	public Long getJmbID() {
 		return jmbID;
 	}
@@ -74,6 +76,7 @@ public class JmylbModel extends BaseModel {
 		this.jmbID = jmbID;
 	}
 
+	@Column(name="jmb_name")
 	public String getJmbName() {
 		return jmbName;
 	}
@@ -82,6 +85,7 @@ public class JmylbModel extends BaseModel {
 		this.jmbName = jmbName;
 	}
 
+	@Column(name="jmb_type")
 	public String getJmbType() {
 		return jmbType;
 	}
@@ -90,6 +94,7 @@ public class JmylbModel extends BaseModel {
 		this.jmbType = jmbType;
 	}
 
+	@Column(name="factory_code")
 	public String getFactoryCode() {
 		return factoryCode;
 	}
@@ -102,7 +107,7 @@ public class JmylbModel extends BaseModel {
 	public String getJmbCode() {
 		return jmbCode;
 	}
-
+	@Column(name="jmb_code")
 	public void setJmbCode(String jmbCode) {
 		this.jmbCode = jmbCode;
 	}
@@ -123,6 +128,7 @@ public class JmylbModel extends BaseModel {
 		this.grade = grade;
 	}
 
+	@Column(name="zhsh_code")
 	public String getZhShCode() {
 		return zhShCode;
 	}
@@ -139,6 +145,7 @@ public class JmylbModel extends BaseModel {
 		this.madeIn = madeIn;
 	}
 
+	@Column(name="jd_unit")
 	public String getJdUnit() {
 		return jdUnit;
 	}

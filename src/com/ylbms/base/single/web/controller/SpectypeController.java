@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ylbms.base.single.model.SpectypeInfo;
@@ -163,7 +164,7 @@ public class SpectypeController extends BaseController {
 	 */
 	@RequestMapping(value = "/deletes/{ids}")
 	@ResponseBody
-	public Map<String, Object> delSpectype(@PathVariable("ids") String ids) {
+	public Map<String, Object> delSpectype(@RequestParam("ids") String ids) {
 		try {
 			spectypeService.deleteSpectype(ids);
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK);

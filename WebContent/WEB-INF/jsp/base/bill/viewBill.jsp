@@ -29,28 +29,30 @@
 				<td width="20%" style="border-bottom: #000 solid 1px">${bh.sxDate}</td>
 			</tr>
 		</table>
-		<table width="90%" align="center" BORDER="1" height="60"
+		<table width="90%" align="center" BORDER="1"
 			BorderColor="#000" CELLSPACING="0" CELLPADDING="3"
 			style="border-collapse: collapse">
-			<tr align="center">
+			<tr align="center" height="30">
 				<td height="20%">序号</td>
 				<td>单件虚拟编号</td>
 				<td>物资名称</td>
 				<td>规格型号</td>
+				<td>出厂编码</td>
 				<td>备注</td>
 			</tr>
-			<c:forEach items="${bh.billTbody}" var="bt">
-			<tr>
-				<td height="20%" align="center">1</td>
-				<td>${bt.mid}</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
+			<c:forEach items="${bh.billTbody}" var="bt" varStatus="stauts">
+			<tr height="30" align="center">
+				<td height="20%" align="center"  width="5%">${stauts.count}</td>
+				<td width="20%">${bt.mid.mid}</td>
+				<td width="20%">${bt.mid.wzname}</td>
+				<td width="10%">${bt.mid.spectype.speId}</td>
+				<td width="20%">${tb.mid.factoryCode}</td>
+				<td width="25%">${bt.mid.remark }</td>
 			</tr>
 					</c:forEach>
 		</table>
 
-		<table width="90%" height="40"
+		<table width="90%" height="35"
 			style="font-size: 12px; margin-bottom: 15px;" BORDER="0"
 			CELLSPACING="0" CELLPADDING="0">
 			<tr valign="bottom">

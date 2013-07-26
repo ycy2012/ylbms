@@ -21,7 +21,7 @@
 						class="required" maxlength="150" value="${obj.speName }" />
 				</p>
 				<p>
-					<label>规格型号状态：</label> <select name="sort" class="required combox">
+					<label>规格型号状态：</label> <select name="status" class="required combox">
 						<option value="">请选择</option>
 						<option value="1">有效</option>
 						<option value="0" selected>无效</option>

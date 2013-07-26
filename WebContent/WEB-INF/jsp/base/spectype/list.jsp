@@ -46,7 +46,7 @@
 			<li><a class="add" href="${ctx}/spec/addUi" target="dialog"
 				mask="true" title="添加规格型号信息"><span>添加</span></a></li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"
-				postType="string" href="${ctx}/spec/deletes/{ids_spectype}"
+				postType="string" href="${ctx}/spec/deletes/{sid_spectype}"
 				class="delete"><span>批量删除</span></a></li>
 			<li><a class="edit" href="${ctx}/spec/edit/{sid_spectype}"
 				target="dialog" mask="true" title="修改规格型号信息"><span>修改</span></a></li>
@@ -62,8 +62,8 @@
 					class="checkboxCtrl"></th>
 				<th>规格型号名称</th>
 				<th>显示顺序</th>
-				<th>规格型号备注</th>
 				<th>规格型号状态</th>
+				<th>规格型号备注</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -73,8 +73,8 @@
 					<td><input name="ids" value="'${acc.speId}'" type="checkbox"></td>
 					<td>${acc.speName}</td>
 					<td>${acc.sort}</td>
-					<td>${acc.remark}</td>
 					<td>${acc.status==0?'有效':'无效'}</td>
+					<td>${acc.remark}</td>
 					<td><a title="删除规格型号信息" target="ajaxTodo"
 						href="${ctx}/spec/delete/${acc.speId}" class="btnDel">删除规格型号信息</a>
 						<a title="编辑规格型号信息" target="dialog"

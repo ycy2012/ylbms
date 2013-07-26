@@ -49,7 +49,7 @@ public class SpectypeService {
 	@Transactional(readOnly = false)
 	public void deleteSpectype(String ids) {
 		spectypeDao
-				.delSpectypeInfo("delect from YLBMS_BAS_SPECTYPEINFO where speid in("
+				.delSpectypeInfo("delete from SpectypeInfo where speid in("
 						+ ids + ")");
 		UserUtils.removeCache("spectypes");
 	}
