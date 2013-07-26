@@ -57,6 +57,7 @@ public class JmylbModel extends BaseModel {
 
 	public JmylbModel() {
 		this.status = DEL_FLAG_NORMAL;
+		this.createDate=new Date();
 	}
 
 	public JmylbModel(Long jmbID) {

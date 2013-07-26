@@ -43,6 +43,8 @@ public class CheckNotesInfo extends BaseModel {
 	private Long order;// 排序
 	private String remark;// 备注信息
 
+	private CheckZhShuModel zCode;  //检定证书编号
+
 	public CheckNotesInfo() {
 	}
 

@@ -49,7 +49,7 @@ public class User extends BaseModel implements Serializable {
 
 	private String password;
 
-	private String fullname;
+	private String fullname; //真实姓名
 
 	private String usertype; // 1为管理员
 

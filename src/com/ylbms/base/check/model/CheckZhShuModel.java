@@ -8,13 +8,18 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -35,7 +40,8 @@ public class CheckZhShuModel extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
 
-	private String zId; // 证书编号
+	private Long zId; // ID
+	private String zCode; // 证书编码
 	private String zTitle;// 证书名称
 	private String sjUnit; // 送检单位
 	private String basis;// 检定依据
@@ -51,19 +57,28 @@ public class CheckZhShuModel extends BaseModel {
 	private String status;
 	private String remark;
 
-	private Set<CheckNotesInfo> infos = new HashSet<CheckNotesInfo>(); // detail
-
 	public CheckZhShuModel() {
 		this.status = DEL_FLAG_NORMAL;
 	}
 
 	// getter setter
-	public String getzId() {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_jd_zhshInfo")
+	@SequenceGenerator(name = "seq_jd_zhshInfo", sequenceName = "seq_jd_zhshInfo")
+	public Long getzId() {
 		return zId;
 	}
 
-	public void setzId(String zId) {
+	public void setzId(Long zId) {
 		this.zId = zId;
+	}
+
+	public String getzCode() {
+		return zCode;
+	}
+
+	public void setzCode(String zCode) {
+		this.zCode = zCode;
 	}
 
 	public String getzTitle() {
@@ -185,17 +200,6 @@ public class CheckZhShuModel extends BaseModel {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "zshu_code", nullable = false)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public Set<CheckNotesInfo> getInfos() {
-		return infos;
-	}
-
-	public void setInfos(Set<CheckNotesInfo> infos) {
-		this.infos = infos;
 	}
 
 }
