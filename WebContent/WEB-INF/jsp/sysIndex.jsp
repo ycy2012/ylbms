@@ -20,6 +20,12 @@
 <!--[if IE]>
 <link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css" />
 <![endif]-->
+<!--[if lte IE 6]>
+<script src="${ctx}/styles/js/DD_belatedPNG_0.0.8a.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('a');
+    </script>
+<![endif]--> 
 <script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery-1.7.2.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
@@ -169,7 +175,9 @@
 									<li><a href="bill/list" target="navTab" rel="bill">单据信息管理</a></li>
 									<li><a href="new/newUi" target="navTab" rel="billgl">入库单制作</a></li>
 									<li><a href="ckgl/addUi" target="navTab" rel="billgl">出库单制作</a></li>
+									<%-- 
 									<li><a href="install/inputUi" target="navTab" rel="billgl">安装单制作</a></li>
+									 --%>
 									<li><a href="check/checkUi" target="navTab" rel="billgl">回收单制作</a></li>
 								</ul></li>
 						   <li><a>检测信息管理</a>

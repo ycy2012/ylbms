@@ -11,6 +11,8 @@ import com.ylbms.base.check.dao.CheckNotesDao;
 import com.ylbms.base.check.model.CheckNotes;
 import com.ylbms.base.check.model.CheckNotesInfo;
 import com.ylbms.base.check.web.controller.NotesModel;
+import com.ylbms.base.single.dao.SingleInfoDao;
+import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.system.model.User;
@@ -29,6 +31,9 @@ public class CheckNotesService {
 	@Autowired
 	private CheckNotesDao checkNotesDao;
 
+	@Autowired
+	private SingleInfoDao singleDao;
+
 	/**
 	 * 
 	 * @param checkNotes
@@ -46,6 +51,23 @@ public class CheckNotesService {
 		}
 		master.setNotesInfo(list);
 		checkNotesDao.save(master);
+		
+		updateSingle(notes.getNotes()); // 更新单件信息
+	}
+
+	/**
+	 * update single info by checkNotes
+	 * 
+	 * @param info
+	 */
+	public void updateSingle(List<CheckNotesInfo> list) {
+		for (CheckNotesInfo c : list) {
+			SingleInfo single = singleDao.get(c.getSingle().getMid());
+			single.setJdtime(c.getJdDate());
+			single.setYxTime(c.getYxDate());
+		    single.setAzLocation(c.getAzLocation());
+			singleDao.save(single);
+		}
 	}
 
 	/**
