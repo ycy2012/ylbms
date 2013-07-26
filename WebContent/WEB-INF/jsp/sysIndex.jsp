@@ -20,6 +20,12 @@
 <!--[if IE]>
 <link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css" />
 <![endif]-->
+<!--[if lte IE 6]>
+<script src="${ctx}/styles/js/DD_belatedPNG_0.0.8a.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('a');
+    </script>
+<![endif]--> 
 <script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery-1.7.2.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
