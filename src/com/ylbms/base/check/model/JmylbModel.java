@@ -49,11 +49,13 @@ public class JmylbModel extends BaseModel {
 	private Date jdDate;// 检定日期
 	private Date yxDate; // 证书有效期
 	private User creater;
-	private Date createDate;
+	private Date createDate; 
 	private String remark;
 	private String status; // 是否有效
 
 	public JmylbModel() {
+		this.status=DEL_FLAG_NORMAL;
+		this.createDate=new Date();
 	}
 
 	public JmylbModel(Long jmbID) {

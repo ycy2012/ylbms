@@ -157,12 +157,10 @@
 						<ul class="tree treeFolder">
 							<li><a>用户信息管理</a>
 								<ul>
-
 									<li><a href="user/list" target="navTab" rel="user">用户信息管理</a></li>
 									<li><a href="menu/list" target="navTab" rel="menu">菜单信息管理</a></li>
 									<li><a href="role/list" target="navTab" rel="role">角色信息管理</a></li> 
 									<li><a href="dict/list" target="navTab" rel="dict">字典信息管理</a></li> 
-								
 								</ul></li>
 							<li><a>基础信息管理</a>
 								<ul>
@@ -185,6 +183,7 @@
 									<li><a href="jd/list" target="navTab" rel="jdnotes">检定记录管理</a></li>
 									<li><a href="bill/list" target="navTab" rel="bill">检定证书管理</a></li>
 									<li><a href="bill/list" target="navTab" rel="bill">检定记录添加</a></li>
+									<li><a href="jmbinfo/list" target="navTab" rel="jmbInfo">精密表信息管理</a></li>
 								</ul></li>
 					</div>
 				</div>

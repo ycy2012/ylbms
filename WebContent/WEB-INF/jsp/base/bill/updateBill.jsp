@@ -11,7 +11,7 @@
 		<input type="hidden" value="${obj.mid}">
 		<div class="pageFormContent" layoutH="56">
 			<p>
-				<label>物资编码：</label> <input name="owercode" type="text" size="30"
+				<label>物资编码：</label> <input name="djTitle" type="text" size="30"
 					value="${obj.owercode}" />
 			</p>
 			<p>
@@ -67,16 +67,6 @@
 				<label>所属单位：</label> <input type="text" name="sc_unit"
 					class="textInput" size="30" value="${obg.sc_unit}" />
 			</p>
-			<%-- <label>所属单位：</label>
-				<select name="sc_unit" class="required combox">
-					<option value="">请选择</option>
-					<option value="10">10</option>
-					<option value="50" selected>50</option>
-					<option value="100">100</option>
-				</select>
-				<span class="unit">万元</span>
-				 
-			</p>--%>
 			<p>
 				<label>有效日期：</label> <input type="text" name="yx_Time" class="date"
 					size="30" value="${obg.yx_Time}" /><a class="inputDateButton"
@@ -138,7 +128,6 @@
 				<label>固定资产编码：</label> <input   type="text"
 					size="30" name="gdzc_Code" value="${obg.gdzc_Code}" />
 			</p>
-			<!-- <div class="divider"></div> -->
 			<p>
 				<label>条码号：</label> <input   type="text" size="30"
 					name="tx_Code" value="${obg.tx_Code}" />
@@ -181,12 +170,10 @@
 			<p>
 				<label>备注信息：</label>
 				<textarea name="remark" value="${obg.remark}"></textarea>
-				<!-- <input type="text" size="30" name="remark" value="${obg.remark}"/> -->
 			</p>
 		</div>
 		<div class="formBar">
 			<ul>
-				<!--<li><a class="buttonActive" href="javascript:;"><span>保存</span></a></li>-->
 				<li><div class="buttonActive">
 						<div class="buttonContent">
 							<button type="submit">保存</button>
