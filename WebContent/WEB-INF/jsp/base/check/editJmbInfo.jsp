@@ -59,15 +59,15 @@
 			
 			<p>
 				<label>证书有效期：</label> <input type="text" name="yxDate"
-					class="date" size="30"    value="${obj.jdDate}" />
+					class="date" size="30"    value="<fmt:formatDate  value="${obj.yxDate}" pattern="yyyy-MM-dd"/>" />
 			</p>
 			<p>
 				<label>创建人：</label> <input type="text" name="creater"
-					class="date" size="30" value="${obj.creater.fullname}" readonly="readonly"/>
+				 size="30" value="${obj.creater.fullname}" readonly="readonly"/>
 			</p>
 			<p>
 				<label>创建时间：</label> <input type="text" name="createDate"
-					class="date" size="30" value="${obj.createDate}" readonly="readonly"/>
+					class="date" size="30" value="<fmt:formatDate  value="${obj.createDate}" pattern="yyyy-MM-dd"/>" readonly="readonly"/>
 			</p>
 			<p> 
 				<label>状态：</label> <select name="status" class="required combox"
