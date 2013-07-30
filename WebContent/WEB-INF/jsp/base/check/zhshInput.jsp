@@ -13,15 +13,19 @@
 			var myTD2 = myTR.insertCell(1);
 			myTD2.innerHTML = "<input type='text' style='width:100px'  readonly='readonly'  value="+temp[1]+">";
 			var myTD3 = myTR.insertCell(2);
-			myTD3.innerHTML = "<input  type='text'  readonly='true' value="+temp[2]+"> ";
+			myTD3.innerHTML = "<input  type='text' style='width:100px;' readonly='true' value="+temp[2]+"> ";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input   type='text'  name='detail["+i+"].grade' >";
+			myTD4.innerHTML = "<input  type='text' name='detail["+i+"].azLocation' >";
 			var myTD5 = myTR.insertCell(4);
-			myTD5.innerHTML = "<input type='text'  name='detail["+i+"].order' value="+(i+1)+">";
-			var myTD6 = myTR.insertCell(5);
-			myTD6.innerHTML = "<input  type='text' name='detail["+i+"].remark'> ";
-			var myTD7 = myTR.insertCell(6);
-			myTD7.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
+			myTD5.innerHTML = "<input  type='text' name='detail["+i+"].shbCode'>";
+			var myTD7= myTR.insertCell(5);
+			myTD7.innerHTML = "<input   type='text' style='width:80px;' name='detail["+i+"].grade' >";
+			var myTD8 = myTR.insertCell(6);
+			myTD8.innerHTML = "<input type='text' style='width:80px;'  name='detail[" + i+ "].order' value=" + (i + 1) + ">";
+			var myTD9 = myTR.insertCell(7);
+			myTD9.innerHTML = "<input  type='text' name='detail["+i+"].remark'> ";
+			var myTD10 = myTR.insertCell(8);
+			myTD10.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
 		}
 	}
 	function _deleteRow(rowID) {
@@ -57,7 +61,7 @@
 	onsubmit="return validateCallback(this, navTabAjaxDone);">
 	<div class="pageHeader">
 		<div>
-			<h1 style="text-align: center;">检定证书</h1>
+			<h1 style="text-align: center;">工程技术部压力表检定证书</h1>
 			<input type="hidden" name="zTitle" id="title">
 		</div>
 		<div class="divider"></div>
@@ -117,9 +121,11 @@
 		<table class="list" width="100%" id="mxTable1">
 			<thead>
 				<tr>
-					<th>单件虚拟编号</th>
+				    <th>单件虚拟编号</th>
 					<th>物资名称</th>
 					<th>规格型号</th>
+					<th>安装位置</th>
+					<th>设备编号</th>
 					<th>等 级</th>
 					<th>排 序</th>
 					<th>备 注</th>
