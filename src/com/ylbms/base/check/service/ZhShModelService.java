@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ylbms.base.check.dao.JmbInfoDao;
 import com.ylbms.base.check.dao.ZhShMasterDao;
 import com.ylbms.base.check.model.JmylbModel;
 import com.ylbms.base.check.model.ZhShInfosModel;
@@ -28,7 +29,7 @@ public class ZhShModelService {
 	private ZhShMasterDao zhShuDao;
 
 	@Autowired
-	private JmbInfoService jmbService;
+	private JmbInfoDao jmbDao;
 
 	/**
 	 * save method
@@ -48,7 +49,8 @@ public class ZhShModelService {
 	@Transactional(readOnly = false)
 	public void saveZhShu(ZhShuMasterModel master, List<ZhShInfosModel> detail) {
 		master.setCreateUser(UserUtils.getUser());
-		JmylbModel jmb = jmbService.getId(master.getJmbInfo().getJmbID());
+		// 获取精密压力表
+		JmylbModel jmb = jmbDao.get(master.getJmbInfo().getJmbID());
 		for (ZhShInfosModel zs : detail) {
 			zs.setJdDate(master.getJdDate());
 			zs.setYxDate(master.getYxDate());
@@ -92,6 +94,16 @@ public class ZhShModelService {
 	public void delByIds(String ids) {
 		String delHQL = "delete ZhShuMasterModel where  zId in (" + ids + ")";
 		this.zhShuDao.getSession().createQuery(delHQL).executeUpdate();
+	}
+
+	/**
+	 * 根据zID来查询检定证书信息
+	 * 
+	 * @param zId
+	 * @return
+	 */
+	public ZhShuMasterModel getZhShMasterByZid(Long zId) {
+		return zhShuDao.get(zId);
 	}
 
 }

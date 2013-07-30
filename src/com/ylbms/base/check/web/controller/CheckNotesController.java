@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ylbms.base.check.model.CheckNotes;
+import com.ylbms.base.check.model.ZhShInfosModel;
 import com.ylbms.base.check.service.CheckNotesService;
+import com.ylbms.base.check.service.ZhShInfoService;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.base.single.model.StateInfo;
 import com.ylbms.base.single.service.SingleInfoService;
@@ -46,6 +48,9 @@ public class CheckNotesController extends BaseController {
 
 	@Autowired
 	private SingleInfoService singleService;
+
+	@Autowired
+	private ZhShInfoService zsInfoService;
 
 	/**
 	 * to add page
@@ -140,6 +145,25 @@ public class CheckNotesController extends BaseController {
 		Page<CheckNotes> list = checkService.findPage(page, filters);
 		model.addAttribute("page", list);
 		return "base/check/list";
+	}
+
+	/**
+	 * 分页查询检定记录信息
+	 * 
+	 * @param request
+	 * @param page
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "iList")
+	@RequiresUser
+	public String infoList(HttpServletRequest request,
+			Page<ZhShInfosModel> page, Model model) {
+		List<PropertyFilter> filters = PropertyFilter
+				.buildFromHttpRequest(request);
+		Page<ZhShInfosModel> list = zsInfoService.findPage(page, filters);
+		model.addAttribute("page", list);
+		return "base/check/infoList";
 	}
 
 	/**
