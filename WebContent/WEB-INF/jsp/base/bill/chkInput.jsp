@@ -32,18 +32,18 @@
 		var i = rowID.parentNode.parentNode.rowIndex;
 		otable.deleteRow(parseInt(i));
 	}
-	function getMids(){
-		var mids="";
-		$("#mxTable").find("input[id=mid]").each(function(){
-			mids+=$(this).val()+",";
+	function getMids() {
+		var mids = "";
+		$("#mxTable").find("input[id=mid]").each(function() {
+			mids += $(this).val() + ",";
 		});
 		return mids;
 	}
-	function getURL(){
-		var url=$("a[class='add']").attr("href");
+	function getURL() {
+		var url = $("a[class='add']").attr("href");
 		return url;
 	}
-	function setWzInfo(id,name){
+	function setWzInfo(id, name) {
 		$("#wzInfo").val(id);
 		$("#wzName").val(name);
 	}
@@ -57,50 +57,44 @@
 		<div class="pageFormContent" layoutH="600">
 			<div
 				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">领料凭证</div>
-				<input type="hidden" name="djTitle" value="领料凭证">
+			<input type="hidden" name="djTitle" value="领料凭证">
 			<div class="divider"></div>
-			<dl>
-				<dt>发料单位：</dt>
-				<dd> <input name="sendLocation.id" type="hidden" value="2051"/>
-					 <input  type="text" value="基地" class="required" readonly="readonly" /> 
-				</dd>
-			</dl>
-			<dl>
-				<dt>领料单位：</dt>
-				<dd>
-					<input name="acceptLocation.id" type="hidden" id="wzInfo" />
-			        <input type="text"  readonly="readonly" id="wzName" class="required">
-					<a class="btnLook" href="${ctx}/location/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	
-				</dd>
-			</dl>
-			<dl>
-				<dt>领料人：</dt>
-				<dd>
-					<input name="llren" type="text" alt="领料人信息" class="required" />
-				</dd>
-			</dl>
-			<dl>
-				<dt>领料部门：</dt>
-				<dd>
-					<select name="lluint" class="combox" class="required">
-						<option value="轮南项目部">轮南项目部</option>
-						<option value="库车项目部">库车项目部</option>
-						<option value="塔中项目部">塔中项目部</option>
-					</select>
-				</dd>
-			</dl>
-			<dl class="nowrap">
-				<dt>备注信息：</dt>
-				<dd>
-					<textarea name="remark" cols="80" rows="1"></textarea>
-				</dd>
-			</dl>
+			<table>
+				<tr>
+					<td>发料单位：</td>
+					<td><input name="sendLocation.id" type="hidden" value="2051" />
+						<input type="text" value="基地" class="required" readonly="readonly" />
+					</td>
+					<td>领料单位：</td>
+					<td><input name="acceptLocation.id" type="hidden" id="wzInfo" />
+						<input type="text" readonly="readonly" id="wzName"
+						class="required"> <a class="btnLook"
+						href="${ctx}/location/commUi" width="300" height="400" mask="true"
+						target="dialog">选择位置信息</a></td>
+				</tr>
+				<tr>
+					<td>领料人：</td>
+					<td><input name="llren" type="text" alt="领料人信息"
+						class="required" /></td>
+					<td>领料部门：</td>
+					<td><select name="lluint" class="combox" class="required">
+							<option value="轮南项目部">轮南项目部</option>
+							<option value="库车项目部">库车项目部</option>
+							<option value="塔中项目部">塔中项目部</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>备注信息：</td>
+					<td colspan="3"><textarea name="remark" cols="80" rows="1"></textarea></td>
+				</tr>
+			</table>
 		</div>
 		<div class="pageContent" layoutH="200">
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>
-					<li><a class="add" href="${ctx}/ckgl/addMx"  target="addMxAjaxTodo" title="添加单件信息" warn="有红色星号标识的选项必填！"><span>添加明细</span></a></li>
+					<li><a class="add" href="${ctx}/ckgl/addMx"
+						target="addMxAjaxTodo" title="添加单件信息" warn="有红色星号标识的选项必填！"><span>添加明细</span></a></li>
 					<li class="line">line</li>
 				</ul>
 			</div>
