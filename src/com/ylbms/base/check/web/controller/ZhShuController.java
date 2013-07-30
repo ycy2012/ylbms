@@ -62,9 +62,10 @@ public class ZhShuController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "viewUi/{zId}")
-	public String viewUi(@PathVariable("zId") String zId, Model model) {
-
-		return "base/check/ZhShView";
+	public String viewUi(@PathVariable("zId") Long zId, Model model) {
+		ZhShuMasterModel master = zhShuService.getZhShMasterByZid(zId);
+		model.addAttribute("master", master);
+		return "base/zhshu/view";
 	}
 
 	/**

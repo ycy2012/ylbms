@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -16,7 +15,7 @@ import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.common.model.BaseModel;
 
 /**
- * 证书明细信息
+ * 证书明细信息及检定记录信息
  * 
  * @author JackLiang
  * @version 1.0

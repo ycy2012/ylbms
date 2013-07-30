@@ -50,7 +50,7 @@ public class JmbInfoService {
 	 * @param filters
 	 * @return
 	 */
-	public  Page<JmylbModel>list(Page<JmylbModel> page,final List<PropertyFilter> filters){
+	public  Page<JmylbModel>list(Page<JmylbModel> page, List<PropertyFilter> filters){
 		return jmbInfoDao.findPage(page,filters);
 	}
 	

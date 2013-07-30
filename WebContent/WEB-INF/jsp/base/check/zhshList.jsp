@@ -9,7 +9,7 @@
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
-				    <td>记录编号：<input type="text" style="width: 150px;" name="filter_EQS_zId" /></td>
+				    <td>证书编号：<input type="text" style="width: 150px;" name="filter_EQS_zId" /></td>
 					<td>
 					   制作日期：<input type="text" name="filter_LIKES_createDate" class="date" readonly="true"/>
 					</td>
@@ -66,7 +66,7 @@
 			<c:forEach items="${page.result}" var="acc">
 				<tr target="sdjId_jd" rel="${acc.zId }">
 				<td><input name="Ids" value="'${acc.zId}'" type="checkbox"></td>
-				    <td>${acc.zId}</td>
+				    <td>${acc.zCode}</td>
 					<td>${acc.zTitle}</td>
 					<td>${acc.sjUnit}</td>
 					<td>${acc.result}</td>
