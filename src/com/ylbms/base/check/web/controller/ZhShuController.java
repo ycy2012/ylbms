@@ -13,8 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ylbms.base.check.model.CheckZhShuModel;
+import com.ylbms.base.check.model.CheckNotesInfo;
+import com.ylbms.base.check.model.ZhShuMasterModel;
+import com.ylbms.base.check.service.CheckNotesService;
 import com.ylbms.base.check.service.ZhShModelService;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
@@ -22,6 +25,7 @@ import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.web.BaseController;
 
 /**
+ * 检定证书管理模块
  * 
  * @author JackLiang
  * @version 1.0
@@ -30,11 +34,15 @@ import com.ylbms.common.web.BaseController;
 @Controller
 @RequestMapping(value = "jdzhs")
 public class ZhShuController extends BaseController {
+
 	private static final Log log = LogFactory.getLog(ZhShuController.class);
 	private static final String NAV_TAB_ID = "jdzhs";
 
 	@Autowired
 	private ZhShModelService zhShuService;
+
+	@Autowired
+	private CheckNotesService checkService;
 
 	/**
 	 * to add page
@@ -60,6 +68,41 @@ public class ZhShuController extends BaseController {
 	}
 
 	/**
+	 * add mx for doing zhsh
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "addMx")
+	public String addMx(@RequestParam("mids") String mids,
+			Page<CheckNotesInfo> page, CheckNotesInfo info, Model model) {
+		checkService.findPage(page, info, mids);
+		return "base/check/zhshMx";
+	}
+
+	/**
+	 * save zhengshu master and detail's infos
+	 * 
+	 * @param master
+	 * @param detail
+	 * @return
+	 */
+	@RequestMapping(value = "save")
+	@ResponseBody
+	public Map<String, Object> save(ZhShuMasterModel master, ZhShForm detail) {
+		try {
+			zhShuService.saveZhShu(master, detail.getDetail());
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error("system error!!", e.getCause());
+			}
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
+					e.getMessage());
+		}
+	}
+
+	/**
 	 * list by page info
 	 * 
 	 * @param request
@@ -68,11 +111,12 @@ public class ZhShuController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "list")
-	public String list(HttpServletRequest request, Page<CheckZhShuModel> page,
+	public String list(HttpServletRequest request, Page<ZhShuMasterModel> page,
 			Model model) {
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<CheckZhShuModel> list = zhShuService.findZhShByPage(page, filters);
+		Page<ZhShuMasterModel> list = zhShuService
+				.findZhShByPage(page, filters);
 		model.addAttribute("page", list);
 		return "base/check/zhshList";
 	}
@@ -84,10 +128,10 @@ public class ZhShuController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "delete/{id}")
-	public Map<String, Object> delete(@PathVariable("id") String id) {
+	public Map<String, Object> delete(@PathVariable("id") Long id) {
 		try {
 			this.zhShuService.deleteById(id);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
 			log.error("system error!!", e.getCause());
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
@@ -101,10 +145,11 @@ public class ZhShuController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "delByIds")
-	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {
+	@ResponseBody
+	public Map<String, Object> delByIds(@RequestParam("Ids") String ids) {
 		try {
 			this.zhShuService.delByIds(ids);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
 			log.error("system error!!", e.getCause());
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,

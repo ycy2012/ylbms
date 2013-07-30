@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ylbms.base.check.dao.ZhShModelDao;
-import com.ylbms.base.check.model.CheckZhShuModel;
+import com.ylbms.base.check.dao.ZhShMasterDao;
+import com.ylbms.base.check.model.JmylbModel;
+import com.ylbms.base.check.model.ZhShInfosModel;
+import com.ylbms.base.check.model.ZhShuMasterModel;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
+import com.ylbms.system.utils.UserUtils;
 
 /**
  * 
@@ -20,16 +23,39 @@ import com.ylbms.common.orm.PropertyFilter;
 @Service
 @Transactional
 public class ZhShModelService {
+
 	@Autowired
-	private ZhShModelDao zhShuDao;
+	ZhShMasterDao zhShuDao;
 
 	/**
 	 * save method
 	 * 
 	 * @param entity
 	 */
-	public void saveOrUpdate(CheckZhShuModel entity) {
+	@Transactional(readOnly = false)
+	public void saveOrUpdate(ZhShuMasterModel entity) {
 		zhShuDao.save(entity);
+	}
+
+	/**
+	 * 
+	 * @param master
+	 * @param detail
+	 */
+	@Transactional(readOnly = false)
+	public void saveZhShu(ZhShuMasterModel master, List<ZhShInfosModel> detail) {
+		master.setCreateUser(UserUtils.getUser());
+		JmylbModel jmb=
+		for (ZhShInfosModel zs : detail) {
+			zs.setJdDate(master.getJdDate());
+			zs.setYxDate(master.getYxDate());
+			zs.setJmbCode(master.getJmbInfo().getJmbCode()==null?"":master.getJmbInfo().getJmbCode());
+			zs.setzShuCode(master.getJmbInfo().getZhShCode()==null?"":master.getJmbInfo().getZhShCode());
+			zs.setZsyxDate(master.getJmbInfo().getYxDate()==null?null:master.getJmbInfo().getYxDate());
+			zs.setMaster(master);
+		}
+		master.setInfos(detail);
+		zhShuDao.save(master);
 	}
 
 	/**
@@ -38,7 +64,7 @@ public class ZhShModelService {
 	 * @param id
 	 */
 	@Transactional(readOnly = false)
-	public void deleteById(String id) {
+	public void deleteById(Long id) {
 		this.zhShuDao.delete(id);
 	}
 
@@ -49,7 +75,8 @@ public class ZhShModelService {
 	 * @param filters
 	 * @return
 	 */
-	public Page<CheckZhShuModel> findZhShByPage(Page<CheckZhShuModel> page,
+	@Transactional(readOnly = true)
+	public Page<ZhShuMasterModel> findZhShByPage(Page<ZhShuMasterModel> page,
 			List<PropertyFilter> filters) {
 		return this.zhShuDao.findPage(page, filters);
 	}
@@ -60,7 +87,7 @@ public class ZhShModelService {
 	 * @param ids
 	 */
 	public void delByIds(String ids) {
-		String delHQL = "delete CheckZhShuModel zId in(" + ids + ")";
+		String delHQL = "delete ZhShuMasterModel where  zId in (" + ids + ")";
 		this.zhShuDao.getSession().createQuery(delHQL).executeUpdate();
 	}
 

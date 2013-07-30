@@ -4,37 +4,34 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.common.model.BaseModel;
 
 /**
- * 检定记录明细信息实体
+ * 证书明细信息
  * 
  * @author JackLiang
  * @version 1.0
- * @date 2013-7-16
+ * @date 2013-7-29
  */
 @Entity
-@IdClass(CheckNotesInfoPK.class)
-@Table(name = "ylbms_jc_jdInfos")
+@IdClass(ZhShDetailIdPK.class)
+@Table(name = "ylbms_jc_jdNotes")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class CheckNotesInfo extends BaseModel {
+public class ZhShInfosModel extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
 
-	private SingleInfo single;// 单件虚拟编号
-	private CheckNotes checkNotes; // 检定记录编码
+	private SingleInfo single;
+	private ZhShuMasterModel master;
 	private Date jdDate;// 检定日期
 	private Date yxDate;// 有效日期
 	private String azLocation;// 安装位置
@@ -42,20 +39,15 @@ public class CheckNotesInfo extends BaseModel {
 	private String zShuCode;// 证书 编码
 	private Date zsyxDate; // 证书有效日期
 	private String shbCode; // 设备编码
-	private Long order;// 排序
-	private String remark;// 备注信息
-	private String status; // 是否已制单
+	private String grade; // 等级
+	private Long order; // 排序
+	private String remark; // 备注
+	private String status;
 
-	public CheckNotesInfo() {
-		this.status = DEL_FLAG_NORMAL;
+	public ZhShInfosModel() {
 	}
 
-	public CheckNotesInfo(SingleInfo single, CheckNotes checkNotes) {
-		this.single = single;
-		this.checkNotes = checkNotes;
-	}
-
-	// setter getter
+	// getter setter
 	@Id
 	public SingleInfo getSingle() {
 		return single;
@@ -66,16 +58,15 @@ public class CheckNotesInfo extends BaseModel {
 	}
 
 	@Id
-	public CheckNotes getCheckNotes() {
-		return checkNotes;
+	public ZhShuMasterModel getMaster() {
+		return master;
 	}
 
-	public void setCheckNotes(CheckNotes checkNotes) {
-		this.checkNotes = checkNotes;
+	public void setMaster(ZhShuMasterModel master) {
+		this.master = master;
 	}
 
 	@Column(name = "jd_date")
-	@JSONField(format = "yyyy-mm-dd")
 	public Date getJdDate() {
 		return jdDate;
 	}
@@ -84,8 +75,7 @@ public class CheckNotesInfo extends BaseModel {
 		this.jdDate = jdDate;
 	}
 
-	@Column(name = "yx_date")
-	@JSONField(format = "yyyy-mm-dd")
+	@Column(name = "yx_Date")
 	public Date getYxDate() {
 		return yxDate;
 	}
@@ -122,7 +112,6 @@ public class CheckNotesInfo extends BaseModel {
 	}
 
 	@Column(name = "zsyx_date")
-	@JSONField(format = "yyyy-mm-dd")
 	public Date getZsyxDate() {
 		return zsyxDate;
 	}
@@ -131,13 +120,21 @@ public class CheckNotesInfo extends BaseModel {
 		this.zsyxDate = zsyxDate;
 	}
 
-	@Column(name = "shb_code")
+	@Column(name="shb_code")
 	public String getShbCode() {
 		return shbCode;
 	}
 
 	public void setShbCode(String shbCode) {
 		this.shbCode = shbCode;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 
 	@Column(name = "sort")

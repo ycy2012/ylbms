@@ -70,6 +70,10 @@ public class User extends BaseModel implements Serializable {
 	public User() {
 	}
 
+	public User(Long id) {
+		this.id = id;
+	}
+
 	public User(Integer usertype, String enabled) {
 		this.usertype = NO;
 		this.enabled = DEL_FLAG_NORMAL;

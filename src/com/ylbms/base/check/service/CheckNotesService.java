@@ -3,11 +3,14 @@ package com.ylbms.base.check.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.base.check.dao.CheckNotesDao;
+import com.ylbms.base.check.dao.CheckNotesInfoDao;
 import com.ylbms.base.check.model.CheckNotes;
 import com.ylbms.base.check.model.CheckNotesInfo;
 import com.ylbms.base.check.web.controller.NotesModel;
@@ -15,6 +18,7 @@ import com.ylbms.base.single.dao.SingleInfoDao;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
+import com.ylbms.common.utils.StringUtils;
 import com.ylbms.system.model.User;
 import com.ylbms.system.utils.UserUtils;
 
@@ -34,6 +38,9 @@ public class CheckNotesService {
 	@Autowired
 	private SingleInfoDao singleDao;
 
+	@Autowired
+	private CheckNotesInfoDao infoDao;
+
 	/**
 	 * 
 	 * @param checkNotes
@@ -51,7 +58,7 @@ public class CheckNotesService {
 		}
 		master.setNotesInfo(list);
 		checkNotesDao.save(master);
-		
+
 		updateSingle(notes.getNotes()); // 更新单件信息
 	}
 
@@ -65,7 +72,7 @@ public class CheckNotesService {
 			SingleInfo single = singleDao.get(c.getSingle().getMid());
 			single.setJdtime(c.getJdDate());
 			single.setYxTime(c.getYxDate());
-		    single.setAzLocation(c.getAzLocation());
+			single.setAzLocation(c.getAzLocation());
 			singleDao.save(single);
 		}
 	}
@@ -112,4 +119,24 @@ public class CheckNotesService {
 		return checkNotesDao.get(jdId);
 	}
 
+	/**
+	 * 为添加证书明细提供
+	 * 
+	 * @param page
+	 * @param info
+	 * @return
+	 */
+	public Page<CheckNotesInfo> findPage(Page<CheckNotesInfo> page,
+			CheckNotesInfo info, String mids) {
+		DetachedCriteria dc = infoDao.createDetachedCriteria();
+		if (StringUtils.isNotBlank(mids)) {
+			dc.add(Restrictions.not(Restrictions.in("single.mid", mids.split(","))));
+		}
+		dc.add(Restrictions.eq("status", "0"));
+		return infoDao.find(page, dc);
+	}
+
+	public void updateInfosByZhSh() {
+
+	}
 }

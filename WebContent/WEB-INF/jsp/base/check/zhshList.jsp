@@ -39,7 +39,7 @@
 		<ul class="toolBar">
 			<li><a class="add" href="${ctx}/jdzhs/addUi" target="navTab" mask="true" title="制作检定记录卡"><span>添加</span></a></li>
 			<li class="line">line</li>
-			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="djIds" postType="string" href="${ctx}/jdzhs/delBydjIds" class="delete"><span>批量删除</span></a></li>
+			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="Ids" postType="string" href="${ctx}/jdzhs/delByIds" class="delete"><span>批量删除</span></a></li>
 			<li class="line">line</li>
 			<li><a class="edit" href="${ctx}/jdzhs/editUi/{sdjId_jd}" target="dialog" mask="true" title="修改检定记录信息"><span>修改</span></a></li>
 			<li class="line">line</li>
@@ -50,7 +50,7 @@
 	<table class="table" width="100%" layoutH="138">
 		<thead>
 			<tr>
-				<th width="26"><input type="checkbox" group="djIds" class="checkboxCtrl"></th>
+				<th width="26"><input type="checkbox" group="Ids" class="checkboxCtrl"></th>
 				<th>证书编号</th>
 				<th>检定记录名称</th>
 				<th>送检单位</th>
@@ -64,8 +64,8 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${page.result}" var="acc">
-				<tr target="sdjId_jd" rel="${acc.jdID }">
-				<td><input name="djIds" value="'${acc.zId}'" type="checkbox"></td>
+				<tr target="sdjId_jd" rel="${acc.zId }">
+				<td><input name="Ids" value="'${acc.zId}'" type="checkbox"></td>
 				    <td>${acc.zId}</td>
 					<td>${acc.zTitle}</td>
 					<td>${acc.sjUnit}</td>

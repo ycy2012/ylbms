@@ -21,6 +21,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.google.common.collect.Lists;
 import com.ylbms.base.location.model.Location;
 import com.ylbms.common.model.BaseModel;
 
@@ -49,8 +50,8 @@ public class BillHeadModel extends BaseModel {
 	private Date sxDate; // 生效日期
 
 	private Date createDate; // 创建日期
-	
-	private String createUser;  //单据制作人员信息
+
+	private String createUser; // 单据制作人员信息
 
 	private String llUnit;
 
@@ -76,11 +77,11 @@ public class BillHeadModel extends BaseModel {
 
 	private Date tempD2;
 
-	private List<BillTbodyModel> billTbody;
+	private List<BillTbodyModel> billTbody = Lists.newArrayList();
 
 	public BillHeadModel() {
-		this.createDate=new Date();
-		this.status=DEL_FLAG_NORMAL;
+		this.createDate = new Date();
+		this.status = DEL_FLAG_NORMAL;
 	}
 
 	public BillHeadModel(String djId) {
@@ -109,10 +110,10 @@ public class BillHeadModel extends BaseModel {
 		this.djTitle = djTitle;
 	}
 
-	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.LAZY)
-	@JoinColumn(name="sendLocation",nullable=false)
-	@NotFound(action=NotFoundAction.IGNORE)
-	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sendLocation", nullable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public Location getSendLocation() {
 		return sendLocation;
 	}
@@ -121,10 +122,11 @@ public class BillHeadModel extends BaseModel {
 		this.sendLocation = sendLocation;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH})
-	@JoinColumn(name="acceptLocation",nullable=false)
-	@NotFound(action=NotFoundAction.IGNORE)
-	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
+			CascadeType.REFRESH })
+	@JoinColumn(name = "acceptLocation", nullable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public Location getAcceptLocation() {
 		return acceptLocation;
 	}
@@ -153,13 +155,13 @@ public class BillHeadModel extends BaseModel {
 		this.createDate = createDate;
 	}
 
-	@Column(name="create_user")
+	@Column(name = "create_user")
 	public String getCreateUser() {
 		return createUser;
 	}
 
 	public void setCreateUser(String createUser) {
-		this.createUser=createUser;
+		this.createUser = createUser;
 	}
 
 	public String getLlUnit() {

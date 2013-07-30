@@ -1,8 +1,7 @@
 package com.ylbms.base.check.model;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,15 +13,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.google.common.collect.Lists;
 import com.ylbms.common.model.BaseModel;
 import com.ylbms.system.model.User;
 
@@ -34,9 +35,9 @@ import com.ylbms.system.model.User;
  * @date 2013-7-24
  */
 @Entity
-@Table(name = "ylbms_jc_zhshInfo")
+@Table(name = "ylbms_jc_zhsh_master")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class CheckZhShuModel extends BaseModel {
+public class ZhShuMasterModel extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -57,14 +58,21 @@ public class CheckZhShuModel extends BaseModel {
 	private String status;
 	private String remark;
 
-	public CheckZhShuModel() {
+	private List<ZhShInfosModel> infos = Lists.newArrayList();
+
+	public ZhShuMasterModel() {
 		this.status = DEL_FLAG_NORMAL;
+		this.createDate = new Date();
+	}
+
+	public ZhShuMasterModel(Long zId) {
+		this.zId = zId;
 	}
 
 	// getter setter
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_jd_zhshInfo")
-	@SequenceGenerator(name = "seq_jd_zhshInfo", sequenceName = "seq_jd_zhshInfo")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_jd_zhsh_master")
+	@SequenceGenerator(name = "seq_jd_zhsh_master", sequenceName = "seq_jd_zhsh_master")
 	public Long getzId() {
 		return zId;
 	}
@@ -73,6 +81,7 @@ public class CheckZhShuModel extends BaseModel {
 		this.zId = zId;
 	}
 
+	@NotNull
 	public String getzCode() {
 		return zCode;
 	}
@@ -89,6 +98,7 @@ public class CheckZhShuModel extends BaseModel {
 		this.zTitle = zTitle;
 	}
 
+	@NotNull
 	public String getSjUnit() {
 		return sjUnit;
 	}
@@ -97,6 +107,7 @@ public class CheckZhShuModel extends BaseModel {
 		this.sjUnit = sjUnit;
 	}
 
+	@Column(nullable = false)
 	public String getBasis() {
 		return basis;
 	}
@@ -105,6 +116,7 @@ public class CheckZhShuModel extends BaseModel {
 		this.basis = basis;
 	}
 
+	@Column(name = "JD_RESULT", nullable = false)
 	public String getResult() {
 		return result;
 	}
@@ -155,7 +167,10 @@ public class CheckZhShuModel extends BaseModel {
 		this.yxDate = yxDate;
 	}
 
-	@Column(name = "jmb_Code", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "jmb_code", nullable = false)
+	@NotFound(action=NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public JmylbModel getJmbInfo() {
 		return jmbInfo;
 	}
@@ -175,7 +190,7 @@ public class CheckZhShuModel extends BaseModel {
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
 			CascadeType.REFRESH })
-	@JoinColumn(name = "create_user")
+	@JoinColumn(name = "create_user", nullable = false)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	public User getCreateUser() {
@@ -200,6 +215,17 @@ public class CheckZhShuModel extends BaseModel {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	@OneToMany(mappedBy = "master", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OrderBy("order")
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	public List<ZhShInfosModel> getInfos() {
+		return infos;
+	}
+
+	public void setInfos(List<ZhShInfosModel> infos) {
+		this.infos = infos;
 	}
 
 }
