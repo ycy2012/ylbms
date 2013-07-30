@@ -25,7 +25,10 @@ import com.ylbms.system.utils.UserUtils;
 public class ZhShModelService {
 
 	@Autowired
-	ZhShMasterDao zhShuDao;
+	private ZhShMasterDao zhShuDao;
+
+	@Autowired
+	private JmbInfoService jmbService;
 
 	/**
 	 * save method
@@ -45,13 +48,13 @@ public class ZhShModelService {
 	@Transactional(readOnly = false)
 	public void saveZhShu(ZhShuMasterModel master, List<ZhShInfosModel> detail) {
 		master.setCreateUser(UserUtils.getUser());
-		JmylbModel jmb=
+		JmylbModel jmb = jmbService.getId(master.getJmbInfo().getJmbID());
 		for (ZhShInfosModel zs : detail) {
 			zs.setJdDate(master.getJdDate());
 			zs.setYxDate(master.getYxDate());
-			zs.setJmbCode(master.getJmbInfo().getJmbCode()==null?"":master.getJmbInfo().getJmbCode());
-			zs.setzShuCode(master.getJmbInfo().getZhShCode()==null?"":master.getJmbInfo().getZhShCode());
-			zs.setZsyxDate(master.getJmbInfo().getYxDate()==null?null:master.getJmbInfo().getYxDate());
+			zs.setJmbCode(jmb.getJmbCode());
+			zs.setzShuCode(jmb.getZhShCode());
+			zs.setZsyxDate(jmb.getYxDate());
 			zs.setMaster(master);
 		}
 		master.setInfos(detail);

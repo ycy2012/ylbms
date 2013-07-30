@@ -3,7 +3,6 @@ package com.ylbms.system.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +10,7 @@ import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.system.dao.UserDao;
 import com.ylbms.system.model.User;
+import com.ylbms.system.utils.UserUtils;
 
 @Service
 @Transactional
@@ -44,6 +44,5 @@ public class UserSerivice {
 	public void deleteUser(Long ID) {
 		userDao.delete(ID);
 	}
-	
 
 }

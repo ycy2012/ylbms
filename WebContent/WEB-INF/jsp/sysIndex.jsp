@@ -157,7 +157,6 @@
 						<ul class="tree treeFolder">
 							<li><a>用户信息管理</a>
 								<ul>
-
 									<li><a href="user/list" target="navTab" rel="user">用户信息管理</a></li>
 									<li><a href="menu/list" target="navTab" rel="menu">菜单信息管理</a></li>
 									<li><a href="role/list" target="navTab" rel="role">角色信息管理</a></li> 

@@ -3,7 +3,7 @@ package com.ylbms.base.single.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.base.single.dao.SpectypeInfoDao;
@@ -18,7 +18,7 @@ import com.ylbms.system.utils.UserUtils;
  * @version 1.0
  * @date 2013-6-9
  */
-@Component
+@Service
 @Transactional
 public class SpectypeService {
 
