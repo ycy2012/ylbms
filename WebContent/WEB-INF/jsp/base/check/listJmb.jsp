@@ -90,6 +90,7 @@
 					--%>
 				<td>
 				<a title="删除精密表信息" target="ajaxTodo" href="${ctx}/jmbinfo/delete/${acc.jmbID}" class="btnDel">删除精密表信息</a>
+				<a title="查看精密表详细信息" target="dialog" href="${ctx}/jmbinfo/showview/${acc.jmbID}" class="btnView">查看精密表详细信息</a>
 				<a title="编辑精密表信息" target="navTab" href="${ctx}/jmbinfo/editUi/${acc.jmbID}" class="btnEdit">编辑精密表信息</a>
 				</td>
 				</tr>

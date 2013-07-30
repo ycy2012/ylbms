@@ -33,7 +33,6 @@ public class JmbInfoService {
 	public void save(JmylbModel jmbInfo) {
 		jmbInfo.setCreater(UserUtils.getUser());
 		jmbInfoDao.save(jmbInfo);
-		UserUtils.removeCache("jmbInfo");
 	}
 	
 	/**
@@ -43,7 +42,6 @@ public class JmbInfoService {
 	@Transactional(readOnly = false)
 	public void delete(JmylbModel jmbInfo){
 		jmbInfoDao.delete(jmbInfo);
-		UserUtils.removeCache("jmbInfo");
 	}
 	
 	/**
@@ -81,8 +79,9 @@ public class JmbInfoService {
 	 * 修改精密表
 	 * @param jmbInfo
 	 */
+	@Transactional(readOnly = false)
 	public void update(JmylbModel jmbInfo){
+		jmbInfo.setCreater(UserUtils.getUser());
 		jmbInfoDao.save(jmbInfo);
-		UserUtils.removeCache("jmbInfo");
 	}
 }

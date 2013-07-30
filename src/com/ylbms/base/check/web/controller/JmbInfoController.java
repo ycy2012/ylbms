@@ -156,4 +156,20 @@ public class JmbInfoController extends BaseController {
 					e.getMessage());
 		}
 	}
+	
+	/**
+	 * 查看详细信息
+	 * 
+	 * @param request
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="showview/{id}")
+	public String jmbDetailed(Model model,@PathVariable("id") String id){
+		Long parseLongMid=Long.parseLong(id);
+		JmylbModel jmbInfo=jmbInfiService.getId(parseLongMid);
+		model.addAttribute("jmbInfo", jmbInfo);
+		return "base/check/jmbview";
+	}
 }
