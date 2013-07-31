@@ -90,7 +90,7 @@ public class ZhShuController extends BaseController {
 	 */
 	@RequestMapping(value = "save")
 	@ResponseBody
-	public Map<String, Object> save(ZhShuMasterModel master, ZhShForm detail) {
+	public Map<String, Object> save(ZhShuMasterModel master, ZhShDTO detail) {
 		try {
 			zhShuService.saveZhShu(master, detail.getDetail());
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);

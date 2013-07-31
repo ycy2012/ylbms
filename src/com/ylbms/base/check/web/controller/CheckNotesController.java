@@ -115,7 +115,7 @@ public class CheckNotesController extends BaseController {
 	 */
 	@RequestMapping(value = "save")
 	@ResponseBody
-	public Map<String, Object> save(CheckNotes cheack, NotesModel notes) {
+	public Map<String, Object> save(CheckNotes cheack, NotesDTO notes) {
 		try {
 			checkService.saveCheckNotes(cheack, notes);
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);

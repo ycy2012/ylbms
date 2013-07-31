@@ -6,39 +6,63 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.ylbms.common.orm.IdEntity;
-
+import com.ylbms.common.model.BaseModel;
 
 @Entity
 @Table(name = "ylbms_sys_ORG")
-public class Org extends IdEntity
-{
+public class Org extends BaseModel {
 	private static final long serialVersionUID = 7297765946510001885L;
-	
+
 	public static final Long ROOT_ORG_ID = 0l;
-	
-    private Org parentOrg;
 
-    private String name;
+	private Long id;
 
-    private String active;
+	private Org parentOrg;
 
-    private String fullname;
+	private String name;
 
-    private String description;
-    
-    private String type;
-    
-    private Set<User> users = new HashSet<User>();
-    
-    private Set<Org> orgs = new HashSet<Org>();
+	private String active;
 
-    @Column(name = "org_name", unique = false, nullable = true)
+	private String fullname;
+
+	private String description;
+
+	private String type;
+
+	private Set<User> users = new HashSet<User>();
+
+	private Set<Org> orgs = new HashSet<Org>();
+
+	public Org() {
+	}
+
+	public Org(Long id) {
+		this.id = id;
+	}
+
+	// getter setter
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "seq_sys_org", sequenceName = "seq_sys_org")
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Column(name = "org_name", unique = false, nullable = true)
 	public String getName() {
 		return name;
 	}
@@ -83,7 +107,8 @@ public class Org extends IdEntity
 		this.type = type;
 	}
 
-	@OneToMany(mappedBy = "org",cascade = {CascadeType.REFRESH, CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REMOVE})
+	@OneToMany(mappedBy = "org", cascade = { CascadeType.REFRESH,
+			CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	public Set<User> getUsers() {
 		return users;
 	}
@@ -92,7 +117,7 @@ public class Org extends IdEntity
 		this.users = users;
 	}
 
-	@OneToMany(mappedBy = "parentOrg",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "parentOrg", cascade = CascadeType.ALL)
 	public Set<Org> getOrgs() {
 		return orgs;
 	}
@@ -101,8 +126,8 @@ public class Org extends IdEntity
 		this.orgs = orgs;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="parentOrg", nullable=true)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "parentOrg", nullable = true)
 	public Org getParentOrg() {
 		return parentOrg;
 	}

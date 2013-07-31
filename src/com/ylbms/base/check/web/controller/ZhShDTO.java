@@ -12,7 +12,7 @@ import com.ylbms.base.check.model.ZhShInfosModel;
  * @version 1.0
  * @date 2013-7-29
  */
-public class ZhShForm {
+public class ZhShDTO {
 
 	private List<ZhShInfosModel> detail = Lists.newArrayList();
 

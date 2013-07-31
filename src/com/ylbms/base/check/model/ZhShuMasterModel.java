@@ -167,9 +167,9 @@ public class ZhShuMasterModel extends BaseModel {
 		this.yxDate = yxDate;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
+			CascadeType.REFRESH })
 	@JoinColumn(name = "jmb_code", nullable = false)
-	@NotFound(action=NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public JmylbModel getJmbInfo() {
 		return jmbInfo;
@@ -191,7 +191,6 @@ public class ZhShuMasterModel extends BaseModel {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
 			CascadeType.REFRESH })
 	@JoinColumn(name = "create_user", nullable = false)
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	public User getCreateUser() {
 		return createUser;

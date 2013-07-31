@@ -36,7 +36,11 @@
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="cacheSeconds" value="60" />
 	</bean>
-
+	<!-- StatFilter属性slowSqlMillis用来配置SQL慢的标准 -->
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+		<property name="slowSqlMillis" value="10000" />
+		<property name="logSlowSql" value="true" />
+	</bean>
 	<!-- 数据源配置, 使用 druid 数据库连接池 -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
@@ -52,7 +56,6 @@
 		<property name="initialSize" value="${pool.minIdle}" />
 		<property name="minIdle" value="${pool.minIdle}" />
 		<property name="maxActive" value="${pool.maxActive}" />
-
 		<!-- 配置获取连接等待超时的时间 -->
 		<property name="maxWait" value="60000" />
 
@@ -73,7 +76,9 @@
 			value="20" />
 
 		<!-- 配置监控统计拦截的filters -->
-		<property name="filters" value="stat" />
+		<property name="filters" value="${pool.filters}" />
+		<!-- 慢SQL记录 -->
+		<property name="connectionProperties" value="druid.stat.slowSqlMillis=5000" />
 	</bean>
 
 	<bean id="sessionFactory"

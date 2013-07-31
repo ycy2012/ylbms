@@ -38,7 +38,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 			<value>
 				/static/** = anon
 				/dwz/**=anon
-				/register/** = anon
 				${adminPath}/login = authc
 				${adminPath}/logout = logout
 				/**=user

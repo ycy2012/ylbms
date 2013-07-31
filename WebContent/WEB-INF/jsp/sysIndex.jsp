@@ -161,7 +161,7 @@
 									<li><a href="menu/list" target="navTab" rel="menu">菜单信息管理</a></li>
 									<li><a href="role/list" target="navTab" rel="role">角色信息管理</a></li> 
 									<li><a href="dict/list" target="navTab" rel="dict">字典信息管理</a></li> 
-								
+									<li><a href="druid/" target="_blank">数据源管理</a></li> 
 								</ul></li>
 							<li><a>基础信息管理</a>
 								<ul>

@@ -10,7 +10,7 @@ import com.ylbms.base.check.model.CheckNotesInfo;
  * @version 1.0
  * @date 2013-7-23
  */
-public class NotesModel {
+public class NotesDTO {
 
 	private List<CheckNotesInfo> notes;
 

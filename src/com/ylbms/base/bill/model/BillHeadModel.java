@@ -112,7 +112,6 @@ public class BillHeadModel extends BaseModel {
 
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "sendLocation", nullable = false)
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public Location getSendLocation() {
 		return sendLocation;
@@ -125,7 +124,6 @@ public class BillHeadModel extends BaseModel {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
 			CascadeType.REFRESH })
 	@JoinColumn(name = "acceptLocation", nullable = false)
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public Location getAcceptLocation() {
 		return acceptLocation;
@@ -268,7 +266,6 @@ public class BillHeadModel extends BaseModel {
 	}
 
 	@OneToMany(mappedBy = "billId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<BillTbodyModel> getBillTbody() {
 		return billTbody;

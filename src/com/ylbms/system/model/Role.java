@@ -7,6 +7,7 @@ package com.ylbms.system.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -91,9 +92,8 @@ public class Role extends BaseModel {
 		this.name = name;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH})
 	@JoinColumn(name = "user_id")
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public User getUser() {
 		return user;

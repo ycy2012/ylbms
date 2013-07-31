@@ -106,8 +106,7 @@ public class SpectypeInfo extends BaseModel {
 	}
 
 
-
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="spectype")
+	@OneToMany(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH},mappedBy="spectype")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public Set<SingleInfo> getSingles() {

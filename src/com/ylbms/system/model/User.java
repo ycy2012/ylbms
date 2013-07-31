@@ -154,12 +154,11 @@ public class User extends BaseModel implements Serializable {
 		this.enabled = enabled;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "ylbms_sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	@Where(clause = "del_flag='" + DEL_FLAG_NORMAL + "'")
 	@OrderBy("id")
 	@Fetch(FetchMode.SUBSELECT)
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<Role> getRoleList() {
 		return roleList;
@@ -169,7 +168,7 @@ public class User extends BaseModel implements Serializable {
 		this.roleList = roleList;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "org", nullable = true)
 	public Org getOrg() {
 		return org;

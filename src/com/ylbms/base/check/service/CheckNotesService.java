@@ -13,7 +13,7 @@ import com.ylbms.base.check.dao.CheckNotesDao;
 import com.ylbms.base.check.dao.CheckNotesInfoDao;
 import com.ylbms.base.check.model.CheckNotes;
 import com.ylbms.base.check.model.CheckNotesInfo;
-import com.ylbms.base.check.web.controller.NotesModel;
+import com.ylbms.base.check.web.controller.NotesDTO;
 import com.ylbms.base.single.dao.SingleInfoDao;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.common.orm.Page;
@@ -46,7 +46,7 @@ public class CheckNotesService {
 	 * @param checkNotes
 	 */
 	@Transactional(readOnly = false)
-	public void saveCheckNotes(CheckNotes master, NotesModel notes) {
+	public void saveCheckNotes(CheckNotes master, NotesDTO notes) {
 		Long i = 1L;
 		User user = UserUtils.getUser();
 		master.setCreateUser(user); // 添加制作人员信息

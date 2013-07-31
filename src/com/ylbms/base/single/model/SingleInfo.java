@@ -18,8 +18,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.FilterJoinTable;
-import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -125,7 +123,6 @@ public class SingleInfo extends BaseModel {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
 			CascadeType.REFRESH })
 	@JoinColumn(name = "spectype", nullable = false, referencedColumnName = "speId")
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Fetch(FetchMode.JOIN)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public SpectypeInfo getSpectype() {
@@ -140,7 +137,6 @@ public class SingleInfo extends BaseModel {
 			CascadeType.REFRESH })
 	@JoinColumn(name = "location")
 	@Fetch(FetchMode.JOIN)
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public Location getLocation() {
 		return location;

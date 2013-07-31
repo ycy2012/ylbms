@@ -64,7 +64,7 @@ public class Menu extends BaseModel implements Serializable {
 
 	public Menu() {
 		this.sort = 30;
-		this.isShow=SHOW;
+		this.isShow = SHOW;
 		this.delFlag = DEL_FLAG_NORMAL;
 	}
 
@@ -87,7 +87,6 @@ public class Menu extends BaseModel implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id")
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@NotNull
 	public Menu getParent() {
@@ -99,7 +98,7 @@ public class Menu extends BaseModel implements Serializable {
 	}
 
 	@Length(min = 1, max = 255)
-	@Column(name="PARENT_IDS")
+	@Column(name = "PARENT_IDS")
 	public String getParentIds() {
 		return parentIds;
 	}
@@ -154,7 +153,7 @@ public class Menu extends BaseModel implements Serializable {
 	}
 
 	@Length(min = 1, max = 1)
-	@Column(name="IS_SHOW")
+	@Column(name = "IS_SHOW")
 	public String getIsShow() {
 		return isShow;
 	}
@@ -172,9 +171,9 @@ public class Menu extends BaseModel implements Serializable {
 		this.permission = permission;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
+			CascadeType.REFRESH })
 	@JoinColumn(name = "user_id")
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public User getUser() {
 		return user;
@@ -185,7 +184,7 @@ public class Menu extends BaseModel implements Serializable {
 	}
 
 	@Length(min = 1, max = 1)
-	@Column(name="DEL_FLAG")
+	@Column(name = "DEL_FLAG")
 	public String getDelFlag() {
 		return delFlag;
 	}
@@ -198,7 +197,6 @@ public class Menu extends BaseModel implements Serializable {
 			CascadeType.REMOVE }, fetch = FetchType.LAZY, mappedBy = "parent")
 	@Where(clause = "del_flag='" + DEL_FLAG_NORMAL + "'")
 	@OrderBy(value = "sort")
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<Menu> getChildList() {
 		return childList;
