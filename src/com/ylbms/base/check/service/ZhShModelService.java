@@ -11,15 +11,21 @@ import com.ylbms.base.check.dao.ZhShMasterDao;
 import com.ylbms.base.check.model.JmylbModel;
 import com.ylbms.base.check.model.ZhShInfosModel;
 import com.ylbms.base.check.model.ZhShuMasterModel;
+import com.ylbms.base.single.dao.SingleInfoDao;
+import com.ylbms.base.single.model.SingleInfo;
+import com.ylbms.base.single.model.StateInfo;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.system.utils.UserUtils;
 
 /**
+ * 检定证书模块Service
  * 
  * @author JackLiang
  * @version 1.0
  * @date 2013-7-26
+ * @modified 更加单件信息在完成检定证书以后 2013年7月31日 09:54:47
+ * 
  */
 @Service
 @Transactional
@@ -30,6 +36,9 @@ public class ZhShModelService {
 
 	@Autowired
 	private JmbInfoDao jmbDao;
+
+	@Autowired
+	private SingleInfoDao singleDao;
 
 	/**
 	 * save method
@@ -52,15 +61,34 @@ public class ZhShModelService {
 		// 获取精密压力表
 		JmylbModel jmb = jmbDao.get(master.getJmbInfo().getJmbID());
 		for (ZhShInfosModel zs : detail) {
-			zs.setJdDate(master.getJdDate());
-			zs.setYxDate(master.getYxDate());
-			zs.setJmbCode(jmb.getJmbCode());
-			zs.setzShuCode(jmb.getZhShCode());
-			zs.setZsyxDate(jmb.getYxDate());
+			zs.setJdDate(master.getJdDate() == null ? null : master.getJdDate());
+			zs.setYxDate(master.getYxDate() == null ? null : master.getYxDate());
+			zs.setJmbCode(jmb.getJmbCode() == null ? "" : jmb.getJmbCode());
+			zs.setzShuCode(jmb.getZhShCode() == null ? "" : jmb.getZhShCode());
+			zs.setZsyxDate(jmb.getYxDate() == null ? null : jmb.getYxDate());
 			zs.setMaster(master);
+			// 更新单件信息
+			updateSingleInfo(zs);
 		}
 		master.setInfos(detail);
 		zhShuDao.save(master);
+	}
+
+	/**
+	 * 更新单件信息内容
+	 * 
+	 * @param detail
+	 */
+	public void updateSingleInfo(ZhShInfosModel detail) {
+		if (null != detail && !detail.equals("")) {
+			SingleInfo single = singleDao.get(detail.getSingle().getMid());
+			single.setYxTime(detail.getYxDate());
+			single.setJdtime(detail.getJdDate());
+			single.setAzLocation(detail.getAzLocation()==null?"":detail.getAzLocation());
+			single.setState(new StateInfo("020"));
+			singleDao.save(single); //持久化
+		}
+
 	}
 
 	/**

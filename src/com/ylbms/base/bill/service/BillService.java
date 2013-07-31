@@ -9,13 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.base.bill.dao.BillHeadDao;
-import com.ylbms.base.bill.dao.BillTbodyDao;
 import com.ylbms.base.bill.model.BillHeadModel;
 import com.ylbms.base.bill.model.BillTbodyModel;
 import com.ylbms.base.location.model.Location;
 import com.ylbms.base.single.dao.SingleInfoDao;
 import com.ylbms.base.single.model.SingleInfo;
-import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.base.single.model.StateInfo;
 import com.ylbms.system.utils.UserUtils;
 
@@ -30,31 +28,32 @@ import com.ylbms.system.utils.UserUtils;
 public class BillService {
 
 	@Autowired
-	BillHeadDao billHDao;
+	private BillHeadDao billHDao;
 
 	@Autowired
-	BillTbodyDao billTbodyDao;
-
-	@Autowired
-	SingleInfoDao singleDao;
-	
+	private SingleInfoDao singleDao;
 
 	/**
 	 * 保存单据
-	 * @param singles 明细
-	 * @param bhm 表头信息
-	 * @param newState 新状态
-	 * @param wzInfo 位置信息
+	 * 
+	 * @param singles
+	 *            明细
+	 * @param bhm
+	 *            表头信息
+	 * @param newState
+	 *            新状态
+	 * @param wzInfo
+	 *            位置信息
 	 */
-	@Transactional(readOnly = false, rollbackFor =Exception.class)
+	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	public void saveBillHeadAndBody(List<SingleInfo> singles,
-			BillHeadModel bhm, String newState,Location wzInfo) {
+			BillHeadModel bhm, String newState, Location wzInfo) {
 		bhm.setSxDate(new Date());
 		bhm.setCreateUser(UserUtils.getUser().getFullname());
 		List<BillTbodyModel> list = new ArrayList<BillTbodyModel>(); // 保存对象用的
 		for (int i = 0, len = singles.size(); i < len; i++) {
 			BillTbodyModel btm = new BillTbodyModel();
-			btm.setMid( new SingleInfo(singles.get(i).getMid()));
+			btm.setMid(new SingleInfo(singles.get(i).getMid()));
 			btm.setOldState(singles.get(i).getState() == null ? "" : singles.get(i).getState().getId());
 			btm.setNewState(newState == null ? "" : newState);
 			btm.setOldWz(singles.get(i).getLocation() == null ? "" : singles.get(i).getLocation().getId().toString());
@@ -68,12 +67,15 @@ public class BillService {
 		// 更新单件信息
 		/**
 		 * 判断是不是安装记录
+		 * 
+		 * @author JackLiang
+		 * @modify 根据需求去掉安装记录填写
 		 */
-		if(newState!=null&&newState.equals(singles.get(0).getState().getId())){
-			updateSingleByInstallNotes(singles);
-		}else{
-			updateSingle(singles, newState, wzInfo);
-		}
+		// if(newState!=null&&newState.equals(singles.get(0).getState().getId())){
+		// updateSingleByInstallNotes(singles);
+		// }else{
+		updateSingle(singles, newState, wzInfo);
+		// }
 	}
 
 	/**
@@ -81,23 +83,30 @@ public class BillService {
 	 * 
 	 * @param single
 	 */
-	public void updateSingle(List<SingleInfo> singles, String newState,Location wzInfo) {
+	public void updateSingle(List<SingleInfo> singles, String newState,
+			Location wzInfo) {
 		for (SingleInfo s : singles) {
-			SingleInfo single=singleDao.get(s.getMid());
+			SingleInfo single = singleDao.get(s.getMid());
 			single.setState(new StateInfo(newState));
 			single.setQyTime(new Date());
 			single.setLocation(wzInfo);
+			if (newState.equals("030")) { // 如果是出库单则增加使用次数
+				single.setUserTimes((single.getUserTimes() + 1));
+			}
 			singleDao.save(single);
 		}
 	}
+
 	/**
-	 * 更新安装位置  ----根据安装记录填写信息更新
+	 * 更新安装位置 ----根据安装记录填写信息更新
+	 * 
 	 * @param singles
 	 */
-	public void updateSingleByInstallNotes(List<SingleInfo> singles){
+	public void updateSingleByInstallNotes(List<SingleInfo> singles) {
 		for (SingleInfo s : singles) {
-			SingleInfo single=singleDao.get(s.getMid());
-			single.setAzLocation(s.getAzLocation()==null?"":s.getAzLocation());
+			SingleInfo single = singleDao.get(s.getMid());
+			single.setAzLocation(s.getAzLocation() == null ? "" : s
+					.getAzLocation());
 			single.setIsAnz("1");
 			singleDao.save(single);
 		}
