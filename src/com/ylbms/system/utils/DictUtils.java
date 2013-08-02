@@ -15,8 +15,9 @@ import com.ylbms.system.model.Dict;
 /**
  * 字典工具类
  * 
- * @author ThinkGem
- * @version 2013-5-29
+ * @author JackLiang
+ * @version 1.0
+ * @date 2013-8-2
  */
 public class DictUtils {
 
@@ -50,6 +51,11 @@ public class DictUtils {
 		return defaultLabel;
 	}
 
+	/**
+	 * 
+	 * @param type
+	 * @return
+	 */
 	public static List<Dict> getDictList(String type) {
 		@SuppressWarnings("unchecked")
 		Map<String, List<Dict>> dictMap = (Map<String, List<Dict>>) CacheUtils

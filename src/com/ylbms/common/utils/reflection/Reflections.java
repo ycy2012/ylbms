@@ -1,4 +1,4 @@
-package com.ylbms.common.utils;
+package com.ylbms.common.utils.reflection;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -13,15 +13,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
+/**
+ * 反射工具类
+ * 
+ * @author JackLiang
+ * @version 1.0
+ * @date 2013-8-2
+ */
 @SuppressWarnings("rawtypes")
 public class Reflections {
+	
+	private static Logger logger = LoggerFactory.getLogger(Reflections.class);
+	
 	private static final String SETTER_PREFIX = "set";
 
 	private static final String GETTER_PREFIX = "get";
 
 	private static final String CGLIB_CLASS_SEPARATOR = "$$";
 
-	private static Logger logger = LoggerFactory.getLogger(Reflections.class);
 
 	/**
 	 * 调用Getter方法. 支持多级，如：对象名.对象名.方法

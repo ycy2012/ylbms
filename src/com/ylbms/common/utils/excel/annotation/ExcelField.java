@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
  * Excel注解定义
  * @author ThinkGem
  * @version 2013-03-10
+ * @editor JackLiang 
+ * @date 2013年8月2日 17:49:39
  */
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

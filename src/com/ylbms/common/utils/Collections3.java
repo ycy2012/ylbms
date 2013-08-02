@@ -10,6 +10,8 @@ import java.util.Map;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.ylbms.common.utils.reflection.Reflections;
+
 /**
  * 
  * @ClassName: Collections3
