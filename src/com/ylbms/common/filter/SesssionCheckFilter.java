@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.filter.RequestContextFilter;
 
 import com.alibaba.fastjson.JSON;
 import com.ylbms.common.utils.DwzUtil;
@@ -23,7 +23,7 @@ import com.ylbms.system.security.SystemRealm.Principal;
  * @version 1.0
  * @date 2013-6-14
  */
-public class SesssionCheckFilter extends OncePerRequestFilter {
+public class SesssionCheckFilter extends RequestContextFilter {
 
 	private static final Log log = LogFactory.getLog(SesssionCheckFilter.class);
 

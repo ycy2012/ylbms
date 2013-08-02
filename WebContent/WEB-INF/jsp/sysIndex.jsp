@@ -74,7 +74,9 @@
 <link href="${ctx}/styles/ztree/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css"/>
 <script src="${ctx}/styles/ztree/js/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
 <script src="${ctx}/styles/ztree/js/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
- <script language="javascript" type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
+<script  type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${ctx}/styles/highcharts/js/highcharts.js"></script>
+<script type="text/javascript" src="${ctx}/styles/js/indexSingleBar.js"></script>
 <script type="text/javascript">
 	$(function() {
 		DWZ.init("dwz.frag.xml", {
@@ -168,6 +170,7 @@
 									<li><a href="location/listUi" target="navTab" rel="location">位置信息管理</a></li> 
 									<li><a href="spec/list" target="navTab" rel="spectype">规格型号管理</a></li>
 									<li><a href="single/list" target="navTab" rel="singleInfo">单件明细管理</a></li>
+									<li><a href="report/barUi" target="navTab" rel="singleBar">单件状态信息</a></li>
 								</ul></li>
 							<li><a>单据信息管理</a>
 								    <ul>
@@ -205,7 +208,7 @@
 					<div class="tabsMore">more</div>
 				</div>
 				<ul class="tabsMoreList">
-					<li><a href="javascript:;">我的主页</a></li>
+					<li><a href="javascript:;" rel="systemHome">我的主页</a></li>
 				</ul>
 				<div class="navTab-panel tabsPageContent layoutBox">
 					<div class="page unitBox">
@@ -214,8 +217,7 @@
 							<br />
 							<h1>压力表具信息管理系统beta版本</h1>
 						</div>
-						<div class="pageFormContent" layoutH="80"
-							style="margin-right: 230px">
+						<div class="pageFormContent" layoutH="80">
 							<div class="panel collapse" minH="100" defH="150">
 								<h1>信息提示</h1>
 								<div>
@@ -224,15 +226,13 @@
 									<p>信息中心， 技术支持</p>
 								</div>
 							</div>
-							<div class="panel collapse" minH="100" defH="150">
+							<div class="panel collapse" minH="350" defH="400">
 								<h1>压力表使用情况统计</h1>
-								<div>
-									<p>测试</p>
+								<div style="width: 98.9%;overflow: hidden;">
+								<div id="indexSingleBar" style="min-width:98%; width:98%; height: 400px; margin: 0 auto;"></div>
 								</div>
 							</div>
 						</div>
-						<div style="width: 230px; position: absolute; top: 60px; right: 0"
-							layoutH="80"></div>
 					</div>
 				</div>
 			</div>

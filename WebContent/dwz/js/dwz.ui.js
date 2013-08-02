@@ -539,9 +539,6 @@ function initUI(_box){
         	$("#roleIds").val($('#itemselector').omItemSelector('value').join(','));
          }
     });
-
-
-	
 }
 
 
