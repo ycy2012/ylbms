@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
@@ -148,7 +147,6 @@ public class SingleInfo extends BaseModel {
 
 	@ManyToOne
 	@JoinColumn(name = "state")
-	@JsonIgnore
 	@NotFound(action = NotFoundAction.IGNORE)
 	@NotNull(message = "归属部门不能为空")
 	public StateInfo getState() {

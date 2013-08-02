@@ -14,7 +14,7 @@ import java.net.URLEncoder;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  * 各种格式的编码加码工具类.
@@ -67,24 +67,26 @@ public class EncodeUtils {
 	}
 
 	/**
-	 * URL 编码, Encode默认为UTF-8. 
+	 * URL 编码, Encode默认为UTF-8.
 	 */
 	public static String urlEncode(String input) {
 		try {
 			return URLEncoder.encode(input, DEFAULT_URL_ENCODING);
 		} catch (UnsupportedEncodingException e) {
-			throw new IllegalArgumentException("Unsupported Encoding Exception", e);
+			throw new IllegalArgumentException(
+					"Unsupported Encoding Exception", e);
 		}
 	}
 
 	/**
-	 * URL 解码, Encode默认为UTF-8. 
+	 * URL 解码, Encode默认为UTF-8.
 	 */
 	public static String urlDecode(String input) {
 		try {
 			return URLDecoder.decode(input, DEFAULT_URL_ENCODING);
 		} catch (UnsupportedEncodingException e) {
-			throw new IllegalArgumentException("Unsupported Encoding Exception", e);
+			throw new IllegalArgumentException(
+					"Unsupported Encoding Exception", e);
 		}
 	}
 
@@ -92,14 +94,14 @@ public class EncodeUtils {
 	 * Html 转码.
 	 */
 	public static String htmlEscape(String html) {
-		return StringEscapeUtils.escapeHtml(html);
+		return StringEscapeUtils.escapeHtml4(html);
 	}
 
 	/**
 	 * Html 解码.
 	 */
 	public static String htmlUnescape(String htmlEscaped) {
-		return StringEscapeUtils.unescapeHtml(htmlEscaped);
+		return StringEscapeUtils.unescapeHtml4(htmlEscaped);
 	}
 
 	/**

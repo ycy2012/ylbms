@@ -1,12 +1,6 @@
-/**
- * Copyright (c) 2005-2010 springside.org.cn
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * 
- * $Id: SpringContextHolder.java 1211 2010-09-10 16:20:45Z calvinxiu $
- */
 package com.ylbms.common.utils.spring;
 
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -14,37 +8,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
- * 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候中取出ApplicaitonContext.
+ * 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候取出ApplicaitonContext.
  * 
- * @author calvin
+ * @author JackLiang
+ * @version 1.0
+ * @date 2013-5-29 下午1:25:40
  */
 public class SpringContextHolder implements ApplicationContextAware, DisposableBean {
-
 	private static ApplicationContext applicationContext = null;
 
 	private static Logger logger = LoggerFactory.getLogger(SpringContextHolder.class);
-
-	/**
-	 * 实现ApplicationContextAware接口, 注入Context到静态变量中.
-	 */
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		logger.debug("注入ApplicationContext到SpringContextHolder:" + applicationContext);
-
-		if (SpringContextHolder.applicationContext != null) {
-			logger.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:"
-					+ SpringContextHolder.applicationContext);
-		}
-
-		SpringContextHolder.applicationContext = applicationContext; //NOSONAR
-	}
-
-	/**
-	 * 实现DisposableBean接口,在Context关闭时清理静态变量.
-	 */
-	@Override
-	public void destroy() throws Exception {
-		SpringContextHolder.clear();
-	}
 
 	/**
 	 * 取得存储在静态变量中的ApplicationContext.
@@ -74,17 +47,38 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 	/**
 	 * 清除SpringContextHolder中的ApplicationContext为Null.
 	 */
-	public static void clear() {
-		logger.debug("清除SpringContextHolder中的ApplicationContext:" + applicationContext);
+	public static void clearHolder() {
+		logger.debug("清除SpringContextHolder中的ApplicationContext:"
+				+ applicationContext);
 		applicationContext = null;
+	}
+
+	/**
+	 * 实现ApplicationContextAware接口, 注入Context到静态变量中.
+	 */
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) {
+//		logger.debug("注入ApplicationContext到SpringContextHolder:{}", applicationContext);
+
+		if (SpringContextHolder.applicationContext != null) {
+			logger.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:" + SpringContextHolder.applicationContext);
+		}
+
+		SpringContextHolder.applicationContext = applicationContext; // NOSONAR
+	}
+
+	/**
+	 * 实现DisposableBean接口, 在Context关闭时清理静态变量.
+	 */
+	@Override
+	public void destroy() throws Exception {
+		SpringContextHolder.clearHolder();
 	}
 
 	/**
 	 * 检查ApplicationContext不为空.
 	 */
 	private static void assertContextInjected() {
-		if (applicationContext == null) {
-			throw new IllegalStateException("applicaitonContext未注入,请在applicationContext.xml中定义SpringContextHolder");
-		}
+		Validate.validState(applicationContext != null, "applicaitonContext属性未注入, 请在applicationContext.xml中定义SpringContextHolder.");
 	}
 }

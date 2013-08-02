@@ -100,6 +100,7 @@ public class User extends BaseModel implements Serializable {
 	}
 
 	@Column(name = "password", unique = false, nullable = true)
+	@JSONField
 	public String getPassword() {
 		return password;
 	}
