@@ -3,6 +3,8 @@ package com.ylbms.base.report.web.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,8 @@ import com.ylbms.common.web.BaseController;
 @Controller
 @RequestMapping(value = "report")
 public class SysReportController extends BaseController {
+	
+	private static Logger log=LoggerFactory.getLogger(SysReportController.class);
 
 	@Autowired
 	private SysReportService sysReportDao;

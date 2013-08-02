@@ -5,9 +5,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.base.single.service.SpectypeService;
@@ -33,7 +34,8 @@ import com.ylbms.common.web.BaseController;
 @RequestMapping("/spec")
 public class SpectypeController extends BaseController {
 
-	private static final Log log = LogFactory.getLog(SpectypeController.class);
+	private static final Logger log = LoggerFactory
+			.getLogger(SpectypeController.class);
 
 	@Autowired
 	SpectypeService spectypeService;
@@ -74,6 +76,31 @@ public class SpectypeController extends BaseController {
 		SpectypeInfo spectype = spectypeService.getSpetypeById(id);
 		model.addAttribute("obj", spectype);
 		return "base/spectype/edit";
+	}
+
+	/**
+	 * 通过excel导入规格型号信息 1 、先上传服务器作为零时文件2、后解析导入
+	 * 
+	 * @author JackLiang
+	 * @date 2013年8月2日 18:21:45
+	 * @return
+	 */
+	@RequestMapping(value = "importUi")
+	public Map<String, Object> importExcel(HttpServletRequest request,
+			@RequestParam("fileUpload") MultipartFile fileUpload) {
+		try {
+			if (!fileUpload.isEmpty()) {
+				String fileName=fileUpload.getOriginalFilename();
+
+			}
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK, "spectype");
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error("system error!", e.getMessage());
+			}
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "spectype",
+					e.getMessage());
+		}
 	}
 
 	/**

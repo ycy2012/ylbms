@@ -7,8 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,17 +37,17 @@ import com.ylbms.common.web.BaseController;
 @Controller
 @RequestMapping("/single")
 public class SingleInfoController extends BaseController {
-	private static final Log log = LogFactory
-			.getLog(SingleInfoController.class);
+	private static final Logger log = LoggerFactory
+			.getLogger(SingleInfoController.class);
 
 	@Autowired
 	SingleInfoService singleInfoService;
 
 	@Autowired
 	SpectypeService spectypeService;
-	
+
 	@Autowired
-	LocationService  locationservice;
+	LocationService locationservice;
 
 	/**
 	 * 跳转到添加页面
@@ -57,18 +57,19 @@ public class SingleInfoController extends BaseController {
 	 */
 	@RequestMapping(value = "/addUi")
 	public String addUi(Model model) {
-		List<Location> listLocation=locationservice.getAllLocation();
-		
-		List<Map<String, Object>> mapLocation=new ArrayList<Map<String,Object>>();
-		for(Location list:listLocation){
+		List<Location> listLocation = locationservice.getAllLocation();
+
+		List<Map<String, Object>> mapLocation = new ArrayList<Map<String, Object>>();
+		for (Location list : listLocation) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("id",list.getId());
+			map.put("id", list.getId());
 			map.put("locationName", list.getLocationName());
 			mapLocation.add(map);
 		}
 		model.addAttribute("mapLocation", mapLocation);
+
 		List<SpectypeInfo> list = spectypeService.getAllSpectype();
-		List<Map<String,Object>> spectypes=new ArrayList<Map<String,Object>>();
+		List<Map<String, Object>> spectypes = new ArrayList<Map<String, Object>>();
 		for (SpectypeInfo s : list) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("text", s.getSpeName());
@@ -93,17 +94,17 @@ public class SingleInfoController extends BaseController {
 	@RequestMapping(value = "/edit/{id}")
 	public String editUi(HttpServletRequest request,
 			@PathVariable("id") String mid, Model model) {
-		List<Location> listLocation=locationservice.getAllLocation();
-		List<Map<String, Object>> mapLocation=new ArrayList<Map<String,Object>>();
-		for(Location list:listLocation){
+		List<Location> listLocation = locationservice.getAllLocation();
+		List<Map<String, Object>> mapLocation = new ArrayList<Map<String, Object>>();
+		for (Location list : listLocation) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("id",list.getId());
+			map.put("id", list.getId());
 			map.put("locationName", list.getLocationName());
 			mapLocation.add(map);
 		}
 		model.addAttribute("mapLocation", mapLocation);
 		List<SpectypeInfo> list = spectypeService.getAllSpectype();
-		List<Map<String,Object>> spectypes=new ArrayList<Map<String,Object>>();
+		List<Map<String, Object>> spectypes = new ArrayList<Map<String, Object>>();
 		for (SpectypeInfo s : list) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("text", s.getSpeName());
@@ -124,8 +125,7 @@ public class SingleInfoController extends BaseController {
 	 */
 	@RequestMapping(value = "/advanced")
 	public String advanced(Model model) {
-		
-		
+
 		return "base/singleinfo/advanced_query";
 
 	}
@@ -143,7 +143,7 @@ public class SingleInfoController extends BaseController {
 			singleInfoService.saveSingleInfo(singleInfo);
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, "singleInfo");
 		} catch (Exception e) {
-			log.error("system error" + e.getMessage());
+			log.error("system error", e.getMessage());
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "singleInfo",
 					e.getMessage());
 		}
@@ -157,12 +157,12 @@ public class SingleInfoController extends BaseController {
 	 */
 	@RequestMapping(value = "/update")
 	@ResponseBody
-	public Map<String, Object> updateSpectype(SingleInfo singleInfo,Model model) {
+	public Map<String, Object> updateSpectype(SingleInfo singleInfo, Model model) {
 		try {
 			singleInfoService.updateSingleInfo(singleInfo);
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, "singleInfo");
 		} catch (Exception e) {
-			log.error("system error" + e.getMessage());
+			log.error("system error", e.getMessage());
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "singleInfo",
 					e.getMessage());
 		}
@@ -180,7 +180,8 @@ public class SingleInfoController extends BaseController {
 	@RequestMapping(value = "/list")
 	public String list(HttpServletRequest request, Page<SingleInfo> page,
 			SingleInfo single, Model model) {
-		Page<SingleInfo> list = singleInfoService.findSingleInfo(page, single,"");
+		Page<SingleInfo> list = singleInfoService.findSingleInfo(page, single,
+				"");
 		model.addAttribute("page", list);
 		return "base/singleinfo/listSingleInfo";
 	}
@@ -198,7 +199,7 @@ public class SingleInfoController extends BaseController {
 			singleInfoService.deleteSingleInfo(mid);
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
-			log.error("system error" + e);
+			log.error("system error", e.getMessage());
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "singleInfo",
 					e.getMessage());
 		}
@@ -217,7 +218,7 @@ public class SingleInfoController extends BaseController {
 			singleInfoService.delByIds(ids);
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
-			log.error("system error" + e);
+			log.error("system error", e.getMessage());
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "singleInfo",
 					e.getMessage());
 		}
