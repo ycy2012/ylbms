@@ -28,6 +28,7 @@ import com.ylbms.system.model.Role;
 import com.ylbms.system.model.User;
 import com.ylbms.system.service.SystemService;
 import com.ylbms.system.service.UserSerivice;
+import com.ylbms.system.utils.UserUtils;
 
 /**
  * 
@@ -200,12 +201,18 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> delete(@PathVariable("id") Long id) {
 		try {
+			if(UserUtils.getUser().getId().equals(id)){
+				return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, null, "删除用户失败，不能删除当前用户！");
+			}
+			if(User.isAdmin(id)){
+				return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, null, "删除用户失败，不允许删除超级管理员");
+			}
 			userService.deleteUser(id);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
 			log.error("system error!!", e);
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "user", e.getMessage());
 		}
-		return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 	}
 
 	/**

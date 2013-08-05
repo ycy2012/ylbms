@@ -11,8 +11,10 @@
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
-					<td>规格型号名称：<input type="text"  name="filter_LIKES_speName" value="${param['filter_LIKES_speName']}"/></td>
-					<td>规格型号状态： <select name="filter_EQS_status" value="${param['filter_EQS_status']}">
+					<td>规格型号名称：<input type="text" name="filter_LIKES_speName"
+						value="${param['filter_LIKES_speName']}" /></td>
+					<td>规格型号状态： <select name="filter_EQS_status"
+						value="${param['filter_EQS_status']}">
 							<option value="1">无效</option>
 							<option value="0">有效</option>
 							<option value="" selected>请选择</option>
@@ -45,13 +47,15 @@
 		<ul class="toolBar">
 			<li><a class="add" href="${ctx}/spec/addUi" target="dialog"
 				mask="true" title="添加规格型号信息"><span>添加</span></a></li>
+				<li class="line">line</li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"
 				postType="string" href="${ctx}/spec/deletes/{sid_spectype}"
 				class="delete"><span>批量删除</span></a></li>
-			<li><a class="edit" href="${ctx}/spec/edit/{sid_spectype}"
-				target="dialog" mask="true" title="修改规格型号信息"><span>修改</span></a></li>
+				<li class="line">line</li>
+			<li><a class="edit" href="${ctx}/spec/importUi"
+				target="dialog" mask="true" title="导入规格型号信息？"><span>EXCEL导入</span></a></li>
 			<li class="line">line</li>
-			<li><a class="icon" href="#" target="dwzExport"
+			<li><a class="icon" href="${ctx}/spec/export" target="dwzExport"
 				targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 		</ul>
 	</div>

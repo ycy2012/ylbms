@@ -1,4 +1,12 @@
 $(function() {
+	 Highcharts.setOptions({
+		 global: {
+		 useUTC: false
+		 },
+		 lang: {
+			 downloadJPEG:"下载为jpg格式"
+		 }
+		 }); 
 	$.post("report/sinlgeBar", function(jsonData, textStatus) {
 		$('#singleBar').highcharts({
 			chart : {

@@ -227,11 +227,11 @@ public class User extends BaseModel implements Serializable {
 
 	@Transient
 	public boolean isAdmin() {
-		return isAdmin(this.usertype);
+		return isAdmin(this.id);
 	}
 
 	@Transient
-	public static boolean isAdmin(String userType) {
-		return userType != null && userType.equals("0");
+	public static boolean isAdmin(Long userType) {
+		return userType != null && userType.equals("1");
 	}
 }

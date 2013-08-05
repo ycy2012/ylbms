@@ -20,6 +20,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import com.ylbms.common.model.BaseModel;
+import com.ylbms.common.utils.excel.annotation.ExcelField;
 
 /**
  * 
@@ -36,13 +37,13 @@ public class SpectypeInfo extends BaseModel {
 	private Long speId;// 规格型号id
 	private String speName;// 规格型号名称
 	private String status;// 规格型号状态
-	private int sort;// 规格顺序
+	private Integer sort;// 规格顺序
 	private String remark;// 备注信息
-	
-	private Set<SingleInfo> singles=new HashSet<SingleInfo>(); //one to many
-	
+
+	private Set<SingleInfo> singles = new HashSet<SingleInfo>(); // one to many
+
 	public SpectypeInfo() {
-		this.status=DEL_FLAG_NORMAL;
+		this.status = DEL_FLAG_NORMAL;
 	}
 
 	public SpectypeInfo(Long speId) {
@@ -57,29 +58,30 @@ public class SpectypeInfo extends BaseModel {
 		this.sort = sort;
 		this.remark = remark;
 	}
-	
 
+	// setter getter
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_base_spectypeinfo")
 	@SequenceGenerator(name = "seq_base_spectypeinfo", sequenceName = "seq_base_spectypeinfo")
 	public Long getSpeId() {
 		return speId;
 	}
-	
+
 	public void setSpeId(Long speId) {
 		this.speId = speId;
 	}
 
-	@Column(length=50)
+	@Column(length = 50)
+	@ExcelField(title="规格型号名称",align=2,sort=2,type=0)
 	public String getSpeName() {
 		return speName;
 	}
-	
+
 	public void setSpeName(String speName) {
 		this.speName = speName;
 	}
 
-	@Column(length=4)
+	@Column(length = 4)
 	public String getStatus() {
 		return status;
 	}
@@ -88,15 +90,17 @@ public class SpectypeInfo extends BaseModel {
 		this.status = status;
 	}
 
-	public int getSort() {
+	@ExcelField(title="排序",align=3,sort=3,type=0)
+	public Integer getSort() {
 		return sort;
 	}
 
-	public void setSort(int sort) {
+	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
 
-	@Column(length=100)
+	@Column(length = 100)
+	@ExcelField(title="备注信息",sort=4,type=0)
 	public String getRemark() {
 		return remark;
 	}
@@ -105,8 +109,8 @@ public class SpectypeInfo extends BaseModel {
 		this.remark = remark;
 	}
 
-
-	@OneToMany(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH},mappedBy="spectype")
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
+			CascadeType.REFRESH }, mappedBy = "spectype")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public Set<SingleInfo> getSingles() {

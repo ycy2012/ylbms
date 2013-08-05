@@ -335,8 +335,8 @@ public class ImportExcel {
 							valType = ((Method) os[1]).getParameterTypes()[0];
 						}
 					}
-					// log.debug("Import value type: ["+i+","+colunm+"] " +
-					// valType);
+//					 log.info("Import value type: ["+i+","+column+"] " +
+//					 valType);
 					try {
 						if (valType == String.class) {
 							val = String.valueOf(val.toString());
@@ -372,7 +372,8 @@ public class ImportExcel {
 							}
 						}
 					} catch (Exception ex) {
-						log.info("Get cell value [" + i + "," + column
+						ex.printStackTrace();
+						log.error("Get cell value [" + i + "," + column
 								+ "] error: " + ex.toString());
 						val = null;
 					}
