@@ -39,7 +39,7 @@
 			<li><a class="edit" href="${ctx}/jd/editUi/{sdjId_jd}" target="dialog" mask="true" title="修改检定记录信息"><span>修改</span></a></li>
 			 --%>
 			<li class="line">line</li>
-			<li><a class="icon" href="#" target="dwzExport"
+			<li><a class="icon" href="${ctx}/jd/export" target="dwzExport"
 				targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 			<li class="line">line</li>
 		</ul>

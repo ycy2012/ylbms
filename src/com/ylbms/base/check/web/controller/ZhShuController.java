@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ylbms.base.check.dao.ZhShInfosDao;
 import com.ylbms.base.check.model.CheckNotesInfo;
+import com.ylbms.base.check.model.ZhShInfosModel;
 import com.ylbms.base.check.model.ZhShuMasterModel;
 import com.ylbms.base.check.service.CheckNotesService;
 import com.ylbms.base.check.service.ZhShModelService;
+import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
+import com.ylbms.common.utils.DateUtils;
 import com.ylbms.common.utils.DwzUtil;
+import com.ylbms.common.utils.excel.ExportExcel;
 import com.ylbms.common.web.BaseController;
 
 /**
@@ -35,7 +41,8 @@ import com.ylbms.common.web.BaseController;
 @RequestMapping(value = "jdzhs")
 public class ZhShuController extends BaseController {
 
-	private static final Log log = LogFactory.getLog(ZhShuController.class);
+	private static final Logger log = LoggerFactory.getLogger(ZhShuController.class);
+	
 	private static final String NAV_TAB_ID = "jdzhs";
 
 	@Autowired
@@ -114,8 +121,7 @@ public class ZhShuController extends BaseController {
 	@RequestMapping(value = "list")
 	public String list(HttpServletRequest request, Page<ZhShuMasterModel> page,
 			Model model) {
-		List<PropertyFilter> filters = PropertyFilter
-				.buildFromHttpRequest(request);
+		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
 		Page<ZhShuMasterModel> list = zhShuService
 				.findZhShByPage(page, filters);
 		model.addAttribute("page", list);

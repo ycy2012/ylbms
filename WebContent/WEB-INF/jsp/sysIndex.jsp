@@ -226,10 +226,10 @@
 									<p>信息中心， 技术支持</p>
 								</div>
 							</div>
-							<div class="panel collapse" minH="350" defH="400">
+							<div class="panel collapse" minH="360" defH="380">
 								<h1>压力表使用情况统计</h1>
-								<div style="width: 98.9%;overflow: hidden;">
-								<div id="indexSingleBar" style="min-width:98%; width:98%; height: 400px; margin: 0 auto;"></div>
+								<div>
+							     <div id="indexSingleBar" style="min-width:900px;; width:1000px;; height:360px; margin: 0 auto;"></div>
 								</div>
 							</div>
 						</div>

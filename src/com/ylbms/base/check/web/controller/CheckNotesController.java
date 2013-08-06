@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,9 @@ import com.ylbms.base.single.model.StateInfo;
 import com.ylbms.base.single.service.SingleInfoService;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
+import com.ylbms.common.utils.DateUtils;
 import com.ylbms.common.utils.DwzUtil;
+import com.ylbms.common.utils.excel.ExportExcel;
 import com.ylbms.common.web.BaseController;
 
 /**
@@ -39,8 +42,7 @@ import com.ylbms.common.web.BaseController;
 @RequestMapping(value = "jd")
 public class CheckNotesController extends BaseController {
 
-	private static final Log log = LogFactory
-			.getLog(CheckNotesController.class);
+	private static final Logger log = LoggerFactory.getLogger(CheckNotesController.class);
 	private static final String NAV_TAB_ID = "jdnotes";
 
 	@Autowired
@@ -50,7 +52,7 @@ public class CheckNotesController extends BaseController {
 	private SingleInfoService singleService;
 
 	@Autowired
-	private ZhShInfoService zsInfoService;
+	private ZhShInfoService zhShInfoService;
 
 	/**
 	 * to add page
@@ -64,6 +66,33 @@ public class CheckNotesController extends BaseController {
 
 		return "base/check/input";
 	}
+	/**
+	 * export to excel By current search condition
+	 * @param request
+	 * @param response
+	 * @param page
+	 * @return
+	 */
+		@RequestMapping(value="export")
+		@ResponseBody
+		public Map<String, Object> export(HttpServletRequest request,HttpServletResponse response,Page<ZhShInfosModel> page) {
+			try {
+				String fileName = "检定台帐信息" + DateUtils.getDate("yyyyMMddHHmmss")+ ".xlsx";
+				List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
+				Page<ZhShInfosModel> list=zhShInfoService.findPage(page, filters);
+				//导出EXCEL
+				new ExportExcel(("检定台帐信息"+DateUtils.getDate("yyyy-MM-dd")), ZhShInfosModel.class)
+				.setDataList(list.getResult()).write(response,request, fileName)
+				.dispose();
+	            return null;
+			} catch (Exception e) {
+				if (log.isErrorEnabled()) {
+					log.error("System error!!", e.getMessage());
+				}
+				return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
+						e.getMessage());
+			}
+		}
 
 	/**
 	 * 添加明细
@@ -161,7 +190,7 @@ public class CheckNotesController extends BaseController {
 			Page<ZhShInfosModel> page, Model model) {
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<ZhShInfosModel> list = zsInfoService.findPage(page, filters);
+		Page<ZhShInfosModel> list = zhShInfoService.findPage(page, filters);
 		model.addAttribute("page", list);
 		return "base/check/infoList";
 	}

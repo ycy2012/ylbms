@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NotFound;
@@ -78,6 +79,12 @@ public class ZhShDetailIdPK implements Serializable {
 				.append(getSingle().getMid(), other.getSingle().getMid())
 				.append(getMaster().getzId(), other.getMaster().getzId())
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(getSingle().getMid())
+				.append(getMaster().getzId()).toHashCode();
 	}
 
 }

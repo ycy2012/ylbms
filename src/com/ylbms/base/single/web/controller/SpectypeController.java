@@ -66,12 +66,12 @@ public class SpectypeController extends BaseController {
 	 */
 	@RequestMapping(value = "import/template")
 	@ResponseBody
-	public Map<String, Object> importFileTemplate(HttpServletResponse response) {
+	public Map<String, Object> importFileTemplate(HttpServletResponse response,HttpServletRequest request) {
 		try {
 			String fileName = "规格型号导入模版.xls";
 			List<SpectypeInfo> list = Lists.newArrayList();
 			new ExportExcel("规格型号信息", SpectypeInfo.class, 2).setDataList(list)
-					.write(response, fileName).dispose();
+					.write(response,request, fileName).dispose();
 			return null;
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
@@ -94,16 +94,13 @@ public class SpectypeController extends BaseController {
 	public Map<String, Object> exportFile(Page<SpectypeInfo> page,
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
-			List<PropertyFilter> filters = PropertyFilter
-					.buildFromHttpRequest(request);
+			List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
 
-			String fileName = "规划型号数据" + DateUtils.getDate("yyyyMMddHHmmss")
-					+ ".xlsx";
-			Page<SpectypeInfo> list = spectypeService.getSpectypeInfo(page,
-					filters);
+			String fileName = "规划型号数据" + DateUtils.getDate("yyyyMMddHHmmss")+ ".xlsx";
+			Page<SpectypeInfo> list = spectypeService.getSpectypeInfo(page,filters);
 
 			new ExportExcel("规划型号数据", SpectypeInfo.class)
-					.setDataList(list.getResult()).write(response, fileName)
+					.setDataList(list.getResult()).write(response,request, fileName)
 					.dispose();
 			return null;
 		} catch (Exception e) {

@@ -474,7 +474,6 @@ public class ExportExcel {
 		String agent = request.getHeader("USER-AGENT");
 		response.reset();
 		response.setContentType("application/octet-stream; charset=utf-8");
-		response.setContentLength(fileName.length());
 		if (StringUtils.isNotBlank(agent) && agent.indexOf("Mozilla") != -1) {
 			fileName=new String(fileName.getBytes("UTF-8"),"iso-8859-1");
 		} else {

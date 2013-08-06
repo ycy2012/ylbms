@@ -7,12 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.common.model.BaseModel;
+import com.ylbms.common.utils.excel.annotation.ExcelField;
 
 /**
  * 证书明细信息及检定记录信息
@@ -30,6 +32,9 @@ public class ZhShInfosModel extends BaseModel {
 	private static final long serialVersionUID = 1L;
 
 	private SingleInfo single;
+	private SingleInfo spectype;  //不进行持久化
+	private SingleInfo clfw;      //不进行持久化
+	private SingleInfo factoryCode; //不进行持久化
 	private ZhShuMasterModel master;
 	private Date jdDate;// 检定日期
 	private Date yxDate;// 有效日期
@@ -48,12 +53,43 @@ public class ZhShInfosModel extends BaseModel {
 
 	// getter setter
 	@Id
+	@ExcelField(title = "物资名称", value = "single.wzname")
 	public SingleInfo getSingle() {
 		return single;
 	}
 
 	public void setSingle(SingleInfo single) {
 		this.single = single;
+	}
+
+	@Transient
+	@ExcelField(title = "规格型号", value = "single.spectype", sort = 1)
+	public SingleInfo getSpectype() {
+		return spectype;
+	}
+
+	public void setSpectype(SingleInfo spectype) {
+		this.spectype = spectype;
+	}
+
+	@Transient
+	@ExcelField(title = "测量范围", value = "single.clfw", sort = 2)
+	public SingleInfo getClfw() {
+		return clfw;
+	}
+
+	public void setClfw(SingleInfo clfw) {
+		this.clfw = clfw;
+	}
+
+	@Transient
+	@ExcelField(title = "出厂编码", value = "single.factoryCode", sort = 3)
+	public SingleInfo getFactoryCode() {
+		return factoryCode;
+	}
+
+	public void setFactoryCode(SingleInfo factoryCode) {
+		this.factoryCode = factoryCode;
 	}
 
 	@Id
@@ -66,6 +102,7 @@ public class ZhShInfosModel extends BaseModel {
 	}
 
 	@Column(name = "jd_date")
+	@ExcelField(title = "检定日期", sort = 4)
 	public Date getJdDate() {
 		return jdDate;
 	}
@@ -75,6 +112,7 @@ public class ZhShInfosModel extends BaseModel {
 	}
 
 	@Column(name = "yx_Date")
+	@ExcelField(title = "有效日期", sort = 5)
 	public Date getYxDate() {
 		return yxDate;
 	}
@@ -84,6 +122,7 @@ public class ZhShInfosModel extends BaseModel {
 	}
 
 	@Column(name = "az_location")
+	@ExcelField(title = "安装位置", sort = 6)
 	public String getAzLocation() {
 		return azLocation;
 	}
@@ -93,6 +132,7 @@ public class ZhShInfosModel extends BaseModel {
 	}
 
 	@Column(name = "jmb_code")
+	@ExcelField(title = "精密表编码", sort = 7)
 	public String getJmbCode() {
 		return jmbCode;
 	}
@@ -102,6 +142,7 @@ public class ZhShInfosModel extends BaseModel {
 	}
 
 	@Column(name = "zshu_code")
+	@ExcelField(title = "证书编码", sort = 8)
 	public String getzShuCode() {
 		return zShuCode;
 	}
@@ -111,6 +152,7 @@ public class ZhShInfosModel extends BaseModel {
 	}
 
 	@Column(name = "zsyx_date")
+	@ExcelField(title = "证书有效期", sort = 9)
 	public Date getZsyxDate() {
 		return zsyxDate;
 	}
@@ -119,7 +161,8 @@ public class ZhShInfosModel extends BaseModel {
 		this.zsyxDate = zsyxDate;
 	}
 
-	@Column(name="shb_code")
+	@Column(name = "shb_code")
+	@ExcelField(title = "设备编码", sort = 10)
 	public String getShbCode() {
 		return shbCode;
 	}
@@ -145,6 +188,7 @@ public class ZhShInfosModel extends BaseModel {
 		this.order = order;
 	}
 
+	@ExcelField(title = "备注信息", sort = 20)
 	public String getRemark() {
 		return remark;
 	}

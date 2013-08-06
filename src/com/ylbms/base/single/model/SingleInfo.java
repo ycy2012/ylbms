@@ -24,6 +24,7 @@ import org.hibernate.annotations.NotFoundAction;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.ylbms.base.location.model.Location;
 import com.ylbms.common.model.BaseModel;
+import com.ylbms.common.utils.excel.annotation.ExcelField;
 
 /**
  * 修改内容：修改主键策略
@@ -48,17 +49,17 @@ public class SingleInfo extends BaseModel {
 	private SpectypeInfo spectype;// 规格型号
 	private Location location;// 当前位置
 	private StateInfo state;// 当前状态
-	private int classId;// 资产种类
-	private int factory;// 生产厂家
+	private Integer classId;// 资产种类
+	private Integer factory;// 生产厂家
 	private String factoryCode;// 出厂编号
 	private Date jdtime;// 检测日期
 	private String scunit;// 所属单位
 	private Date yxTime;// 有效日期
 	private Date bfTime;// 报废日期
 	private Date qyTime;// 启用日期
-	private int typeId;// 计量类别
+	private Integer typeId;// 计量类别
 	private Float zqd;// 精确度
-	private int userTimes;// 使用次数
+	private Integer userTimes;// 使用次数
 	private Float price;// 价格
 	private String isnyqj;// 是否能源器具
 	private String clfw;// 测量范围
@@ -102,6 +103,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false)
+	@ExcelField(title = "自编码", sort = 1)
 	public String getOwercode() {
 		return owercode;
 	}
@@ -111,6 +113,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false)
+	@ExcelField(title = "物资名称", sort = 2)
 	public String getWzname() {
 		return wzname;
 	}
@@ -124,6 +127,7 @@ public class SingleInfo extends BaseModel {
 	@JoinColumn(name = "spectype", nullable = false, referencedColumnName = "speId")
 	@Fetch(FetchMode.JOIN)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@ExcelField(title="规划型号信息",sort=3)
 	public SpectypeInfo getSpectype() {
 		return spectype;
 	}
@@ -137,6 +141,7 @@ public class SingleInfo extends BaseModel {
 	@JoinColumn(name = "location")
 	@Fetch(FetchMode.JOIN)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@ExcelField(title="当前位置",align=3, sort=4)
 	public Location getLocation() {
 		return location;
 	}
@@ -145,10 +150,10 @@ public class SingleInfo extends BaseModel {
 		this.location = location;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "state")
-	@NotFound(action = NotFoundAction.IGNORE)
-	@NotNull(message = "归属部门不能为空")
+	@NotNull(message = "状态信息不能为空")
+	@ExcelField(title="当前状态",sort=5)
 	public StateInfo getState() {
 		return state;
 	}
@@ -158,19 +163,19 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false)
-	public int getClassId() {
+	public Integer getClassId() {
 		return classId;
 	}
 
-	public void setClassId(int classId) {
+	public void setClassId(Integer classId) {
 		this.classId = classId;
 	}
 
-	public int getFactory() {
+	public Integer getFactory() {
 		return factory;
 	}
 
-	public void setFactory(int factory) {
+	public void setFactory(Integer factory) {
 		this.factory = factory;
 	}
 
@@ -184,6 +189,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false, name = "jd_time")
+	@ExcelField(title="检定日期")
 	public Date getJdtime() {
 		return jdtime;
 	}
@@ -202,6 +208,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false, name = "yx_Time")
+	@ExcelField(title="有效日期")
 	public Date getYxTime() {
 		return yxTime;
 	}
@@ -231,11 +238,11 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false, name = "type_Id")
-	public int getTypeId() {
+	public Integer getTypeId() {
 		return typeId;
 	}
 
-	public void setTypeId(int typeId) {
+	public void setTypeId(Integer typeId) {
 		this.typeId = typeId;
 	}
 
@@ -249,11 +256,11 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false)
-	public int getUserTimes() {
+	public Integer getUserTimes() {
 		return userTimes;
 	}
 
-	public void setUserTimes(int userTimes) {
+	public void setUserTimes(Integer userTimes) {
 		this.userTimes = 0;
 	}
 
