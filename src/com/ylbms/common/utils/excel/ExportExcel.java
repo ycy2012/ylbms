@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +40,7 @@ import com.ylbms.common.utils.reflection.Reflections;
 import com.ylbms.system.utils.DictUtils;
 
 /**
- *  导出Excel文件（导出“XLSX”格式，支持大数据量导出 @see org.apache.poi.ss.SpreadsheetVersion）
+ * 导出Excel文件（导出“XLSX”格式，支持大数据量导出 @see org.apache.poi.ss.SpreadsheetVersion）
  * 
  * @author JackLiang
  * @version 1.0
@@ -466,13 +467,21 @@ public class ExportExcel {
 	 * 
 	 * @param fileName
 	 *            输出文件名
+	 * @editor JackLiang 解决乱码问题
 	 */
-	public ExportExcel write(HttpServletResponse response, String fileName)
-			throws IOException {
+	public ExportExcel write(HttpServletResponse response,
+			HttpServletRequest request, String fileName) throws IOException {
+		String agent = request.getHeader("USER-AGENT");
 		response.reset();
 		response.setContentType("application/octet-stream; charset=utf-8");
+		response.setContentLength(fileName.length());
+		if (StringUtils.isNotBlank(agent) && agent.indexOf("Mozilla") != -1) {
+			fileName=new String(fileName.getBytes("UTF-8"),"iso-8859-1");
+		} else {
+			fileName = Encodes.urlEncode(fileName);
+		}
 		response.setHeader("Content-Disposition", "attachment; filename="
-				+ Encodes.urlEncode(fileName));
+				+ fileName);
 		write(response.getOutputStream());
 		return this;
 	}
