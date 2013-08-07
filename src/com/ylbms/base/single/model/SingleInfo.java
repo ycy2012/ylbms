@@ -18,13 +18,13 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.annotations.Where;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.ylbms.base.location.model.Location;
 import com.ylbms.common.model.BaseModel;
 import com.ylbms.common.utils.excel.annotation.ExcelField;
+import com.ylbms.system.model.Dict;
 
 /**
  * 修改内容：修改主键策略
@@ -34,6 +34,7 @@ import com.ylbms.common.utils.excel.annotation.ExcelField;
  * @date 2013-6-8
  * @editor: JackLiang
  * @date 2013-06-19 15:45:20
+ * @date 2013年8月7日 15:11:37 修改添加EXCEL导入导出注解
  */
 
 @Entity
@@ -49,8 +50,8 @@ public class SingleInfo extends BaseModel {
 	private SpectypeInfo spectype;// 规格型号
 	private Location location;// 当前位置
 	private StateInfo state;// 当前状态
-	private Integer classId;// 资产种类
-	private Integer factory;// 生产厂家
+	private Dict classId;// 资产种类
+	private Dict factory;// 生产厂家
 	private String factoryCode;// 出厂编号
 	private Date jdtime;// 检测日期
 	private String scunit;// 所属单位
@@ -70,7 +71,7 @@ public class SingleInfo extends BaseModel {
 	private String gdzcCode;// 固定资产编码
 	private String txCode;// 条码号
 	private String azLocation;// 安装位置
-	private String isAnz; // 是否安装 其中1表示安装了，0表示没有安装
+	// private String isAnz; // 是否安装 其中1表示安装了，0表示没有安装
 	private Date grDate;// 购入日期
 	private String shdw;// 四位定号
 	private String other;// 其他指标
@@ -81,7 +82,6 @@ public class SingleInfo extends BaseModel {
 
 	public SingleInfo() {
 		this.status = DEL_FLAG_NORMAL;
-		this.isAnz = DEL_FLAG_NORMAL;
 		this.isCheck = CHECKED_NO;
 	}
 
@@ -93,7 +93,7 @@ public class SingleInfo extends BaseModel {
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "com.ylbms.base.single.model.SingleInfoPK")
-	@Column(nullable = false)
+	@NotNull(message = "主键信息不可以为空！")
 	public String getMid() {
 		return mid;
 	}
@@ -103,7 +103,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false)
-	@ExcelField(title = "自编码", sort = 1)
+	@ExcelField(title = "物资自编码")
 	public String getOwercode() {
 		return owercode;
 	}
@@ -113,7 +113,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false)
-	@ExcelField(title = "物资名称", sort = 2)
+	@ExcelField(title = "物资名称", sort = 1)
 	public String getWzname() {
 		return wzname;
 	}
@@ -122,12 +122,16 @@ public class SingleInfo extends BaseModel {
 		this.wzname = wzname;
 	}
 
+	/**
+	 * "规划型号信息
+	 * @return
+	 */
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
 			CascadeType.REFRESH })
 	@JoinColumn(name = "spectype", nullable = false, referencedColumnName = "speId")
 	@Fetch(FetchMode.JOIN)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	@ExcelField(title="规划型号信息",sort=3)
+	@ExcelField(title = "规划型号信息", value = "spectype.speName", sort = 2)
 	public SpectypeInfo getSpectype() {
 		return spectype;
 	}
@@ -136,12 +140,17 @@ public class SingleInfo extends BaseModel {
 		this.spectype = spectype;
 	}
 
+	/**
+	 * 当前位置 
+	 * 
+	 * @return
+	 */
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
 			CascadeType.REFRESH })
 	@JoinColumn(name = "location")
 	@Fetch(FetchMode.JOIN)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	@ExcelField(title="当前位置",align=3, sort=4)
+	@ExcelField(title = "当前位置", align = 3, sort = 3, value = "location.allName")
 	public Location getLocation() {
 		return location;
 	}
@@ -150,10 +159,15 @@ public class SingleInfo extends BaseModel {
 		this.location = location;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	/**
+	 * 状态信息映射
+	 * 
+	 * @return
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "state")
 	@NotNull(message = "状态信息不能为空")
-	@ExcelField(title="当前状态",sort=5)
+	@ExcelField(title = "当前状态", sort = 4, value = "state.stateName")
 	public StateInfo getState() {
 		return state;
 	}
@@ -162,24 +176,44 @@ public class SingleInfo extends BaseModel {
 		this.state = state;
 	}
 
-	@Column(nullable = false)
-	public Integer getClassId() {
+	/**
+	 * 资产种类映射
+	 * 
+	 * @return
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "classId", referencedColumnName = "id")
+	@Where(clause = "type='class_type'")
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@ExcelField(title = "资产种类", sort = 5,value="classId.value")
+	public Dict getClassId() {
 		return classId;
 	}
 
-	public void setClassId(Integer classId) {
+	public void setClassId(Dict classId) {
 		this.classId = classId;
 	}
 
-	public Integer getFactory() {
+	/**
+	 * 字典关系映射
+	 * 
+	 * @return
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "factory", referencedColumnName = "id")
+	@Where(clause = "type='factory_type'")
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@ExcelField(title = "生产厂家", value = "factory.value", sort = 6)
+	public Dict getFactory() {
 		return factory;
 	}
 
-	public void setFactory(Integer factory) {
+	public void setFactory(Dict factory) {
 		this.factory = factory;
 	}
 
-	@Column(nullable = false)
+	@Column
+	@ExcelField(title = "出厂编码", sort = 7)
 	public String getFactoryCode() {
 		return factoryCode;
 	}
@@ -189,7 +223,8 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false, name = "jd_time")
-	@ExcelField(title="检定日期")
+	@JSONField(format = "yyyy-mm-dd")
+	@ExcelField(title = "检定日期", type = 1, sort = 8)
 	public Date getJdtime() {
 		return jdtime;
 	}
@@ -199,6 +234,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false, name = "sc_unit")
+	@ExcelField(title = "所属单位", sort = 9, type = 2)
 	public String getScunit() {
 		return scunit;
 	}
@@ -208,7 +244,8 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false, name = "yx_Time")
-	@ExcelField(title="有效日期")
+	@JSONField(format = "yyyy-mm-dd")
+	@ExcelField(title = "有效日期", sort = 10)
 	public Date getYxTime() {
 		return yxTime;
 	}
@@ -218,6 +255,11 @@ public class SingleInfo extends BaseModel {
 		this.yxTime = yxTime;
 	}
 
+	/**
+	 * 报废日期
+	 * 
+	 * @return
+	 */
 	@Column(name = "bf_time")
 	@JSONField(format = "yyyy-mm-dd")
 	public Date getBfTime() {
@@ -229,6 +271,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false, name = "qy_Time")
+	@JSONField(format = "yyyy-mm-dd")
 	public Date getQyTime() {
 		return qyTime;
 	}
@@ -237,6 +280,11 @@ public class SingleInfo extends BaseModel {
 		this.qyTime = qyTime;
 	}
 
+	/**
+	 * 计量类别
+	 * 
+	 * @return
+	 */
 	@Column(nullable = false, name = "type_Id")
 	public Integer getTypeId() {
 		return typeId;
@@ -246,7 +294,13 @@ public class SingleInfo extends BaseModel {
 		this.typeId = typeId;
 	}
 
+	/**
+	 * 精确度
+	 * 
+	 * @return
+	 */
 	@Column(nullable = false)
+	@ExcelField(title = "精确度", type = 2, sort = 11)
 	public Float getZqd() {
 		return zqd;
 	}
@@ -256,6 +310,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	@Column(nullable = false)
+	@ExcelField(title = "使用次数", sort = 12, type = 1)
 	public Integer getUserTimes() {
 		return userTimes;
 	}
@@ -264,7 +319,14 @@ public class SingleInfo extends BaseModel {
 		this.userTimes = 0;
 	}
 
+	/**
+	 * 
+	 * 价格
+	 * 
+	 * @return
+	 */
 	@Column(nullable = false)
+	@ExcelField(title = "价格", sort = 12)
 	public Float getPrice() {
 		return price;
 	}
@@ -273,6 +335,11 @@ public class SingleInfo extends BaseModel {
 		this.price = price;
 	}
 
+	/**
+	 * 是否能源器具
+	 * 
+	 * @return
+	 */
 	public String getIsnyqj() {
 		return isnyqj;
 	}
@@ -281,6 +348,12 @@ public class SingleInfo extends BaseModel {
 		this.isnyqj = isnyqj;
 	}
 
+	/**
+	 * 测量范围MPa
+	 * 
+	 * @return
+	 */
+	@ExcelField(title = "测量范围MPa", sort = 13)
 	public String getClfw() {
 		return clfw;
 	}
@@ -305,7 +378,13 @@ public class SingleInfo extends BaseModel {
 		this.isCheck = isCheck;
 	}
 
+	/**
+	 * 出厂日期
+	 * 
+	 * @return
+	 */
 	@Column(name = "chc_Date")
+	@ExcelField(title = "出厂日期", type = 2, sort = 14)
 	public Date getChcDate() {
 		return chcDate;
 	}
@@ -314,6 +393,12 @@ public class SingleInfo extends BaseModel {
 		this.chcDate = chcDate;
 	}
 
+	/**
+	 * ABC形式
+	 * 
+	 * @return
+	 */
+	@ExcelField(title = "形式(ABC)", sort = 15)
 	public String getForm() {
 		return form;
 	}
@@ -322,7 +407,13 @@ public class SingleInfo extends BaseModel {
 		this.form = form;
 	}
 
+	/**
+	 * 固定资产编码
+	 * 
+	 * @return
+	 */
 	@Column(name = "gdzc_Code")
+	@ExcelField(title = "固定资产编码", sort = 16)
 	public String getGdzcCode() {
 		return gdzcCode;
 	}
@@ -340,7 +431,13 @@ public class SingleInfo extends BaseModel {
 		this.txCode = txCode;
 	}
 
+	/**
+	 * 安装位置
+	 * 
+	 * @return
+	 */
 	@Column(name = "az_Location")
+	@ExcelField(title = "安装位置", type = 1, sort = 17)
 	public String getAzLocation() {
 		return azLocation;
 	}
@@ -349,15 +446,21 @@ public class SingleInfo extends BaseModel {
 		this.azLocation = azLocation;
 	}
 
-	public String getIsAnz() {
-		return isAnz;
-	}
+	// public String getIsAnz() {
+	// return isAnz;
+	// }
+	//
+	// public void setIsAnz(String isAnz) {
+	// this.isAnz = isAnz;
+	// }
 
-	public void setIsAnz(String isAnz) {
-		this.isAnz = isAnz;
-	}
-
+	/**
+	 * 购入日期
+	 * 
+	 * @return
+	 */
 	@Column(name = "gr_Date")
+	@ExcelField(title = "购入日期", type = 2, sort = 18)
 	public Date getGrDate() {
 		return grDate;
 	}
@@ -366,6 +469,11 @@ public class SingleInfo extends BaseModel {
 		this.grDate = grDate;
 	}
 
+	/**
+	 * 四位定号
+	 * 
+	 * @return
+	 */
 	public String getShdw() {
 		return shdw;
 	}
@@ -374,6 +482,11 @@ public class SingleInfo extends BaseModel {
 		this.shdw = shdw;
 	}
 
+	/**
+	 * 其他
+	 * 
+	 * @return
+	 */
 	public String getOther() {
 		return other;
 	}
@@ -406,6 +519,12 @@ public class SingleInfo extends BaseModel {
 		this.status = status;
 	}
 
+	/**
+	 * 备注信息
+	 * 
+	 * @return
+	 */
+	@ExcelField(title = "备注信息", sort = 25)
 	public String getRemark() {
 		return remark;
 	}

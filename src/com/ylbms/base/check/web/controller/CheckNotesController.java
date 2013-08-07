@@ -86,6 +86,7 @@ public class CheckNotesController extends BaseController {
 				.dispose();
 	            return null;
 			} catch (Exception e) {
+				e.printStackTrace();
 				if (log.isErrorEnabled()) {
 					log.error("System error!!", e.getMessage());
 				}

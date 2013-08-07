@@ -119,13 +119,13 @@ public class SingleInfoService {
 	/**
 	 * 根据分页查询单件明细
 	 * 
-	 * @author JackLiang 2013年7月14日 10:34:46
-	 * @param page
-	 * @param filters
+	 * @param page 页面
+	 * @param single 对象
+	 * @param mids 单件信息集合 not in
 	 * @return
 	 */
 	public Page<SingleInfo> findSingleInfo(Page<SingleInfo> page,
-			SingleInfo single,String mids) {
+			SingleInfo single, String mids) {
 
 		DetachedCriteria dc = singleDao.createDetachedCriteria();
 		if (single.getLocation() != null
@@ -146,10 +146,11 @@ public class SingleInfoService {
 		}
 		/**
 		 * 重新添加的！
+		 * 
 		 * @author JackinLiang
 		 */
-		if(StringUtils.isNotBlank(mids)){
-			String[] mid=mids.split(",");
+		if (StringUtils.isNotBlank(mids)) {
+			String[] mid = mids.split(",");
 			dc.add(Restrictions.not(Restrictions.in("mid", mid)));
 		}
 
@@ -173,9 +174,9 @@ public class SingleInfoService {
 		if (StringUtils.isNotEmpty(single.getGdzcCode())) {
 			dc.add(Restrictions.like("gdzcCode", single.getGdzcCode()));
 		}
-		if (single.getFactory() > 0) {
-			dc.add(Restrictions.like("factory", single.getFactory()));
-		}
+		// if (single!=null&&single.getFactory() > 0) {
+		// dc.add(Restrictions.like("factory", single.getFactory()));
+		// }
 
 		if (!StringUtils.isNotEmpty(page.getOrderBy())) {
 			dc.addOrder(Order.asc("spectype.speId"));

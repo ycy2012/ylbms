@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/jsp/base/check/JmbLookup.jsp=UTF-8
 encoding//WebContent/WEB-INF/jsp/base/location/treeLookup.jsp=UTF-8
 encoding//WebContent/WEB-INF/jsp/inc/treetable.jsp=UTF-8
 encoding//WebContent/WEB-INF/jsp/report/singleBar.jsp=UTF-8

@@ -107,7 +107,6 @@ public class BillService {
 			SingleInfo single = singleDao.get(s.getMid());
 			single.setAzLocation(s.getAzLocation() == null ? "" : s
 					.getAzLocation());
-			single.setIsAnz("1");
 			singleDao.save(single);
 		}
 	}

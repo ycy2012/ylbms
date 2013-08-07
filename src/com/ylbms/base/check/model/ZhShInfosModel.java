@@ -32,9 +32,9 @@ public class ZhShInfosModel extends BaseModel {
 	private static final long serialVersionUID = 1L;
 
 	private SingleInfo single;
-	private SingleInfo spectype;  //不进行持久化
-	private SingleInfo clfw;      //不进行持久化
-	private SingleInfo factoryCode; //不进行持久化
+	private SingleInfo spectype; // 不进行持久化
+	private SingleInfo clfw; // 不进行持久化
+	private SingleInfo factoryCode; // 不进行持久化
 	private ZhShuMasterModel master;
 	private Date jdDate;// 检定日期
 	private Date yxDate;// 有效日期
@@ -62,6 +62,11 @@ public class ZhShInfosModel extends BaseModel {
 		this.single = single;
 	}
 
+	/**
+	 * 不进行持久化 为导出EXCEL
+	 * 
+	 * @return
+	 */
 	@Transient
 	@ExcelField(title = "规格型号", value = "single.spectype", sort = 1)
 	public SingleInfo getSpectype() {
@@ -71,7 +76,11 @@ public class ZhShInfosModel extends BaseModel {
 	public void setSpectype(SingleInfo spectype) {
 		this.spectype = spectype;
 	}
-
+	/**
+	 * 不进行持久化 为导出EXCEL
+	 * 
+	 * @return
+	 */
 	@Transient
 	@ExcelField(title = "测量范围", value = "single.clfw", sort = 2)
 	public SingleInfo getClfw() {
@@ -81,7 +90,11 @@ public class ZhShInfosModel extends BaseModel {
 	public void setClfw(SingleInfo clfw) {
 		this.clfw = clfw;
 	}
-
+	/**
+	 * 不进行持久化 为导出EXCEL
+	 * 
+	 * @return
+	 */
 	@Transient
 	@ExcelField(title = "出厂编码", value = "single.factoryCode", sort = 3)
 	public SingleInfo getFactoryCode() {

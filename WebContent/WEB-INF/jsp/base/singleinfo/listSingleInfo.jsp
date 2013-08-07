@@ -47,13 +47,15 @@
 		<ul class="toolBar">
 			<li><a class="add" href="${ctx}/single/addUi" target="navTab"
 				mask="true" title="添加单件信息"><span>添加</span></a></li>
+				<li class="line">line</li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"
-				postType="string" href="${ctx}/single/delByIds/{sid_single}"
+				postType="string" href="${ctx}/single/delByIds"
 				class="delete"><span>批量删除</span></a></li>
-			<li><a class="edit" href="${ctx}/single/edit/{sid_single}"
-				target="dialog" mask="true" title="修改单件信息"><span>修改</span></a></li>
+				<li class="line">line</li>
+			<li><a class="edit" href="${ctx}/single/importUi"
+				target="dialog" mask="true" title="导入单件信息"><span>EXCEL导入</span></a></li>
 			<li class="line">line</li>
-			<li><a class="icon" href="#" target="dwzExport"
+			<li><a class="icon" href="${ctx}/single/export" target="dwzExport"
 				targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 		</ul>
 	</div>

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Lists;
 import com.ylbms.base.location.model.Location;
 import com.ylbms.base.location.service.LocationService;
 import com.ylbms.base.single.model.SingleInfo;
@@ -24,7 +26,10 @@ import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.base.single.service.SingleInfoService;
 import com.ylbms.base.single.service.SpectypeService;
 import com.ylbms.common.orm.Page;
+import com.ylbms.common.orm.PropertyFilter;
+import com.ylbms.common.utils.DateUtils;
 import com.ylbms.common.utils.DwzUtil;
+import com.ylbms.common.utils.excel.ExportExcel;
 import com.ylbms.common.web.BaseController;
 
 /**
@@ -37,8 +42,10 @@ import com.ylbms.common.web.BaseController;
 @Controller
 @RequestMapping("/single")
 public class SingleInfoController extends BaseController {
+
 	private static final Logger log = LoggerFactory
 			.getLogger(SingleInfoController.class);
+	private static final String NAV_TAB_ID = "singleInfo";
 
 	@Autowired
 	SingleInfoService singleInfoService;
@@ -48,6 +55,76 @@ public class SingleInfoController extends BaseController {
 
 	@Autowired
 	LocationService locationservice;
+
+	/**
+	 * to import page
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "importUi")
+	public String importUi() {
+		return "base/singleinfo/import";
+	}
+
+	/**
+	 * download excel template
+	 * 
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "import/template")
+	@ResponseBody
+	public Map<String, Object> template(HttpServletResponse response,
+			HttpServletRequest request) {
+		try {
+			String fileName = "单件信息导入模版.xls";
+			List<SingleInfo> list = Lists.newArrayList();
+			new ExportExcel("单件信息", SingleInfo.class, 2).setDataList(list)
+					.write(response, request, fileName).dispose();
+			return null;
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error("system error!!", e.getMessage());
+			}
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
+					e.getMessage());
+		}
+	}
+
+	/**
+	 * 根据当前分页导出单件信息内容
+	 * 
+	 * @author JackLiang
+	 * @date 2013年8月7日 16:07:57
+	 * @param page
+	 * @param single
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="export")
+	@ResponseBody
+	public Map<String, Object> export(Page<SingleInfo> page, SingleInfo single,
+			HttpServletRequest request, HttpServletResponse response) {
+		try {
+			//文件名
+			String fileName = "压力表单件信息" + DateUtils.getDate("yyyyMMddHHmmss")
+					+ ".xlsx";
+			Page<SingleInfo> list = singleInfoService.findSingleInfo(page,
+					single, "");
+
+			new ExportExcel("压力表单件信息", SingleInfo.class)
+					.setDataList(list.getResult())
+					.write(response, request, fileName).dispose();
+			return null;
+		} catch (Exception e) {
+			log.error("System error!", e.getMessage());
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
+					e.getMessage());
+		}
+
+	}
 
 	/**
 	 * 跳转到添加页面
@@ -211,7 +288,7 @@ public class SingleInfoController extends BaseController {
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value = "/delByIds/{ids}")
+	@RequestMapping(value = "/delByIds")
 	@ResponseBody
 	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {
 		try {

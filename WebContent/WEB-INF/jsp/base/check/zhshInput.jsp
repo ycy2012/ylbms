@@ -99,10 +99,12 @@
 					<td><input type="text" name="veriRen" class="required"></td>
 				</tr>
 				<tr>
-					<td>精密表信息</td>
-					<td><select name="jmbInfo.jmbID" class="required">
-							<option value="100">选择精密表信息</option>
-					</select></td>
+					<td>精密表编码</td>
+					<td>
+					<input name="jmbInfo.jmbID" value="" type="hidden">
+				    <input name="jmbInfo.jmbCode" type="text"/>
+				    <a class="btnLook" href="${ctx}/jmbinfo/lookUp" lookupGroup="jmbInfo" width="850">查找带回</a>
+				    </td>
 					<td>备注信息</td>
 					<td colspan="3"><input type="text" name="remark"></td>
 				</tr>

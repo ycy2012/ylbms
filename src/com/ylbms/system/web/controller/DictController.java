@@ -75,7 +75,7 @@ public class DictController {
 	public Map<String, Object> add(Dict dict, Model model) {
 		try {
 			dictService.saveDict(dict);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK,"dict");
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error("system error!!" + e.getMessage());

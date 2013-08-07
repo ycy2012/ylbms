@@ -41,7 +41,6 @@ public class Dict extends BaseModel {
 	}
 
 	public Dict(Long id) {
-		this();
 		this.id = id;
 	}
 
@@ -92,7 +91,7 @@ public class Dict extends BaseModel {
 		this.desciption = desciption;
 	}
 
-	@NotNull
+	@NotNull(message = "序号不能为空")
 	public Integer getSort() {
 		return sort;
 	}

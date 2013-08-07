@@ -49,7 +49,7 @@
 				mask="true" title="添加规格型号信息"><span>添加</span></a></li>
 				<li class="line">line</li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"
-				postType="string" href="${ctx}/spec/deletes/{sid_spectype}"
+				postType="string" href="${ctx}/spec/deletes"
 				class="delete"><span>批量删除</span></a></li>
 				<li class="line">line</li>
 			<li><a class="edit" href="${ctx}/spec/importUi"

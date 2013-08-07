@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,18 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ylbms.base.check.dao.ZhShInfosDao;
 import com.ylbms.base.check.model.CheckNotesInfo;
-import com.ylbms.base.check.model.ZhShInfosModel;
 import com.ylbms.base.check.model.ZhShuMasterModel;
 import com.ylbms.base.check.service.CheckNotesService;
 import com.ylbms.base.check.service.ZhShModelService;
-import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
-import com.ylbms.common.utils.DateUtils;
 import com.ylbms.common.utils.DwzUtil;
-import com.ylbms.common.utils.excel.ExportExcel;
 import com.ylbms.common.web.BaseController;
 
 /**
@@ -50,14 +44,14 @@ public class ZhShuController extends BaseController {
 
 	@Autowired
 	private CheckNotesService checkService;
-
+	
 	/**
 	 * to add page
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "addUi")
-	public String addUi() {
+	public String addUi(Model model) {
 		return "base/check/zhshInput";
 	}
 
