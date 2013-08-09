@@ -27,8 +27,12 @@
 				</select>
 			</p>
 			<p>
-				<label>当前位置：</label><input name="loction.id" class="required"
-					type="text" size="30" value="${ml.locationName}" />
+				<label>当前位置：</label> <select name="id" class="required">
+					<option value="">请选择当前位置</option>
+					<c:forEach items="${mapLocation}" var="ml">
+						<option value="${ml.id}">${ml.locationName}</option>
+					</c:forEach>
+				</select>
 			</p>
 			<p>
 				<label>当前状态：</label> <select name="id" class="required combox"
@@ -159,7 +163,16 @@
 					value="${obg.other}" />
 			</p>
 			<p>
-				<label>状态：</label> <select name="status" class="required combox">
+				<label>录入人员：</label> <input type="text" size="30" name="creater"
+					value="${obg.creater}" />
+			</p>
+			<p>
+				<label>录入时间：</label> <input type="text" name="createDate"
+					class="date" size="30" value="${obg.createDate}" /><a
+					class="inputDateButton" href="javascript:;">选择</a>
+			</p>
+			<p>
+				<label>状态信息：</label> <select name="status" class="required combox">
 					<option value="" selected>请选择</option>
 					<option value="1">无效</option>
 					<option value="0">有效</option>
