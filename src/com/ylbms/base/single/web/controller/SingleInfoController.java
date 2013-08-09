@@ -112,7 +112,7 @@ public class SingleInfoController extends BaseController {
 			String fileName = "压力表单件信息" + DateUtils.getDate("yyyyMMddHHmmss")
 					+ ".xlsx";
 			Page<SingleInfo> list = singleInfoService.findSingleInfo(page,
-					single, "");
+					single, "","");
 
 			new ExportExcel("压力表单件信息", SingleInfo.class)
 					.setDataList(list.getResult())
@@ -258,7 +258,7 @@ public class SingleInfoController extends BaseController {
 	public String list(HttpServletRequest request, Page<SingleInfo> page,
 			SingleInfo single, Model model) {
 		Page<SingleInfo> list = singleInfoService.findSingleInfo(page, single,
-				"");
+				"","");
 		model.addAttribute("page", list);
 		return "base/singleinfo/listSingleInfo";
 	}

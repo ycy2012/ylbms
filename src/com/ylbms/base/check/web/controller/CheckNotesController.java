@@ -108,7 +108,7 @@ public class CheckNotesController extends BaseController {
 			Page<SingleInfo> page, SingleInfo single, Model model) {
 		single.setState(new StateInfo("040")); // 设置要查询的单件信息的状态
 		Page<SingleInfo> list = singleService
-				.findSingleInfo(page, single, mids);
+				.findSingleInfo(page, single, mids,"");
 		model.addAttribute("page", list);
 		return "base/check/addMx";
 	}
