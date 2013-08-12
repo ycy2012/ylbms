@@ -19,14 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
-import com.ylbms.base.location.model.Location;
-import com.ylbms.base.location.service.LocationService;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.base.single.service.SingleInfoService;
 import com.ylbms.base.single.service.SpectypeService;
+import com.ylbms.base.single.service.StateService;
 import com.ylbms.common.orm.Page;
-import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.utils.DateUtils;
 import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.utils.excel.ExportExcel;
@@ -37,24 +35,24 @@ import com.ylbms.common.web.BaseController;
  * @author zhangjl
  * @version 1.0
  * @date 2013-6-8
+ * @editor JackLiang 2013年8月12日 11:22:17
  */
 
 @Controller
 @RequestMapping("/single")
 public class SingleInfoController extends BaseController {
 
-	private static final Logger log = LoggerFactory
-			.getLogger(SingleInfoController.class);
+	private static final Logger log = LoggerFactory .getLogger(SingleInfoController.class);
 	private static final String NAV_TAB_ID = "singleInfo";
 
 	@Autowired
-	SingleInfoService singleInfoService;
+	private SingleInfoService singleInfoService;
 
 	@Autowired
-	SpectypeService spectypeService;
+	private SpectypeService spectypeService;
 
 	@Autowired
-	LocationService locationservice;
+	private StateService stateService;
 
 	/**
 	 * to import page
@@ -103,16 +101,16 @@ public class SingleInfoController extends BaseController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value="export")
+	@RequestMapping(value = "export")
 	@ResponseBody
 	public Map<String, Object> export(Page<SingleInfo> page, SingleInfo single,
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
-			//文件名
+			// 文件名
 			String fileName = "压力表单件信息" + DateUtils.getDate("yyyyMMddHHmmss")
 					+ ".xlsx";
 			Page<SingleInfo> list = singleInfoService.findSingleInfo(page,
-					single, "","");
+					single, "", "");
 
 			new ExportExcel("压力表单件信息", SingleInfo.class)
 					.setDataList(list.getResult())
@@ -134,28 +132,7 @@ public class SingleInfoController extends BaseController {
 	 */
 	@RequestMapping(value = "/addUi")
 	public String addUi(Model model) {
-		List<Location> listLocation = locationservice.getAllLocation();
-
-		List<Map<String, Object>> mapLocation = new ArrayList<Map<String, Object>>();
-		for (Location list : listLocation) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("id", list.getId());
-			map.put("locationName", list.getLocationName());
-			mapLocation.add(map);
-		}
-		model.addAttribute("mapLocation", mapLocation);
-
-		List<SpectypeInfo> list = spectypeService.getAllSpectype();
-		List<Map<String, Object>> spectypes = new ArrayList<Map<String, Object>>();
-		for (SpectypeInfo s : list) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("text", s.getSpeName());
-			map.put("value", s.getSpeId());
-			spectypes.add(map);
-		}
-		// 将值放入model
-		model.addAttribute("spectypes", spectypes);
-
+		saveInfoToehcacher(model);
 		return "base/singleinfo/addSingleInfo";
 	}
 
@@ -171,27 +148,11 @@ public class SingleInfoController extends BaseController {
 	@RequestMapping(value = "/edit/{id}")
 	public String editUi(HttpServletRequest request,
 			@PathVariable("id") String mid, Model model) {
-		List<Location> listLocation = locationservice.getAllLocation();
-		List<Map<String, Object>> mapLocation = new ArrayList<Map<String, Object>>();
-		for (Location list : listLocation) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("id", list.getId());
-			map.put("locationName", list.getLocationName());
-			mapLocation.add(map);
-		}
-		model.addAttribute("mapLocation", mapLocation);
-		List<SpectypeInfo> list = spectypeService.getAllSpectype();
-		List<Map<String, Object>> spectypes = new ArrayList<Map<String, Object>>();
-		for (SpectypeInfo s : list) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("text", s.getSpeName());
-			map.put("value", s.getSpeId());
-			spectypes.add(map);
-		}
-		model.addAttribute("spectypes", spectypes);
+		saveInfoToehcacher(model);
+		//
 		SingleInfo singleinfo = singleInfoService.getSingleById(mid);
 		model.addAttribute("obj", singleinfo);
-		return "base/singleinfo/addSingleInfo";
+		return "base/singleinfo/edit";
 	}
 
 	/**
@@ -258,7 +219,7 @@ public class SingleInfoController extends BaseController {
 	public String list(HttpServletRequest request, Page<SingleInfo> page,
 			SingleInfo single, Model model) {
 		Page<SingleInfo> list = singleInfoService.findSingleInfo(page, single,
-				"","");
+				"", "");
 		model.addAttribute("page", list);
 		return "base/singleinfo/listSingleInfo";
 	}
@@ -301,4 +262,23 @@ public class SingleInfoController extends BaseController {
 		}
 	}
 
+	/**
+	 * 将规格信息和状态信息放到model中
+	 * @author JackLiang 2013年8月12日 11:22:48
+	 * @param model
+	 */
+	public void saveInfoToehcacher(Model model) {
+		List<Map<String, Object>> state = stateService.getStateMapBystatus();
+		model.addAttribute("state", state);
+
+		List<SpectypeInfo> list = spectypeService.getAllSpectype();
+		List<Map<String, Object>> spectypes = new ArrayList<Map<String, Object>>();
+		for (SpectypeInfo s : list) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("text", s.getSpeName());
+			map.put("value", s.getSpeId());
+			spectypes.add(map);
+		}
+		model.addAttribute("spectypes", spectypes);
+	}
 }

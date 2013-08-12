@@ -71,9 +71,6 @@
 -->
 <script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
 <script src="${ctx}/oper/js/operamasks-ui.js" type="text/javascript"></script>
-<link href="${ctx}/styles/ztree/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css"/>
-<script src="${ctx}/styles/ztree/js/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
-<script src="${ctx}/styles/ztree/js/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
 <script  type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${ctx}/styles/highcharts/js/highcharts.js"></script>
 <script type="text/javascript" src="${ctx}/styles/js/indexSingleBar.js"></script>

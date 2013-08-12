@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>入库管理</title>
+<link href="${ctx}/styles/css/bill_title.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 <!--
 	function addTr(value) {
@@ -54,30 +55,31 @@
 	<form action="${ctx}/ckgl/addBill" method="post"
 		class="pageForm required-validate"
 		onsubmit="return validateCallback(this, navTabAjaxDone);">
-		<div class="pageFormContent" layoutH="600">
+		<div class="pageFormContent" >
 			<div
 				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">领料凭证</div>
 			<input type="hidden" name="djTitle" value="领料凭证">
 			<div class="divider"></div>
-			<table>
+			<table id="b_title" width="100%">
 				<tr>
 					<td>发料单位：</td>
-					<td><input name="sendLocation.id" type="hidden" value="2051" />
-						<input type="text" value="基地" class="required" readonly="readonly" />
+					<td><input name="sendLocation.id" type="hidden" value="2051"  />
+						<input type="text" value="基地" class="required" readonly="readonly" size="30" />
 					</td>
 					<td>领料单位：</td>
 					<td><input name="acceptLocation.id" type="hidden" id="wzInfo" />
-						<input type="text" readonly="readonly" id="wzName"
+						<input type="text" readonly="readonly" id="wzName" size="30" 
 						class="required"> <a class="btnLook"
 						href="${ctx}/location/commUi" width="300" height="400" mask="true"
 						target="dialog">选择位置信息</a></td>
 				</tr>
 				<tr>
 					<td>领料人：</td>
-					<td><input name="llren" type="text" alt="领料人信息"
+					<td><input name="llren" type="text" alt="领料人信息" size="30" 
 						class="required" /></td>
 					<td>领料部门：</td>
 					<td><select name="lluint" class="combox" class="required">
+					         <option value="">请选择领料部门</option>
 							<option value="轮南项目部">轮南项目部</option>
 							<option value="库车项目部">库车项目部</option>
 							<option value="塔中项目部">塔中项目部</option>
@@ -89,7 +91,7 @@
 				</tr>
 			</table>
 		</div>
-		<div class="pageContent" layoutH="200">
+		<div class="pageContent" layoutH="165">
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>

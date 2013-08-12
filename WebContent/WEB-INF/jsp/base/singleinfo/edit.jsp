@@ -27,38 +27,34 @@
 				</select>
 			</p>
 			<p>
-				<label>当前位置：</label> <select name="id" class="required">
-					<option value="">请选择当前位置</option>
-					<c:forEach items="${mapLocation}" var="ml">
-						<option value="${ml.id}">${ml.locationName}</option>
+				<label>当前位置：</label> 
+				<input name="location.id" class="required" type="hidden" size="30" id="locationId" value="${obj.location.id}" /> 
+				<input type="text" readonly="readonly" id="locationName" size="30" class="required" value="${obj.location.allName}">
+			    <a class="btnLook" href="${ctx}/location/commUi" width="300" height="400" mask="true" target="dialog">选择位置信息</a>
+			</p>
+			<p>
+				<label>当前状态：</label> <select name="state.id" class="required combox">
+					<c:forEach items="${state}" var="s" >
+						<option value="${s.value }">${s.text}</option>
 					</c:forEach>
 				</select>
 			</p>
 			<p>
-				<label>当前状态：</label> <select name="id" class="required combox"
-					value="${obj.state}">
-					<option value="" selected>请选择</option>
-					<option value="1">已租</option>
-					<option value="0">待租</option>
-				</select>
-			</p>
-			<p>
-				<label>资产种类：</label> <select name="classId" class="required combox"
-					value="obj.classId">
+				<label>资产种类：</label> <select name="classId.id" class="required combox">
 					<option value="" selected>请选择</option>
 					<option value="0">个人</option>
 					<option value="1">公司</option>
 				</select>
 			</p>
 			<p>
-				<label>生产厂家：</label> <input type="text" size="30" name="factory" />
+				<label>生产厂家：</label> <input type="text" size="30" name="factory.id" value="${obj.factory.value}" />
 			</p>
 			<p>
 				<label>出厂编号：</label> <input type="text" name="factoryCode"
-					class="textInput" size="30" />
+					class="required" size="30" />
 			</p>
 			<p>
-				<label>检测日期：</label> <input type="text" name="jd_time" class="date"
+				<label>检测日期：</label> <input type="text" name="jd_time" class="date" readonly="readonly"
 					size="30" /><a class="inputDateButton" href="javascript:;">选择</a>
 			</p>
 			<p>
@@ -66,28 +62,18 @@
 				<label>所属单位：</label> <input type="text" name="sc_unit"
 					class="textInput" size="30" value="${obg.sc_unit}" />
 			</p>
-			<%-- <label>所属单位：</label>
-				<select name="sc_unit" class="required combox">
-					<option value="">请选择</option>
-					<option value="10">10</option>
-					<option value="50" selected>50</option>
-					<option value="100">100</option>
-				</select>
-				<span class="unit">万元</span>
-				 
-			</p>--%>
 			<p>
-				<label>有效日期：</label> <input type="text" name="yx_Time" class="date"
+				<label>有效日期：</label> <input type="text" name="yx_Time" class="date" readonly="readonly"
 					size="30" value="${obg.yx_Time}" /><a class="inputDateButton"
 					href="javascript:;">选择</a>
 			</p>
 			<p>
-				<label>报废日期：</label> <input type="text" name="bf_Time" class="date"
+				<label>报废日期：</label> <input type="text" name="bf_Time" class="date" 
 					readonly="readonly" size="30" value="${obg.bf_Time}" /><a
 					class="inputDateButton" href="javascript:;">选择</a>
 			</p>
 			<p>
-				<label>启用日期：</label> <input type="text" name="qy_Time" class="date"
+				<label>启用日期：</label> <input type="text" name="qy_Time" class="date" readonly="readonly"
 					size="30" value="${obg.qy_Time}" /><a class="inputDateButton"
 					href="javascript:;">选择</a>
 			</p>
@@ -100,7 +86,7 @@
 					value="${obg.zqd}" />
 			</p>
 			<p>
-				<label>使用次数：</label> <input type="text" size="30" name="userTimes"
+				<label>使用次数：</label> <input type="text" size="30" name="userTimes" readonly="readonly"
 					value="${obg.userTimes}" />
 			</p>
 			<p>
@@ -109,48 +95,50 @@
 			</p>
 			<p>
 				<label>是否能源器具：</label>
-				<!-- <input type="text" size="30" name="isnyqj"  value="${obg.isnyqj}"/> -->
-				<select name="isnyqj" class="required combox" value="obj.isnyqj">
+				<select name="isnyqj" class="combox" >
 					<option value="" selected>请选择</option>
 					<option value="是">是</option>
 					<option value="否">否</option>
 				</select>
 			</p>
 			<p>
-				<label>测量范围：</label> <input type="text" size="30" name="clfw"
+				<label>测量范围：</label> <input type="text" size="30" name="clfw" class="required"
 					value="${obg.clfw}" />
 			</p>
 			<p>
-				<label>是否强检：</label> <input type="text" size="30" name="isqj"
-					value="${obg.isqj}" />
+				<label>是否强检：</label>
+				<select name="isqj" class="combox" >
+					<option value="" selected>请选择</option>
+					<option value="是">是</option>
+					<option value="否">否</option>
+				</select>
 			</p>
 			<p>
-				<label>出厂日期：</label> <input type="text" name="chc_Date" class="date"
+				<label>出厂日期：</label> <input type="text" name="chc_Date" class="date" readonly="readonly"
 					size="30" value="${obg.chc_Date}" /><a class="inputDateButton"
 					href="javascript:;">选择</a>
 			</p>
 			<p>
 				<label>ABC形式：</label> <select name="form" class="combox">
-					<option value="A">A</option>
-					<option value="B">B</option>
-					<option value="C">C</option>
+				      <option value="A">A</option>
+				      <option value="B">B</option>
+				      <option value="C">C</option>
 				</select>
 			</p>
 			<p>
 				<label>固定资产编码：</label> <input type="text" size="30" name="gdzc_Code"
 					value="${obg.gdzc_Code}" />
 			</p>
-			<!-- <div class="divider"></div> -->
 			<p>
 				<label>条码号：</label> <input type="text" size="30" name="tx_Code"
 					value="${obg.tx_Code}" />
 			</p>
 			<p>
-				<label>安装位置：</label> <input type="text" size="30" name="az_Location"
+				<label>安装位置：</label> <input type="text" size="30" name="az_Location" readonly="readonly"
 					value="${obg.az_Location}" />
 			</p>
 			<p>
-				<label>购入日期：</label> <input type="text" name="gr_Date" class="date"
+				<label>购入日期：</label> <input type="text" name="gr_Date" class="date" readonly="readonly"
 					size="30" value="${obg.gr_Date}" /><a class="inputDateButton"
 					href="javascript:;">选择</a>
 			</p>
@@ -163,19 +151,15 @@
 					value="${obg.other}" />
 			</p>
 			<p>
-				<label>录入人员：</label> <input type="text" size="30" name="creater"
-					value="${obg.creater}" />
+				<label>录入人员：</label> <input type="text" size="30" name="creater" readonly="readonly"
+					value="${obg.creater.fullname}" />
 			</p>
 			<p>
-				<label>录入时间：</label> <input type="text" name="createDate"
-					class="date" size="30" value="${obg.createDate}" /><a
-					class="inputDateButton" href="javascript:;">选择</a>
-			</p>
-			<p>
-				<label>状态信息：</label> <select name="status" class="required combox">
-					<option value="" selected>请选择</option>
-					<option value="1">无效</option>
-					<option value="0">有效</option>
+				<label>状态信息：</label> <select name="status" class="combox">
+				   <c:if test="${obj.status eq '0'}">
+				   <option value="0">有效</option>
+				   </c:if >
+				  <option value="1">无效</option>
 				</select>
 			</p>
 			<p>

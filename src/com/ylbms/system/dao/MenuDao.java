@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Query;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.ylbms.common.orm.hibernate.HibernateDao;
@@ -45,7 +44,7 @@ public class MenuDao extends HibernateDao<Menu, Long> {
 				+ Menu.DEL_FLAG_NORMAL
 				+ "' and r.delFlag='"
 				+ Role.DEL_FLAG_NORMAL
-				+ "' and u.delFlag='"
+				+ "' and u.enabled='"
 				+ User.DEL_FLAG_NORMAL
 				+ "' and u.id="+id+" or (m.user.id="+id+"  and m.delFlag='"
 				+ Menu.DEL_FLAG_NORMAL + "') order by m.sort";

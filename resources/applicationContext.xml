@@ -14,7 +14,9 @@
 	<!-- 加载配置属性文件 -->
 	<context:property-placeholder
 		ignore-unresolvable="true" location="classpath:resources.properties" />
-
+	<!-- 获取bean工具注入 -->
+	<bean id="springContextHolder" class="com.ylbms.common.utils.spring.SpringContextHolder"
+		lazy-init="false" />
 	<!-- 使用Annotation自动注册Bean，解决事物失效问题：在主容器中不扫描@Controller注解，在SpringMvc中只扫描@Controller注解。 -->
 	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
 	<context:component-scan base-package="com.ylbms">
@@ -121,6 +123,7 @@
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+
 	<!-- <tx:advice id="txAdvice" transaction-manager="txManager"> <tx:attributes> 
 		<tx:method name="save*" propagation="REQUIRED" /> <tx:method name="add*" 
 		propagation="REQUIRED" /> <tx:method name="create*" propagation="REQUIRED" 
