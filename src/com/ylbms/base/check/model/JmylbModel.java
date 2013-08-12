@@ -34,6 +34,7 @@ import com.ylbms.system.model.User;
 @Entity
 @Table(name = "ylbms_base_jmbInfo")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
 public class JmylbModel extends BaseModel {
 
 	private static final long serialVersionUID = 1L;

@@ -73,10 +73,10 @@
 					<td><fmt:formatDate value="${acc.createDate}" pattern="yyyy-MM-dd"/> </td>
 					<td>${acc.createUser.fullname}</td>
 					<td>${acc.remark}</td>
-					<td>${acc.status==0?'有效':'无效'}</td>
+					<td>${acc.status=='0'?'有效':'无效'}</td>
 				<td>
 				<a title="删除检定记录信息" target="ajaxTodo" href="${ctx}/jdzhs/delete/${acc.zId}" class="btnDel">删除检定记录信息</a>
-				<a title="查看检定记录信息" target="navTab" href="${ctx}/jdzhs/viewUi/${acc.zId}" class="btnView">查看检定记录信息</a>
+				<a title="查看检定记录信息"  onClick="window.open('${ctx}/jdzhs/viewUi/${acc.zId}','','height=500,width=768,scrollbars=yes,status=yes,toolbar=yes,location=yes') " class="btnView">查看检定记录信息</a>
 				<%--
 				<a title="编辑检定记录信息" target="navTab" href="${ctx}/jdzhs/editUi/${acc.jdID}" class="btnEdit">编辑检定记录信息</a>
 				 --%>

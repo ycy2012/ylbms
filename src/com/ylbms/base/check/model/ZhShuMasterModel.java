@@ -170,6 +170,7 @@ public class ZhShuMasterModel extends BaseModel {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
 			CascadeType.REFRESH })
 	@JoinColumn(name = "jmb_code", nullable = false)
+	@NotFound(action=NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public JmylbModel getJmbInfo() {
 		return jmbInfo;
