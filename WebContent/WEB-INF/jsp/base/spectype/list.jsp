@@ -45,15 +45,20 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="${ctx}/spec/addUi" target="dialog"
-				mask="true" title="添加规格型号信息"><span>添加</span></a></li>
-				<li class="line">line</li>
-			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"
-				postType="string" href="${ctx}/spec/deletes"
-				class="delete"><span>批量删除</span></a></li>
-				<li class="line">line</li>
-			<li><a class="edit" href="${ctx}/spec/importUi"
-				target="dialog" mask="true" title="导入规格型号信息？"><span>EXCEL导入</span></a></li>
+			<shiro:hasPermission name="sys:user:add">
+				<li><a class="add" href="${ctx}/spec/addUi" target="dialog"
+					mask="true" title="添加规格型号信息"><span>添加</span></a></li>
+			</shiro:hasPermission>
+			<li class="line">line</li>
+			<shiro:hasPermission name="sys:user:delete">
+				<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"
+					postType="string" href="${ctx}/spec/deletes" class="delete"><span>批量删除</span></a></li>
+			</shiro:hasPermission>
+			<li class="line">line</li>
+			<shiro:hasPermission name="sys:user:add">
+				<li><a class="edit" href="${ctx}/spec/importUi" target="dialog"
+					mask="true" title="导入规格型号信息？"><span>EXCEL导入</span></a></li>
+			</shiro:hasPermission>
 			<li class="line">line</li>
 			<li><a class="icon" href="${ctx}/spec/export" target="dwzExport"
 				targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
@@ -79,11 +84,13 @@
 					<td>${acc.sort}</td>
 					<td>${acc.status==0?'有效':'无效'}</td>
 					<td>${acc.remark}</td>
-					<td><a title="删除规格型号信息" target="ajaxTodo"
-						href="${ctx}/spec/delete/${acc.speId}" class="btnDel">删除规格型号信息</a>
-						<a title="编辑规格型号信息" target="dialog"
-						href="${ctx}/spec/edit/${acc.speId}" class="btnEdit">编辑规格型号信息</a>
-					</td>
+					<td><shiro:hasPermission name="sys:user:delete">
+							<a title="删除规格型号信息" target="ajaxTodo"
+								href="${ctx}/spec/delete/${acc.speId}" class="btnDel">删除规格型号信息</a>
+						</shiro:hasPermission> <shiro:hasPermission name="sys:user:edit">
+							<a title="编辑规格型号信息" target="dialog"
+								href="${ctx}/spec/edit/${acc.speId}" class="btnEdit">编辑规格型号信息</a>
+						</shiro:hasPermission></td>
 				</tr>
 			</c:forEach>
 		</tbody>
