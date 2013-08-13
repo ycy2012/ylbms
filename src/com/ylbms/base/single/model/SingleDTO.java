@@ -1,6 +1,6 @@
 package com.ylbms.base.single.model;
 
-public class SingleModel extends SingleInfo {
+public class SingleDTO extends SingleInfo {
 
 	private static final long serialVersionUID = 1L;
 	

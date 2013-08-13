@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ylbms.common.orm.Page;
@@ -109,12 +110,12 @@ public class DictController {
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value = "/delByIds/{ids}")
+	@RequestMapping(value = "/delByIds")
 	@ResponseBody
-	public Map<String, Object> delByIds(@PathVariable("ids") String ids) {
+	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {
 		try {
 			dictService.delByIds(ids);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, "dict");
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
 			if (log.isErrorEnabled())
 				log.error("system error!!", e.getCause());

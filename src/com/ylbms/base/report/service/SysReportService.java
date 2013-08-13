@@ -41,4 +41,17 @@ public class SysReportService {
 		}
 		return values;
 	}
+
+	/**
+	 * 获得即将到期的单件信息 目前的阀值是2
+	 * 
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Long getCheckCount() {
+		String querySQL = "select count(1) from ylbms_bas_single_info t  where (t.yx_time-t.jd_time) < 2";
+		Object obj=singleDao.getSession().createSQLQuery(querySQL)
+				.uniqueResult();
+		return Long.parseLong(obj.toString());
+	}
 }

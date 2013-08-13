@@ -25,6 +25,13 @@ public class DictUtils {
 
 	public static final String CACHE_DICT_MAP = "dictMap";
 
+	/**
+	 * 
+	 * @param value
+	 * @param type
+	 * @param defaultValue
+	 * @return
+	 */
 	public static String getDictLabel(String value, String type,
 			String defaultValue) {
 		if (StringUtils.isNotBlank(type) && StringUtils.isNotBlank(value)) {
@@ -38,6 +45,13 @@ public class DictUtils {
 		return defaultValue;
 	}
 
+	/**
+	 * 
+	 * @param label
+	 * @param type
+	 * @param defaultLabel
+	 * @return
+	 */
 	public static String getDictValue(String label, String type,
 			String defaultLabel) {
 		if (StringUtils.isNotBlank(type) && StringUtils.isNotBlank(label)) {

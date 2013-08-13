@@ -74,7 +74,7 @@
 					<td>${de.single.factoryCode}</td>
 					<td><fmt:formatDate value="${de.jdDate}" pattern="yyyy-MM-dd" /></td>
 					<td><fmt:formatDate value="${de.yxDate}" pattern="yyyy-MM-dd" /></td>
-					<td>${de.single.factory}</td>
+					<td>${de.single.factory.value}</td>
 					<td>${de.azLocation }</td>
 					<td>${de.jmbCode }</td>
 					<td>${de.zShuCode}</td>

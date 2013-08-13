@@ -46,7 +46,7 @@ public class Dict extends BaseModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_dict")
-	@SequenceGenerator(name = "seq_sys_dict", sequenceName = "seq_sys_dict")
+	@SequenceGenerator(name = "seq_sys_dict", sequenceName = "seq_sys_dict", allocationSize = 1)
 	public Long getId() {
 		return id;
 	}

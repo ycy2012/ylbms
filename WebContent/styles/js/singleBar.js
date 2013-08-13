@@ -1,4 +1,5 @@
 $(function() {
+	//
 	 Highcharts.setOptions({
 		 global: {
 		 useUTC: false
@@ -63,4 +64,5 @@ $(function() {
 			} ]
 		});
 	}, "json");
+	//
 });

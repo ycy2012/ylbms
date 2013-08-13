@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../../inc/taglib.jsp"%>
+<link href="${ctx}/styles/css/bill_title.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 <!--
 	function addTr(value) {
@@ -65,7 +66,7 @@
 			<input type="hidden" name="zTitle" id="title">
 		</div>
 		<div class="divider"></div>
-		<table border="1" width="100%" cellpadding="2">
+		<table id="b_title"  width="100%">
 			<thead>
 				<tr>
 					<td>证书编号</td>

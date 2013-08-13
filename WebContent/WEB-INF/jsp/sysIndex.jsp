@@ -71,9 +71,6 @@
 -->
 <script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
 <script src="${ctx}/oper/js/operamasks-ui.js" type="text/javascript"></script>
-<link href="${ctx}/styles/ztree/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css"/>
-<script src="${ctx}/styles/ztree/js/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
-<script src="${ctx}/styles/ztree/js/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
 <script  type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${ctx}/styles/highcharts/js/highcharts.js"></script>
 <script type="text/javascript" src="${ctx}/styles/js/indexSingleBar.js"></script>
@@ -100,6 +97,9 @@
 					themeBase : "${ctx}/dwz/themes"
 				}); // themeBase 相对于index页面的主题base路径
 			}
+		});
+		$.post("report/singleCheck",function(data){
+			$("#counts").text(data);
 		});
 	});
 </script>
@@ -219,8 +219,9 @@
 						</div>
 						<div class="pageFormContent" layoutH="80">
 							<div class="panel collapse" minH="100" defH="150">
-								<h1>信息提示</h1>
+								<h1>待办事件</h1>
 								<div>
+								    <p>温馨提示：<a href="${ctx}/report/list" target="navTab">将有<b id="counts" style="color: red;"> ${counts} </b>只压力表到期了!</a></p>
 									<p>本版本为测试版本，针对软件的相关意见和想法，请及时与我们交流！</p>
 									<p>电话号码：0996-2179284</p>
 									<p>信息中心， 技术支持</p>

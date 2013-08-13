@@ -18,6 +18,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -58,7 +60,7 @@ public class SingleInfo extends BaseModel {
 	private Date yxTime;// 有效日期
 	private Date bfTime;// 报废日期
 	private Date qyTime;// 启用日期
-	private Integer typeId;// 计量类别
+	private Dict typeId;// 计量类别
 	private Float zqd;// 精确度
 	private Integer userTimes;// 使用次数
 	private Float price;// 价格
@@ -124,12 +126,14 @@ public class SingleInfo extends BaseModel {
 
 	/**
 	 * "规划型号信息
+	 * 
 	 * @return
 	 */
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
 			CascadeType.REFRESH })
 	@JoinColumn(name = "spectype", nullable = false, referencedColumnName = "speId")
 	@Fetch(FetchMode.JOIN)
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@ExcelField(title = "规划型号信息", value = "spectype.speName", sort = 2)
 	public SpectypeInfo getSpectype() {
@@ -141,7 +145,7 @@ public class SingleInfo extends BaseModel {
 	}
 
 	/**
-	 * 当前位置 
+	 * 当前位置
 	 * 
 	 * @return
 	 */
@@ -149,6 +153,7 @@ public class SingleInfo extends BaseModel {
 			CascadeType.REFRESH })
 	@JoinColumn(name = "location")
 	@Fetch(FetchMode.JOIN)
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@ExcelField(title = "当前位置", align = 3, sort = 3, value = "location.allName")
 	public Location getLocation() {
@@ -166,6 +171,7 @@ public class SingleInfo extends BaseModel {
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "state")
+	@NotFound(action = NotFoundAction.IGNORE)
 	@NotNull(message = "状态信息不能为空")
 	@ExcelField(title = "当前状态", sort = 4, value = "state.stateName")
 	public StateInfo getState() {
@@ -184,8 +190,9 @@ public class SingleInfo extends BaseModel {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "classId", referencedColumnName = "id")
 	@Where(clause = "type='class_type'")
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	@ExcelField(title = "资产种类", sort = 5,value="classId.value")
+	@ExcelField(title = "资产种类", sort = 5, value = "classId.value")
 	public Dict getClassId() {
 		return classId;
 	}
@@ -202,6 +209,7 @@ public class SingleInfo extends BaseModel {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "factory", referencedColumnName = "id")
 	@Where(clause = "type='factory_type'")
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@ExcelField(title = "生产厂家", value = "factory.value", sort = 6)
 	public Dict getFactory() {
@@ -285,12 +293,16 @@ public class SingleInfo extends BaseModel {
 	 * 
 	 * @return
 	 */
-	@Column(nullable = false, name = "type_Id")
-	public Integer getTypeId() {
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "type_Id", referencedColumnName = "id")
+	@Where(clause = "type='jltype_type'")
+	@NotFound(action = NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	public Dict getTypeId() {
 		return typeId;
 	}
 
-	public void setTypeId(Integer typeId) {
+	public void setTypeId(Dict typeId) {
 		this.typeId = typeId;
 	}
 

@@ -2,9 +2,7 @@ package com.ylbms.system.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,15 +23,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.google.common.collect.Lists;
 import com.ylbms.common.model.BaseModel;
-import com.ylbms.common.orm.IdEntity;
 import com.ylbms.common.utils.Collections3;
 
 @Entity
@@ -49,7 +43,7 @@ public class User extends BaseModel implements Serializable {
 
 	private String password;
 
-	private String fullname; //真实姓名
+	private String fullname; // 真实姓名
 
 	private String usertype; // 1为管理员
 
@@ -81,7 +75,7 @@ public class User extends BaseModel implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_user")
-	@SequenceGenerator(name = "seq_sys_user", sequenceName = "seq_sys_user")
+	@SequenceGenerator(name = "seq_sys_user", sequenceName = "seq_sys_user", allocationSize = 1)
 	public Long getId() {
 		return id;
 	}

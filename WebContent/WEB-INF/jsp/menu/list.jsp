@@ -34,6 +34,7 @@
 
 			</ul>
 		</div>
+		<div style="height: 700px;; overflow: auto;">
 		<table id="treeTable"
 			class="table_boot table-striped table-bordered table-condensed table-hover">
 			<thead>
@@ -52,19 +53,20 @@
 						<td><i class="icon-${not empty menu.icon?menu.icon:' hide'}"></i>${menu.name}</td>
 						<td>${menu.href}</td>
 						<td>${menu.sort}</td>
-						<td>${menu.isShow eq 1?'显示':'隐藏'}</td>
+						<td>${menu.isShow eq 0?'显示':'隐藏'}</td>
 						<td>${menu.permission}</td>
 						<td><a class="btn btn-small" target="dialog"
 							href="${ctx}/menu/editUi/${menu.id}"><i class="icon-edit"></i>修改</a>
 							<a class="btn btn-small" target="ajaxTodo"
 							href="${ctx}/menu/delete/${menu.id}" title="删除该选项吗?"><i
 								class="icon-remove"></i>删除</a> <a class="btn btn-small"
-							target="dialog" href="${ctx}/menu/nextUi?parent.id=${menu.id}"><i
+							target="navTab" href="${ctx}/menu/nextUi?parent.id=${menu.id}"><i
 								class="icon-plus"></i>添加下级菜单</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		</div>
 	</div>
 </body>
 </html>

@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.common.orm.Page;
@@ -196,6 +195,9 @@ public class SystemServiceImpl implements SystemService {
 		return menuDao.get(menuID);
 	}
 
+	/**
+	 * search all menu infos
+	 */
 	public List<Menu> findAllMenu() {
 		return UserUtils.getMenuList();
 	}
@@ -219,12 +221,14 @@ public class SystemServiceImpl implements SystemService {
 		}
 		menuDao.saveMenu(list);
 		systemRealm.clearAllCachedAuthorizationInfo();
+		UserUtils.removeCache("state"); // 缓存中信息
 	}
 
 	@Transactional(readOnly = false)
 	public void deleteMenu(Long id) {
 		menuDao.delete(id);
 		systemRealm.clearAllCachedAuthorizationInfo();
+		UserUtils.removeCache("state");
 	}
 
 	// **************org********************
