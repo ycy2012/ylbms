@@ -53,7 +53,7 @@ public class Org extends BaseModel {
 	// getter setter
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "seq_sys_org", sequenceName = "seq_sys_org")
+	@SequenceGenerator(name = "seq_sys_org", sequenceName = "seq_sys_org",allocationSize=1)
 	public Long getId() {
 		return id;
 	}

@@ -195,6 +195,9 @@ public class SystemServiceImpl implements SystemService {
 		return menuDao.get(menuID);
 	}
 
+	/**
+	 * search all menu infos
+	 */
 	public List<Menu> findAllMenu() {
 		return UserUtils.getMenuList();
 	}
@@ -218,12 +221,14 @@ public class SystemServiceImpl implements SystemService {
 		}
 		menuDao.saveMenu(list);
 		systemRealm.clearAllCachedAuthorizationInfo();
+		UserUtils.removeCache("state"); // 缓存中信息
 	}
 
 	@Transactional(readOnly = false)
 	public void deleteMenu(Long id) {
 		menuDao.delete(id);
 		systemRealm.clearAllCachedAuthorizationInfo();
+		UserUtils.removeCache("state");
 	}
 
 	// **************org********************

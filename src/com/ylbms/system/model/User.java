@@ -43,7 +43,7 @@ public class User extends BaseModel implements Serializable {
 
 	private String password;
 
-	private String fullname; //真实姓名
+	private String fullname; // 真实姓名
 
 	private String usertype; // 1为管理员
 
@@ -75,7 +75,7 @@ public class User extends BaseModel implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_user")
-	@SequenceGenerator(name = "seq_sys_user", sequenceName = "seq_sys_user")
+	@SequenceGenerator(name = "seq_sys_user", sequenceName = "seq_sys_user", allocationSize = 1)
 	public Long getId() {
 		return id;
 	}

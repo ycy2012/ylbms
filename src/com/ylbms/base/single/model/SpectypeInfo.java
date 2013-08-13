@@ -62,7 +62,7 @@ public class SpectypeInfo extends BaseModel {
 	// setter getter
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_base_spectypeinfo")
-	@SequenceGenerator(name = "seq_base_spectypeinfo", sequenceName = "seq_base_spectypeinfo")
+	@SequenceGenerator(name = "seq_base_spectypeinfo", sequenceName = "seq_base_spectypeinfo", allocationSize = 1)
 	public Long getSpeId() {
 		return speId;
 	}
@@ -72,7 +72,7 @@ public class SpectypeInfo extends BaseModel {
 	}
 
 	@Column(length = 50)
-	@ExcelField(title="规格型号名称",align=2,sort=2,type=0)
+	@ExcelField(title = "规格型号名称", align = 2, sort = 2, type = 0)
 	public String getSpeName() {
 		return speName;
 	}
@@ -90,7 +90,7 @@ public class SpectypeInfo extends BaseModel {
 		this.status = status;
 	}
 
-	@ExcelField(title="排序",align=3,sort=3,type=0)
+	@ExcelField(title = "排序", align = 3, sort = 3, type = 0)
 	public Integer getSort() {
 		return sort;
 	}
@@ -100,7 +100,7 @@ public class SpectypeInfo extends BaseModel {
 	}
 
 	@Column(length = 100)
-	@ExcelField(title="备注信息",sort=4,type=0)
+	@ExcelField(title = "备注信息", sort = 4, type = 0)
 	public String getRemark() {
 		return remark;
 	}

@@ -8,7 +8,7 @@
 * sprigMVC、Spring
 * 数据库连接池：druid
 * JSON :这个当然是fastjson
-* 权限管理shiro
+* 权限管理：shiro
 * 前端选择：DWZ+JQUERY+Ztree
 
 ### 项目其他说

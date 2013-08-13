@@ -33,10 +33,10 @@ public class StateService {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
 	public List<Map<String, Object>> getStateMapBystatus() {
-		List<Map<String, Object>> state = Lists.newArrayList();
+		List<Map<String, Object>> states = Lists.newArrayList();
+		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> maps = (List<Map<String, Object>>) CacheUtils
 				.get("state");
 		// 如果不为空则直接返回
@@ -50,12 +50,13 @@ public class StateService {
 				Map<String, Object> map = Maps.newHashMap();
 				map.put("value", s.getId());
 				map.put("text", s.getStateName());
-				state.add(map);
+				states.add(map);
 			}
-			CacheUtils.put("state", state);
+			CacheUtils.put("state", states);
+			return states;
 		} else {
 			return maps;
 		}
-		return state;
 	}
+	
 }

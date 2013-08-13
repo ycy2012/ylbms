@@ -51,10 +51,11 @@ public class Menu extends BaseModel implements Serializable {
 	private String parentIds; // 所有父级编号
 	private String name; // 名称
 	private String href; // 链接
+	private String rel; //rel信息
 	private String target; // 目标（ mainFrame、_blank、_self、_parent、_top）
 	private String icon; // 图标
 	private Integer sort; // 排序
-	private String isShow; // 是否在菜单中显示（1：显示；0：不显示）
+	private String isShow; // 是否在菜单中显示（0：显示；1：不显示）
 	private String permission; // 权限标识
 	private User user; // 创建者
 	private String delFlag; // 删除标记（0：正常；1：删除）
@@ -76,7 +77,7 @@ public class Menu extends BaseModel implements Serializable {
 	@Id
 	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_menu")
-	@SequenceGenerator(name = "seq_sys_menu", sequenceName = "seq_sys_menu")
+	@SequenceGenerator(name = "seq_sys_menu", sequenceName = "seq_sys_menu",allocationSize=1)
 	public Long getId() {
 		return id;
 	}
@@ -123,6 +124,14 @@ public class Menu extends BaseModel implements Serializable {
 
 	public void setHref(String href) {
 		this.href = href;
+	}
+
+	public String getRel() {
+		return rel;
+	}
+
+	public void setRel(String rel) {
+		this.rel = rel;
 	}
 
 	@Length(min = 0, max = 20)

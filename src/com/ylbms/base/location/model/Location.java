@@ -52,7 +52,7 @@ public class Location extends BaseModel {
 	private String locationName; // 当前的信息
 
 	private String allName;// 全称信息
-	
+
 	private Date createDate;
 
 	private User user; // 添加人员信息
@@ -75,7 +75,7 @@ public class Location extends BaseModel {
 	// getter setter
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BASE_LOCATION")
-	@SequenceGenerator(name = "SEQ_BASE_LOCATION", sequenceName = "SEQ_BASE_LOCATION")
+	@SequenceGenerator(name = "SEQ_BASE_LOCATION", sequenceName = "SEQ_BASE_LOCATION", allocationSize = 1)
 	public Long getId() {
 		return id;
 	}
@@ -116,7 +116,7 @@ public class Location extends BaseModel {
 		this.locationName = locationName;
 	}
 
-	@Column(name="ALL_Name")
+	@Column(name = "ALL_Name")
 	public String getAllName() {
 		return allName;
 	}

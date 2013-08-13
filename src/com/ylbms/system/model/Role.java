@@ -74,7 +74,7 @@ public class Role extends BaseModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_role")
-	@SequenceGenerator(name = "seq_sys_role", sequenceName = "seq_sys_role")
+	@SequenceGenerator(name = "seq_sys_role", sequenceName = "seq_sys_role",allocationSize=1)
 	public Long getId() {
 		return id;
 	}
