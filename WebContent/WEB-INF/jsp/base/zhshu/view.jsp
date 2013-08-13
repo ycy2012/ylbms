@@ -115,7 +115,8 @@ body {
 </style>
 </head>
 
-<body>
+<body style="text-align: center;">
+<div align="center">
 	<div class="PageNext">
 		<div class="Noprint">
 			<input type=button value=打印
@@ -170,14 +171,13 @@ body {
 		</table>
 
 		<div
-			style="padding-top: 60px; padding-bottom: 60px; text-align: center">
+			style="padding-top: 75px; padding-bottom: 75px;">
 			<table width="80%" border="0">
 				<tr>
 					<td width="52%" rowspan="3" style="font-size: 24px;" align="left">
 						(检定单位盖章)</td>
 					<td width="20%" height="40" valign="bottom"><div align="right">批准人：</div></td>
-					<td width="28%" valign="bottom"><div class=" div3">${jdzs.pzren
-							}</div></td>
+					<td width="28%" valign="bottom"><div class=" div3">${jdzs.pzren}</div></td>
 				</tr>
 				<tr>
 					<td height="40" valign="bottom"><div align="right">核验员：</div></td>
@@ -226,7 +226,7 @@ body {
 			</div>
 		</div>
 	</div>
-	<div style="width: 90%; border-top: #000 solid 1px;margin-top:60px" class="PageNext">
+	<div style="width: 90%; border-top: #000 solid 1px;margin-top:60px;text-align: center;" class="PageNext">
 		<div
 			style="border-left: #000 solid 1px; border-right: #000 solid 1px;padding-bottom: 10px;padding-top: 5px"
 			class="font1" align="left">
@@ -249,7 +249,7 @@ body {
 					<td class="border">${bt.factoryCode}</td>
 					<td class="border">${bt.clfw}</td>
 					<td class="border">${bt.grade}</td>
-					<td class="border">${bt.zhShCode }</td>
+					<td class="border">${bt.zhShCode}</td>
 					<td class="border"><fmt:formatDate value="${bt.yxDate}" pattern="yyyy-MM-dd"/></td>
 				</tr>
 			</table>
@@ -270,16 +270,14 @@ body {
 					<td>相对湿度：21%RH</td>
 				</tr>
 			</table>
-
-
 		</div>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0"
 			class="border">
 			<tr height="25px">
 				<td class="border">序号</td>
 				<td class="border">名称</td>
-				<td class="border">规格型号</td>
-				<td class="border">制造长</td>
+				<td class="border">型号规格</td>
+				<td class="border">制造厂</td>
 				<td class="border">测量范围</td>
 				<td class="border">出厂编号</td>
 				<td class="border">等级</td>
@@ -295,17 +293,15 @@ body {
 				<td class="border">${bt.clfw.grade }</td>
 			</tr>
 			</c:forEach>
-			
 		</table>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr class="font1" align="left">
 				<td width="10px">注</td>
-				<td>1、检定结论仅对被检器具的本次鉴定有效，请妥善保管此证。</td>
-
+				<td>1、检定结论仅对被检器具的本次检定有效，请妥善保管此证。</td>
 			</tr>
 			<tr class="font1" align="left">
 				<td></td>
-				<td>2、未经本室许可，不得复印或部分复印改证书</td>
+				<td>2、未经本室许可，不得复印或部分复印该证书</td>
 			</tr>
 			<tr class="font1" align="left">
 				<td></td>
@@ -314,6 +310,6 @@ body {
 			</tr>
 		</table>
 	</div>
-
+</div>
 </body>
 </html>
