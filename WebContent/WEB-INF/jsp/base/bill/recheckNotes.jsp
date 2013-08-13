@@ -92,7 +92,7 @@
 				</tr>
 			</table>
 		</div>
-		<div class="pageContent" layoutH="178">
+		<div class="pageContent" layoutH="188">
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>

@@ -40,7 +40,8 @@
 			<thead>
 				<tr>
 					<th width="15%">名称</th>
-					<th width="25%">链接</th>
+					<th width="20%">链接</th>
+					<th width="8%">REL属性</th>
 					<th width="8%">排序</th>
 					<th width="8%">可见</th>
 					<th width="12%">权限标识</th>
@@ -48,14 +49,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${page}" var="menu">
+				<c:forEach items="${page}" var="menu"> 
 					<tr id="${menu.id}" pId="${menu.parent.id ne 1?menu.parent.id:'0'}">
 						<td><i class="icon-${not empty menu.icon?menu.icon:' hide'}"></i>${menu.name}</td>
 						<td>${menu.href}</td>
+						<td>${menu.rel}</td>
 						<td>${menu.sort}</td>
-						<td>${menu.isShow eq 0?'显示':'隐藏'}</td>
+						<td>${menu.isShow eq '0' ?'显示':'隐藏'}</td>
 						<td>${menu.permission}</td>
-						<td><a class="btn btn-small" target="dialog"
+						<td><a class="btn btn-small" target="navTab"
 							href="${ctx}/menu/editUi/${menu.id}"><i class="icon-edit"></i>修改</a>
 							<a class="btn btn-small" target="ajaxTodo"
 							href="${ctx}/menu/delete/${menu.id}" title="删除该选项吗?"><i

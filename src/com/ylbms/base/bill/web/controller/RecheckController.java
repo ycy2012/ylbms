@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,6 +49,7 @@ public class RecheckController extends BaseController {
 	 * 
 	 * @return
 	 */
+	@RequiresPermissions("base:checkbill:add")
 	@RequestMapping(value = "checkUi")
 	public String toCheackUi() {
 		return "base/bill/recheckNotes";

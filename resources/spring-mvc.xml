@@ -144,8 +144,6 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<!-- json view <bean id="defaultJsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" 
-		/>. -->
 	<!-- 文件上传相关 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

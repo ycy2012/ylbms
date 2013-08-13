@@ -88,6 +88,7 @@ public class Menu extends BaseModel implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id")
+	@NotFound(action=NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@NotNull
 	public Menu getParent() {

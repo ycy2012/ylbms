@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,7 +66,7 @@ public class UserController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequiresUser
+	@RequiresPermissions("sys:user:add")
 	@RequestMapping("/addUi")
 	public String addUi(HttpServletRequest request, Model model) {
 		model.addAttribute("allRoles", systemService.findAllRole());
@@ -115,7 +116,7 @@ public class UserController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequiresUser
+	@RequiresPermissions("sys:user:edit")
 	@RequestMapping(value = "/editUi/{id}")
 	public String editUi(HttpServletRequest request,
 			@PathVariable("id") Long id, Model model) {
@@ -177,9 +178,10 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> updateUser(User user, String oldPwd) {
 		try {
-			if(StringUtils.isNotBlank(user.getPassword())){
-				user.setPassword(systemService.entryptPassword(user.getPassword()));
-			}else{
+			if (StringUtils.isNotBlank(user.getPassword())) {
+				user.setPassword(systemService.entryptPassword(user
+						.getPassword()));
+			} else {
 				user.setPassword(oldPwd);
 			}
 			systemService.updateUser(user);
@@ -196,16 +198,18 @@ public class UserController extends BaseController {
 	 * @param id
 	 * @return
 	 */
-	@RequiresUser
+	@RequiresPermissions("sys:user:delete")
 	@RequestMapping(value = "/delete/{id}")
 	@ResponseBody
 	public Map<String, Object> delete(@PathVariable("id") Long id) {
 		try {
-			if(UserUtils.getUser().getId().equals(id)){
-				return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, null, "删除用户失败，不能删除当前用户！");
+			if (UserUtils.getUser().getId().equals(id)) {
+				return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, null,
+						"删除用户失败，不能删除当前用户！");
 			}
-			if(User.isAdmin(id)){
-				return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, null, "删除用户失败，不允许删除超级管理员");
+			if (User.isAdmin(id)) {
+				return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, null,
+						"删除用户失败，不允许删除超级管理员");
 			}
 			userService.deleteUser(id);
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
@@ -221,7 +225,7 @@ public class UserController extends BaseController {
 	 * @param ids
 	 * @return
 	 */
-	@RequiresUser
+	@RequiresPermissions("sys:user:delete")
 	@RequestMapping(value = "/delByIds/{ids}")
 	@ResponseBody
 	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {

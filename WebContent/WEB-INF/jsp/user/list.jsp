@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../inc/header.jsp"%>
 <form id="pagerForm" method="post" action="user/list">
 	<input type="hidden" name="pageNum" value="${page.pageNum}" /> 
@@ -36,11 +35,17 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
+		    <shiro:hasPermission name="sys:user:add">
 			<li><a class="add" href="${ctx}/user/addUi" target="dialog" mask="true" title="添加用户信息"><span>添加</span></a></li>
+			</shiro:hasPermission>
 			<li class="line">line</li>
+			 <shiro:hasPermission name="sys:user:delete">
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="${ctx}/user/delByIds/{sid_user}" class="delete"><span>批量删除</span></a></li>
+			</shiro:hasPermission>
 			<li class="line">line</li>
+			<shiro:hasPermission name="sys:user:edit">
 			<li><a class="edit" href="${ctx}/user/editUi/{sid_user}" target="dialog" mask="true" title="修改用户信息"><span>修改</span></a></li>
+			</shiro:hasPermission>
 			<li class="line">line</li>
 			<li><a class="icon" href="#" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 		    <li class="line">line</li>
@@ -74,10 +79,14 @@
 					<td><fmt:formatDate value="${acc.loginDate}" pattern="yyyy-MM-dd"/></td>
 					<td>${acc.enabled==0?'有效':'无效'}</td>
 				<td>
+				<shiro:hasPermission name="sys:user:delete">
 				<a title="删除用户信息" target="ajaxTodo" href="${ctx}/user/delete/${acc.id}" class="btnDel">删除用户信息</a>
+				</shiro:hasPermission>
 				<a title="授权" target="dialog" href="${ctx}/role/permUi/${acc.id}" class="btnView">授权</a>
 				<a title="添加角色" target="dialog" href="${ctx}/user/roleUi/${acc.id}" class="btnPerm">添加角色</a>
+				<shiro:hasPermission name="sys:user:edit">
 				<a title="编辑用户信息" target="dialog" href="${ctx}/user/editUi/${acc.id}" class="btnEdit">编辑用户信息</a>
+				</shiro:hasPermission>
 				</td>
 				</tr>
 			</c:forEach>

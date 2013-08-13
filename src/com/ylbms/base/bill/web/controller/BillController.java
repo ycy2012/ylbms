@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ylbms.base.bill.model.BillHeadModel;
-import com.ylbms.base.bill.model.BillTbodyModel;
 import com.ylbms.base.bill.service.BillHeadService;
 import com.ylbms.base.single.service.SingleInfoService;
 import com.ylbms.common.orm.Page;

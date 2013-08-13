@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,7 @@ public class ZhShuController extends BaseController {
 	 * 
 	 * @return
 	 */
+	@RequiresPermissions("base:jdzs:add")
 	@RequestMapping(value = "addUi")
 	public String addUi(Model model) {
 		return "base/check/zhshInput";
@@ -128,6 +130,7 @@ public class ZhShuController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@RequiresPermissions("base:jdzs:delete")
 	@RequestMapping(value = "delete/{id}")
 	public Map<String, Object> delete(@PathVariable("id") Long id) {
 		try {
@@ -147,6 +150,7 @@ public class ZhShuController extends BaseController {
 	 */
 	@RequestMapping(value = "delByIds")
 	@ResponseBody
+	@RequiresPermissions("base:jdzs:delete")
 	public Map<String, Object> delByIds(@RequestParam("Ids") String ids) {
 		try {
 			this.zhShuService.delByIds(ids);

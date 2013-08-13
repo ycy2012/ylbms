@@ -68,6 +68,7 @@ public class UserUtils implements ApplicationContextAware {
 		List<Menu> menuList = (List<Menu>) getCache("menuList");
 		if (menuList == null) {
 			User user = getUser();
+			log.info(user.getId()+"-------------------------------"+user.isAdmin());
 			if (user.isAdmin()) {
 				menuList = menuDao.getAll();
 			} else {
