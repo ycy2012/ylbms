@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,7 @@ public class SingleInfoController extends BaseController {
 	 * 
 	 * @return
 	 */
+	@RequiresPermissions("base:single:add")
 	@RequestMapping(value = "importUi")
 	public String importUi() {
 		return "base/singleinfo/import";
@@ -101,6 +103,7 @@ public class SingleInfoController extends BaseController {
 	 * @param response
 	 * @return
 	 */
+
 	@RequestMapping(value = "export")
 	@ResponseBody
 	public Map<String, Object> export(Page<SingleInfo> page, SingleInfo single,
@@ -130,6 +133,7 @@ public class SingleInfoController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("base:single:add")
 	@RequestMapping(value = "/addUi")
 	public String addUi(Model model) {
 		saveInfoToehcacher(model);
@@ -144,7 +148,7 @@ public class SingleInfoController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-
+	@RequiresPermissions("base:single:edit")
 	@RequestMapping(value = "/edit/{id}")
 	public String editUi(HttpServletRequest request,
 			@PathVariable("id") String mid, Model model) {
@@ -230,6 +234,7 @@ public class SingleInfoController extends BaseController {
 	 * @param mid
 	 * @return
 	 */
+	@RequiresPermissions("base:single:delete")
 	@RequestMapping(value = "/delete/{mid}")
 	@ResponseBody
 	public Map<String, Object> delSpectype(@PathVariable("mid") String mid) {
@@ -249,6 +254,7 @@ public class SingleInfoController extends BaseController {
 	 * @param ids
 	 * @return
 	 */
+	@RequiresPermissions("base:single:delete")
 	@RequestMapping(value = "/delByIds")
 	@ResponseBody
 	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {

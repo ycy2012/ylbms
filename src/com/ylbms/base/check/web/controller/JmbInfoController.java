@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +47,7 @@ public class JmbInfoController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("check:jmb:add")
 	@RequestMapping(value = "/addUI")
 	public String jmbAddUI(Model model) {
 		return "base/check/addJmbInfo";
@@ -59,6 +61,7 @@ public class JmbInfoController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("check:jmb:edit")
 	@RequestMapping(value = "/editUi/{id}")
 	public String editUi(HttpServletRequest request,
 			@PathVariable("id") Long id, Model model) {
@@ -153,6 +156,7 @@ public class JmbInfoController extends BaseController {
 	 * @param mid
 	 * @return
 	 */
+	@RequiresPermissions("check:jmb:delete")
 	@RequestMapping(value = "/delete/{id}")
 	@ResponseBody
 	public Map<String, Object> delSpectype(@PathVariable("id") Long id) {

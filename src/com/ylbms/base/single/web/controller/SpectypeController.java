@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +65,7 @@ public class SpectypeController extends BaseController {
 	 * @param response
 	 * @return
 	 */
+	@RequiresPermissions("base:spectype:add")
 	@RequestMapping(value = "import/template")
 	@ResponseBody
 	public Map<String, Object> importFileTemplate(HttpServletResponse response,HttpServletRequest request) {
@@ -118,6 +120,7 @@ public class SpectypeController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("base:spectype:add")
 	@RequestMapping("addUi")
 	public String addUi(Model model) {
 		return "base/spectype/addspectype";
@@ -142,6 +145,7 @@ public class SpectypeController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("base:spectype:edit")
 	@RequestMapping(value = "edit/{id}")
 	public String editUi(HttpServletRequest request,
 			@PathVariable("id") int id, Model model) {
@@ -157,6 +161,7 @@ public class SpectypeController extends BaseController {
 	 * @date 2013年8月2日 18:21:45
 	 * @return
 	 */
+	@RequiresPermissions("base:spectype:add")
 	@RequestMapping(value = "import", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> importExcel(HttpServletRequest request,
@@ -208,7 +213,7 @@ public class SpectypeController extends BaseController {
 	 * @param id
 	 * @return
 	 */
-
+	@RequiresPermissions("base:spectype:delete")
 	@RequestMapping(value = "/delete/{id}")
 	@ResponseBody
 	public Map<String, Object> delSpectype(@PathVariable("id") Long id) {
@@ -269,6 +274,7 @@ public class SpectypeController extends BaseController {
 	 * @param ids
 	 * @return
 	 */
+	@RequiresPermissions("base:spectype:delete")
 	@RequestMapping(value = "/deletes/{ids}")
 	@ResponseBody
 	public Map<String, Object> delSpectype(@RequestParam("ids") String ids) {

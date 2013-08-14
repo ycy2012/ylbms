@@ -35,11 +35,16 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
+		
+		<shiro:hasPermission name="check:jmb:add">
 			<li><a class="add" href="${ctx}/jmbinfo/addUI" target="navTab" mask="true" title="添加精密表信息"><span>添加</span></a></li>
 			<%--<li class="line">line</li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="djIds" postType="string" href="${ctx}/jd/delBydjIds" class="delete"><span>批量删除</span></a></li> --%>
+		</shiro:hasPermission>
 			<li class="line">line</li>
+			<shiro:hasPermission name="check:jmb:edit">
 			<li><a class="edit" href="${ctx}/jmbinfo/editUi/{sdjId_jd}" target="dialog" mask="true" title="修改精密表信息"><span>修改</span></a></li>
+			</shiro:hasPermission>
 			<li class="line">line</li>
 			<li><a class="icon" href="#" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 		    <li class="line">line</li>
@@ -89,9 +94,13 @@
 					<td>${acc.remark}</td>
 					--%>
 				<td>
+				<shiro:hasPermission name="check:jmb:delete">
 				<a title="删除精密表信息" target="ajaxTodo" href="${ctx}/jmbinfo/delete/${acc.jmbID}" class="btnDel">删除精密表信息</a>
+				</shiro:hasPermission>
 				<a title="查看精密表详细信息" target="dialog" href="${ctx}/jmbinfo/showview/${acc.jmbID}" class="btnView">查看精密表详细信息</a>
+				<shiro:hasPermission name="check:jmb:edit">
 				<a title="编辑精密表信息" target="navTab" href="${ctx}/jmbinfo/editUi/${acc.jmbID}" class="btnEdit">编辑精密表信息</a>
+				</shiro:hasPermission>
 				</td>
 				</tr>
 			</c:forEach>
