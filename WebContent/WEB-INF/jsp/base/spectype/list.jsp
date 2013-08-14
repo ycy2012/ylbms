@@ -45,17 +45,17 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<shiro:hasPermission name="sys:user:add">
+			<shiro:hasPermission name="base:spectype:add">
 				<li><a class="add" href="${ctx}/spec/addUi" target="dialog"
 					mask="true" title="添加规格型号信息"><span>添加</span></a></li>
 			</shiro:hasPermission>
 			<li class="line">line</li>
-			<shiro:hasPermission name="sys:user:delete">
+			<shiro:hasPermission name="base:spectype:delete">
 				<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"
 					postType="string" href="${ctx}/spec/deletes" class="delete"><span>批量删除</span></a></li>
 			</shiro:hasPermission>
 			<li class="line">line</li>
-			<shiro:hasPermission name="sys:user:add">
+			<shiro:hasPermission name="base:spectype:add">
 				<li><a class="edit" href="${ctx}/spec/importUi" target="dialog"
 					mask="true" title="导入规格型号信息？"><span>EXCEL导入</span></a></li>
 			</shiro:hasPermission>
@@ -84,10 +84,10 @@
 					<td>${acc.sort}</td>
 					<td>${acc.status==0?'有效':'无效'}</td>
 					<td>${acc.remark}</td>
-					<td><shiro:hasPermission name="sys:user:delete">
+					<td><shiro:hasPermission name="base:spectype:delete">
 							<a title="删除规格型号信息" target="ajaxTodo"
 								href="${ctx}/spec/delete/${acc.speId}" class="btnDel">删除规格型号信息</a>
-						</shiro:hasPermission> <shiro:hasPermission name="sys:user:edit">
+						</shiro:hasPermission> <shiro:hasPermission name="base:spectype:edit">
 							<a title="编辑规格型号信息" target="dialog"
 								href="${ctx}/spec/edit/${acc.speId}" class="btnEdit">编辑规格型号信息</a>
 						</shiro:hasPermission></td>

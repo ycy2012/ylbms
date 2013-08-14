@@ -60,7 +60,7 @@ public class SingleInfoController extends BaseController {
 	 * 
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:add")
+	@RequiresPermissions("base:single:add")
 	@RequestMapping(value = "importUi")
 	public String importUi() {
 		return "base/singleinfo/import";
@@ -133,7 +133,7 @@ public class SingleInfoController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:add")
+	@RequiresPermissions("base:single:add")
 	@RequestMapping(value = "/addUi")
 	public String addUi(Model model) {
 		saveInfoToehcacher(model);
@@ -148,7 +148,7 @@ public class SingleInfoController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:edit")
+	@RequiresPermissions("base:single:edit")
 	@RequestMapping(value = "/edit/{id}")
 	public String editUi(HttpServletRequest request,
 			@PathVariable("id") String mid, Model model) {
@@ -234,7 +234,7 @@ public class SingleInfoController extends BaseController {
 	 * @param mid
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:delete")
+	@RequiresPermissions("base:single:delete")
 	@RequestMapping(value = "/delete/{mid}")
 	@ResponseBody
 	public Map<String, Object> delSpectype(@PathVariable("mid") String mid) {
@@ -254,7 +254,7 @@ public class SingleInfoController extends BaseController {
 	 * @param ids
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:delete")
+	@RequiresPermissions("base:single:delete")
 	@RequestMapping(value = "/delByIds")
 	@ResponseBody
 	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {

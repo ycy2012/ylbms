@@ -47,7 +47,7 @@ public class JmbInfoController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:add")
+	@RequiresPermissions("check:jmb:add")
 	@RequestMapping(value = "/addUI")
 	public String jmbAddUI(Model model) {
 		return "base/check/addJmbInfo";
@@ -61,7 +61,7 @@ public class JmbInfoController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:add")
+	@RequiresPermissions("check:jmb:edit")
 	@RequestMapping(value = "/editUi/{id}")
 	public String editUi(HttpServletRequest request,
 			@PathVariable("id") Long id, Model model) {
@@ -156,7 +156,7 @@ public class JmbInfoController extends BaseController {
 	 * @param mid
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:delete")
+	@RequiresPermissions("check:jmb:delete")
 	@RequestMapping(value = "/delete/{id}")
 	@ResponseBody
 	public Map<String, Object> delSpectype(@PathVariable("id") Long id) {

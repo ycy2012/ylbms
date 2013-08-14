@@ -65,7 +65,7 @@ public class SpectypeController extends BaseController {
 	 * @param response
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:add")
+	@RequiresPermissions("base:spectype:add")
 	@RequestMapping(value = "import/template")
 	@ResponseBody
 	public Map<String, Object> importFileTemplate(HttpServletResponse response,HttpServletRequest request) {
@@ -120,7 +120,7 @@ public class SpectypeController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:add")
+	@RequiresPermissions("base:spectype:add")
 	@RequestMapping("addUi")
 	public String addUi(Model model) {
 		return "base/spectype/addspectype";
@@ -145,7 +145,7 @@ public class SpectypeController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:edit")
+	@RequiresPermissions("base:spectype:edit")
 	@RequestMapping(value = "edit/{id}")
 	public String editUi(HttpServletRequest request,
 			@PathVariable("id") int id, Model model) {
@@ -161,7 +161,7 @@ public class SpectypeController extends BaseController {
 	 * @date 2013年8月2日 18:21:45
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:add")
+	@RequiresPermissions("base:spectype:add")
 	@RequestMapping(value = "import", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> importExcel(HttpServletRequest request,
@@ -213,7 +213,7 @@ public class SpectypeController extends BaseController {
 	 * @param id
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:delete")
+	@RequiresPermissions("base:spectype:delete")
 	@RequestMapping(value = "/delete/{id}")
 	@ResponseBody
 	public Map<String, Object> delSpectype(@PathVariable("id") Long id) {
@@ -274,7 +274,7 @@ public class SpectypeController extends BaseController {
 	 * @param ids
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:delete")
+	@RequiresPermissions("base:spectype:delete")
 	@RequestMapping(value = "/deletes/{ids}")
 	@ResponseBody
 	public Map<String, Object> delSpectype(@RequestParam("ids") String ids) {

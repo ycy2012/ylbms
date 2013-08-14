@@ -45,18 +45,18 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-		<shiro:hasPermission name="sys:user:add">
+		<shiro:hasPermission name="base:single:add">
 			<li><a class="add" href="${ctx}/single/addUi" target="navTab"
 				mask="true" title="添加单件信息"><span>添加</span></a></li>
 		</shiro:hasPermission>
 				<li class="line">line</li>
-		<shiro:hasPermission name="sys:user:delete">
+		<shiro:hasPermission name="base:single:delete">
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"
 				postType="string" href="${ctx}/single/delByIds"
 				class="delete"><span>批量删除</span></a></li>
 		</shiro:hasPermission>	
 				<li class="line">line</li>
-		<shiro:hasPermission name="sys:user:add">
+		<shiro:hasPermission name="base:single:add">
 			<li><a class="edit" href="${ctx}/single/importUi"
 				target="dialog" mask="true" title="导入单件信息"><span>EXCEL导入</span></a></li>
 		</shiro:hasPermission>
@@ -145,7 +145,7 @@
 					<td>${acc.remark}</td> 
 					
 					<td>
-					<shiro:hasPermission name="sys:user:delete">
+					<shiro:hasPermission name="base:single:delete">
 					<a title="删除单件信息" target="ajaxTodo"
 						href="${ctx}/single/delete/${acc.mid}" class="btnDel">删除单件信息</a>
 					</shiro:hasPermission>
