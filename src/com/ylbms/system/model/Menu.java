@@ -207,6 +207,7 @@ public class Menu extends BaseModel implements Serializable {
 			CascadeType.REMOVE }, fetch = FetchType.LAZY, mappedBy = "parent")
 	@Where(clause = "del_flag='" + DEL_FLAG_NORMAL + "'")
 	@OrderBy(value = "sort")
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<Menu> getChildList() {
 		return childList;

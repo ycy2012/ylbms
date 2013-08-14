@@ -26,8 +26,8 @@
         DD_belatedPNG.fix('a');
     </script>
 <![endif]-->
+<script src="${ctx}/styles/jquery/jquery-1.7.2.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
-<script src="${ctx}/dwz/js/jquery-1.7.2.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.validate.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
@@ -66,9 +66,9 @@
 <script src="${ctx}/dwz/js/dwz.effects.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.panel.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.checkbox.js" type="text/javascript"></script>
-<script src="${ctx}/dwz/js/dwz.history.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.combox.js" type="text/javascript"></script>
 <!--
+<script src="${ctx}/dwz/js/dwz.history.js" type="text/javascript"></script>
 <script src="bin/dwz.min.js" type="text/javascript"></script>
 -->
 <script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
@@ -259,7 +259,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div id="footer">Copyright &copy; 2012 塔里木油田工程技术部信息中心</div>
 </body>
 </html>

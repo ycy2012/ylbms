@@ -5,13 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="${ctx}/styles/bootstrap/css/bootstrap.css" rel="stylesheet"
-	type="text/css" />
+<title>位置信息</title>
+<link href="${ctx}/styles/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${ctx}/styles/ztree/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css"/>
 <script src="${ctx}/styles/ztree/js/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
 <script src="${ctx}/styles/ztree/js/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
-<title>位置信息</title>
 <script type="text/javascript">
+<!--
 	var key, lastValue = "", nodeList = [];
 	var zTree, setting = {
 		view : {
@@ -110,22 +110,30 @@
 		$("#txt").toggle();
 		$("#key").focus();
 	}
+	//-->
 </script>
 </head>
 <body>
 	<div class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
+			       <shiro:hasPermission name="base:location:add">
 				<li><a class="add" href="${ctx}/location/addUi" target="ztreeAddAjaxTodo" rel="ids"
 					mask="true" title="添加位置信息" warn="请选择要添加的位置节点"><span>添加信息</span></a></li>
 				<li class="line">line</li>
+					</shiro:hasPermission>
+				<shiro:hasPermission name="base:location:edit">
 				<li><a class="edit" href="${ctx}/location/editUi" visible="false" name="editlink" id="editlink" rel="ids"
 					target="ztreeEditSelectOne" mask="true" warn="请选择且只能选择一个位置节点"
 					title="修改位置信息"><span>修改信息</span></a></li>
 				<li class="line">line</li>
+				</shiro:hasPermission>
+				<shiro:hasPermission name="base:location:delete">
 				<li><a class="delete" href="${ctx}/location/delete" rel="ids"
 					mask="true" target="ztreeDelAjaxTodo" mask="true" title="删除位置信息"><span>删除信息</span></a></li>
+					
 				<li class="line">line</li>
+				</shiro:hasPermission>
 			</ul>
 		</div>
 		<div style="margin-left: auto; margin-right: auto; width: 60%;">

@@ -63,7 +63,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 
-		log.info("--------------------------------I coming ----------------------------");
 		response.setCharacterEncoding("UTF-8");
 
 		Principal principal = (Principal) SecurityUtils.getSubject()

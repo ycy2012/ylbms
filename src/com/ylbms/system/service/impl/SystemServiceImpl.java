@@ -201,7 +201,9 @@ public class SystemServiceImpl implements SystemService {
 	public List<Menu> findAllMenu() {
 		return UserUtils.getMenuList();
 	}
-
+/**
+ * save
+ */
 	@Transactional(readOnly = false)
 	public void saveMenu(Menu menu) {
 		menu.setParent(this.getMenu(menu.getParent().getId()));

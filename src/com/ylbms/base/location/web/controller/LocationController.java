@@ -114,6 +114,7 @@ public class LocationController {
 	 * @param location
 	 * @return
 	 */
+	@RequiresPermissions("base:location:add")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> add(HttpServletRequest request, Location location) {

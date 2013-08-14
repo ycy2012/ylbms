@@ -50,7 +50,7 @@ public class RecheckController extends BaseController {
 	 * @return
 	 */
 	@RequiresPermissions("base:checkbill:add")
-	@RequestMapping(value = "checkUi")
+	@RequestMapping(value = "addUi")
 	public String toCheackUi() {
 		return "base/bill/recheckNotes";
 	}
