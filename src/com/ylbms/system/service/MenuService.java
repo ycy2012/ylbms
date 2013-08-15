@@ -25,14 +25,6 @@ public class MenuService {
 	@Autowired
 	MenuDao menuDao;
 
-	/**
-	 * save menu method
-	 * 
-	 * @param menu
-	 */
-	public void saveMenu(Menu menu) {
-		menuDao.save(menu);
-	}
 
 	public Menu getMenuById(Long id) {
 		return menuDao.get(id);

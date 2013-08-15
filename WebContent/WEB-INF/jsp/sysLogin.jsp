@@ -9,7 +9,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>欢迎使用压力表具信息管理系统beta版本</title>
 <link href="${ctx}/dwz/themes/css/login.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${ctx}/dwz/js/jquery-1.7.2.js"></script>
 </head>
 <body>
 	<div id="login">

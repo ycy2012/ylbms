@@ -16,7 +16,6 @@
 	type="text/css" media="print" />
 <link href="${ctx}/dwz/uploadify/css/uploadify.css" rel="stylesheet"
 	type="text/css" />
-<link href="${ctx}/oper/om-default.css" rel="stylesheet" type="text/css" />
 <!--[if IE]>
 <link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css" />
 <![endif]-->
@@ -26,7 +25,7 @@
         DD_belatedPNG.fix('a');
     </script>
 <![endif]-->
-<script src="${ctx}/styles/jquery/jquery-1.7.2.js" type="text/javascript"></script>
+<script src="${ctx}/styles/jquery/jquery-1.7.2.min.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.validate.js" type="text/javascript"></script>
@@ -72,7 +71,6 @@
 <script src="bin/dwz.min.js" type="text/javascript"></script>
 -->
 <script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
-<script src="${ctx}/oper/js/operamasks-ui.js" type="text/javascript"></script>
 <script type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${ctx}/styles/highcharts/js/highcharts.js"></script>
 <script type="text/javascript" src="${ctx}/styles/js/indexSingleBar.js"></script>

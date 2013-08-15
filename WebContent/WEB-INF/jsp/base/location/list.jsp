@@ -131,7 +131,6 @@
 				<shiro:hasPermission name="base:location:delete">
 				<li><a class="delete" href="${ctx}/location/delete" rel="ids"
 					mask="true" target="ztreeDelAjaxTodo" mask="true" title="删除位置信息"><span>删除信息</span></a></li>
-					
 				<li class="line">line</li>
 				</shiro:hasPermission>
 			</ul>

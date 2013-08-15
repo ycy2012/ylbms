@@ -1,6 +1,5 @@
 package com.ylbms.system.web.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Lists;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.utils.DwzUtil;
@@ -137,13 +137,13 @@ public class UserController extends BaseController {
 	public Map<String, Object> addRole(HttpServletRequest request, User user,
 			String roleIds) {
 		try {
-			List<Role> roleList = new ArrayList<Role>();
+			List<Role> roleList =Lists.newArrayList();
 			String[] role = roleIds.split(",");
 			for (int i = 0, len = role.length; i < len; i++) {
 				roleList.add(new Role(Long.parseLong(role[i])));
 			}
 			user.setRoleList(roleList);
-			systemService.saveUser(user);
+			systemService.updateUser(user);
 		} catch (Exception e) {
 			log.error("system error!!", e);
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "user", e.getMessage());

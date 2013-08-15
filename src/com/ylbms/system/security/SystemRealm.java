@@ -128,7 +128,6 @@ public class SystemRealm extends AuthorizingRealm {
 			}
 		}
 		UserUtils.removeCache("menuList");
-		UserUtils.removeCache("categoryList");
 	}
 
 	/**

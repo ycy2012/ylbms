@@ -44,8 +44,10 @@
 				<dd>
 					<select name="target" class="combox">
 						<option value="">请选择</option>
-						<option value="navTab">navTab</option>
-						<option value="dialog">dialog</option>
+						
+						<option value="navTab" <c:if test="${menu.target eq 'navTab' }">selected="selected"</c:if> >navTab</option>
+						<option value="dialog" <c:if test="${menu.target eq 'dialog' }">selected="selected"</c:if>>dialog</option>
+						<option value="_blank" <c:if test="${menu.target eq '_blank' }">selected="selected"</c:if>>_blank</option>
 					</select><span class="info">该属性必须选择</span>
 			</dl>
 			<dl>
