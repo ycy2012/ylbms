@@ -36,7 +36,6 @@ import org.springframework.util.Assert;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.orm.PropertyFilter.MatchType;
-import com.ylbms.common.orm.PropertyFilter.PropertyType;
 import com.ylbms.common.utils.StringUtils;
 import com.ylbms.common.utils.reflection.ReflectionUtils;
 
