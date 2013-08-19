@@ -25,6 +25,7 @@
 		window.close();
 	}
 </script>
+
 <OBJECT id=WebBrowser classid=CLSID:8856F961-340A-11D0-A96B-00C04FD705A2
 	style="display: none"> </OBJECT>
 <style media="print" type="text/css">
@@ -51,10 +52,22 @@ body {
 }
 
 .border {
-	border: #000 solid 1px;
+	border-top: #000 solid 1px;
+	border-bottom: #000 solid 1px;
+	border-left: #000 solid 1px;
 	border-collapse: collapse;
 	font-size: 14px;
 }
+#tblGrid tr ,#tblGrid td{
+	border-top: #000 solid 1px;
+	border-bottom: #000 solid 1px;
+	border-left: #000 solid 1px;
+
+	border-left: #000 solid 1px;
+	border-collapse: collapse;
+	font-size: 14px;
+	height: 25px;
+	}
 
 .div1 {
 	border-bottom: #000000 solid 1px;
@@ -83,12 +96,13 @@ body {
 	font-family: "宋体";
 	margin-top: 15px;
 	letter-spacing: -1px;
-	padding-top: 10px;
+	
+	margin-tio:10px;
 }
 
 .font1 {
 	font-size: 14px;
-	padding-top: 5px;
+	padding-top: 6px;
 	padding-left: 5px
 }
 
@@ -115,7 +129,7 @@ body {
 </style>
 </head>
 
-<body style="text-align: center;">
+<body style="text-align: center;" onload="add();">
 <div align="center">
 	<div class="PageNext">
 		<div class="Noprint">
@@ -226,14 +240,14 @@ body {
 			</div>
 		</div>
 	</div>
-	<div style="width: 90%; border-top: #000 solid 1px;margin-top:60px;text-align: center;" class="PageNext">
+	<div style="width: 90%; border-top: #000 solid 1px;margin-top:100px;text-align: center;" class="PageNext">
 		<div
 			style="border-left: #000 solid 1px; border-right: #000 solid 1px;padding-bottom: 10px;padding-top: 5px"
 			class="font1" align="left">
 			溯源性：本次检定使用的计量标准可溯源到中国国家计量基础<br />本次检定所使用的计量标准器：
 		</div>
 		<div>
-			<table width="100%" border="0" align="center" cellpadding="1"
+			<table width="100%" border="1" align="center" cellpadding="1"
 				cellspacing="0" class="border">
 				<tr class="border" height="25px">
 					<td class="border">名称</td>
@@ -254,62 +268,91 @@ body {
 				</tr>
 			</table>
 		</div>
-		<div style="border-left: #000 solid 1px; border-right: #000 solid 1px">
+		<div style="border-left: #000 solid 1px; border-right: #000 solid 1px;padding-bottom:5px">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0"
 				class="font1">
-				<tr align="left">
+				<tr align="left" class="font1">
 					<td width="40%">检定地点、环境条件</td>
 					<td width="60%"></td>
 				</tr>
-				<tr align="left">
+				<tr align="left" class="font1">
 					<td align="left">地&nbsp;&nbsp;&nbsp;&nbsp;点：压力表检验室</td>
 					<td align="left"> </td>
 				</tr>
-				<tr align="left">
+				<tr align="left" class="font1">
 					<td>环境温度：25℃</td>
 					<td>相对湿度：21%RH</td>
 				</tr>
 			</table>
 		</div>
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			class="border">
+		<table width="100%" border="0"  cellspacing="0" cellpadding="0"
+			 class="border" id="tblGrid">
 			<tr height="25px">
-				<td class="border">序号</td>
-				<td class="border">名称</td>
-				<td class="border">型号规格</td>
-				<td class="border">制造厂</td>
-				<td class="border">测量范围</td>
-				<td class="border">出厂编号</td>
-				<td class="border">等级</td>
+				<td>序号</td>
+				<td>名称</td>
+				<td>型号规格</td>
+				<td>制造厂</td>
+				<td>测量范围</td>
+				<td>出厂编号</td>
+				<td>等级</td>
 			</tr>
 			<c:forEach items="${jdzs.infos}" var="bt" varStatus="stauts" > 
 			<tr height="25px">
-				<td class="border">${stauts.count}</td>
-				<td class="border">${bt.clfw.wzname }</td>
-				<td class="border">${bt.clfw.spectype.speName}</td>
-				<td class="border">${bt.clfw.factory }</td>
-				<td class="border">${bt.clfw.clfw }</td>
-				<td class="border">${bt.clfw.factoryCode }</td>
-				<td class="border">${bt.clfw.grade }</td>
+				<td>${stauts.count}</td>
+				<td>${bt.clfw.wzname }</td>
+				<td>${bt.clfw.spectype.speName}</td>
+				<td>${bt.clfw.factory }</td>
+				<td >${bt.clfw.clfw }</td>
+				<td>${bt.clfw.factoryCode }</td>
+				<td>${bt.clfw.grade }</td>
 			</tr>
 			</c:forEach>
 		</table>
-		<table width="100%" border="0" cellspacing="0" cellpadding="0">
-			<tr class="font1" align="left">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="font1">
+			<tr  align="left">
 				<td width="10px">注</td>
 				<td>1、检定结论仅对被检器具的本次检定有效，请妥善保管此证。</td>
 			</tr>
-			<tr class="font1" align="left">
+			<tr  align="left">
 				<td></td>
 				<td>2、未经本室许可，不得复印或部分复印该证书</td>
 			</tr>
-			<tr class="font1" align="left">
+			<tr align="left">
 				<td></td>
 				<td>3、本证书未加盖检定专用章无效</td>
-
 			</tr>
 		</table>
 	</div>
 </div>
+
 </body>
 </html>
+<script type="text/javascript">
+function add()  
+{  
+	 var table1=document.getElementById("tblGrid");
+	 var rows=table1.rows.length;
+ for (var i = 0;i < 24-rows;i++)
+ {
+	var newRow = document.all("tblGrid").insertRow();  
+	//得到表的对象并插入一行，下面是插入了行以后，填充相应的列节点，如下面所示  
+	var oCell = newRow.insertCell();//插入列的节点  
+ 	oCell.innerHTML = "&nbsp";//列里面填充的值，innerHtml值列内的所有元素      
+	oCell = newRow.insertCell();  
+	oCell.innerHTML = "&nbsp"; 
+	oCell = newRow.insertCell();  
+	oCell.innerHTML = "&nbsp"; 
+	oCell = newRow.insertCell();  
+	oCell.innerHTML = "&nbsp";//列里面填充的值，innerHtml值列内的所有元素      
+	oCell = newRow.insertCell();  
+	oCell.innerHTML = "&nbsp"; 
+	oCell = newRow.insertCell();  
+	oCell.innerHTML = "&nbsp"; 
+	oCell = newRow.insertCell();  
+	oCell.innerHTML = "&nbsp"; 
+	oCell = newRow.insertCell();  
+	
+ } 
+}  
+
+</script>
