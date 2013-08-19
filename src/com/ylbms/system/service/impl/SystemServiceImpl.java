@@ -91,9 +91,10 @@ public class SystemServiceImpl implements SystemService {
 	 * 
 	 * @param user
 	 */
-	@Transactional(readOnly = false, rollbackFor = Exception.class)
+	@Transactional(readOnly = false)
 	public void updateUser(User user) {
 		userDao.save(user);
+		systemRealm.clearCachedAuthorizationInfo(user.getFullname());
 	}
 
 	@Transactional(readOnly = false)
@@ -198,10 +199,13 @@ public class SystemServiceImpl implements SystemService {
 	/**
 	 * search all menu infos
 	 */
+	@Transactional(readOnly=true)
 	public List<Menu> findAllMenu() {
 		return UserUtils.getMenuList();
 	}
-
+/**
+ * save
+ */
 	@Transactional(readOnly = false)
 	public void saveMenu(Menu menu) {
 		menu.setParent(this.getMenu(menu.getParent().getId()));
@@ -221,14 +225,14 @@ public class SystemServiceImpl implements SystemService {
 		}
 		menuDao.saveMenu(list);
 		systemRealm.clearAllCachedAuthorizationInfo();
-		UserUtils.removeCache("state"); // 缓存中信息
+		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
 	}
 
 	@Transactional(readOnly = false)
 	public void deleteMenu(Long id) {
 		menuDao.delete(id);
 		systemRealm.clearAllCachedAuthorizationInfo();
-		UserUtils.removeCache("state");
+		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
 	}
 
 	// **************org********************

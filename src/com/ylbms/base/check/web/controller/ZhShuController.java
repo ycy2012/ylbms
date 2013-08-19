@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +52,10 @@ public class ZhShuController extends BaseController {
 	 * 
 	 * @return
 	 */
+	@RequiresPermissions("base:jdzs:add")
 	@RequestMapping(value = "addUi")
 	public String addUi(Model model) {
-		return "base/check/zhshInput";
+		return "base/zhshu/zhshInput";
 	}
 
 	/**
@@ -62,6 +65,7 @@ public class ZhShuController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresUser
 	@RequestMapping(value = "viewUi/{zId}")
 	public String viewUi(@PathVariable("zId") Long zId, Model model) {
 		ZhShuMasterModel master = zhShuService.getZhShMasterByZid(zId);
@@ -76,10 +80,11 @@ public class ZhShuController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "addMx")
+	@RequiresPermissions("base:jdzs:add")
 	public String addMx(@RequestParam("mids") String mids,
 			Page<CheckNotesInfo> page, CheckNotesInfo info, Model model) {
 		checkService.findPage(page, info, mids);
-		return "base/check/zhshMx";
+		return "base/zhshu/zhshMx";
 	}
 
 	/**
@@ -112,6 +117,7 @@ public class ZhShuController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresUser
 	@RequestMapping(value = "list")
 	public String list(HttpServletRequest request, Page<ZhShuMasterModel> page,
 			Model model) {
@@ -119,7 +125,7 @@ public class ZhShuController extends BaseController {
 		Page<ZhShuMasterModel> list = zhShuService
 				.findZhShByPage(page, filters);
 		model.addAttribute("page", list);
-		return "base/check/zhshList";
+		return "base/zhshu/zhshList";
 	}
 
 	/**
@@ -128,6 +134,7 @@ public class ZhShuController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@RequiresPermissions("base:jdzs:delete")
 	@RequestMapping(value = "delete/{id}")
 	public Map<String, Object> delete(@PathVariable("id") Long id) {
 		try {
@@ -147,6 +154,7 @@ public class ZhShuController extends BaseController {
 	 */
 	@RequestMapping(value = "delByIds")
 	@ResponseBody
+	@RequiresPermissions("base:jdzs:delete")
 	public Map<String, Object> delByIds(@RequestParam("Ids") String ids) {
 		try {
 			this.zhShuService.delByIds(ids);

@@ -72,7 +72,7 @@ public class MenuController {
 			@PathVariable("id") Long id, Model model) {
 		Menu menu = systemService.getMenu(id);
 		model.addAttribute("menu", menu);
-		return "menu/input";
+		return "menu/edit";
 	}
 
 	/**
@@ -105,6 +105,7 @@ public class MenuController {
 		}
 		return DwzUtil.dialogAjaxDone(DwzUtil.OK, "menu");
 	}
+	
 
 	/**
 	 * add next menu for it
@@ -192,9 +193,9 @@ public class MenuController {
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value = "/delByIds/{ids}")
+	@RequestMapping(value = "/delByIds}")
 	@ResponseBody
-	public Map<String, Object> delByIds(@PathVariable("ids") String ids) {
+	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {
 		try {
 			menuService.delByIds(ids);
 		} catch (Exception e) {

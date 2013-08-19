@@ -87,7 +87,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			} else {
 				response.sendRedirect(request.getContextPath() + "/a/login");
 			}
+			return false;
 		}
-		return false;
+		return true;
 	}
 }

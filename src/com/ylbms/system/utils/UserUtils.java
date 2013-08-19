@@ -11,6 +11,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Maps;
 import com.ylbms.system.dao.MenuDao;
@@ -30,18 +31,23 @@ public class UserUtils implements ApplicationContextAware {
 
 	private static final Log log = LogFactory.getLog(UserUtils.class);
 
+	public static final String CACHE_USER = "user";
+	public static final String CACHE_MENU_LIST = "menuList";
+	public static final String CACHE_AREA_LIST = "areaList";
+	public static final String CACHE_OFFICE_LIST = "officeList";
+
 	private static UserDao userDao;
 	private static MenuDao menuDao;
 
 	public static User getUser() {
-		User user = (User) getCache("user");
+		User user = (User) getCache(CACHE_USER);
 		if (null == user) {
 			Principal principal = (Principal) SecurityUtils.getSubject()
 					.getPrincipal();
 			if (null != principal) {
 				user = userDao.findUniqueBy("loginName",
 						principal.getLoginName());
-				putCache("user", user);
+				putCache(CACHE_USER, user);
 			}
 		}
 		if (user == null) {
@@ -53,7 +59,7 @@ public class UserUtils implements ApplicationContextAware {
 
 	public static User getUser(boolean isRefresh) {
 		if (isRefresh) {
-			removeCache("user");
+			removeCache(CACHE_USER);
 		}
 		return getUser();
 	}
@@ -65,7 +71,7 @@ public class UserUtils implements ApplicationContextAware {
 	 */
 	public static List<Menu> getMenuList() {
 		@SuppressWarnings("unchecked")
-		List<Menu> menuList = (List<Menu>) getCache("menuList");
+		List<Menu> menuList = (List<Menu>) getCache(CACHE_MENU_LIST);
 		if (menuList == null) {
 			User user = getUser();
 			if (user.isAdmin()) {
@@ -73,7 +79,7 @@ public class UserUtils implements ApplicationContextAware {
 			} else {
 				menuList = menuDao.findByUserId(user.getId());
 			}
-			putCache("menuList", menuList);
+			putCache(CACHE_MENU_LIST, menuList);
 		}
 		return menuList;
 	}

@@ -91,7 +91,7 @@
 				</tr>
 			</table>
 		</div>
-		<div class="pageContent" layoutH="165">
+		<div class="pageContent" layoutH="175">
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>

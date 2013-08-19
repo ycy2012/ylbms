@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,7 @@ public class DictController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("sys:dict:add")
 	@RequestMapping("/addUi")
 	public String addUi(HttpServletRequest request, Model model) {
 		return "dict/input";
@@ -57,6 +59,7 @@ public class DictController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("sys:dict:edit")
 	@RequestMapping("/editUi/{id}")
 	public String editUi(@PathVariable("id") Long id, Model model) {
 		Dict dict = dictService.getDictById(id);
@@ -91,6 +94,7 @@ public class DictController {
 	 * @param id
 	 * @return
 	 */
+	@RequiresPermissions("sys:dict:delete")
 	@RequestMapping(value = "/delete/{id}")
 	@ResponseBody
 	public Map<String, Object> delete(@PathVariable("id") Long id) {
@@ -110,6 +114,7 @@ public class DictController {
 	 * @param ids
 	 * @return
 	 */
+	@RequiresPermissions("sys:dict:delete")
 	@RequestMapping(value = "/delByIds")
 	@ResponseBody
 	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {

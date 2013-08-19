@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,10 @@ public class LocationController {
 	@Autowired
 	LocationService locationService;
 
+	/**
+	 * to comment page
+	 * @return
+	 */
 	@RequestMapping(value = "/commUi")
 	public String toCommUi() {
 		return "base/location/commonTree";
@@ -52,6 +57,7 @@ public class LocationController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("base:location:add")
 	@RequestMapping("/addUi/{ids}/{all}")
 	public String addUi(@PathVariable("ids") String ids,
 			@PathVariable("all") String all, HttpServletRequest request,
@@ -73,6 +79,7 @@ public class LocationController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("base:location:edit")
 	@RequestMapping(value = "/editUi/{ids}/{all}")
 	public String editUi(@PathVariable("ids") String ids,
 			@PathVariable("all") String all, HttpServletRequest request,
@@ -107,6 +114,7 @@ public class LocationController {
 	 * @param location
 	 * @return
 	 */
+	@RequiresPermissions("base:location:add")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> add(HttpServletRequest request, Location location) {
@@ -131,6 +139,7 @@ public class LocationController {
 	 * @param ids
 	 * @return
 	 */
+	@RequiresPermissions("base:location:delete")
 	@RequestMapping(value = "/delete/{ids}")
 	@ResponseBody
 	public Map<String, Object> delete(HttpServletRequest request,
@@ -166,7 +175,7 @@ public class LocationController {
 			map.put("id", l.getId());
 			map.put("pId", l.getParent() != null ? l.getParent().getId() : 0);
 			map.put("name", l.getLocationName());
-			map.put("fullName", l.getAllName()==null?"":l.getAllName());
+			map.put("fullName", l.getAllName() == null ? "" : l.getAllName());
 			mapList.add(map);
 		}
 		return mapList;

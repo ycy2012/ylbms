@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 import com.ylbms.common.orm.hibernate.HibernateDao;
 import com.ylbms.system.model.User;
 
+/**
+ * 
+ * @author JackLiang
+ * @version 1.0
+ * @date 2013-8-14
+ */
 @Repository("userDao")
 public class UserDao extends HibernateDao<User, Long> {
 
