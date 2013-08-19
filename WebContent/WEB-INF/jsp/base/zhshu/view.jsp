@@ -6,7 +6,6 @@
 <head>
 <title>展示页面</title>
 </head>
-<title>无标题文档</title>
 <script language="javascript">
 	function printWithAlert() {
 		document.all.WebBrowser.ExecWB(6, 1);
@@ -128,7 +127,6 @@ body {
 }
 </style>
 </head>
-
 <body style="text-align: center;" onload="add();">
 <div align="center">
 	<div class="PageNext">
