@@ -4,10 +4,8 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
-
 import com.tedmis.location.model.TdmisLocation;
 import com.tedmis.util.DBContextHolder;
 import com.ylbms.common.utils.spring.SpringContextHolder;
@@ -21,23 +19,15 @@ import com.ylbms.common.utils.spring.SpringContextHolder;
 @Repository
 public class TdmisLocationDao {
 
-	private SessionFactory wzSessionFactory;
-
-	public SessionFactory getWzSessionFactory() {
-		return wzSessionFactory;
-	}
-
-	@Autowired
-	public void setWzSessionFactory(SessionFactory wzSessionFactory) {
-		DBContextHolder.setDB(DBContextHolder.DB_TDMIS);
-		this.wzSessionFactory = SpringContextHolder.getBean("sessionFactory");
-	}
+	private SessionFactory wzSessionFactory = SpringContextHolder
+			.getBean("sessionFactory");
 
 	/**
 	 * 取得当前Session.
 	 */
 	public Session getSession() {
-		return wzSessionFactory.getCurrentSession();
+		DBContextHolder.setDB(DBContextHolder.DB_TDMIS);
+		return wzSessionFactory.openSession();
 	}
 
 	/**
@@ -96,5 +86,12 @@ public class TdmisLocationDao {
 	@SuppressWarnings("unchecked")
 	public List<TdmisLocation> getAll() {
 		return getSession().createCriteria(TdmisLocation.class).list();
+	}
+
+	/**
+	 * close session
+	 */
+	public void SessionClose() {
+		getSession().close();
 	}
 }

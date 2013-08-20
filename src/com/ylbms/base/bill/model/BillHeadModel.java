@@ -33,7 +33,7 @@ import com.ylbms.common.model.BaseModel;
  * @modify JackLiang 2013年7月8日 16:48:45
  */
 @Entity
-@Table(name = "ylbms_dj_thead")
+@Table(name = "ylbms_dj_master")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BillHeadModel extends BaseModel {
 

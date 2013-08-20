@@ -67,6 +67,7 @@ public class LoginController {
 	@RequestMapping(value = "")
 	public String index(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
+		request.getSession().setAttribute("Action", "yes");
 		// 登录成功
 		return "sysIndex";
 	}

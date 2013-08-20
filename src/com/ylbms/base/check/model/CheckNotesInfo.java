@@ -19,16 +19,16 @@ import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.common.model.BaseModel;
 
 /**
- * 检定记录明细信息实体
+ * 检定记录明细信息实体（未启用）
  * 
  * @author JackLiang
  * @version 1.0
  * @date 2013-7-16
  */
-@Entity
-@IdClass(CheckNotesInfoPK.class)
-@Table(name = "ylbms_jc_jdInfos")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Entity
+//@IdClass(CheckNotesInfoPK.class)
+//@Table(name = "ylbms_jc_jdInfos")
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class CheckNotesInfo extends BaseModel {
 
 	private static final long serialVersionUID = 1L;

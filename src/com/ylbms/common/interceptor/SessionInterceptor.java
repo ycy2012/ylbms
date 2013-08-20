@@ -1,14 +1,15 @@
 package com.ylbms.common.interceptor;
 
+import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -62,33 +63,43 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-
+		// 设置编码
 		response.setCharacterEncoding("UTF-8");
-
+		response.setContentType("text/html;charset=UTF-8");
+		//获取当前用户信息
 		Principal principal = (Principal) SecurityUtils.getSubject()
 				.getPrincipal();
 		String currentURL = request.getRequestURI();
-		HttpSession session = request.getSession();
 
 		if (currentURL.equalsIgnoreCase("/ylbms/a/login")
-				|| currentURL.equalsIgnoreCase("/ylbms/login_dialog.html")
-				|| currentURL.matches(IGNORE) || session != null) {
-
+				|| currentURL.equalsIgnoreCase("/ylbms/login_dialog.html")||currentURL.equalsIgnoreCase("login.jsp")
+				|| currentURL.matches(IGNORE)) {
 			return true;
 		}
-
-		if (null == session && null == principal) {
+		if (principal==null) {
 			if (request != null
 					&& "XMLHttpRequest".equalsIgnoreCase(request
 							.getHeader("X-Requested-With"))
 					|| request.getParameter("ajax") != null) {
 				Map<String, Object> ret = DwzUtil.dialogAjaxDoneTimeOut();
-				response.getWriter().print(JSON.toJSON(ret));
+				PrintWriter out=response.getWriter();
+				out.print(JSON.toJSON(ret));
+				out.close();
+				return false;
 			} else {
-				response.sendRedirect(request.getContextPath() + "/a/login");
+				PrintWriter out = response.getWriter(); 
+                StringBuilder builder = new StringBuilder(); 
+                builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">"); 
+                builder.append("alert(\"页面过期，请重新登录\");"); 
+                builder.append("window.location.href=\""); 
+                builder.append(request.getContextPath()+"/a/login"); 
+                builder.append("\";</script>"); 
+                out.print(builder.toString()); 
+                out.close(); 
+//				response.sendRedirect(request.getContextPath() + "/a/login");
+				return false;
 			}
-			return false;
 		}
-		return true;
+		return super.preHandle(request, response, handler);  
 	}
 }

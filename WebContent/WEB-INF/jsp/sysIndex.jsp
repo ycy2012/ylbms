@@ -25,8 +25,8 @@
         DD_belatedPNG.fix('a');
     </script>
 <![endif]-->
-<script src="${ctx}/styles/jquery/jquery-1.7.2.min.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
+<script src="${ctx}/styles/jquery/jquery-1.7.2.min.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.validate.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>

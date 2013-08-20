@@ -24,7 +24,7 @@ import com.ylbms.common.model.BaseModel;
 @Entity
 @IdClass(BillTbodyPK.class)
 // 复合主键
-@Table(name = "ylbms_dj_tbody")
+@Table(name = "ylbms_dj_detail")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BillTbodyModel extends BaseModel {
 
