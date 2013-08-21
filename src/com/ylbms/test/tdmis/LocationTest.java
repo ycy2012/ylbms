@@ -28,8 +28,8 @@ public class LocationTest extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void testGet() {
-		Object obj=tdmisService.getTdmisLocation("00000000000311");
-		System.out.println(obj);
+//		Object obj=tdmisService.getTdmisLocation("00000000000311");
+//		System.out.println(obj);
 	}
 
 }

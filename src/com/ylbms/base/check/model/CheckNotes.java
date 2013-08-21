@@ -31,14 +31,14 @@ import com.ylbms.system.model.User;
 
 /**
  * 检定记录表头信息实体
- * 
+ *  为启用
  * @author JackLiang
  * @version 1.0
  * @date 2013-7-16
  */
-@Entity
-@Table(name = "YLBMS_JC_JDMASTER")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Entity
+//@Table(name = "YLBMS_JC_JDMASTER")
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class CheckNotes extends BaseModel {
 
 	private static final long serialVersionUID = 1L;

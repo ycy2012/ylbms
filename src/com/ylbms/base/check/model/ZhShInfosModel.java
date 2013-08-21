@@ -25,7 +25,7 @@ import com.ylbms.common.utils.excel.annotation.ExcelField;
  */
 @Entity
 @IdClass(ZhShDetailIdPK.class)
-@Table(name = "ylbms_jc_jdNotes")
+@Table(name = "ylbms_jc_zhsh_detail")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ZhShInfosModel extends BaseModel {
 
