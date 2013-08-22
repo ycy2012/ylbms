@@ -12,8 +12,7 @@
 <script src="${ctx}/styles/ztree/js/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 <!--
-	var key, lastValue = "", nodeList = [];
-	var zTree, setting = {
+var zTree, setting = {
 		view : {
 			selectedMulti : false
 		},
@@ -51,6 +50,31 @@
 			}
 		}
 	};
+locationTree=function(){
+	var key, lastValue = "", nodeList = [];
+	return{
+		init:function(){
+			$.ajax({
+				type:'post',url:'${ctx}/tdmis/treeList',
+				success:function(data){
+					locationTree.handleAjaxResult(data);
+				},
+				dataType:'json'
+			});
+		},
+		handleAjaxResult:function(data){
+			if(data==null)return;
+			//初始化树信息
+			zTree = $.fn.zTree.init($("#tree"), setting, zNodes);
+							// 默认展开一级节点
+							var nodes = zTree.getNodesByParam("level", 0);
+							for ( var i = 0; i < nodes.length; i++) {
+								zTree.expandNode(nodes[i], true, false, false);
+							}
+		}
+	}
+}();
+
 	$(document).ready(
 			function() {
 				$.get("${ctx}/tdmis/treeList?_=" + new Date().getTime(),

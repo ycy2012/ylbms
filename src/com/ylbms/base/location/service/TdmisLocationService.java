@@ -44,6 +44,7 @@ public class TdmisLocationService {
 			DetachedCriteria dc = tdmislocationDao.createDetachedCriteria();
 			dc.addOrder(Order.asc("wzCc"));
 			list = tdmislocationDao.find(dc);
+			CacheUtils.put("tdmisLocation", list);
 		}
 		return list;
 	}
