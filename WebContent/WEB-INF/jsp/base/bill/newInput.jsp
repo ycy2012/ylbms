@@ -64,10 +64,10 @@
 				<tr>
 					<td>供货方：</td>
 					<td>
-						<input name="sendLocation.id" type="text" alt="供货方信息" class="required" size="30" /></td>
+						<input name="sendLocation.wzId" type="text" alt="供货方信息" class="required" size="30" /></td>
 					<td>接收方：</td>
 					<td> 
-						<input name="acceptLocation.id" type="hidden" id="wzInfo" />
+						<input name="acceptLocation.wzId" type="hidden" id="wzInfo" />
 			        <input type="text"  readonly="readonly" id="wzName" class="required" size="30">
 					<a class="btnLook" href="${ctx}/location/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	
 					</td>

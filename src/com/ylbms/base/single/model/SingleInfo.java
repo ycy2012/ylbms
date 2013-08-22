@@ -24,6 +24,7 @@ import org.hibernate.annotations.Where;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.ylbms.base.location.model.Location;
+import com.ylbms.base.location.model.TdmisLocationFullName;
 import com.ylbms.common.model.BaseModel;
 import com.ylbms.common.utils.excel.annotation.ExcelField;
 import com.ylbms.system.model.Dict;
@@ -50,7 +51,7 @@ public class SingleInfo extends BaseModel {
 	private String owercode;// 物资编码
 	private String wzname;// 物资名称
 	private SpectypeInfo spectype;// 规格型号
-	private Location location;// 当前位置
+	private TdmisLocationFullName location;// 当前位置
 	private StateInfo state;// 当前状态
 	private Dict classId;// 资产种类
 	private Dict factory;// 生产厂家
@@ -155,12 +156,12 @@ public class SingleInfo extends BaseModel {
 	@Fetch(FetchMode.JOIN)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	@ExcelField(title = "当前位置", align = 3, sort = 3, value = "location.allName")
-	public Location getLocation() {
+	@ExcelField(title = "当前位置", align = 3, sort = 3, value = "location.fullName")
+	public TdmisLocationFullName getLocation() {
 		return location;
 	}
 
-	public void setLocation(Location location) {
+	public void setLocation(TdmisLocationFullName location) {
 		this.location = location;
 	}
 

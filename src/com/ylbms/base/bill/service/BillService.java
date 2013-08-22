@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ylbms.base.bill.dao.BillHeadDao;
 import com.ylbms.base.bill.model.BillHeadModel;
 import com.ylbms.base.bill.model.BillTbodyModel;
-import com.ylbms.base.location.model.Location;
+import com.ylbms.base.location.model.TdmisLocationFullName;
 import com.ylbms.base.single.dao.SingleInfoDao;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.base.single.model.StateInfo;
@@ -47,7 +47,7 @@ public class BillService {
 	 */
 	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	public void saveBillHeadAndBody(List<SingleInfo> singles,
-			BillHeadModel bhm, String newState, Location wzInfo) {
+			BillHeadModel bhm, String newState, TdmisLocationFullName wzInfo) {
 		bhm.setSxDate(new Date());
 		bhm.setCreateUser(UserUtils.getUser().getFullname());
 		List<BillTbodyModel> list = new ArrayList<BillTbodyModel>(); // 保存对象用的
@@ -56,8 +56,8 @@ public class BillService {
 			btm.setMid(new SingleInfo(singles.get(i).getMid()));
 			btm.setOldState(singles.get(i).getState() == null ? "" : singles.get(i).getState().getId());
 			btm.setNewState(newState == null ? "" : newState);
-			btm.setOldWz(singles.get(i).getLocation() == null ? "" : singles.get(i).getLocation().getId().toString());
-			btm.setNewWz(bhm.getAcceptLocation() == null ? "" : bhm.getAcceptLocation().getId().toString());
+			btm.setOldWz(singles.get(i).getLocation() == null ? "" : singles.get(i).getLocation().getWzId().toString());
+			btm.setNewWz(bhm.getAcceptLocation() == null ? "" : bhm.getAcceptLocation().getWzId().toString());
 			btm.setRemark(singles.get(i).getRemark() == null ? "" : singles.get(i).getRemark());
 			btm.setBillId(bhm);
 			list.add(btm);
@@ -84,7 +84,7 @@ public class BillService {
 	 * @param single
 	 */
 	public void updateSingle(List<SingleInfo> singles, String newState,
-			Location wzInfo) {
+			TdmisLocationFullName wzInfo) {
 		for (SingleInfo s : singles) {
 			SingleInfo single = singleDao.get(s.getMid());
 			single.setState(new StateInfo(newState));

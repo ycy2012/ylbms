@@ -22,7 +22,7 @@ import org.hibernate.annotations.NotFoundAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.google.common.collect.Lists;
-import com.ylbms.base.location.model.Location;
+import com.ylbms.base.location.model.TdmisLocationFullName;
 import com.ylbms.common.model.BaseModel;
 
 /**
@@ -43,9 +43,9 @@ public class BillHeadModel extends BaseModel {
 
 	private String djTitle;
 
-	private Location sendLocation;
+	private TdmisLocationFullName sendLocation;
 
-	private Location acceptLocation;
+	private TdmisLocationFullName acceptLocation;
 
 	private Date sxDate; // 生效日期
 
@@ -112,24 +112,26 @@ public class BillHeadModel extends BaseModel {
 
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "sendLocation", nullable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public Location getSendLocation() {
+	public TdmisLocationFullName getSendLocation() {
 		return sendLocation;
 	}
 
-	public void setSendLocation(Location sendLocation) {
+	public void setSendLocation(TdmisLocationFullName sendLocation) {
 		this.sendLocation = sendLocation;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
 			CascadeType.REFRESH })
 	@JoinColumn(name = "acceptLocation", nullable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public Location getAcceptLocation() {
+	public TdmisLocationFullName getAcceptLocation() {
 		return acceptLocation;
 	}
 
-	public void setAcceptLocation(Location acceptLocation) {
+	public void setAcceptLocation(TdmisLocationFullName acceptLocation) {
 		this.acceptLocation = acceptLocation;
 	}
 

@@ -67,7 +67,7 @@
 						<input type="text" value="基地" class="required" readonly="readonly" size="30" />
 					</td>
 					<td>领料单位：</td>
-					<td><input name="acceptLocation.id" type="hidden" id="wzInfo" />
+					<td><input name="acceptLocation.wzId" type="hidden" id="wzInfo" />
 						<input type="text" readonly="readonly" id="wzName" size="30" 
 						class="required"> <a class="btnLook"
 						href="${ctx}/tdmis/commUi" width="300" height="400" mask="true"

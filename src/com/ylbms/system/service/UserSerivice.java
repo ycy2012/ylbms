@@ -10,7 +10,6 @@ import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.system.dao.UserDao;
 import com.ylbms.system.model.User;
-import com.ylbms.system.utils.UserUtils;
 
 @Service
 @Transactional

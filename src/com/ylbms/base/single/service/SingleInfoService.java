@@ -131,8 +131,8 @@ public class SingleInfoService {
 
 		DetachedCriteria dc = singleDao.createDetachedCriteria();
 		if (single.getLocation() != null
-				&& single.getLocation().getId() != null) {
-			dc.add(Restrictions.eq("location.id", single.getLocation().getId()));
+				&& single.getLocation().getWzId() != null) {
+			dc.add(Restrictions.eq("location.id", single.getLocation().getWzId()));
 		}
 		if (single.getSpectype() != null
 				&& single.getSpectype().getSpeId() != null) {

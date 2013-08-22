@@ -70,17 +70,18 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		Principal principal = (Principal) SecurityUtils.getSubject()
 				.getPrincipal();
 		String currentURL = request.getRequestURI();
-
-		if (currentURL.equalsIgnoreCase("/ylbms/a/login")
-				|| currentURL.equalsIgnoreCase("/ylbms/login_dialog.html")||currentURL.equalsIgnoreCase("login.jsp")
+//		
+		if ((currentURL.equalsIgnoreCase("/ylbms/a/login"))|| currentURL.equalsIgnoreCase("/ylbms/login_dialog.html")||currentURL.equalsIgnoreCase("login.jsp")
 				|| currentURL.matches(IGNORE)) {
 			return true;
 		}
+		log.info("---------------"+(principal==null));
 		if (principal==null) {
 			if (request != null
 					&& "XMLHttpRequest".equalsIgnoreCase(request
 							.getHeader("X-Requested-With"))
 					|| request.getParameter("ajax") != null) {
+				log.info("---------------------无视--------------");
 				Map<String, Object> ret = DwzUtil.dialogAjaxDoneTimeOut();
 				PrintWriter out=response.getWriter();
 				out.print(JSON.toJSON(ret));
