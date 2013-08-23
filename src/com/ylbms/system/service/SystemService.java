@@ -1,57 +1,245 @@
 package com.ylbms.system.service;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.ylbms.common.orm.Page;
+import com.ylbms.common.security.Digests;
+import com.ylbms.common.utils.Encodes;
+import com.ylbms.system.dao.MenuDao;
+import com.ylbms.system.dao.OrgDAO;
+import com.ylbms.system.dao.RoleDAO;
+import com.ylbms.system.dao.UserDao;
 import com.ylbms.system.model.Menu;
 import com.ylbms.system.model.Org;
 import com.ylbms.system.model.Role;
 import com.ylbms.system.model.User;
+import com.ylbms.system.security.SystemRealm;
+import com.ylbms.system.service.SystemService;
+import com.ylbms.system.utils.UserUtils;
 
 /**
  * 
- * @ClassName: SystemService
- * @Description: TODO(这里用一句话描述这个类的作用)
+ * @ClassName: SystemServiceImpl
+ * @Description: 系统管理，安全相关实体的管理类,包括用户、角色、菜单.
  * @author JackLiang
- * @date 2013-5-17 上午11:22:49
+ * @date 2013-5-17 上午11:31:01
  * @version V1.0
  * 
  */
-
-public interface SystemService {
+@Service
+@Transactional(readOnly = true)
+public class SystemService {
 
 	public static final String HASH_ALGORITHM = "SHA-1";
 	public static final int HASH_INTERATIONS = 1024;
 	public static final int SALT_SIZE = 8;
 
-	User getUserByLoginName(String loginName);
+	@Autowired
+	private UserDao userDao;
+	@Autowired
+	private RoleDAO roleDao;
+	@Autowired
+	private MenuDao menuDao;
+	@Autowired
+	private OrgDAO orgDao;
+	@Autowired
+	private SystemRealm systemRealm;
 
-	List<Menu> findAllMenu();
+	// -- User Service --//
+	public User getUser(Long id) {
+		return userDao.get(id);
+	}
 
-	void updateUserLoginInfo(Long userID);
+	public List<User> findUser(Page<User> page, User user) {
 
-	void saveUser(User currentUser);
+		return null;
+	}
 
-	void updatePasswordById(Long id, String loginName, String newPassword);
+	/**
+	 * 根据用户名查询用户信息
+	 * 
+	 * @param loginName
+	 * @return
+	 */
+	public User getUserByLoginName(String loginName) {
+		return userDao.findUniqueBy("loginName", loginName);
+	}
 
-	User getUser(Long userId);
+	/**
+	 * 保存User
+	 * 
+	 * @param user
+	 */
+	@Transactional(readOnly = false, rollbackFor = Exception.class)
+	public void saveUser(User user) {
+		if (StringUtils.isNotBlank(user.getPassword())) {
+			user.setPassword(entryptPassword(user.getPassword()));
+		}
+		userDao.save(user);
+		systemRealm.clearCachedAuthorizationInfo(user.getFullname());
+	}
 
-	void updateUser(User user);
+	/**
+	 * 更新user
+	 * 
+	 * @param user
+	 */
+	@Transactional(readOnly = false)
+	public void updateUser(User user) {
+		userDao.save(user);
+		systemRealm.clearCachedAuthorizationInfo(user.getFullname());
+	}
 
-	String entryptPassword(String plainPassword);
+	@Transactional(readOnly = false)
+	public void deleteUser(Long id) {
+		userDao.delete(id);
+	}
 
-	List<Org> getAllOrg();
+	/**
+	 * 修改密码
+	 */
+	@Transactional(readOnly = false)
+	public void updatePasswordById(Long id, String loginName, String newPassword) {
+		if (!StringUtils.isBlank(newPassword)
+				&& !StringUtils.isBlank(loginName)) {
+			userDao.updatePasswordById(entryptPassword(newPassword), id);
+			systemRealm.clearCachedAuthorizationInfo(loginName);
+		}
+	}
 
-	void saveMenu(Menu menu);
+	/**
+	 * 判断用户名是不是唯一
+	 * 
+	 * @param newUserName
+	 * @param oldUserName
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public boolean isUserNameUnique(String newUserName, String oldUserName) {
+		return userDao.isPropertyUnique("loginName", newUserName, oldUserName);
+	}
 
-	public void deleteMenu(Long id);
+	/**
+	 * 生成安全的密码，生成随机的16位salt并经过1024次 sha-1 hash
+	 */
+	public String entryptPassword(String plainPassword) {
+		byte[] salt = Digests.generateSalt(SALT_SIZE);
+		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), salt,
+				HASH_INTERATIONS);
+		return Encodes.encodeHex(salt) + Encodes.encodeHex(hashPassword);
+	}
 
-	public Role getRoleModel(Long roleID);
+	/**
+	 * 验证密码
+	 * 
+	 * @param plainPassword
+	 *            明文密码
+	 * @param password
+	 *            密文密码
+	 * @return 验证成功返回true
+	 */
+	public static boolean validatePassword(String plainPassword, String password) {
+		byte[] salt = Encodes.decodeHex(password.substring(0, 16));
+		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), salt,
+				HASH_INTERATIONS);
+		return password.equals(Encodes.encodeHex(salt)
+				+ Encodes.encodeHex(hashPassword));
+	}
 
-	public void saveRole(Role role);
+	@Transactional(readOnly = false)
+	public void updateUserLoginInfo(Long id) {
+		userDao.updateLoginInfo(SecurityUtils.getSubject().getSession()
+				.getHost(), new Date(), id);
+	}
 
-	public List<Role> findAllRole();
+	// -- Role Service --//
+	public Role getRoleModel(Long roleID) {
+		return roleDao.get(roleID);
+	}
 
-	public void deleteRole(Long roleID);
+	public Role getRoleByName(String roleName) {
+		return roleDao.findUniqueBy("name", roleName);
+	}
 
-	public Menu getMenu(Long menuID);
+	public List<Role> findAllRole() {
+		User currentUser = UserUtils.getUser();
+		if (!currentUser.isAdmin()) {
+			return roleDao.findByUserId(currentUser.getId());
+		} else {
+			return roleDao.getAll();
+		}
+	}
+
+	@Transactional(readOnly = false)
+	public void saveRole(Role role) {
+		if (role.getId() == null) {
+			role.setUser(UserUtils.getUser());
+		}
+		roleDao.save(role);
+		systemRealm.clearAllCachedAuthorizationInfo();
+	}
+
+	public void deleteRole(Long roleID) {
+		roleDao.delete(roleID);
+		systemRealm.clearAllCachedAuthorizationInfo();
+	}
+
+	// -- Menu Service --//
+	public Menu getMenu(Long menuID) {
+		return menuDao.get(menuID);
+	}
+
+	/**
+	 * search all menu infos
+	 */
+	@Transactional(readOnly = true)
+	public List<Menu> findAllMenu() {
+		return UserUtils.getMenuList();
+	}
+
+	/**
+	 * save
+	 */
+	@Transactional(readOnly = false)
+	public void saveMenu(Menu menu) {
+		menu.setParent(this.getMenu(menu.getParent().getId()));
+		String oldParentIds = menu.getParentIds(); // 获取修改前的parentIds，用于更新子节点的parentIds
+		menu.setParentIds(menu.getParent().getParentIds()
+				+ menu.getParent().getId() + ",");
+		if (menu.getId() == null) {
+			menu.setUser(UserUtils.getUser());
+		}
+		menuDao.save(menu);
+		// 更新子节点 parentIds
+		List<Menu> list = menuDao.findByParentIdsLike("%," + menu.getId()
+				+ ",%");
+		for (Menu e : list) {
+			e.setParentIds(e.getParentIds().replace(oldParentIds,
+					menu.getParentIds()));
+		}
+		menuDao.saveMenu(list);
+		systemRealm.clearAllCachedAuthorizationInfo();
+		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
+	}
+
+	@Transactional(readOnly = false)
+	public void deleteMenu(Long id) {
+		menuDao.delete(id);
+		systemRealm.clearAllCachedAuthorizationInfo();
+		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
+	}
+
+	// **************org********************
+
+	public List<Org> getAllOrg() {
+		return orgDao.getAll();
+	}
+
 }

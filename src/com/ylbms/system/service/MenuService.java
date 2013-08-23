@@ -17,7 +17,7 @@ import com.ylbms.system.model.Menu;
  * @date 2013-5-31
  */
 @Service
-@Transactional
+@Transactional(readOnly=true)
 public class MenuService {
 
 	private static final Log log = LogFactory.getLog(MenuService.class);
@@ -25,14 +25,6 @@ public class MenuService {
 	@Autowired
 	MenuDao menuDao;
 
-	/**
-	 * save menu method
-	 * 
-	 * @param menu
-	 */
-	public void saveMenu(Menu menu) {
-		menuDao.save(menu);
-	}
 
 	public Menu getMenuById(Long id) {
 		return menuDao.get(id);

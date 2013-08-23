@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +45,12 @@ public class InstallationController extends BaseController {
 	@Autowired
 	private BillService billservice;
 	
+	/**
+	 * to add page 
+	 * @param model
+	 * @return
+	 */
+	@RequiresPermissions("base:install:add")
 	@RequestMapping(value="inputUi")
 	public String installUi(Model model){
 		return "base/bill/installNotes";

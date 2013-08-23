@@ -9,9 +9,9 @@ package com.ylbms.common.orm;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 
 import com.google.common.collect.Lists;
+import com.ylbms.common.utils.StringUtils;
 
 /**
  * 与具体ORM实现无关的分页参数及查询结果封装.

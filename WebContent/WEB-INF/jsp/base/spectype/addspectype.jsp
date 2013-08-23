@@ -26,7 +26,7 @@
 				</p>
 					<p>
 					<label>状态：</label>
-					<select name="sort" class="required combox">
+					<select name="status" class="required combox">
 					<option value="0">有效</option>
 					<option value="1" selected>无效</option>
 				</select>

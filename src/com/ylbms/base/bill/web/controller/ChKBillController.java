@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,6 +51,7 @@ public class ChKBillController extends BaseController {
 	 * 
 	 * @return
 	 */
+	@RequiresPermissions("base:ckgl:add")
 	@RequestMapping(value = "/addUi")
 	public String addUi() {
 		return "base/bill/chkInput";

@@ -45,7 +45,8 @@ public class DwzUtil {
 			String navTabId, String message) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("statusCode", statusCode);
-		map.put("message", message);
+		map.put("message", (statusCode == FAIL && message == null) ? "操作失败！"
+				: message);
 		if (StringUtils.isNotBlank(navTabId)) {
 			map.put("navTabId", navTabId);
 			map.put("callbackType", "closeCurrent");
@@ -66,9 +67,9 @@ public class DwzUtil {
 			String navTabId, String message, String forwardUrl) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("statusCode", statusCode);
-		if(StringUtils.isNotBlank(message)){
+		if (StringUtils.isNotBlank(message)) {
 			map.put("message", message);
-		}else{
+		} else {
 			map.put("message", (statusCode == OK) ? "操作成功！" : "操作失败！");
 		}
 		map.put("forwardUrl", forwardUrl);

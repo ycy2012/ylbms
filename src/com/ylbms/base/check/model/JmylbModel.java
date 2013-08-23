@@ -2,8 +2,10 @@ package com.ylbms.base.check.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,8 +31,9 @@ import com.ylbms.system.model.User;
  * @date 2013-7-26
  */
 @Entity
-@Table(name = "ylbms_jc_jmbInfo")
+@Table(name = "ylbms_base_jmbInfo")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
 public class JmylbModel extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
@@ -48,11 +51,13 @@ public class JmylbModel extends BaseModel {
 	private Date jdDate;// 检定日期
 	private Date yxDate; // 证书有效期
 	private User creater;
-	private Date createDate;
+	private Date createDate; 
 	private String remark;
 	private String status; // 是否有效
 
 	public JmylbModel() {
+		this.status=DEL_FLAG_NORMAL;
+		this.createDate=new Date();
 	}
 
 	public JmylbModel(Long jmbID) {
@@ -62,7 +67,8 @@ public class JmylbModel extends BaseModel {
 	// setter getter
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_jd_jmbinfo")
-	@SequenceGenerator(name = "seq_jd_jmbinfo", sequenceName = "seq_jd_jmbinfo")
+	@SequenceGenerator(name = "seq_jd_jmbinfo", sequenceName = "seq_jd_jmbinfo",allocationSize=1)
+	@Column(name="jmb_id")
 	public Long getJmbID() {
 		return jmbID;
 	}
@@ -71,6 +77,7 @@ public class JmylbModel extends BaseModel {
 		this.jmbID = jmbID;
 	}
 
+	@Column(name="jmb_name")
 	public String getJmbName() {
 		return jmbName;
 	}
@@ -79,6 +86,7 @@ public class JmylbModel extends BaseModel {
 		this.jmbName = jmbName;
 	}
 
+	@Column(name="jmb_type")
 	public String getJmbType() {
 		return jmbType;
 	}
@@ -87,6 +95,7 @@ public class JmylbModel extends BaseModel {
 		this.jmbType = jmbType;
 	}
 
+	@Column(name="factory_code")
 	public String getFactoryCode() {
 		return factoryCode;
 	}
@@ -99,7 +108,7 @@ public class JmylbModel extends BaseModel {
 	public String getJmbCode() {
 		return jmbCode;
 	}
-
+	@Column(name="jmb_code")
 	public void setJmbCode(String jmbCode) {
 		this.jmbCode = jmbCode;
 	}
@@ -120,6 +129,7 @@ public class JmylbModel extends BaseModel {
 		this.grade = grade;
 	}
 
+	@Column(name="zhsh_code")
 	public String getZhShCode() {
 		return zhShCode;
 	}
@@ -136,6 +146,7 @@ public class JmylbModel extends BaseModel {
 		this.madeIn = madeIn;
 	}
 
+	@Column(name="jd_unit")
 	public String getJdUnit() {
 		return jdUnit;
 	}
@@ -163,7 +174,7 @@ public class JmylbModel extends BaseModel {
 		this.yxDate = yxDate;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH})
 	@JoinColumn(name = "creater")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)

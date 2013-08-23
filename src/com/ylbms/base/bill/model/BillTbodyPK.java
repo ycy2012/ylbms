@@ -3,11 +3,13 @@ package com.ylbms.base.bill.model;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -36,7 +38,7 @@ public class BillTbodyPK implements Serializable {
 	}
 
 	// setter getter
-	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.LAZY)
 	@JoinColumn(name = "mid")
 	@NotFound(action=NotFoundAction.EXCEPTION)
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
@@ -48,9 +50,8 @@ public class BillTbodyPK implements Serializable {
 		this.mid = mid;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "dj_id")
-	@NotFound(action = NotFoundAction.EXCEPTION)
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	public BillHeadModel getBillId() {
 		return billId;

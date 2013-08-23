@@ -24,8 +24,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ylbms.common.utils.spring.SpringContextHolder;
 import com.ylbms.system.model.Menu;
 import com.ylbms.system.model.User;
 import com.ylbms.system.service.SystemService;
@@ -53,7 +53,7 @@ public class SystemRealm extends AuthorizingRealm {
 			AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 
-		User user = systemService.getUserByLoginName(token.getUsername());
+		User user = getSystemService().getUserByLoginName(token.getUsername());
 		if (user != null) {
 			UserUtils.putCache("user", user); // user信息添加到缓存中
 			String salt = user.getPassword().substring(0, 16);
@@ -72,11 +72,11 @@ public class SystemRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
 		Principal principal = (Principal) principals.getPrimaryPrincipal();
-		User user = systemService.getUserByLoginName(principal.getLoginName());
+		User user = getSystemService().getUserByLoginName(principal.getLoginName());
 		if (user != null) {
 			UserUtils.putCache("user", user);
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-			List<Menu> list = systemService.findAllMenu();
+			List<Menu> list = getSystemService().findAllMenu();
 			for (Menu menu : list) {
 				if (StringUtils.isNotBlank(menu.getPermission())) {
 					// 添加基于Permission的权限信息
@@ -84,16 +84,11 @@ public class SystemRealm extends AuthorizingRealm {
 				}
 			}
 			// 更新登录IP和时间
-			systemService.updateUserLoginInfo(user.getId());
+			getSystemService().updateUserLoginInfo(user.getId());
 			return info;
 		} else {
 			return null;
 		}
-	}
-
-	@Autowired
-	public void setSystemService(SystemService systemService) {
-		this.systemService = systemService;
 	}
 
 	/**
@@ -114,7 +109,7 @@ public class SystemRealm extends AuthorizingRealm {
 		SimplePrincipalCollection principals = new SimplePrincipalCollection(
 				principal, getName());
 		clearCachedAuthorizationInfo(principals);
-		UserUtils.removeCache("user");
+		UserUtils.removeCache(UserUtils.CACHE_USER);
 	}
 
 	/**
@@ -127,8 +122,7 @@ public class SystemRealm extends AuthorizingRealm {
 				cache.remove(key);
 			}
 		}
-		UserUtils.removeCache("menuList");
-		UserUtils.removeCache("categoryList");
+		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
 	}
 
 	/**
@@ -171,6 +165,22 @@ public class SystemRealm extends AuthorizingRealm {
 			return cacheMap;
 		}
 
+	}
+
+	/**
+	 * 获取业务系统对象
+	 * 
+	 * @return
+	 */
+	public SystemService getSystemService() {
+		if(systemService==null){
+			 systemService = SpringContextHolder.getBean(SystemService.class); 
+		}
+		return systemService;
+	}
+	
+	public void setSystemService(SystemService systemService) {
+		this.systemService = systemService;
 	}
 
 }

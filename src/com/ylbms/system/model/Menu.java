@@ -51,10 +51,11 @@ public class Menu extends BaseModel implements Serializable {
 	private String parentIds; // 所有父级编号
 	private String name; // 名称
 	private String href; // 链接
+	private String rel; //rel信息
 	private String target; // 目标（ mainFrame、_blank、_self、_parent、_top）
 	private String icon; // 图标
 	private Integer sort; // 排序
-	private String isShow; // 是否在菜单中显示（1：显示；0：不显示）
+	private String isShow; // 是否在菜单中显示（0：显示；1：不显示）
 	private String permission; // 权限标识
 	private User user; // 创建者
 	private String delFlag; // 删除标记（0：正常；1：删除）
@@ -64,7 +65,7 @@ public class Menu extends BaseModel implements Serializable {
 
 	public Menu() {
 		this.sort = 30;
-		this.isShow=SHOW;
+		this.isShow = SHOW;
 		this.delFlag = DEL_FLAG_NORMAL;
 	}
 
@@ -76,7 +77,7 @@ public class Menu extends BaseModel implements Serializable {
 	@Id
 	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_menu")
-	@SequenceGenerator(name = "seq_sys_menu", sequenceName = "seq_sys_menu")
+	@SequenceGenerator(name = "seq_sys_menu", sequenceName = "seq_sys_menu",allocationSize=1)
 	public Long getId() {
 		return id;
 	}
@@ -87,7 +88,7 @@ public class Menu extends BaseModel implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id")
-	@NotFound(action = NotFoundAction.IGNORE)
+	@NotFound(action=NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@NotNull
 	public Menu getParent() {
@@ -99,7 +100,7 @@ public class Menu extends BaseModel implements Serializable {
 	}
 
 	@Length(min = 1, max = 255)
-	@Column(name="PARENT_IDS")
+	@Column(name = "PARENT_IDS")
 	public String getParentIds() {
 		return parentIds;
 	}
@@ -124,6 +125,14 @@ public class Menu extends BaseModel implements Serializable {
 
 	public void setHref(String href) {
 		this.href = href;
+	}
+
+	public String getRel() {
+		return rel;
+	}
+
+	public void setRel(String rel) {
+		this.rel = rel;
 	}
 
 	@Length(min = 0, max = 20)
@@ -154,7 +163,7 @@ public class Menu extends BaseModel implements Serializable {
 	}
 
 	@Length(min = 1, max = 1)
-	@Column(name="IS_SHOW")
+	@Column(name = "IS_SHOW")
 	public String getIsShow() {
 		return isShow;
 	}
@@ -172,9 +181,9 @@ public class Menu extends BaseModel implements Serializable {
 		this.permission = permission;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
+			CascadeType.REFRESH })
 	@JoinColumn(name = "user_id")
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public User getUser() {
 		return user;
@@ -185,7 +194,7 @@ public class Menu extends BaseModel implements Serializable {
 	}
 
 	@Length(min = 1, max = 1)
-	@Column(name="DEL_FLAG")
+	@Column(name = "DEL_FLAG")
 	public String getDelFlag() {
 		return delFlag;
 	}
@@ -194,8 +203,8 @@ public class Menu extends BaseModel implements Serializable {
 		this.delFlag = delFlag;
 	}
 
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.REMOVE }, fetch = FetchType.LAZY, mappedBy = "parent")
+	@OneToMany(cascade = { CascadeType.REFRESH, CascadeType.MERGE,CascadeType.PERSIST,
+			CascadeType.REMOVE },fetch=FetchType.LAZY, mappedBy = "parent")
 	@Where(clause = "del_flag='" + DEL_FLAG_NORMAL + "'")
 	@OrderBy(value = "sort")
 	@NotFound(action = NotFoundAction.IGNORE)

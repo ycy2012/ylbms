@@ -19,7 +19,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang.StringUtils;
+import com.ylbms.common.utils.StringUtils;
 
 /**
  * 使用Jaxb2.0实现XML<->Java Object的Binder.
@@ -29,11 +29,12 @@ import org.apache.commons.lang.StringUtils;
  * @author calvin
  */
 public class JaxbBinder {
-	//多线程安全的Context.
+	// 多线程安全的Context.
 	private JAXBContext jaxbContext;
 
 	/**
-	 * @param types 所有需要序列化的Root对象的类型.
+	 * @param types
+	 *            所有需要序列化的Root对象的类型.
 	 */
 	public JaxbBinder(Class<?>... types) {
 		try {
@@ -65,8 +66,8 @@ public class JaxbBinder {
 			CollectionWrapper wrapper = new CollectionWrapper();
 			wrapper.collection = root;
 
-			JAXBElement<CollectionWrapper> wrapperElement = new JAXBElement<CollectionWrapper>(new QName(rootName),
-					CollectionWrapper.class, wrapper);
+			JAXBElement<CollectionWrapper> wrapperElement = new JAXBElement<CollectionWrapper>(
+					new QName(rootName), CollectionWrapper.class, wrapper);
 
 			StringWriter writer = new StringWriter();
 			createMarshaller(encoding).marshal(wrapperElement, writer);
@@ -97,7 +98,8 @@ public class JaxbBinder {
 		try {
 			Marshaller marshaller = jaxbContext.createMarshaller();
 
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+					Boolean.TRUE);
 
 			if (StringUtils.isNotBlank(encoding)) {
 				marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);

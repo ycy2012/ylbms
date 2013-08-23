@@ -6,7 +6,7 @@ function initEnv() {
 			document.execCommand("BackgroundImageCache", false, true);
 		}catch(e){}
 	}
-	// 清理浏览器内存,只对IE起效
+	//清理浏览器内存,只对IE起效
 	if ($.browser.msie) {
 		window.setInterval("CollectGarbage();", 10000);
 	}
@@ -59,13 +59,13 @@ function initUI(_box){
 
 	$("div.panel", $p).jPanel();
 
-	// tables
+	//tables
 	$("table.table", $p).jTable();
 	
 	// css tables
 	$('table.list', $p).cssTable();
 
-	// auto bind tabs
+	//auto bind tabs
 	$("div.tabs", $p).each(function(){
 		var $this = $(this);
 		var options = {};
@@ -110,33 +110,20 @@ function initUI(_box){
 	}
 	
 	if ($.fn.uploadify) {
-		$(":file[uploader]", $p).each(function(){
+		$(":file[uploaderOption]", $p).each(function(){
 			var $this = $(this);
 			var options = {
-				uploader: $this.attr("uploader"),
-				script: $this.attr("script"),
-				buttonImg: $this.attr("buttonImg"),
-				cancelImg: $this.attr("cancelImg"),
-				queueID: $this.attr("fileQueue") || "fileQueue",
-				fileDesc: $this.attr("fileDesc"),
-				fileExt : $this.attr("fileExt"),
-				folder	: $this.attr("folder"),
-				fileDataName: $this.attr("name") || "file",
-				auto: $this.attr("auto") || false,
+				fileObjName: $this.attr("name") || "file",
+				auto: true,
 				multi: true,
-				onError:uploadifyError,
-				onComplete: uploadifyComplete,
-				onAllComplete: uploadifyAllComplete
+				onUploadError: uploadifyError
 			};
-			if ($this.attr("onComplete")) {
-				options.onComplete = DWZ.jsonEval($this.attr("onComplete"));
-			}
-			if ($this.attr("onAllComplete")) {
-				options.onAllComplete = DWZ.jsonEval($this.attr("onAllComplete"));
-			}
-			if ($this.attr("scriptData")) {
-				options.scriptData = DWZ.jsonEval($this.attr("scriptData"));
-			}
+			
+			var uploaderOption = DWZ.jsonEval($this.attr("uploaderOption"));
+			$.extend(options, uploaderOption);
+
+			DWZ.debug("uploaderOption: "+DWZ.obj2str(uploaderOption));
+			
 			$this.uploadify(options);
 		});
 	}
@@ -149,17 +136,17 @@ function initUI(_box){
 
 	$("input[type=text]", $p).not("div.tabs input[type=text]", $p).filter("[alt]").inputAlert();
 
-	// Grid ToolBar
+	//Grid ToolBar
 	$("div.panelBar li, div.panelBar", $p).hoverClass("hover");
 
-	// Button
+	//Button
 	$("div.button", $p).hoverClass("buttonHover");
 	$("div.buttonActive", $p).hoverClass("buttonActiveHover");
 	
-	// tabsPageHeader
+	//tabsPageHeader
 	$("div.tabsHeader li, div.tabsPageHeader li, div.accordionHeader, div.accordion", $p).hoverClass("hover");
 
-	// validate form
+	//validate form
 	$("form.required-validate", $p).each(function(){
 		var $form = $(this);
 		$form.validate({
@@ -218,7 +205,7 @@ function initUI(_box){
 		});
 	});
 	
-	// dialogs
+	//dialogs
 	$("a[target=dialog]", $p).each(function(){
 		$(this).click(function(event){
 			var $this = $(this);
@@ -289,8 +276,9 @@ function initUI(_box){
 	if ($.fn.itemDetail) $("table.itemDetail", $p).itemDetail();
 	if ($.fn.selectedTodo) $("a[target=selectedTodo]", $p).selectedTodo();
 	if ($.fn.pagerForm) $("form[rel=pagerForm]", $p).pagerForm({parentBox:$p});
-	
 
+	// 这里放其他第三方jQuery插件...
+	
 	 // selectOne ztree编辑时只能选择一项
    $("a[target=ztreeEditSelectOne]", $p).each(function() {
        $(this).click(function(event) {
@@ -503,7 +491,7 @@ function initUI(_box){
         	   url=encodeURI(encodeURI(url+"?mids="+getMids()+"&wz="+flwz)); //这个是页面一个方法
            }
            // 添加一些处理方法
-           $("div[class='pageFormContent']").find(".required").each(function(){
+           $("div[class='pageHeader']").find(".required").each(function(){
 				var v=$(this).val();
 				if(typeof(v)=='undefined'||v==null||v==""){
 					alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
@@ -524,23 +512,6 @@ function initUI(_box){
    });
 	// 这里放其他第三方jQuery插件...
 	// oper
-	$('#itemselector').omItemSelector({
-		 availableTitle : '准备选择权限',
-         selectedTitle : '已选择权限',
-         dataSource:'role/roleData',
-         width:100,
-         autoSore:true,
-         onSuccess:function(data, textStatus, event){
-       	  var roleIdArr = $("#roleIds").val().split(',');
-       	  if(roleIdArr!="")
-          $("#itemselector").omItemSelector({value:roleIdArr});
-         },
-         onItemSelect:function(itemDatas,event){
-        	$("#roleIds").val($('#itemselector').omItemSelector('value').join(','));
-         }
-    });
-
-
 	
 }
 

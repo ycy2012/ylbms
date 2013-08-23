@@ -12,6 +12,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.ylbms.base.single.model.SingleInfo;
+import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.common.model.BaseModel;
 
 /**
@@ -23,7 +24,7 @@ import com.ylbms.common.model.BaseModel;
 @Entity
 @IdClass(BillTbodyPK.class)
 // 复合主键
-@Table(name = "ylbms_dj_tbody")
+@Table(name = "ylbms_dj_detail")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BillTbodyModel extends BaseModel {
 
@@ -64,6 +65,8 @@ public class BillTbodyModel extends BaseModel {
 	}
 
 	// setter getter
+	
+	
 	@Id
 	public SingleInfo getMid() {
 		return mid;

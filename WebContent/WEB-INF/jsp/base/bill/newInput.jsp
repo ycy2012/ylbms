@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>入库管理</title>
+<link href="${ctx}/styles/css/bill_title.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 <!--
 	function addTr(value) {
@@ -54,50 +55,43 @@
 	<form action="${ctx}/new/addBill" method="post"
 		class="pageForm required-validate"
 		onsubmit="return validateCallback(this, navTabAjaxDone);">
-		<div class="pageFormContent" layoutH="600">
+		<div class="pageFormContent">
 			<div
-				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">新产品入库单</div>
-				<input type="hidden" name="djTitle" value="新产品入库单">
+				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">新产品合格入库单</div>
+				<input type="hidden" name="djTitle" value="新产品合格入库单">
 			<div class="divider"></div>
-			<dl>
-				<dt>供货方：</dt>
-				<dd>
-					<input name="sendLocation.id" type="text" alt="供货方信息" class="required" />
-				</dd>
-			</dl>
-			<dl>
-				<dt>接收方：</dt>
-				<dd>
-					<input name="acceptLocation.id" type="hidden" id="wzInfo" />
-			        <input type="text"  readonly="readonly" id="wzName" class="required">
-					<a class="btnLook" href="${ctx}/location/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	
-				</dd>
-			</dl>
-			<dl>
-				<dt>领料人：</dt>
-				<dd>
-					<input name="llren" type="text" alt="领料人信息" class="required" />
-				</dd>
-			</dl>
-			<dl>
-				<dt>领料单位：</dt>
-				<dd>
-					<select name="llUnit" class="combox" class="required">
+				<table id="b_title"  width="100%">
+				<tr>
+					<td>供货方：</td>
+					<td>
+						<input name="sendLocation.wzId" type="text" alt="供货方信息" class="required" size="30" /></td>
+					<td>接收方：</td>
+					<td> 
+						<input name="acceptLocation.wzId" type="hidden" id="wzInfo" />
+			        <input type="text"  readonly="readonly" id="wzName" class="required" size="30">
+					<a class="btnLook" href="${ctx}/tdmis/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	
+					</td>
+				</tr>
+				<tr>
+					<td>领料人：</td>
+					<td><input name="llren" type="text" alt="领料人信息" class="required" size="30" /></td>
+					<td>领料单位：</td>
+					<td>
+                    <select name="llUnit" class="combox" class="required">
 					    <option value="">请选择信息</option>
 						<option value="轮南项目部">轮南项目部</option>
 						<option value="库车项目部">库车项目部</option>
 						<option value="塔中项目部">塔中项目部</option>
 					</select>
-				</dd>
-			</dl>
-			<dl class="nowrap">
-				<dt>备注信息：</dt>
-				<dd>
-					<textarea name="remark" cols="80" rows="1"></textarea>
-				</dd>
-			</dl>
+                    </td>
+				</tr>
+				<tr>
+					<td>备注信息：</td>
+					<td colspan="3"><textarea name="remark" cols="80" rows="1"></textarea></td>
+				</tr>
+			</table>
 		</div>
-		<div class="pageContent" layoutH="200">
+		<div class="pageContent" layoutH="175">
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>

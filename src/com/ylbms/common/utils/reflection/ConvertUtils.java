@@ -14,7 +14,8 @@ import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
-import org.apache.commons.lang.StringUtils;
+
+import com.ylbms.common.utils.StringUtils;
 
 public class ConvertUtils {
 

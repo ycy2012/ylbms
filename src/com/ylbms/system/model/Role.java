@@ -1,12 +1,8 @@
-/**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
 package com.ylbms.system.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -73,7 +69,7 @@ public class Role extends BaseModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_role")
-	@SequenceGenerator(name = "seq_sys_role", sequenceName = "seq_sys_role")
+	@SequenceGenerator(name = "seq_sys_role", sequenceName = "seq_sys_role",allocationSize=1)
 	public Long getId() {
 		return id;
 	}
@@ -91,9 +87,8 @@ public class Role extends BaseModel {
 		this.name = name;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH})
 	@JoinColumn(name = "user_id")
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public User getUser() {
 		return user;

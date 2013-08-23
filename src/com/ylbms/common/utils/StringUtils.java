@@ -11,6 +11,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.LocaleResolver;
 
+import com.ylbms.common.utils.spring.SpringContextHolder;
+
 
 /**
  * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类

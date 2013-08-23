@@ -25,11 +25,11 @@
 			</p>
 			<p>
 				<label>描述：</label> <input name="desciption" type="text" size="30"
-					value="${obj.desciption}" class="required" maxlength="150" />
+					value="${obj.desciption}"  maxlength="150" />
 			</p>
 			<p>
 				<label>排序：</label> <input name="sort" type="text" size="30"
-					value="${obj.sort}"  maxlength="150" />
+					value="${obj.sort}"  maxlength="10" class="required" />
 			</p>
 			<p>
 				<label>状态：</label> <select name="delFlag" class="combox">

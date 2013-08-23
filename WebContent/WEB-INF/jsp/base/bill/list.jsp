@@ -35,7 +35,6 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="${ctx}/bill/addUi" target="dialog" mask="true" title="添加单据信息"><span>添加</span></a></li>
 			<li class="line">line</li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="djIds" postType="string" href="${ctx}/bill/delBydjIds/{sdjId_bill}" class="delete"><span>批量删除</span></a></li>
 			<li class="line">line</li>

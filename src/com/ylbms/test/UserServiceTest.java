@@ -27,6 +27,7 @@ import com.ylbms.system.dao.UserDao;
 import com.ylbms.system.model.User;
 import com.ylbms.system.security.SystemRealm;
 import com.ylbms.system.service.SystemService;
+import com.ylbms.system.service.SystemService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring-mvc.xml",
@@ -43,7 +44,6 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
 	@Autowired
 	private UserDao userDao;
 
-	@Test
 	public void testBackwardsCompatibleSaltedAuthenticationInfo() {
 		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(
 				Sha1Hash.ALGORITHM_NAME);
@@ -80,6 +80,16 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
 
 		// verify the hashed token matches what is in the account:
 		assertTrue(matcher.doCredentialsMatch(token, account));
+	}
+	
+	@Test
+	public void testIsAdmin(){
+		User user=systemService.getUser(1l);
+		boolean flag=false;
+		System.out.println(user.getId().equals(1L));
+		
+		flag=user.isAdmin();
+		
 	}
 
 	

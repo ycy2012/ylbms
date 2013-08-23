@@ -3,6 +3,7 @@
  * @version 1.0
  */
 (function($){
+
 	$.fn.extend({
 		jTask:function(options){
 			return this.each(function(){
@@ -95,8 +96,7 @@
 			if (iW > this._getTaskBarW()) {
 				var $this = this;
 				var lTask = $(">li:last-child", this._taskList);
-				var left = this._getTaskBarW() - (lTask.position()===null?"":lTask.position().left) - lTask.outerWidth(true);
-				
+				var left = this._getTaskBarW() - (lTask.position()==null?"":lTask.position().left) - lTask.outerWidth(true);
 				this._taskList.animate({
 					left: left + 'px'
 				}, 200, function(){

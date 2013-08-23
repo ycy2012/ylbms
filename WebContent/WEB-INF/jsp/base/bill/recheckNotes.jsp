@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>安装记录添加</title>
+<link href="${ctx}/styles/css/bill_title.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 <!--
 	function addTr(value) {
@@ -55,48 +56,43 @@
 	<form action="${ctx}/check/addBill" method="post"
 		class="pageForm required-validate"
 		onsubmit="return validateCallback(this, navTabAjaxDone);">
-		<div class="pageHeader">
-		<div class="pageFormContent" layoutH="600">
+		<div class="pageFormContent" >
 			<div
 				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">回收送检记录表</div>
 				<input type="hidden" name="djTitle" value="回收送检记录表">
 			<div class="divider"></div>
-			<dl>
-				<dt>发料地点：</dt>
-				<dd>
-				    <input name="sendLocation.id" type="hidden" id="wzInfo" />
-			        <input type="text"  readonly="readonly" id="wzName" class="required">
-					<a class="btnLook" href="${ctx}/location/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	
-				</dd>
-			</dl>
-			<dl>
-				<dt>接受地点：</dt>
-				<dd>
-				   <input name="acceptLocation.id" type="hidden"  value="2051" />
-					<input  type="text" readonly="readonly" value="基地" />
-				</dd>
-			</dl>
-			<dl>
-				<dt>送料人员：</dt>
-				<dd>
-					<input name="llren" type="text" alt="送料人员信息" class="required" />
-				</dd>
-			</dl>
-			<dl>
-				<dt>送料单位：</dt>
-				<dd>
-				    <input name="llUnit" readonly="readonly" type="text" id="ss">
-				</dd>
-			</dl>
-			<dl class="nowrap">
-				<dt>备注信息：</dt>
-				<dd>
-					<textarea name="remark" cols="80" rows="2"></textarea>
-				</dd>
-			</dl>
+				<table id="b_title"  width="100%">
+				<tr>
+					<td>发料地点:</td>
+					<td>
+						<input name="sendLocation.wzId" type="hidden" id="wzInfo" />
+				        <input type="text"  readonly="readonly" id="wzName" class="required" size="30">
+						<a class="btnLook" href="${ctx}/tdmis/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	</td>
+					<td>接受地点:</td>
+					<td> 
+						<input name="acceptLocation.wzId" type="hidden"  value="2051" />
+						<input  type="text" readonly="readonly" value="基地"  size="30"/>
+					</td>
+				</tr>
+				<tr>
+					<td>送料人员：</td>
+					<td>
+						<input name="llren" type="text" alt="送料人员信息" class="required" size="30" />
+					</td>
+					<td>送料单位：</td>
+					<td>
+						<input name="llUnit" readonly="readonly" type="text" id="ss">
+					</td>
+				</tr>
+				<tr>
+					<td>备注信息：</td>
+					<td colspan="3">
+						<textarea name="remark" cols="80" rows="2"></textarea>
+					</td>
+				</tr>
+			</table>
 		</div>
-		</div>
-		<div class="pageContent" layoutH="208">
+		<div class="pageContent" layoutH="188">
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>

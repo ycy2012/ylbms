@@ -34,8 +34,13 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
+		    <shiro:hasPermission name="sys:role:add">
 			<li><a class="add" href="${ctx}/role/addUi" target="dialog" mask="true" title="添加角色信息"><span>添加</span></a></li>
+			</shiro:hasPermission>
+			<li class="line">line</li>
+			 <shiro:hasPermission name="sys:role:edit">
 			<li><a class="edit" href="${ctx}/role/editUi/{sid_role}" target="dialog" mask="true" title="修改角色信息"><span>修改</span></a></li>
+			</shiro:hasPermission>
 			<li class="line">line</li>
 			<!--  
 			<li><a class="icon" href="#" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
@@ -58,7 +63,9 @@
 					<td>${acc.name}</td>
 					<td>${acc.delFlag==0?'有效':'无效'}</td>
 				<td>
+				 <shiro:hasPermission name="sys:role:delete">
 				<a title="删除角色信息" target="ajaxTodo" href="${ctx}/role/delete/${acc.id}" class="btnDel">删除角色信息</a>
+				</shiro:hasPermission>
 				<a title="添加权限信息" target="dialog" href="${ctx}/role/permUi/${acc.id}" class="btnPerm" width="250">添加权限</a>
 				<a title="编辑角色信息" target="dialog" href="${ctx}/role/editUi/${acc.id}" class="btnEdit">编辑角色信息</a>
 				</td>

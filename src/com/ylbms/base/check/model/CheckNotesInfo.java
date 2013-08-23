@@ -4,8 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -16,16 +19,16 @@ import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.common.model.BaseModel;
 
 /**
- * 检定记录明细信息实体
+ * 检定记录明细信息实体（未启用）
  * 
  * @author JackLiang
  * @version 1.0
  * @date 2013-7-16
  */
-@Entity
-@IdClass(CheckNotesInfoPK.class)
-@Table(name = "ylbms_jc_jdInfos")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Entity
+//@IdClass(CheckNotesInfoPK.class)
+//@Table(name = "ylbms_jc_jdInfos")
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class CheckNotesInfo extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
@@ -39,11 +42,17 @@ public class CheckNotesInfo extends BaseModel {
 	private String zShuCode;// 证书 编码
 	private Date zsyxDate; // 证书有效日期
 	private String shbCode; // 设备编码
-	private String grade; // 检定等级
 	private Long order;// 排序
 	private String remark;// 备注信息
+	private String status; // 是否已制单
 
 	public CheckNotesInfo() {
+		this.status = DEL_FLAG_NORMAL;
+	}
+
+	public CheckNotesInfo(SingleInfo single, CheckNotes checkNotes) {
+		this.single = single;
+		this.checkNotes = checkNotes;
 	}
 
 	// setter getter
@@ -131,14 +140,6 @@ public class CheckNotesInfo extends BaseModel {
 		this.shbCode = shbCode;
 	}
 
-	public String getGrade() {
-		return grade;
-	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-
 	@Column(name = "sort")
 	public Long getOrder() {
 		return order;
@@ -154,6 +155,14 @@ public class CheckNotesInfo extends BaseModel {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

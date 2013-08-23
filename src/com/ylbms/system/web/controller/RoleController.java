@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
-import org.junit.runners.Parameterized.Parameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,6 +53,7 @@ public class RoleController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("sys:role:add")
 	@RequestMapping("/addUi")
 	public String addUi(HttpServletRequest request, Model model) {
 
@@ -66,6 +67,7 @@ public class RoleController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("sys:role:edit")
 	@RequestMapping("/editUi/{id}")
 	public String editUi(@PathVariable("id") Long id, Model model) {
 		Role role = systemService.getRoleModel(id);
@@ -179,6 +181,7 @@ public class RoleController {
 	 * @param id
 	 * @return
 	 */
+	@RequiresPermissions("sys:role:delete")
 	@RequestMapping("/delete/{id}")
 	@ResponseBody
 	public Map<String, Object> delete(@PathVariable("id") Long id) {

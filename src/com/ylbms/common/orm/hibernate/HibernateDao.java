@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -37,7 +36,7 @@ import org.springframework.util.Assert;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.orm.PropertyFilter.MatchType;
-import com.ylbms.common.orm.PropertyFilter.PropertyType;
+import com.ylbms.common.utils.StringUtils;
 import com.ylbms.common.utils.reflection.ReflectionUtils;
 
 /**

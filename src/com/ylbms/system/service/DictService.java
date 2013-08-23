@@ -3,7 +3,6 @@ package com.ylbms.system.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,6 +71,6 @@ public class DictService {
 	 */
 	public void delByIds(String ids) {
 		String delHQL = "delete Dict where id in(" + ids + ")";
-		dictDao.createQuery(delHQL, "");
+		dictDao.getSession().createQuery(delHQL).executeUpdate();
 	}
 }

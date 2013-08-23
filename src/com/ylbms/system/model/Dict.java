@@ -41,13 +41,12 @@ public class Dict extends BaseModel {
 	}
 
 	public Dict(Long id) {
-		this();
 		this.id = id;
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_dict")
-	@SequenceGenerator(name = "seq_sys_dict", sequenceName = "seq_sys_dict")
+	@SequenceGenerator(name = "seq_sys_dict", sequenceName = "seq_sys_dict", allocationSize = 1)
 	public Long getId() {
 		return id;
 	}
@@ -92,7 +91,7 @@ public class Dict extends BaseModel {
 		this.desciption = desciption;
 	}
 
-	@NotNull
+	@NotNull(message = "序号不能为空")
 	public Integer getSort() {
 		return sort;
 	}

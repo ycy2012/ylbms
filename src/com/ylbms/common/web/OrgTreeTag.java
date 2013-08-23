@@ -14,7 +14,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.ylbms.system.model.Org;
 import com.ylbms.system.service.SystemService;
-import com.ylbms.system.service.impl.SystemServiceImpl;
+import com.ylbms.system.service.SystemService;
 
 public class OrgTreeTag extends TagSupport
 {
@@ -36,7 +36,7 @@ public class OrgTreeTag extends TagSupport
 			sc = pageContext.getServletContext();
 			context = WebApplicationContextUtils.getWebApplicationContext(sc);
 			
-			SystemService securityManager = context.getBean(SystemServiceImpl.class);
+			SystemService securityManager = context.getBean(SystemService.class);
 			List<Org> orgs = securityManager.getAllOrg();
 			
 			Map<Long, List<Org>> orgMap = buildOrgTreeMap(orgs);

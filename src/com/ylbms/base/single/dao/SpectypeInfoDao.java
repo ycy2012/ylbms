@@ -21,26 +21,5 @@ public class SpectypeInfoDao extends HibernateDao<SpectypeInfo, Long> {
 		return getSession().createQuery(HQL).executeUpdate();
 	}
 	
-	/**
-	 * 删除一条记录
-	 * @param HQL
-	 */
-	public void delSpectypeInfo(SpectypeInfo spetype){
-		delete(spetype);
-	}
-
-	/**
-	 * 根据规格型号名称查询（模糊查询）
-	 * @param string
-	 * @return
-	 */
-
-	/*public List<Menu> findSpectypeInfo(String string) {
-		String HQL = "from YLBMS_BAS_SPECTYPEINFO where speName like name";
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("name", string);
-		return find(HQL, map);
-	}*/
-	
 }
 

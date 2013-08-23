@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ylbms.common.orm.Page;
@@ -44,6 +46,7 @@ public class DictController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("sys:dict:add")
 	@RequestMapping("/addUi")
 	public String addUi(HttpServletRequest request, Model model) {
 		return "dict/input";
@@ -56,6 +59,7 @@ public class DictController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions("sys:dict:edit")
 	@RequestMapping("/editUi/{id}")
 	public String editUi(@PathVariable("id") Long id, Model model) {
 		Dict dict = dictService.getDictById(id);
@@ -75,7 +79,7 @@ public class DictController {
 	public Map<String, Object> add(Dict dict, Model model) {
 		try {
 			dictService.saveDict(dict);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK,"dict");
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error("system error!!" + e.getMessage());
@@ -90,6 +94,7 @@ public class DictController {
 	 * @param id
 	 * @return
 	 */
+	@RequiresPermissions("sys:dict:delete")
 	@RequestMapping(value = "/delete/{id}")
 	@ResponseBody
 	public Map<String, Object> delete(@PathVariable("id") Long id) {
@@ -109,12 +114,13 @@ public class DictController {
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value = "/delByIds/{ids}")
+	@RequiresPermissions("sys:dict:delete")
+	@RequestMapping(value = "/delByIds")
 	@ResponseBody
-	public Map<String, Object> delByIds(@PathVariable("ids") String ids) {
+	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {
 		try {
 			dictService.delByIds(ids);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, "dict");
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
 			if (log.isErrorEnabled())
 				log.error("system error!!", e.getCause());

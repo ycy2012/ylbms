@@ -14,9 +14,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.util.Assert;
 
+import com.ylbms.common.utils.StringUtils;
 import com.ylbms.common.utils.reflection.ConvertUtils;
 import com.ylbms.common.utils.web.ServletUtils;
 

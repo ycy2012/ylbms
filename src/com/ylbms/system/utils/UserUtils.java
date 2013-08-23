@@ -8,11 +8,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.subject.Subject;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Maps;
+import com.ylbms.common.utils.spring.SpringContextHolder;
 import com.ylbms.system.dao.MenuDao;
 import com.ylbms.system.dao.UserDao;
 import com.ylbms.system.model.Menu;
@@ -25,23 +23,27 @@ import com.ylbms.system.security.SystemRealm.Principal;
  * @author JackLiang
  * @version 1.0
  */
-@Component
-public class UserUtils implements ApplicationContextAware {
+public class UserUtils  {
 
 	private static final Log log = LogFactory.getLog(UserUtils.class);
 
-	private static UserDao userDao;
-	private static MenuDao menuDao;
+	public static final String CACHE_USER = "user";
+	public static final String CACHE_MENU_LIST = "menuList";
+	public static final String CACHE_AREA_LIST = "areaList";
+	public static final String CACHE_OFFICE_LIST = "officeList";
+
+	private static UserDao userDao=SpringContextHolder.getBean(UserDao.class);
+	private static MenuDao menuDao=SpringContextHolder.getBean(MenuDao.class);
 
 	public static User getUser() {
-		User user = (User) getCache("user");
+		User user = (User) getCache(CACHE_USER);
 		if (null == user) {
 			Principal principal = (Principal) SecurityUtils.getSubject()
 					.getPrincipal();
 			if (null != principal) {
 				user = userDao.findUniqueBy("loginName",
 						principal.getLoginName());
-				putCache("user", user);
+				putCache(CACHE_USER, user);
 			}
 		}
 		if (user == null) {
@@ -53,7 +55,7 @@ public class UserUtils implements ApplicationContextAware {
 
 	public static User getUser(boolean isRefresh) {
 		if (isRefresh) {
-			removeCache("user");
+			removeCache(CACHE_USER);
 		}
 		return getUser();
 	}
@@ -65,7 +67,7 @@ public class UserUtils implements ApplicationContextAware {
 	 */
 	public static List<Menu> getMenuList() {
 		@SuppressWarnings("unchecked")
-		List<Menu> menuList = (List<Menu>) getCache("menuList");
+		List<Menu> menuList = (List<Menu>) getCache(CACHE_MENU_LIST);
 		if (menuList == null) {
 			User user = getUser();
 			if (user.isAdmin()) {
@@ -73,7 +75,7 @@ public class UserUtils implements ApplicationContextAware {
 			} else {
 				menuList = menuDao.findByUserId(user.getId());
 			}
-			putCache("menuList", menuList);
+			putCache(CACHE_MENU_LIST, menuList);
 		}
 		return menuList;
 	}
@@ -93,12 +95,6 @@ public class UserUtils implements ApplicationContextAware {
 	// }
 	// return officeList;
 	// }
-
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		userDao = (UserDao) applicationContext.getBean("userDao");
-		menuDao = (MenuDao) applicationContext.getBean("menuDao");
-	}
 
 	// ============== User Cache ==============
 

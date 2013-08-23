@@ -23,7 +23,7 @@
 			$(this).wrap("<div class='grid'></div>");
 			var $grid = $table.parent().html($table.html());
 			var thead = $grid.find("thead");
-			thead.wrap("<div class='gridHeader'><div  class='gridThead'><table  style='width:" + (tlength - 20) + "px;'></table></div></div>");
+			thead.wrap("<div class='gridHeader'><div class='gridThead'><table style='width:" + (tlength - 20) + "px;'></table></div></div>");
 
 			var lastH = $(">tr:last-child", thead);
 			var ths = $(">th", lastH);
@@ -69,12 +69,6 @@
 						$("#"+sTarget, $grid).val($tr.attr("rel"));
 					}
 				});
-				//添加双击事件
-				/**
-			    $tr.dblclick(function(){
-			        dbltable($tr.attr("target"),$tr.attr("rel"));
-			    });
-			    */
 			});
 			
 			$(">td",ftr).each(function(i){

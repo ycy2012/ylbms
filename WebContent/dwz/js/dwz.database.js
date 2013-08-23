@@ -229,9 +229,8 @@
 					var $th = $(this);
 					var field = {
 						type: $th.attr("type") || "text",
-						patternDate: $th.attr("format") || "yyyy-MM-dd",
+						patternDate: $th.attr("dateFmt") || "yyyy-MM-dd",
 						name: $th.attr("name") || "",
-						id:$th.attr("id")|| "", //id属性 jack Liang添加
 						defaultVal: $th.attr("defaultVal") || "",
 						size: $th.attr("size") || "12",
 						enumUrl: $th.attr("enumUrl") || "",
@@ -305,12 +304,11 @@
 			 */
 			function initSuffix($tbody) {
 				$tbody.find('>tr').each(function(i){
-					$(':input, a.btnLook', this).each(function(){
+					$(':input, a.btnLook, a.btnAttach', this).each(function(){
 						var $this = $(this), name = $this.attr('name'), val = $this.val();
 
 						if (name) $this.attr('name', name.replaceSuffix(i));
-						//修改添加部分 ID [#index#] Jack添加
-						if(id) $this.attr('id',id.replaceSuffix(i));
+						
 						var lookupGroup = $this.attr('lookupGroup');
 						if (lookupGroup) {$this.attr('lookupGroup', lookupGroup.replaceSuffix(i));}
 						
@@ -367,7 +365,7 @@
 						});
 						break;
 					case 'date':
-						html = '<input type="text" name="'+field.name+'" value="'+field.defaultVal+'" class="date '+field.fieldClass+'" format="'+field.patternDate+'" size="'+field.size+'"/>'
+						html = '<input type="text" name="'+field.name+'" value="'+field.defaultVal+'" class="date '+field.fieldClass+'" dateFmt="'+field.patternDate+'" size="'+field.size+'"/>'
 							+'<a class="inputDateButton" href="javascript:void(0)">选择</a>';
 						break;
 					default:
@@ -419,7 +417,7 @@
 								if (postType == 'map'){
 									return $.map(ids.split(','), function(val, i) {
 										return {name: selectedIds, value: val};
-									});
+									})
 								} else {
 									var _data = {};
 									_data[selectedIds] = ids;
@@ -440,65 +438,6 @@
 				});
 				
 			});
-		},
-		/**
-		 *扩展传值给父页面
-		 * @returns
-		 */
-		selectedToPage:function(){
-			function _getIds(selectedIds, targetType) {
-				var ids = "";
-				var $box = targetType == "dialog" ? $.pdialog.getCurrent() : navTab
-						.getCurrentPanel();
-				$box.find("input:checked").filter("[name='" + selectedIds + "']").each(
-						function(i) {
-							var val = $(this).val();
-							ids += i == 0 ? val : "," + val;
-						});
-				return ids;
-			}
-			return this.each(function() {
-				var $this = $(this);
-				var selectedIds = $this.attr("rel") || "ids";
-				var postType = $this.attr("postType") || "map";
-				$this.click(function() {
-							var targetType = $this.attr("targetType");
-							var ids = _getIds(selectedIds, targetType);
-							if (!ids) {
-								alertMsg.error($this.attr("warn")|| DWZ.msg("alertSelectMsg"));
-								return false;
-							}
-							var _callback = $this.attr("callback")|| (targetType == "dialog" ? dialogAjaxDone : navTabAjaxDone);
-							if (!$.isFunction(_callback))_callback = eval('(' + _callback + ')');
-							// 未实现
-							function _doPost() {
-								alert("I coming");
-								if (postType == 'map') {
-									return $.map(ids.split(','), function(val, i) {
-										return {
-											name : selectedIds,
-											value : val
-										};
-									});
-								} else {
-									var temp = {};
-									temp[selectedIds] = ids;
-									window.returnValue = temp;
-//									return temp;
-								}
-								return  _callback;
-							}
-							var title = $this.attr("title");
-							alert(title);
-							if (title) {
-								alertMsg.confirm(title, {
-									okCall : _doPost
-								});
-							}
-							return false;
-						});
-			});
-			// end
 		}
 	});
 })(jQuery);

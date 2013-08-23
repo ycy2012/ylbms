@@ -103,10 +103,6 @@ var DWZ = {
 		}
 	},
 	ajaxDone:function(json){
-		if (json.statusCode === undefined && json.message === undefined) { // for iframeCallback
-			if (alertMsg) return alertMsg.error(json);
-			else return alert(json);
-		} 
 		if(json.statusCode == DWZ.statusCode.error) {
 			if(json.message && alertMsg) alertMsg.error(json.message);
 		} else if (json.statusCode == DWZ.statusCode.timeout) {

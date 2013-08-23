@@ -12,31 +12,33 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.google.common.collect.Lists;
 import com.ylbms.common.model.BaseModel;
 import com.ylbms.system.model.User;
 
 /**
  * 检定记录表头信息实体
- * 
+ *  为启用
  * @author JackLiang
  * @version 1.0
  * @date 2013-7-16
  */
-@Entity
-@Table(name = "YLBMS_JC_JDMASTER")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Entity
+//@Table(name = "YLBMS_JC_JDMASTER")
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class CheckNotes extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
@@ -51,7 +53,7 @@ public class CheckNotes extends BaseModel {
 	private String remark; // 备注信息
 	private String status; // 状态
 
-	private List<CheckNotesInfo> notesInfo;
+	private List<CheckNotesInfo> notesInfo=Lists.newArrayList();
 
 	// 构造函数
 	public CheckNotes() {
@@ -149,6 +151,7 @@ public class CheckNotes extends BaseModel {
 	}
 
 	@OneToMany(mappedBy = "checkNotes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OrderBy("order")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<CheckNotesInfo> getNotesInfo() {

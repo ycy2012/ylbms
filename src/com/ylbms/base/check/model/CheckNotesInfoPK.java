@@ -30,7 +30,7 @@ public class CheckNotesInfoPK implements Serializable {
 	// setter getter
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinColumn(name = "mid")
-	@NotFound(action = NotFoundAction.EXCEPTION)
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	public SingleInfo getSingle() {
 		return single;
@@ -42,7 +42,7 @@ public class CheckNotesInfoPK implements Serializable {
 
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.REMOVE })
 	@JoinColumn(name = "jd_id",nullable=false)
-	@NotFound(action = NotFoundAction.EXCEPTION)
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	public CheckNotes getCheckNotes() {
 		return checkNotes;

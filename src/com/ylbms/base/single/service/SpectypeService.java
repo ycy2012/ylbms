@@ -3,13 +3,14 @@ package com.ylbms.base.single.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.base.single.dao.SpectypeInfoDao;
 import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
+import com.ylbms.common.utils.StringUtils;
 import com.ylbms.system.utils.UserUtils;
 
 /**
@@ -18,7 +19,7 @@ import com.ylbms.system.utils.UserUtils;
  * @version 1.0
  * @date 2013-6-9
  */
-@Component
+@Service
 @Transactional
 public class SpectypeService {
 
@@ -36,7 +37,7 @@ public class SpectypeService {
 		UserUtils.removeCache("spectypes");
 	}
 
-	public SpectypeInfo getSpetypeById(long  id) {
+	public SpectypeInfo getSpetypeById(long id) {
 		return spectypeDao.get(id);
 	}
 
@@ -48,9 +49,8 @@ public class SpectypeService {
 
 	@Transactional(readOnly = false)
 	public void deleteSpectype(String ids) {
-		spectypeDao
-				.delSpectypeInfo("delect from YLBMS_BAS_SPECTYPEINFO where speid in("
-						+ ids + ")");
+		spectypeDao.delSpectypeInfo("delete from SpectypeInfo where speid in("
+				+ ids + ")");
 		UserUtils.removeCache("spectypes");
 	}
 
@@ -102,5 +102,17 @@ public class SpectypeService {
 			UserUtils.putCache("spectypes", obj);
 		}
 		return ((List<SpectypeInfo>) obj);
+	}
+
+	/**
+	 * get spectype info by name
+	 * 
+	 * @param speName
+	 */
+	public SpectypeInfo getSpectypeByName(String speName) {
+		if (StringUtils.isNotBlank(speName)) {
+			return spectypeDao.findUniqueBy("speName", speName);
+		}
+		return null;
 	}
 }

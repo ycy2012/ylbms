@@ -4,31 +4,24 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import sun.rmi.transport.proxy.HttpReceiveSocket;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.ylbms.common.orm.Page;
-import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.system.model.Menu;
-import com.ylbms.system.model.User;
 import com.ylbms.system.service.MenuService;
 import com.ylbms.system.service.SystemService;
 
@@ -79,7 +72,7 @@ public class MenuController {
 			@PathVariable("id") Long id, Model model) {
 		Menu menu = systemService.getMenu(id);
 		model.addAttribute("menu", menu);
-		return "menu/input";
+		return "menu/edit";
 	}
 
 	/**
@@ -112,6 +105,7 @@ public class MenuController {
 		}
 		return DwzUtil.dialogAjaxDone(DwzUtil.OK, "menu");
 	}
+	
 
 	/**
 	 * add next menu for it
@@ -199,9 +193,9 @@ public class MenuController {
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value = "/delByIds/{ids}")
+	@RequestMapping(value = "/delByIds}")
 	@ResponseBody
-	public Map<String, Object> delByIds(@PathVariable("ids") String ids) {
+	public Map<String, Object> delByIds(@RequestParam("ids") String ids) {
 		try {
 			menuService.delByIds(ids);
 		} catch (Exception e) {

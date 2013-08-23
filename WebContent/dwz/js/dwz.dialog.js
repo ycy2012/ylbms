@@ -355,16 +355,6 @@
 			$(".pageContent", dialog).css("width", (width-14) + "px");
 			
 			$(window).trigger(DWZ.eventType.resizeGrid);
-		},
-		/**
-		 * 扩展刷新dialog
-		 * @param dialogId
-		 */
-		reloadDialog:function(dialogId){
-            var dialog = $("body").data(dialogId);
-            if(dialog){
-                $.pdialog.reload(dialog.data("url"),{dialogId:dialogId});
-            }
-        }
+		}
 	};
 })(jQuery);

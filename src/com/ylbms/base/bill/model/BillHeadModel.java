@@ -21,7 +21,8 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.ylbms.base.location.model.Location;
+import com.google.common.collect.Lists;
+import com.ylbms.base.location.model.TdmisLocationFullName;
 import com.ylbms.common.model.BaseModel;
 
 /**
@@ -32,7 +33,7 @@ import com.ylbms.common.model.BaseModel;
  * @modify JackLiang 2013年7月8日 16:48:45
  */
 @Entity
-@Table(name = "ylbms_dj_thead")
+@Table(name = "ylbms_dj_master")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BillHeadModel extends BaseModel {
 
@@ -42,15 +43,15 @@ public class BillHeadModel extends BaseModel {
 
 	private String djTitle;
 
-	private Location sendLocation;
+	private TdmisLocationFullName sendLocation;
 
-	private Location acceptLocation;
+	private TdmisLocationFullName acceptLocation;
 
 	private Date sxDate; // 生效日期
 
 	private Date createDate; // 创建日期
-	
-	private String createUser;  //单据制作人员信息
+
+	private String createUser; // 单据制作人员信息
 
 	private String llUnit;
 
@@ -76,11 +77,11 @@ public class BillHeadModel extends BaseModel {
 
 	private Date tempD2;
 
-	private List<BillTbodyModel> billTbody;
+	private List<BillTbodyModel> billTbody = Lists.newArrayList();
 
 	public BillHeadModel() {
-		this.createDate=new Date();
-		this.status=DEL_FLAG_NORMAL;
+		this.createDate = new Date();
+		this.status = DEL_FLAG_NORMAL;
 	}
 
 	public BillHeadModel(String djId) {
@@ -109,27 +110,28 @@ public class BillHeadModel extends BaseModel {
 		this.djTitle = djTitle;
 	}
 
-	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.LAZY)
-	@JoinColumn(name="sendLocation",nullable=false)
-	@NotFound(action=NotFoundAction.IGNORE)
-	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-	public Location getSendLocation() {
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sendLocation", nullable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	public TdmisLocationFullName getSendLocation() {
 		return sendLocation;
 	}
 
-	public void setSendLocation(Location sendLocation) {
+	public void setSendLocation(TdmisLocationFullName sendLocation) {
 		this.sendLocation = sendLocation;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH})
-	@JoinColumn(name="acceptLocation",nullable=false)
-	@NotFound(action=NotFoundAction.IGNORE)
-	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-	public Location getAcceptLocation() {
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
+			CascadeType.REFRESH })
+	@JoinColumn(name = "acceptLocation", nullable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	public TdmisLocationFullName getAcceptLocation() {
 		return acceptLocation;
 	}
 
-	public void setAcceptLocation(Location acceptLocation) {
+	public void setAcceptLocation(TdmisLocationFullName acceptLocation) {
 		this.acceptLocation = acceptLocation;
 	}
 
@@ -153,13 +155,13 @@ public class BillHeadModel extends BaseModel {
 		this.createDate = createDate;
 	}
 
-	@Column(name="create_user")
+	@Column(name = "create_user")
 	public String getCreateUser() {
 		return createUser;
 	}
 
 	public void setCreateUser(String createUser) {
-		this.createUser=createUser;
+		this.createUser = createUser;
 	}
 
 	public String getLlUnit() {
@@ -266,7 +268,6 @@ public class BillHeadModel extends BaseModel {
 	}
 
 	@OneToMany(mappedBy = "billId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<BillTbodyModel> getBillTbody() {
 		return billTbody;

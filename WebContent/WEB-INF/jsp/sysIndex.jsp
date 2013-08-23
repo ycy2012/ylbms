@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
- <%@include file="inc/header.jsp"%>
+<%@include file="inc/taglib.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -10,12 +10,11 @@
 
 <link href="${ctx}/dwz/themes/default/style.css" rel="stylesheet"
 	type="text/css" />
-<link href="${ctx}/dwz/themes/css/core.css" rel="stylesheet" type="text/css" />
-<link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet" type="text/css"
-	media="print" />
-<link href="${ctx}/dwz/uploadify/css/uploadify.css" rel="stylesheet"
+<link href="${ctx}/dwz/themes/css/core.css" rel="stylesheet"
 	type="text/css" />
-<link href="${ctx}/oper/om-default.css" rel="stylesheet"
+<link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet"
+	type="text/css" media="print" />
+<link href="${ctx}/dwz/uploadify/css/uploadify.css" rel="stylesheet"
 	type="text/css" />
 <!--[if IE]>
 <link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css" />
@@ -25,20 +24,22 @@
     <script type="text/javascript">
         DD_belatedPNG.fix('a');
     </script>
-<![endif]--> 
+<![endif]-->
 <script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
-<script src="${ctx}/dwz/js/jquery-1.7.2.js" type="text/javascript"></script>
+<script src="${ctx}/styles/jquery/jquery-1.7.2.min.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.validate.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/xheditor/xheditor-1.1.14-zh-cn.min.js"
 	type="text/javascript"></script>
-<script src="${ctx}/dwz/uploadify/scripts/swfobject.js" type="text/javascript"></script>
+<script src="${ctx}/dwz/uploadify/scripts/swfobject.js"
+	type="text/javascript"></script>
 <script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.v2.1.0.js"
 	type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.core.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.util.date.js" type="text/javascript"></script>
-<script src="${ctx}/dwz/js/dwz.validate.method.js" type="text/javascript"></script>
+<script src="${ctx}/dwz/js/dwz.validate.method.js"
+	type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.barDrag.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.drag.js" type="text/javascript"></script>
@@ -64,17 +65,15 @@
 <script src="${ctx}/dwz/js/dwz.effects.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.panel.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.checkbox.js" type="text/javascript"></script>
-<script src="${ctx}/dwz/js/dwz.history.js" type="text/javascript"></script>
 <script src="${ctx}/dwz/js/dwz.combox.js" type="text/javascript"></script>
 <!--
+<script src="${ctx}/dwz/js/dwz.history.js" type="text/javascript"></script>
 <script src="bin/dwz.min.js" type="text/javascript"></script>
 -->
 <script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
-<script src="${ctx}/oper/js/operamasks-ui.js" type="text/javascript"></script>
-<link href="${ctx}/styles/ztree/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css"/>
-<script src="${ctx}/styles/ztree/js/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
-<script src="${ctx}/styles/ztree/js/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
- <script language="javascript" type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${ctx}/styles/highcharts/js/highcharts.js"></script>
+<script type="text/javascript" src="${ctx}/styles/js/indexSingleBar.js"></script>
 <script type="text/javascript">
 	$(function() {
 		DWZ.init("dwz.frag.xml", {
@@ -99,6 +98,9 @@
 				}); // themeBase 相对于index页面的主题base路径
 			}
 		});
+		$.post("report/singleCheck", function(data) {
+			$("#counts").text(data);
+		});
 	});
 </script>
 </head>
@@ -107,12 +109,13 @@
 	<div id="layout">
 		<div id="header">
 			<div class="headerNav">
-			   <a class="logo">标志</a>
+				<a class="logo">标志</a>
 				<ul class="nav">
-					<li id="switchEnvBox">
-					<a> 欢迎使用[<shiro:principal property="name"/>]</a>
-					</li>
-					<li><a href="${ctx}/user/editPwdform" target="dialog" width="600">修改密码</a></li>
+					<li id="switchEnvBox"><a> 欢迎使用[<shiro:principal
+								property="name" />]
+					</a></li>
+					<li><a href="${ctx}/user/editPwdform" target="dialog"
+						width="600">修改密码</a></li>
 					<!--  
 					<li><a href="http://www.cnblogs.com/dwzjs" target="_blank">博客</a></li>
 					<li><a href="http://weibo.com/dwzui" target="_blank">微博</a></li>
@@ -152,40 +155,50 @@
 						</h2>
 					</div>
 					<div class="accordionContent">
-					  <!--    <ul id="menuTree"></ul>-->
-			  
+						<ul class="tree treeFolder">
+							<c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus">
+							<c:if test="${menu.parent.id eq 1&&menu.isShow eq 0 }">
+								<li><a>${menu.name}</a><ul>
+								 <c:forEach items="${menu.childList}" var="subm">
+								 	<li><a href="${subm.href}" rel="${subm.rel}" target="${subm.target}" >${subm.name}</a></li>
+								 </c:forEach>
+								</ul></li>
+								</c:if>
+							</c:forEach>
+						</ul>
+						<!--  <ul id="menuTree"></ul>-->
+						<%-- 
 						<ul class="tree treeFolder">
 							<li><a>用户信息管理</a>
 								<ul>
-
 									<li><a href="user/list" target="navTab" rel="user">用户信息管理</a></li>
 									<li><a href="menu/list" target="navTab" rel="menu">菜单信息管理</a></li>
-									<li><a href="role/list" target="navTab" rel="role">角色信息管理</a></li> 
-									<li><a href="dict/list" target="navTab" rel="dict">字典信息管理</a></li> 
-								
+									<li><a href="role/list" target="navTab" rel="role">角色信息管理</a></li>
+									<li><a href="dict/list" target="navTab" rel="dict">字典信息管理</a></li>
+									<li><a href="druid/" target="_blank">数据源管理</a></li>
 								</ul></li>
 							<li><a>基础信息管理</a>
 								<ul>
-									<li><a href="location/listUi" target="navTab" rel="location">位置信息管理</a></li> 
+									<li><a href="location/listUi" target="navTab"
+										rel="location">位置信息管理</a></li>
 									<li><a href="spec/list" target="navTab" rel="spectype">规格型号管理</a></li>
 									<li><a href="single/list" target="navTab" rel="singleInfo">单件明细管理</a></li>
+									<li><a href="report/barUi" target="navTab" rel="singleBar">单件状态信息</a></li>
 								</ul></li>
 							<li><a>单据信息管理</a>
-								    <ul>
+								<ul>
 									<li><a href="bill/list" target="navTab" rel="bill">单据信息管理</a></li>
 									<li><a href="new/newUi" target="navTab" rel="billgl">入库单制作</a></li>
 									<li><a href="ckgl/addUi" target="navTab" rel="billgl">出库单制作</a></li>
-									<%-- 
 									<li><a href="install/inputUi" target="navTab" rel="billgl">安装单制作</a></li>
-									 --%>
 									<li><a href="check/checkUi" target="navTab" rel="billgl">回收单制作</a></li>
 								</ul></li>
-						   <li><a>检测信息管理</a>
-								    <ul>
-									<li><a href="jd/list" target="navTab" rel="jdnotes">检定记录管理</a></li>
-									<li><a href="bill/list" target="navTab" rel="bill">检定证书管理</a></li>
-									<li><a href="bill/list" target="navTab" rel="bill">检定记录添加</a></li>
+							<li><a>检测信息管理</a>
+								<ul>
+									<li><a href="jd/iList" target="navTab" rel="jdnotes">检定台帐信息</a></li>
+									<li><a href="jdzhs/list" target="navTab" rel="jdzhs">检定证书管理</a></li>
 								</ul></li>
+								--%>
 					</div>
 				</div>
 			</div>
@@ -207,7 +220,7 @@
 					<div class="tabsMore">more</div>
 				</div>
 				<ul class="tabsMoreList">
-					<li><a href="javascript:;">我的主页</a></li>
+					<li><a href="javascript:;" rel="systemHome">我的主页</a></li>
 				</ul>
 				<div class="navTab-panel tabsPageContent layoutBox">
 					<div class="page unitBox">
@@ -216,33 +229,33 @@
 							<br />
 							<h1>压力表具信息管理系统beta版本</h1>
 						</div>
-						<div class="pageFormContent" layoutH="80"
-							style="margin-right: 230px">
+						<div class="pageFormContent" layoutH="80">
 							<div class="panel collapse" minH="100" defH="150">
-								<h1>信息提示</h1>
+								<h1>待办事件</h1>
 								<div>
-									<p>本版本为测试版本，针对软件的相关和想法，请及时与我们交流！</p>
+									<p>
+										温馨提示：<a href="${ctx}/report/list" target="navTab">将有<b
+											id="counts" style="color: red;"> ${counts} </b>只压力表到期了!
+										</a>
+									</p>
+									<p>本版本为测试版本，针对软件的相关意见和想法，请及时与我们交流！</p>
 									<p>电话号码：0996-2179284</p>
 									<p>信息中心， 技术支持</p>
 								</div>
 							</div>
-							<div class="panel collapse" minH="100" defH="150">
+							<div class="panel collapse" minH="360" defH="380">
 								<h1>压力表使用情况统计</h1>
 								<div>
-									<p>测试</p>
+									<div id="indexSingleBar"
+										style="min-width: 900px;; width: 1000px;; height: 360px; margin: 0 auto;"></div>
 								</div>
 							</div>
 						</div>
-						<div style="width: 230px; position: absolute; top: 60px; right: 0"
-							layoutH="80"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<div id="footer">
-		Copyright &copy; 2012  塔里木油田工程技术部信息中心
-	</div>
+	<div id="footer">Copyright &copy; 2012 塔里木油田工程技术部信息中心</div>
 </body>
 </html>

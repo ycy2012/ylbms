@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import sun.swing.StringUIClientPropertyKey;
-
 import com.ylbms.base.single.dao.SingleInfoDao;
 import com.ylbms.base.single.model.SingleInfo;
 import com.ylbms.common.orm.Page;
@@ -117,20 +115,24 @@ public class SingleInfoService {
 	}
 
 	/**
-	 * 根据分页查询单件明细
+	 * /** 根据分页查询单件明细
 	 * 
-	 * @author JackLiang 2013年7月14日 10:34:46
 	 * @param page
-	 * @param filters
+	 *            页面
+	 * @param single
+	 *            对象
+	 * @param mids
+	 *            单件信息集合 not in
+	 * @param flag  判断是否到期的条件
 	 * @return
 	 */
 	public Page<SingleInfo> findSingleInfo(Page<SingleInfo> page,
-			SingleInfo single,String mids) {
+			SingleInfo single, String mids, String flag) {
 
 		DetachedCriteria dc = singleDao.createDetachedCriteria();
 		if (single.getLocation() != null
-				&& single.getLocation().getId() != null) {
-			dc.add(Restrictions.eq("location.id", single.getLocation().getId()));
+				&& single.getLocation().getWzId() != null) {
+			dc.add(Restrictions.eq("location.id", single.getLocation().getWzId()));
 		}
 		if (single.getSpectype() != null
 				&& single.getSpectype().getSpeId() != null) {
@@ -146,11 +148,19 @@ public class SingleInfoService {
 		}
 		/**
 		 * 重新添加的！
+		 * 
 		 * @author JackinLiang
 		 */
-		if(StringUtils.isNotBlank(mids)){
-			String[] mid=mids.split(",");
+		if (StringUtils.isNotBlank(mids)) {
+			String[] mid = mids.split(",");
 			dc.add(Restrictions.not(Restrictions.in("mid", mid)));
+		}
+		/**
+		 * 重新添加
+		 */
+		if (StringUtils.isNotBlank(flag)) {
+			String sql = "(yx_Time - jd_Time) < 2";
+			dc.add(Restrictions.sqlRestriction(sql));
 		}
 
 		if (StringUtils.isNotEmpty(single.getOwercode())) {
@@ -173,9 +183,9 @@ public class SingleInfoService {
 		if (StringUtils.isNotEmpty(single.getGdzcCode())) {
 			dc.add(Restrictions.like("gdzcCode", single.getGdzcCode()));
 		}
-		if (single.getFactory() > 0) {
-			dc.add(Restrictions.like("factory", single.getFactory()));
-		}
+		// if (single!=null&&single.getFactory() > 0) {
+		// dc.add(Restrictions.like("factory", single.getFactory()));
+		// }
 
 		if (!StringUtils.isNotEmpty(page.getOrderBy())) {
 			dc.addOrder(Order.asc("spectype.speId"));

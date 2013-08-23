@@ -1,42 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ page
 	import="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"%>
-<%@include file="inc/header.jsp"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@include file="inc/taglib.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>欢迎使用工程技术部考核题库管理系统beta版本</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<title>欢迎使用压力表具信息管理系统</title>
 <link href="${ctx}/dwz/themes/css/login.css" rel="stylesheet"
 	type="text/css" />
-<script type="text/javascript" src="${ctx}/dwz/js/jquery-1.7.2.js"></script>
-<script type="text/javascript">
-	/**
-	 $(function() {
-	 $("#login_form").submit(function() {
-	 $.ajax({
-	 url : "${base}/a/login",
-	 data : $("#login_form").serialize(),
-	 success : function(res) {
-	 if (res == "true") {
-	 window.location.href = "index.jsp";
-	 } else {
-	 alert("登陆失败!!");
-	 }
-	 return false;
-	 },
-	 fail : function(res) {
-	 alert("系统错误?!");
-	 }
-	 });
-	 return false;
-	 });
-	 });
-	 **/
-</script>
 </head>
-
 <body>
 	<div id="login">
 		<div id="login_header">
@@ -61,8 +35,14 @@
 					<%
 						String error = (String) request
 								.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
+						if (error != null) {
 					%>
-					<p><%=error%></p>
+					<div class="alert">
+						<strong>Warning!</strong> 输入用户信息错误，请重新输入！
+					</div>
+					<%
+						}
+					%>
 					<p>
 						<label>用户名：</label> <input type="text" name="username" size="20"
 							class="login_input" />

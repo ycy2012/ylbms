@@ -40,7 +40,6 @@
 	</bean>
 	<bean id="conversion-service"
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
-
 	<!-- 开启controller注解支持 -->
 	<!-- 自动扫描且只扫描@Controller -->
 	<context:component-scan base-package="com.ylbms"
@@ -145,13 +144,12 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<!-- json view <bean id="defaultJsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" 
-		/>. -->
 	<!-- 文件上传相关 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!--one of the properties available;the maximum file size in bytes -->
 		<property name="maxUploadSize" value="100000" />
+		<property name="maxInMemorySize" value="4096" />
 	</bean>
 
 	<!-- 控制器异常处理 -->
@@ -160,7 +158,7 @@
 		<property name="exceptionMappings">
 			<props>
 				<prop key="java.lang.Exception">
-					error_all
+					error/403
 				</prop>
 			</props>
 		</property>
