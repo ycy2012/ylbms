@@ -67,7 +67,7 @@
 					<td>
 						<input name="sendLocation.wzId" type="hidden" id="wzInfo" />
 				        <input type="text"  readonly="readonly" id="wzName" class="required" size="30">
-						<a class="btnLook" href="${ctx}/location/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	</td>
+						<a class="btnLook" href="${ctx}/tdmis/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	</td>
 					<td>接受地点:</td>
 					<td> 
 						<input name="acceptLocation.wzId" type="hidden"  value="2051" />
