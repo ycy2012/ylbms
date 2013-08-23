@@ -6,30 +6,38 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>位置信息</title>
-<link href="${ctx}/styles/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="${ctx}/styles/ztree/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css"/>
-<script src="${ctx}/styles/ztree/js/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
-<script src="${ctx}/styles/ztree/js/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
+<link href="${ctx}/styles/bootstrap/css/bootstrap.css" rel="stylesheet"
+	type="text/css" />
+<link href="${ctx}/styles/ztree/css/zTreeStyle/zTreeStyle.min.css"
+	rel="stylesheet" type="text/css" />
+<script src="${ctx}/styles/ztree/js/jquery.ztree.core-3.5.min.js"
+	type="text/javascript"></script>
+<script src="${ctx}/styles/ztree/js/jquery.ztree.excheck-3.5.min.js"
+	type="text/javascript"></script>
 <script type="text/javascript">
 <!--
-var zTree, setting = {
+	var key, lastValue = "", nodeList = [];
+	var zTree, setting = {
 		view : {
 			selectedMulti : false
 		},
 		check : {
 			enable : false,
 			nocheckInherit : true,
-			chkStyle: "checkbox",
-			chkboxType: { "Y": "p", "N": "s" },
-			radioType: "level",
-			chkDisabledInherit: true
+			chkStyle : "checkbox",
+			chkboxType : {
+				"Y" : "p",
+				"N" : "s"
+			},
+			radioType : "level",
+			chkDisabledInherit : true
 		},
 		data : {
 			simpleData : {
-				enable: true,
-				idKey: "id",
-				pIdKey: "pid",
-				rootPId: 0
+				enable : true,
+				idKey : "id",
+				pIdKey : "pid",
+				rootPId : 0
 			}
 		},
 		view : {
@@ -50,48 +58,47 @@ var zTree, setting = {
 			}
 		}
 	};
-locationTree=function(){
-	var key, lastValue = "", nodeList = [];
-	return{
-		init:function(){
-			$.ajax({
-				type:'post',url:'${ctx}/tdmis/treeList',
-				success:function(data){
-					locationTree.handleAjaxResult(data);
-				},
-				dataType:'json'
-			});
-		},
-		handleAjaxResult:function(data){
-			if(data==null)return;
-			//初始化树信息
-			zTree = $.fn.zTree.init($("#tree"), setting, zNodes);
-							// 默认展开一级节点
-							var nodes = zTree.getNodesByParam("level", 0);
-							for ( var i = 0; i < nodes.length; i++) {
-								zTree.expandNode(nodes[i], true, false, false);
-							}
-		}
-	}
-}();
-
-	$(document).ready(
-			function() {
-				$.get("${ctx}/tdmis/treeList?_=" + new Date().getTime(),
-						function(zNodes) {
-							// 初始化树结构
-							zTree = $.fn.zTree
-									.init($("#tree"), setting, zNodes);
-							// 默认展开一级节点
-							var nodes = zTree.getNodesByParam("level", 0);
-							for ( var i = 0; i < nodes.length; i++) {
-								zTree.expandNode(nodes[i], true, false, false);
-							}
-						});
+	locationTree = function() {
+		return {
+			init : function() {
+				$.ajax({
+					type : 'post',
+					url : '${ctx}/tdmis/treeList',
+					success : function(data) {
+						locationTree.handleAjaxResult(data);
+					},
+					dataType : 'json',
+					error:function(){
+						 alertMsg.error("温馨提示：数据加载失败！");
+					},
+					beforeSend:function(){
+						ajaxbg.show();
+					},
+					complete:function(){
+						ajaxbg.hide();
+					}
+				});
+			},
+			handleAjaxResult : function(data) {
+				if (data == null)
+					return;
+				//初始化树信息
+				zTree = $.fn.zTree.init($("#tree"), setting, data);
+				// 默认展开一级节点
+				var nodes = zTree.getNodesByParam("level", 0);
+				for ( var i = 0; i < nodes.length; i++) {
+					zTree.expandNode(nodes[i], true, false, false);
+				}
 				key = $("#key");
 				key.bind("focus", focusKey).bind("blur", blurKey).bind(
 						"change keydown cut input propertychange", searchNode);
-			});
+			}
+		}
+	}();
+	//init
+	$(document).ready(function() {
+		locationTree.init();
+	});
 	function focusKey(e) {
 		if (key.hasClass("empty")) {
 			key.removeClass("empty");
@@ -137,7 +144,7 @@ locationTree=function(){
 		$("#txt").toggle();
 		$("#key").focus();
 	}
-	//-->
+//-->
 </script>
 </head>
 <body>
@@ -155,11 +162,11 @@ locationTree=function(){
 					type="text" class="empty" id="key" name="key" maxlength="50"
 					style="width: 150px;">
 			</div>
-			<div style="width: 100%;height: 600px; overflow: auto;">
-			<input type="hidden" name="id" id="id" />
-			<input type="hidden" name="ids" id="ids" />
-			<input type="hidden" name="allName" id="all" />
-			<div id="tree" class="ztree" style="padding: 15px 20px;"></div>
+			<div style="width: 100%; height: 600px; overflow: auto;">
+				<input type="hidden" name="id" id="id" /> <input type="hidden"
+					name="ids" id="ids" /> <input type="hidden" name="allName"
+					id="all" />
+				<div id="tree" class="ztree" style="padding: 15px 20px;"></div>
 			</div>
 		</div>
 	</div>

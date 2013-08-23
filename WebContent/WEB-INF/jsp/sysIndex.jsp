@@ -155,7 +155,6 @@
 						</h2>
 					</div>
 					<div class="accordionContent">
-
 						<ul class="tree treeFolder">
 							<c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus">
 							<c:if test="${menu.parent.id eq 1&&menu.isShow eq 0 }">
