@@ -40,8 +40,9 @@
 			<thead>
 				<tr>
 					<th width="15%">名称</th>
-					<th width="20%">链接</th>
+					<th width="15%">链接</th>
 					<th width="8%">REL属性</th>
+					<th width="8%">TATGET属性</th>
 					<th width="8%">排序</th>
 					<th width="8%">可见</th>
 					<th width="12%">权限标识</th>
@@ -54,6 +55,7 @@
 						<td><i class="icon-${not empty menu.icon?menu.icon:' hide'}"></i>${menu.name}</td>
 						<td>${menu.href}</td>
 						<td>${menu.rel}</td>
+						<td>${menu.target}</td>
 						<td>${menu.sort}</td>
 						<td>${menu.isShow eq '0' ?'显示':'隐藏'}</td>
 						<td>${menu.permission}</td>

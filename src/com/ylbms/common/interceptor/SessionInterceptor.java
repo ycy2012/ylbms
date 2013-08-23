@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -66,41 +65,41 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		// 设置编码
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		//获取当前用户信息
+		// 获取当前用户信息
 		Principal principal = (Principal) SecurityUtils.getSubject()
 				.getPrincipal();
 		String currentURL = request.getRequestURI();
-//		
-		if ((currentURL.equalsIgnoreCase("/ylbms/a/login"))|| currentURL.equalsIgnoreCase("/ylbms/login_dialog.html")||currentURL.equalsIgnoreCase("login.jsp")
+		//
+		if ((currentURL.endsWith("a/login"))
+				|| currentURL.endsWith("login_dialog.html")
+				|| currentURL.endsWith("sysLogin.jsp")
 				|| currentURL.matches(IGNORE)) {
 			return true;
 		}
-		log.info("---------------"+(principal==null));
-		if (principal==null) {
+		if (principal == null) {
 			if (request != null
 					&& "XMLHttpRequest".equalsIgnoreCase(request
 							.getHeader("X-Requested-With"))
 					|| request.getParameter("ajax") != null) {
-				log.info("---------------------无视--------------");
 				Map<String, Object> ret = DwzUtil.dialogAjaxDoneTimeOut();
-				PrintWriter out=response.getWriter();
+				PrintWriter out = response.getWriter();
 				out.print(JSON.toJSON(ret));
 				out.close();
 				return false;
 			} else {
-				PrintWriter out = response.getWriter(); 
-                StringBuilder builder = new StringBuilder(); 
-                builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">"); 
-                builder.append("alert(\"页面过期，请重新登录\");"); 
-                builder.append("window.location.href=\""); 
-                builder.append(request.getContextPath()+"/a/login"); 
-                builder.append("\";</script>"); 
-                out.print(builder.toString()); 
-                out.close(); 
-//				response.sendRedirect(request.getContextPath() + "/a/login");
+				PrintWriter out = response.getWriter();
+				StringBuilder builder = new StringBuilder();
+				builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">");
+				builder.append("alert(\"页面过期，请重新登录\");");
+				builder.append("window.location.href=\"");
+				builder.append(request.getContextPath() + "/a/login");
+				builder.append("\";</script>");
+				out.print(builder.toString());
+				out.close();
+				// response.sendRedirect(request.getContextPath() + "/a/login");
 				return false;
 			}
 		}
-		return super.preHandle(request, response, handler);  
+		return super.preHandle(request, response, handler);
 	}
 }

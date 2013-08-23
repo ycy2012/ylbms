@@ -158,7 +158,7 @@
 		<property name="exceptionMappings">
 			<props>
 				<prop key="java.lang.Exception">
-					error_all
+					error/403
 				</prop>
 			</props>
 		</property>

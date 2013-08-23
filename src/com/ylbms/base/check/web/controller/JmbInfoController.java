@@ -22,7 +22,6 @@ import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
 import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.web.BaseController;
-import com.ylbms.system.utils.UserUtils;
 
 /**
  * 精密表控制层
@@ -38,8 +37,6 @@ public class JmbInfoController extends BaseController {
 	private static final Log log = LogFactory.getLog(JmbInfoController.class);
 	@Autowired
 	JmbInfoService jmbInfiService;
-	@Autowired
-	UserUtils userUtils;
 
 	/**
 	 * 跳转到添加精密表信息添加页面

@@ -203,8 +203,8 @@ public class Menu extends BaseModel implements Serializable {
 		this.delFlag = delFlag;
 	}
 
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.REMOVE }, fetch = FetchType.LAZY, mappedBy = "parent")
+	@OneToMany(cascade = { CascadeType.REFRESH, CascadeType.MERGE,CascadeType.PERSIST,
+			CascadeType.REMOVE },fetch=FetchType.LAZY, mappedBy = "parent")
 	@Where(clause = "del_flag='" + DEL_FLAG_NORMAL + "'")
 	@OrderBy(value = "sort")
 	@NotFound(action = NotFoundAction.IGNORE)

@@ -109,7 +109,7 @@ public class SystemRealm extends AuthorizingRealm {
 		SimplePrincipalCollection principals = new SimplePrincipalCollection(
 				principal, getName());
 		clearCachedAuthorizationInfo(principals);
-		UserUtils.removeCache("user");
+		UserUtils.removeCache(UserUtils.CACHE_USER);
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class SystemRealm extends AuthorizingRealm {
 				cache.remove(key);
 			}
 		}
-		UserUtils.removeCache("menuList");
+		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
 	}
 
 	/**
@@ -178,7 +178,6 @@ public class SystemRealm extends AuthorizingRealm {
 		}
 		return systemService;
 	}
-
 	
 	public void setSystemService(SystemService systemService) {
 		this.systemService = systemService;

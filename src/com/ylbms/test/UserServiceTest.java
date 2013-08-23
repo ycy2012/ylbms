@@ -27,7 +27,7 @@ import com.ylbms.system.dao.UserDao;
 import com.ylbms.system.model.User;
 import com.ylbms.system.security.SystemRealm;
 import com.ylbms.system.service.SystemService;
-import com.ylbms.system.service.impl.SystemServiceImpl;
+import com.ylbms.system.service.SystemService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring-mvc.xml",
@@ -39,7 +39,7 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
 	AtomicInteger counter = new AtomicInteger();
 
 	@Autowired
-	private SystemServiceImpl systemService;
+	private SystemService systemService;
 	
 	@Autowired
 	private UserDao userDao;

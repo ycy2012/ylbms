@@ -8,9 +8,12 @@
 <title>添加菜单信息</title>
 <link href="${ctx}/styles/bootstrap/css/bootstrap.css" rel="stylesheet"
 	type="text/css" />
-<link href="${ctx}/styles/ztree/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css"/>
-<script src="${ctx}/styles/ztree/js/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
-<script src="${ctx}/styles/ztree/js/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
+<link href="${ctx}/styles/ztree/css/zTreeStyle/zTreeStyle.min.css"
+	rel="stylesheet" type="text/css" />
+<script src="${ctx}/styles/ztree/js/jquery.ztree.core-3.5.min.js"
+	type="text/javascript"></script>
+<script src="${ctx}/styles/ztree/js/jquery.ztree.excheck-3.5.min.js"
+	type="text/javascript"></script>
 <script type="text/javascript">
 	var key, lastValue = "", nodeList = [];
 	var tree, setting = {
@@ -18,24 +21,17 @@
 			selectedMulti : false
 		},
 		check : {
-			enable : true,
-			nocheckInherit : false,
-			chkStyle : "radio",
-			radioType : "level",
-			chkboxType : {
-				"Y" : "p",
-				"N" : "s"
-			}
+			enable : false
 		},
 		data : {
 			simpleData : {
 				enable : true,
-				idKey: "id",
-				pIdKey: "pid",
-				rootPId: 0
+				idKey : "id",
+				pIdKey : "pid",
+				rootPId : 0
 			},
-			key:{
-				title: "wzCode"
+			key : {
+				title : "wzCode"
 			}
 		},
 		view : {
@@ -53,44 +49,43 @@
 					tree.checkNode(node, !node.checked, true, true);
 					return false;
 				}
+			},
+			onClick : function(event, id, node) {
+				var id = node.wzCode;
+				var name = node.name;
+				window.parent.setWzInfo(id, name);
+				$.pdialog.closeCurrent();//关闭dialog
 			}
 		}
+
 	};
-	$(document).ready(
-			function() {
-				$.get("${ctx}/tdmis/treeList?_=" + new Date().getTime(),
-								function(zNodes) {
-									// 初始化树结构
-									tree = $.fn.zTree.init($("#commonTree"), setting,
-											zNodes);
-									// 默认展开一级节点
-									var nodes = tree.getNodesByParam("level", 0);
-									for ( var i = 0; i < nodes.length; i++) {
-										tree.expandNode(nodes[i], true, false,
-												false);
-									}
-									// 默认选择节点
-									var ids = "${selectIds}".split(",");
-									for ( var i = 0; i < ids.length; i++) {
-										var node = tree.getNodeByParam("id",ids[i]);
-											try {
-												tree.checkNode(node, true,true);
-											} catch (e) {
-											}
-									}
-								});
-				key = $("#key");
-				key.bind("focus", focusKey).bind("blur", blurKey).bind(
-						"change keydown cut input propertychange", searchNode);
-				//取得当前选中的地点信息
-				$("#button").click(function(){
-					var zTree = $.fn.zTree.getZTreeObj("commonTree"), nodes = zTree.getCheckedNodes(true);
-					var id=nodes[0].wzCode;
-					var name=nodes[0].name;
-					window.parent.setWzInfo(id,name);
-					$.pdialog.closeCurrent();//关闭dialog
-				});
-			});
+	$(document)
+			.ready(
+					function() {
+						$.get("${ctx}/tdmis/treeList", function(zNodes) {
+							// 初始化树结构
+							tree = $.fn.zTree.init($("#commonTree"), setting,
+									zNodes);
+							// 默认展开一级节点
+							var nodes = tree.getNodesByParam("level", 0);
+							for ( var i = 0; i < nodes.length; i++) {
+								tree.expandNode(nodes[i], true, false, false);
+							}
+							// 默认选择节点
+							var ids = "${selectIds}".split(",");
+							for ( var i = 0; i < ids.length; i++) {
+								var node = tree.getNodeByParam("id", ids[i]);
+								try {
+									tree.checkNode(node, true, true);
+								} catch (e) {
+								}
+							}
+						});
+						key = $("#key");
+						key.bind("focus", focusKey).bind("blur", blurKey).bind(
+								"change keydown cut input propertychange",
+								searchNode);
+					});
 	function focusKey(e) {
 		if (key.hasClass("empty")) {
 			key.removeClass("empty");
@@ -137,7 +132,7 @@
 		$("#key").focus();
 	}
 	function getSelectNodes() {
-		
+
 		for ( var i = 0, len = nodes.length; i < len; i++) {
 			result += nodes[i].id + ',';
 		}
@@ -163,11 +158,6 @@
 	</div>
 	<div class="formBar">
 		<ul>
-			<li><div class="buttonActive">
-					<div class="buttonContent">
-							<button type="button" id="button">确定</button>
-					</div>
-				</div></li>
 			<li>
 				<div class="button">
 					<div class="buttonContent">

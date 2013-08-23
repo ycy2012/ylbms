@@ -17,7 +17,7 @@ import com.ylbms.system.model.Menu;
  * @date 2013-5-31
  */
 @Service
-@Transactional
+@Transactional(readOnly=true)
 public class MenuService {
 
 	private static final Log log = LogFactory.getLog(MenuService.class);

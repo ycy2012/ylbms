@@ -11,7 +11,7 @@ import com.ylbms.common.utils.spring.SpringContextHolder;
 /**
  * Cache工具类
  * 
- * @author ThinkGem
+ * @author JackLiang
  * @version 2013-5-29
  */
 public class CacheUtils {

@@ -70,12 +70,6 @@
 					dataType : 'json',
 					error:function(){
 						 alertMsg.error("温馨提示：数据加载失败！");
-					},
-					beforeSend:function(){
-						ajaxbg.show();
-					},
-					complete:function(){
-						ajaxbg.hide();
 					}
 				});
 			},
