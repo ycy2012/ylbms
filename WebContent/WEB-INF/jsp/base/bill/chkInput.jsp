@@ -63,7 +63,7 @@
 			<table id="b_title" width="100%">
 				<tr>
 					<td>发料单位：</td>
-					<td><input name="sendLocation.id" type="hidden" value="2051"  />
+					<td><input name="sendLocation.id" type="hidden" value="00000000000955"  />
 						<input type="text" value="基地" class="required" readonly="readonly" size="30" />
 					</td>
 					<td>领料单位：</td>
