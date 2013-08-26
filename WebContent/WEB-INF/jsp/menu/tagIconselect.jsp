@@ -5,7 +5,7 @@
 <html style="overflow-x: hidden; overflow-y: auto;">
 <head>
 <title>图标选择</title>
-<script src="${ctx}/dwz/js/jquery-1.7.2.js" type="text/javascript"></script>
+<script src="${ctx}/styles/jquery/jquery-1.7.2.min.js" type="text/javascript"></script>
 <%@include file="../inc/treetable.jsp" %>
 <style type="text/css">
 .the-icons {

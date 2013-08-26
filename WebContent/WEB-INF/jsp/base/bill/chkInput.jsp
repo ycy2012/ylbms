@@ -64,7 +64,7 @@
 				<tr>
 					<td>发料单位：</td>
 					<td><input name="sendLocation.id" type="hidden" value="00000000000955"  />
-						<input type="text" value="基地" class="required" readonly="readonly" size="30" />
+						<input type="text" value="基地料场" class="required" readonly="readonly" size="30" />
 					</td>
 					<td>领料单位：</td>
 					<td><input name="acceptLocation.wzId" type="hidden" id="wzInfo" />

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.Lists;
 import com.ylbms.base.single.model.SingleInfo;
@@ -29,6 +30,7 @@ import com.ylbms.common.orm.Page;
 import com.ylbms.common.utils.DateUtils;
 import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.utils.excel.ExportExcel;
+import com.ylbms.common.utils.excel.ImportExcel;
 import com.ylbms.common.web.BaseController;
 
 /**
@@ -43,7 +45,8 @@ import com.ylbms.common.web.BaseController;
 @RequestMapping("/single")
 public class SingleInfoController extends BaseController {
 
-	private static final Logger log = LoggerFactory .getLogger(SingleInfoController.class);
+	private static final Logger log = LoggerFactory
+			.getLogger(SingleInfoController.class);
 	private static final String NAV_TAB_ID = "singleInfo";
 
 	@Autowired
@@ -125,6 +128,32 @@ public class SingleInfoController extends BaseController {
 					e.getMessage());
 		}
 
+	}
+
+	/**
+	 * add singleInfo by importing excel
+	 * 
+	 * @param fileUpload
+	 * @param model
+	 * @return
+	 */
+	@RequiresPermissions("base:single:add")
+	@RequestMapping(value = "import")
+	@ResponseBody
+	public Map<String, Object> importFile(MultipartFile fileUpload, Model model) {
+		try {
+			ImportExcel ei = new ImportExcel(fileUpload, 1, 0);
+			List<SingleInfo> list = ei.getDataList(SingleInfo.class);
+			for (SingleInfo s : list) {
+				singleInfoService.saveSingleInfo(s);
+			}
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
+		} catch (Exception e) {
+			if (log.isErrorEnabled())
+				log.error("System error!", e.getCause());
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
+					e.getMessage());
+		}
 	}
 
 	/**
@@ -270,6 +299,7 @@ public class SingleInfoController extends BaseController {
 
 	/**
 	 * 将规格信息和状态信息放到model中
+	 * 
 	 * @author JackLiang 2013年8月12日 11:22:48
 	 * @param model
 	 */

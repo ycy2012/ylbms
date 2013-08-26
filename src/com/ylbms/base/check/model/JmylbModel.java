@@ -21,6 +21,7 @@ import org.hibernate.annotations.NotFoundAction;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.ylbms.common.model.BaseModel;
+import com.ylbms.common.utils.excel.annotation.ExcelField;
 import com.ylbms.system.model.User;
 
 /**
@@ -33,7 +34,6 @@ import com.ylbms.system.model.User;
 @Entity
 @Table(name = "ylbms_base_jmbInfo")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-
 public class JmylbModel extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
@@ -50,14 +50,15 @@ public class JmylbModel extends BaseModel {
 	private String jdUnit; // 检定单位
 	private Date jdDate;// 检定日期
 	private Date yxDate; // 证书有效期
+	private String UserUnit; // 使用部门
 	private User creater;
-	private Date createDate; 
+	private Date createDate;
 	private String remark;
 	private String status; // 是否有效
 
 	public JmylbModel() {
-		this.status=DEL_FLAG_NORMAL;
-		this.createDate=new Date();
+		this.status = DEL_FLAG_NORMAL;
+		this.createDate = new Date();
 	}
 
 	public JmylbModel(Long jmbID) {
@@ -67,8 +68,8 @@ public class JmylbModel extends BaseModel {
 	// setter getter
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_jd_jmbinfo")
-	@SequenceGenerator(name = "seq_jd_jmbinfo", sequenceName = "seq_jd_jmbinfo",allocationSize=1)
-	@Column(name="jmb_id")
+	@SequenceGenerator(name = "seq_jd_jmbinfo", sequenceName = "seq_jd_jmbinfo", allocationSize = 1)
+	@Column(name = "jmb_id")
 	public Long getJmbID() {
 		return jmbID;
 	}
@@ -77,7 +78,8 @@ public class JmylbModel extends BaseModel {
 		this.jmbID = jmbID;
 	}
 
-	@Column(name="jmb_name")
+	@Column(name = "jmb_name")
+	@ExcelField(title = "器具名称", sort = 1, type = 0)
 	public String getJmbName() {
 		return jmbName;
 	}
@@ -86,7 +88,8 @@ public class JmylbModel extends BaseModel {
 		this.jmbName = jmbName;
 	}
 
-	@Column(name="jmb_type")
+	@Column(name = "jmb_type")
+	@ExcelField(title = " 规格", sort = 2, type = 0)
 	public String getJmbType() {
 		return jmbType;
 	}
@@ -95,7 +98,8 @@ public class JmylbModel extends BaseModel {
 		this.jmbType = jmbType;
 	}
 
-	@Column(name="factory_code")
+	@Column(name = "factory_code")
+	@ExcelField(title = "出厂编号", sort = 4, type = 0)
 	public String getFactoryCode() {
 		return factoryCode;
 	}
@@ -105,14 +109,17 @@ public class JmylbModel extends BaseModel {
 	}
 
 	@Column(name = "Jmb_Code")
+	@ExcelField(title = "精密表编码", type = 1,sort=5)
 	public String getJmbCode() {
 		return jmbCode;
 	}
-	@Column(name="jmb_code")
+
 	public void setJmbCode(String jmbCode) {
 		this.jmbCode = jmbCode;
 	}
 
+	@Column
+	@ExcelField(title = "测量范围", sort = 3)
 	public String getClfw() {
 		return clfw;
 	}
@@ -121,6 +128,7 @@ public class JmylbModel extends BaseModel {
 		this.clfw = clfw;
 	}
 
+	@ExcelField(title = "等级", sort = 5, type = 1)
 	public String getGrade() {
 		return grade;
 	}
@@ -129,7 +137,8 @@ public class JmylbModel extends BaseModel {
 		this.grade = grade;
 	}
 
-	@Column(name="zhsh_code")
+	@Column(name = "zhsh_code")
+	@ExcelField(title = "证书编码", sort = 9)
 	public String getZhShCode() {
 		return zhShCode;
 	}
@@ -138,6 +147,8 @@ public class JmylbModel extends BaseModel {
 		this.zhShCode = zhShCode;
 	}
 
+	@Column
+	@ExcelField(title = "生产厂家", sort = 6)
 	public String getMadeIn() {
 		return madeIn;
 	}
@@ -146,7 +157,8 @@ public class JmylbModel extends BaseModel {
 		this.madeIn = madeIn;
 	}
 
-	@Column(name="jd_unit")
+	@Column(name = "jd_unit")
+	@ExcelField(title = "检定单位", sort = 10)
 	public String getJdUnit() {
 		return jdUnit;
 	}
@@ -156,6 +168,8 @@ public class JmylbModel extends BaseModel {
 	}
 
 	@Column(name = "jd_Date")
+	@ExcelField(title = "检定日期", sort = 8)
+	@JSONField(format = "yyyy-mm-dd")
 	public Date getJdDate() {
 		return jdDate;
 	}
@@ -166,6 +180,7 @@ public class JmylbModel extends BaseModel {
 
 	@Column(name = "yx_date")
 	@JSONField(format = "yyyy-mm-dd")
+	@ExcelField(title = "有效日期", sort = 7)
 	public Date getYxDate() {
 		return yxDate;
 	}
@@ -174,7 +189,17 @@ public class JmylbModel extends BaseModel {
 		this.yxDate = yxDate;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY,cascade={CascadeType.MERGE,CascadeType.REFRESH})
+	@ExcelField(title = "使用部门", sort = 11)
+	public String getUserUnit() {
+		return UserUnit;
+	}
+
+	public void setUserUnit(String userUnit) {
+		UserUnit = userUnit;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE,
+			CascadeType.REFRESH })
 	@JoinColumn(name = "creater")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -195,6 +220,7 @@ public class JmylbModel extends BaseModel {
 		this.createDate = createDate;
 	}
 
+	@ExcelField(title = "备注", type = 1, sort = 20)
 	public String getRemark() {
 		return remark;
 	}

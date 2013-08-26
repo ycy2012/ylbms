@@ -33,6 +33,7 @@ import com.ylbms.common.web.BaseController;
 
 /**
  * 规格型号信息维护Action
+ * 
  * @author zhangjl
  * @version 1.0
  * @date 2013-6-6
@@ -50,10 +51,12 @@ public class SpectypeController extends BaseController {
 
 	/**
 	 * to excel import page
+	 * 
 	 * @author JackLiang
 	 * @date 2013年8月5日 14:25:57
 	 * @return
 	 */
+	@RequiresPermissions("base:spectype:add")
 	@RequestMapping(value = "importUi")
 	public String importUi() {
 		return "base/spectype/import";
@@ -68,12 +71,13 @@ public class SpectypeController extends BaseController {
 	@RequiresPermissions("base:spectype:add")
 	@RequestMapping(value = "import/template")
 	@ResponseBody
-	public Map<String, Object> importFileTemplate(HttpServletResponse response,HttpServletRequest request) {
+	public Map<String, Object> importFileTemplate(HttpServletResponse response,
+			HttpServletRequest request) {
 		try {
 			String fileName = "规格型号导入模版.xls";
 			List<SpectypeInfo> list = Lists.newArrayList();
 			new ExportExcel("规格型号信息", SpectypeInfo.class, 2).setDataList(list)
-					.write(response,request, fileName).dispose();
+					.write(response, request, fileName).dispose();
 			return null;
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
@@ -93,22 +97,53 @@ public class SpectypeController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "export")
+	@RequiresUser
+	@ResponseBody
 	public Map<String, Object> exportFile(Page<SpectypeInfo> page,
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
-			List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
+			List<PropertyFilter> filters = PropertyFilter
+					.buildFromHttpRequest(request);
 
-			String fileName = "规划型号数据" + DateUtils.getDate("yyyyMMddHHmmss")+ ".xlsx";
-			Page<SpectypeInfo> list = spectypeService.getSpectypeInfo(page,filters);
+			String fileName = "规划型号数据" + DateUtils.getDate("yyyyMMddHHmmss")
+					+ ".xlsx";
+			Page<SpectypeInfo> list = spectypeService.getSpectypeInfo(page,
+					filters);
 
 			new ExportExcel("规划型号数据", SpectypeInfo.class)
-					.setDataList(list.getResult()).write(response,request, fileName)
-					.dispose();
+					.setDataList(list.getResult())
+					.write(response, request, fileName).dispose();
 			return null;
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error("system error!", e.getMessage());
 			}
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
+					e.getMessage());
+		}
+	}
+
+	/**
+	 * add spectype infos by importing excel
+	 * 
+	 * @param fileUpload
+	 * @param model
+	 * @return
+	 */
+	@RequiresPermissions("base:spectype:add")
+	@RequestMapping(value = "import")
+	@ResponseBody
+	public Map<String, Object> importFile(MultipartFile fileUpload, Model model) {
+		try {
+			ImportExcel ei = new ImportExcel(fileUpload, 1, 0);
+			List<SpectypeInfo> list = ei.getDataList(SpectypeInfo.class);
+			for (SpectypeInfo sp : list) {
+				spectypeService.addSpectype(sp);
+			}
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
+		} catch (Exception e) {
+			if (log.isErrorEnabled())
+				log.error("System error!!", e.getCause());
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
 					e.getMessage());
 		}
@@ -178,7 +213,8 @@ public class SpectypeController extends BaseController {
 					}
 				}
 			}
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK,NAV_TAB_ID,"导入成功了！数量是<b>"+suNum+"</b>");
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID,
+					"导入成功了！数量是<b>" + suNum + "</b>");
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error("system error!", e.getMessage());

@@ -95,6 +95,7 @@ public class RoleController {
 	 */
 	@RequestMapping("/roleData")
 	@ResponseBody
+	@RequiresUser
 	public List<Map<String, Object>> roleInfo() {
 		List<Role> list = systemService.findAllRole();
 		List<Map<String, Object>> roleData = new ArrayList<Map<String, Object>>();
@@ -187,10 +188,11 @@ public class RoleController {
 	public Map<String, Object> delete(@PathVariable("id") Long id) {
 		try {
 			systemService.deleteRole(id);
+			return DwzUtil.dialogAjaxDone(DwzUtil.OK);
 		} catch (Exception e) {
 			log.error("system error!!", e);
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "role", e.getMessage());
 		}
-		return DwzUtil.dialogAjaxDone(DwzUtil.OK, "role");
+		
 	}
 }

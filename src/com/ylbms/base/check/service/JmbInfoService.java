@@ -24,13 +24,14 @@ import com.ylbms.system.utils.UserUtils;
 public class JmbInfoService {
 
 	@Autowired
-	JmbInfoDao jmbInfoDao;
+	private JmbInfoDao jmbInfoDao;
 
 	/**
 	 * 添加或修改
 	 * 
 	 * @param jmbInfo
 	 */
+	
 	@Transactional(readOnly = false)
 	public void save(JmylbModel jmbInfo) {
 		jmbInfo.setCreater(UserUtils.getUser());

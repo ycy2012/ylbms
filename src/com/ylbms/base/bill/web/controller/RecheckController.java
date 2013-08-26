@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,10 +38,10 @@ import com.ylbms.common.web.BaseController;
 public class RecheckController extends BaseController {
 	private static final Log log = LogFactory.getLog(RecheckController.class);
 	private static final String NAV_TAB_ID = "billgl";
-	
+
 	@Autowired
 	private BillService billService;
-	
+
 	@Autowired
 	private SingleInfoService singleService;
 
@@ -54,7 +55,7 @@ public class RecheckController extends BaseController {
 	public String toCheackUi() {
 		return "base/bill/recheckNotes";
 	}
-	
+
 	/**
 	 * 添加单件明细内容
 	 * 
@@ -64,24 +65,27 @@ public class RecheckController extends BaseController {
 	 * @return
 	 */
 	@SuppressWarnings("deprecation")
+	@RequiresUser
 	@RequestMapping(value = "/addMx")
 	public String addMx(HttpServletRequest request,
-			@RequestParam("mids") String ids,@RequestParam("wz")String wz, Page<SingleInfo> page,
-			Model model) {
-		String wzName=URLDecoder.decode(wz),mids=URLDecoder.decode(ids);
+			@RequestParam("mids") String ids, @RequestParam("wz") String wz,
+			Page<SingleInfo> page, Model model) {
+		String wzName = URLDecoder.decode(wz), mids = URLDecoder.decode(ids);
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<SingleInfo> list = singleService.findSingleNotInMids(page, filters, mids, "030",wzName);
+		Page<SingleInfo> list = singleService.findSingleNotInMids(page,
+				filters, mids, "030", wzName);
 		model.addAttribute("page", list);
 
 		return "base/bill/addMx";
 	}
-	
+
 	/**
 	 * 添加单据
 	 * 
-	 * @param single 
-	 * @param billHead 表头信息
+	 * @param single
+	 * @param billHead
+	 *            表头信息
 	 * @return
 	 */
 	@RequestMapping(value = "/addBill")
@@ -89,8 +93,9 @@ public class RecheckController extends BaseController {
 	public Map<String, Object> addBill(SingleForm singles, BillHeadModel bill) {
 		try {
 			// save billheadInfo
-			billService.saveBillHeadAndBody(singles.getSingles(), bill, "040",bill.getAcceptLocation());
-			
+			billService.saveBillHeadAndBody(singles.getSingles(), bill, "040",
+					bill.getAcceptLocation());
+
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
@@ -100,6 +105,5 @@ public class RecheckController extends BaseController {
 					e.getMessage());
 		}
 	}
-
 
 }

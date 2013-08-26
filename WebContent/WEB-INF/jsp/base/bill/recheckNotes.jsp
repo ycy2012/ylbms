@@ -70,8 +70,8 @@
 						<a class="btnLook" href="${ctx}/tdmis/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	</td>
 					<td>接受地点:</td>
 					<td> 
-						<input name="acceptLocation.wzId" type="hidden"  value="2051" />
-						<input  type="text" readonly="readonly" value="基地"  size="30"/>
+						<input name="acceptLocation.wzId" type="hidden"  value="00000000000955" />
+						<input  type="text" readonly="readonly" value="基地料场"  size="30"/>
 					</td>
 				</tr>
 				<tr>
@@ -81,7 +81,7 @@
 					</td>
 					<td>送料单位：</td>
 					<td>
-						<input name="llUnit" readonly="readonly" type="text" id="ss">
+						<input name="llUnit" readonly="readonly" type="text" id="ss" size="30">
 					</td>
 				</tr>
 				<tr>
