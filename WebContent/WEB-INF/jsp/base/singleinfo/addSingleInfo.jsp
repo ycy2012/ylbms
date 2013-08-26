@@ -33,10 +33,10 @@
 				</select>
 			</p>
 			<p>
-				<label>当前位置：</label> <input name="location.id" class="required"
-					type="hidden" size="30" id="locationId" /> <input type="text" size="30"
+				<label>当前位置：</label> <input name="location.wzId" class="required" value="00000000000955"
+					type="hidden" size="30" id="locationId" /> <input type="text" size="30" value="基地料场"
 					readonly="readonly" id="locationName" class="required"> <a
-					class="btnLook" href="${ctx}/location/commUi" width="300"
+					class="btnLook" href="${ctx}/tdmis/commUi" width="300"
 					height="400" mask="true" target="dialog">选择位置信息</a>
 			</p>
 			<p>

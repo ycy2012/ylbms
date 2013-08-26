@@ -47,7 +47,7 @@ public class JmbInfoController extends BaseController {
 	@RequiresPermissions("check:jmb:add")
 	@RequestMapping(value = "/addUI")
 	public String jmbAddUI(Model model) {
-		return "base/check/addJmbInfo";
+		return "base/jmb/addJmbInfo";
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class JmbInfoController extends BaseController {
 			@PathVariable("id") Long id, Model model) {
 		JmylbModel jmblbModel = jmbInfiService.getId(id);
 		model.addAttribute("obj", jmblbModel);
-		return "base/check/editJmbInfo";
+		return "base/jmb/editJmbInfo";
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class JmbInfoController extends BaseController {
 				.buildFromHttpRequest(request);
 		Page<JmylbModel> list = jmbInfiService.list(page, filters);
 		model.addAttribute("page", list);
-		return "base/check/JmbLookup";
+		return "base/jmb/JmbLookup";
 
 	}
 
@@ -144,7 +144,7 @@ public class JmbInfoController extends BaseController {
 				.buildFromHttpRequest(request);
 		Page<JmylbModel> list = jmbInfiService.list(page, filters);
 		model.addAttribute("page", list);
-		return "base/check/listJmb";
+		return "base/jmb/listJmb";
 	}
 
 	/**
@@ -180,6 +180,6 @@ public class JmbInfoController extends BaseController {
 		Long parseLongMid = Long.parseLong(id);
 		JmylbModel jmbInfo = jmbInfiService.getId(parseLongMid);
 		model.addAttribute("jmbInfo", jmbInfo);
-		return "base/check/jmbview";
+		return "base/jmb/jmbview";
 	}
 }

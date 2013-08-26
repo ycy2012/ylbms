@@ -28,7 +28,7 @@
 					<label>状态：</label>
 					<select name="status" class="required combox">
 					<option value="0">有效</option>
-					<option value="1" selected>无效</option>
+					<option value="1">无效</option>
 				</select>
 				</p>
 				<p>
