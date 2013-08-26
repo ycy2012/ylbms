@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -30,6 +31,7 @@ import com.ylbms.common.utils.excel.annotation.ExcelField;
  */
 @Entity
 @Table(name = "YLBMS_BAS_SPECTYPEINFO")
+@DynamicUpdate(true)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SpectypeInfo extends BaseModel {
 

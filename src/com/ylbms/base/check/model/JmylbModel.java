@@ -13,9 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -33,6 +36,7 @@ import com.ylbms.system.model.User;
  */
 @Entity
 @Table(name = "ylbms_base_jmbInfo")
+@DynamicUpdate(true)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class JmylbModel extends BaseModel {
 
@@ -109,7 +113,7 @@ public class JmylbModel extends BaseModel {
 	}
 
 	@Column(name = "Jmb_Code")
-	@ExcelField(title = "精密表编码", type = 1,sort=5)
+	@ExcelField(title = "精密表编码", type = 1, sort = 5)
 	public String getJmbCode() {
 		return jmbCode;
 	}
@@ -169,6 +173,7 @@ public class JmylbModel extends BaseModel {
 
 	@Column(name = "jd_Date")
 	@ExcelField(title = "检定日期", sort = 8)
+	@Temporal(TemporalType.DATE)
 	@JSONField(format = "yyyy-mm-dd")
 	public Date getJdDate() {
 		return jdDate;
@@ -180,6 +185,7 @@ public class JmylbModel extends BaseModel {
 
 	@Column(name = "yx_date")
 	@JSONField(format = "yyyy-mm-dd")
+	@Temporal(TemporalType.DATE)
 	@ExcelField(title = "有效日期", sort = 7)
 	public Date getYxDate() {
 		return yxDate;

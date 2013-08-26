@@ -11,10 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
@@ -23,7 +26,6 @@ import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.ylbms.base.location.model.Location;
 import com.ylbms.base.location.model.TdmisLocationFullName;
 import com.ylbms.common.model.BaseModel;
 import com.ylbms.common.utils.excel.annotation.ExcelField;
@@ -42,6 +44,7 @@ import com.ylbms.system.model.Dict;
 
 @Entity
 @Table(name = "ylbms_bas_single_info")
+@DynamicUpdate(true)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SingleInfo extends BaseModel {
 
@@ -254,6 +257,7 @@ public class SingleInfo extends BaseModel {
 
 	@Column(nullable = false, name = "yx_Time")
 	@JSONField(format = "yyyy-mm-dd")
+	@Temporal(TemporalType.DATE)
 	@ExcelField(title = "有效日期", sort = 10)
 	public Date getYxTime() {
 		return yxTime;
@@ -270,6 +274,7 @@ public class SingleInfo extends BaseModel {
 	 * @return
 	 */
 	@Column(name = "bf_time")
+	@Temporal(TemporalType.DATE)
 	@JSONField(format = "yyyy-mm-dd")
 	public Date getBfTime() {
 		return bfTime;

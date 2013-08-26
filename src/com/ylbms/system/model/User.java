@@ -21,6 +21,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Where;
@@ -32,6 +33,7 @@ import com.ylbms.common.utils.Collections3;
 
 @Entity
 @Table(name = "ylbms_sys_USER")
+@DynamicUpdate(true)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends BaseModel implements Serializable {
 
