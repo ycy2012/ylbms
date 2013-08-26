@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 
 import com.ylbms.common.model.BaseModel;
@@ -24,13 +25,14 @@ import com.ylbms.common.model.BaseModel;
  */
 @Entity
 @Table(name = "ylbms_sys_dict")
+@DynamicUpdate(true)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Dict extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
 	private Long id; // 编号
-	private String label; // 值
-	private String value; // 键
+	private String label; // 键
+	private String value; // 值
 	private String type; // 类型
 	private String desciption;// 描述
 	private Integer sort; // 排序

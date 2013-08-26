@@ -23,7 +23,7 @@ import com.ylbms.system.model.Dict;
 public class DictService {
 
 	@Autowired
-	DictDao dictDao;
+	private DictDao dictDao;
 
 	/**
 	 * 分页查询
@@ -72,5 +72,18 @@ public class DictService {
 	public void delByIds(String ids) {
 		String delHQL = "delete Dict where id in(" + ids + ")";
 		dictDao.getSession().createQuery(delHQL).executeUpdate();
+	}
+
+	/**
+	 * 查询是否存在同样的字典 信息by label and value
+	 * 
+	 * @param label
+	 * @param value
+	 * @return
+	 */
+	public Boolean isExist(String label, String value) {
+		String queryHQL = "from Dict where label=? and value=?";
+		Object obj = dictDao.findUnique(queryHQL, label, value);
+		return obj != null ? false : true;
 	}
 }

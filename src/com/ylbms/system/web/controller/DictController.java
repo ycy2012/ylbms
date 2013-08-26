@@ -78,8 +78,12 @@ public class DictController {
 	@ResponseBody
 	public Map<String, Object> add(Dict dict, Model model) {
 		try {
-			dictService.saveDict(dict);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK,"dict");
+			dict.setLabel(dict.getType());
+			if (dictService.isExist(dict.getLabel(), dict.getValue())) {
+				dictService.saveDict(dict);
+				return DwzUtil.dialogAjaxDone(DwzUtil.OK, "dict");
+			}
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "dict", "字典信息重复,无法添加！");
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error("system error!!" + e.getMessage());

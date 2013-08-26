@@ -52,7 +52,6 @@
 				<th width="26"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
 				<th>标签</th>
 				<th>键值</th>
-				<th>类型</th>
 				<th>描述</th>
 				<th>排序</th>
 				<th>状态</th>
@@ -65,7 +64,6 @@
 				<td><input name="ids" value="'${acc.id}'" type="checkbox"></td>
 					<td>${acc.label}</td>
 					<td>${acc.value}</td>
-					<td>${acc.type}</td>
 					<td>${acc.desciption}</td>
 					<td>${acc.sort}</td>
 					<td>${acc.delFlag==0?'有效':'无效'}</td>

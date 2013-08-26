@@ -7,10 +7,12 @@
 		onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="56">
 			<input type="hidden" name="id" value="${obj.id}">
+			<!--  
 			<p>
 				<label>标签：</label> <input name="label" type="text" size="30"
 					value="${obj.label}" class="required" maxlength="150" />
 			</p>
+			-->
 			<p>
 				<label>键值：</label> <input name="value" type="text" size="30"
 					value="${obj.value}" maxlength="100" class="required" />
