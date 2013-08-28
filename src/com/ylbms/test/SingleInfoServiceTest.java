@@ -47,11 +47,4 @@ public class SingleInfoServiceTest extends AbstractJUnit4SpringContextTests {
 		}
 	}
 	
-	@Test
-	public void updateSingle() {
-//		String hql="update SingleInfo set owercode=? where state='20' ";
-//	    singleDao.batchExecute(hql, "00000000");
-		singleInfoService.test();
-	}
-	
 }

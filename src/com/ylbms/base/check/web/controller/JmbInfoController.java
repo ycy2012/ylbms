@@ -23,6 +23,7 @@ import com.ylbms.base.check.model.JmylbModel;
 import com.ylbms.base.check.service.JmbInfoService;
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
+import com.ylbms.common.utils.DateUtils;
 import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.utils.excel.ExportExcel;
 import com.ylbms.common.utils.excel.ImportExcel;
@@ -98,6 +99,8 @@ public class JmbInfoController extends BaseController {
 			ImportExcel ei = new ImportExcel(fileUpload, 1, 0);
 			List<JmylbModel> list = ei.getDataList(JmylbModel.class);
 			for (JmylbModel j : list) {
+				j.setYxDate(DateUtils.format(j.getYxDate().toString())); // 日期格式化
+				j.setJdDate(DateUtils.format(j.getJdDate().toString()));
 				jmbInfiService.save(j);
 			}
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);

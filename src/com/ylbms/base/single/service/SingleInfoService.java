@@ -123,7 +123,8 @@ public class SingleInfoService {
 	 *            对象
 	 * @param mids
 	 *            单件信息集合 not in
-	 * @param flag  判断是否到期的条件
+	 * @param flag
+	 *            判断是否到期的条件
 	 * @return
 	 */
 	public Page<SingleInfo> findSingleInfo(Page<SingleInfo> page,
@@ -132,7 +133,8 @@ public class SingleInfoService {
 		DetachedCriteria dc = singleDao.createDetachedCriteria();
 		if (single.getLocation() != null
 				&& single.getLocation().getWzId() != null) {
-			dc.add(Restrictions.eq("location.id", single.getLocation().getWzId()));
+			dc.add(Restrictions.eq("location.id", single.getLocation()
+					.getWzId()));
 		}
 		if (single.getSpectype() != null
 				&& single.getSpectype().getSpeId() != null) {
@@ -205,16 +207,13 @@ public class SingleInfoService {
 	}
 
 	/**
-	 * 测试的玩意儿！！不要当真
+	 * 判断单件信息是否重复
+	 * 
+	 * @param wzName
+	 * @param g
 	 */
-	public void test() {
-		Session session = singleDao.getSession();
-		Criteria c = session.createCriteria(SingleInfo.class);
-		List cats = session.createCriteria(SingleInfo.class)
-		// .createAlias("location", "l",JoinType.LEFT_OUTER_JOIN)
-				.add(Restrictions.like("location", 1400L)).list();
+	public void isExist(String wzName, String g) {
 
-		System.out.print("------" + cats.size());
 	}
 
 }

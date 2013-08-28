@@ -23,7 +23,7 @@
 			var myTD4 = myTR.insertCell(3);
 			myTD4.innerHTML = "<input type='text'  value="+temp[4]+"> <input type='hidden'  name='singles["+i+"].state' value="+temp[6]+">";
 			var myTD5 = myTR.insertCell(4);
-			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark' > <input type='hidden' name='singles["+i+"].location.id' value="+temp[5]+">";
+			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark' > <input type='hidden' name='singles["+i+"].location.wzId' value="+temp[5]+">";
 			var myTD6 = myTR.insertCell(5);
 			myTD6.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
 		}

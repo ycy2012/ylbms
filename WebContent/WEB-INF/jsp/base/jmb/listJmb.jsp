@@ -62,7 +62,9 @@
 				<th>精密表名称</th>
 				<th>精密表型号</th>
 				<th>出厂编号</th>
+				<!--  
 				<th>精密表编码</th>
+				-->
 				<th>测量范围</th>
 				<th>准确度等级</th>
 				<th>证书编码</th>
@@ -85,7 +87,9 @@
 				    <td>${acc.jmbName}</td>   
 					<td>${acc.jmbType}</td>
 					<td>${acc.factoryCode}</td>
+					<!--  
 					<td>${acc.jmbCode}</td>
+					-->
 					<td>${acc.clfw}</td>
 					<td>${acc.grade}</td>
 					<td>${acc.zhShCode}</td>

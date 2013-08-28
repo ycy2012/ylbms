@@ -22,7 +22,9 @@
 				         <option value="">选择类型</option>
 				         <option value="factory_type">厂家信息</option>
 				         <option value="class_type">资产种类</option>
-				         <option value="jltype_type">计量类别</option>
+				         <option value="jlnb_type">计量类别</option>
+				         <option value="anwz_type">安装位置</option>
+				         <option value="clfw_type">测量范围</option>
 				    </select>
 			</p>
 			<p>
@@ -39,7 +41,6 @@
 					<option value="1">无效</option>
 				</select>
 			</p>
-
 		</div>
 		<div class="formBar">
 			<ul>

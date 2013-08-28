@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>入库管理</title>
-<link href="${ctx}/styles/css/bill_title.css" rel="stylesheet" type="text/css" />
+<link href="${ctx}/styles/css/bill_title.css" rel="stylesheet"
+	type="text/css" />
 <script type="text/javascript">
 <!--
 	function addTr(value) {
@@ -21,7 +22,7 @@
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[3]+">";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input type='text'  readonly='readonly' value="+temp[4]+"><input  type='hidden'  name='singles["+i+"].location.id' value="+temp[5]+">";
+			myTD4.innerHTML = "<input type='text'  readonly='readonly' value="+temp[4]+"><input  type='hidden'  name='singles["+i+"].location.wzId' value="+temp[5]+">";
 			var myTD5 = myTR.insertCell(4);
 			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark'> <input type='hidden' name='singles["+i+"].state' value="+temp[6]+">";
 			var myTD6 = myTR.insertCell(5);
@@ -33,18 +34,18 @@
 		var i = rowID.parentNode.parentNode.rowIndex;
 		otable.deleteRow(parseInt(i));
 	}
-	function getMids(){
-		var mids="";
-		$("#mxTable").find("input[id=mid]").each(function(){
-			mids+=$(this).val()+",";
+	function getMids() {
+		var mids = "";
+		$("#mxTable").find("input[id=mid]").each(function() {
+			mids += $(this).val() + ",";
 		});
 		return mids;
 	}
-	function getURL(){
-		var url=$("a[class='add']").attr("href");
+	function getURL() {
+		var url = $("a[class='add']").attr("href");
 		return url;
 	}
-	function setWzInfo(id,name){
+	function setWzInfo(id, name) {
 		$("#wzInfo").val(id);
 		$("#wzName").val(name);
 	}
@@ -58,32 +59,35 @@
 		<div class="pageFormContent">
 			<div
 				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">新产品合格入库单</div>
-				<input type="hidden" name="djTitle" value="新产品合格入库单">
+			<input type="hidden" name="djTitle" value="新产品合格入库单">
 			<div class="divider"></div>
-				<table id="b_title"  width="100%">
+			<table id="b_title" width="100%">
 				<tr>
 					<td>供货方：</td>
-					<td>
-						<input name="sendLocation.wzId" type="text" alt="供货方信息" class="required" size="30" /></td>
+					<td><input name="sendLocation.wzId" type="hidden" 
+						value="00000000000955" /> <input type="text" value="基地料场"
+						class="required" size="30" /></td>
 					<td>接收方：</td>
-					<td> 
-						<input name="acceptLocation.wzId" type="hidden" id="wzInfo" value="00000000000955" />
-			        <input type="text"  readonly="readonly" id="wzName" class="required" size="30" value="基地料场">
-					<a class="btnLook" href="${ctx}/tdmis/commUi" width="300" height="400" mask="true"  target="dialog" >选择位置信息</a>	
-					</td>
+					<td><input name="acceptLocation.wzId" type="hidden"
+						id="wzInfo" value="00000000000955" /> <input type="text"
+						readonly="readonly" id="wzName" class="required" size="30"
+						value="基地料场"> <a class="btnLook"
+						href="${ctx}/tdmis/commUi" width="300" height="400" mask="true"
+						target="dialog">选择位置信息</a></td>
 				</tr>
 				<tr>
 					<td>领料人：</td>
-					<td><input name="llren" type="text" alt="领料人信息" class="required" size="30" /></td>
+					<td><input name="llren" type="text" alt="领料人信息"
+						class="required" size="30" /></td>
+					<!--  
 					<td>领料单位：</td>
-					<td>
-                    <select name="llUnit" class="combox" class="required">
-					    <option value="">请选择信息</option>
-						<option value="轮南项目部">轮南项目部</option>
-						<option value="库车项目部">库车项目部</option>
-						<option value="塔中项目部">塔中项目部</option>
-					</select>
-                    </td>
+					<td><select name="llUnit" class="combox" class="required">
+							<option value="">请选择信息</option>
+							<option value="轮南项目部">轮南项目部</option>
+							<option value="库车项目部">库车项目部</option>
+							<option value="塔中项目部">塔中项目部</option>
+					</select></td>
+					-->
 				</tr>
 				<tr>
 					<td>备注信息：</td>
@@ -95,7 +99,8 @@
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>
-					<li><a class="add" href="${ctx}/new/addMx"  target="addMxAjaxTodo" title="添加单件信息" warn="有红色星号标识的选项必填！"><span>添加明细</span></a></li>
+					<li><a class="add" href="${ctx}/new/addMx"
+						target="addMxAjaxTodo" title="添加单件信息" warn="有红色星号标识的选项必填！"><span>添加明细</span></a></li>
 					<li class="line">line</li>
 				</ul>
 			</div>

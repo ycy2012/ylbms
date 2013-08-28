@@ -16,7 +16,7 @@
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input  type='text' style='width:100px;' readonly='true' value="+temp[2]+"> ";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input  type='text' name='detail["+i+"].azLocation' >";
+			myTD4.innerHTML = "<input  type='text' name='detail["+i+"].azLocation'>";
 			var myTD5 = myTR.insertCell(4);
 			myTD5.innerHTML = "<input  type='text' name='detail["+i+"].shbCode'>";
 			var myTD7= myTR.insertCell(5);
@@ -112,7 +112,7 @@
 			</thead>
 		</table>
 	</div>
-	<div class="pageContent" layoutH="160">
+	<div class="pageContent" layoutH="170">
 		<div class="panelBar">
 			<ul class="toolBar">
 				<li class="line">line</li>

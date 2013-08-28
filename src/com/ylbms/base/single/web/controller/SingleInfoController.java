@@ -209,6 +209,7 @@ public class SingleInfoController extends BaseController {
 	 */
 	@RequestMapping(value = "/add")
 	@ResponseBody
+	@RequiresPermissions("base:single:add")
 	public Map<String, Object> addSpectype(SingleInfo singleInfo) {
 		try {
 			singleInfoService.saveSingleInfo(singleInfo);

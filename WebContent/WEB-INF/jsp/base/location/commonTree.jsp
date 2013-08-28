@@ -82,9 +82,9 @@
 				//取得当前选中的地点信息
 				$("#button").click(function(){
 					var zTree = $.fn.zTree.getZTreeObj("commonTree"), nodes = zTree.getCheckedNodes(true);
-					var id=nodes[0].id;
+					var wid=nodes[0].id;
 					var name=nodes[0].fullName;
-					window.parent.setWzInfo(id,name);
+					window.parent.setWzInfo(wid,name);
 					$.pdialog.closeCurrent();//关闭dialog
 				});
 			});

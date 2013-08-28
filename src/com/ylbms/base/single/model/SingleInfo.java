@@ -69,7 +69,7 @@ public class SingleInfo extends BaseModel {
 	private Integer userTimes;// 使用次数
 	private Float price;// 价格
 	private String isnyqj;// 是否能源器具
-	private String clfw;// 测量范围
+	private Dict clfw;// 测量范围
 	private String isqj;// 是否强检
 	private String isCheck; // 是否有检测数据
 	private Date chcDate;// 出厂日期
@@ -301,7 +301,7 @@ public class SingleInfo extends BaseModel {
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "type_Id", referencedColumnName = "id")
-	@Where(clause = "type='jltype_type'")
+	@Where(clause = "type='jlnb_type'")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public Dict getTypeId() {
@@ -371,12 +371,17 @@ public class SingleInfo extends BaseModel {
 	 * 
 	 * @return
 	 */
-	@ExcelField(title = "测量范围MPa", sort = 13)
-	public String getClfw() {
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "clfw", referencedColumnName = "id")
+	@Where(clause = "type='clfw_type'")
+	@NotFound(action = NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@ExcelField(title = "测量范围MPa", sort = 13,value="clfw.value")
+	public Dict getClfw() {
 		return clfw;
 	}
 
-	public void setClfw(String clfw) {
+	public void setClfw(Dict clfw) {
 		this.clfw = clfw;
 	}
 
