@@ -196,7 +196,6 @@ public class SingleInfoController extends BaseController {
 	 */
 	@RequestMapping(value = "/advanced")
 	public String advanced(Model model) {
-
 		return "base/singleinfo/advanced_query";
 
 	}
@@ -206,16 +205,21 @@ public class SingleInfoController extends BaseController {
 	 * 
 	 * @param singleInfo
 	 * @return
+	 * @editor JackLiang  2013年8月29日 12:58:04
 	 */
 	@RequestMapping(value = "/add")
 	@ResponseBody
 	@RequiresPermissions("base:single:add")
 	public Map<String, Object> addSpectype(SingleInfo singleInfo) {
 		try {
-			singleInfoService.saveSingleInfo(singleInfo);
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, "singleInfo");
+			if (singleInfoService.isExist(singleInfo.getFactoryCode())) {
+				singleInfoService.saveSingleInfo(singleInfo);
+				return DwzUtil.dialogAjaxDone(DwzUtil.OK, "singleInfo");
+			}
+			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "singleInfo","数据重复，请检查数据信息！");
 		} catch (Exception e) {
-			log.error("system error", e.getMessage());
+			if (log.isErrorEnabled())
+				log.error("system error", e.getMessage());
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "singleInfo",
 					e.getMessage());
 		}

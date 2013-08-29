@@ -209,11 +209,13 @@ public class SingleInfoService {
 	/**
 	 * 判断单件信息是否重复
 	 * 
-	 * @param wzName
+	 * @param fcode
+	 *            出厂编码
 	 * @param g
 	 */
-	public void isExist(String wzName, String g) {
-
+	public Boolean isExist(String fcode) {
+		return (singleDao.findUniqueBy("factoryCode", fcode)) == null ? true
+				: false;
 	}
 
 }
