@@ -19,9 +19,6 @@ $(function() {
 			},
 			xAxis : {
 				categories : [ '未入库', '待租', '已租', '在检', '报废' ],
-				title : {
-					text : null
-				}
 			},
 			colors : [ '#1874CD','#668B8B','#A2CD5A', '#778899' ],
 			yAxis : {
@@ -31,7 +28,8 @@ $(function() {
 					align : 'high'
 				},
 				labels : {
-					overflow : 'justify'
+					overflow : 'justify',
+					step:0.5
 				}
 			},
 			tooltip : {

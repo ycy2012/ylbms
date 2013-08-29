@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.common.orm.Page;
 import com.ylbms.common.orm.PropertyFilter;
+import com.ylbms.common.utils.CacheUtils;
 import com.ylbms.system.dao.DictDao;
 import com.ylbms.system.model.Dict;
+import com.ylbms.system.utils.DictUtils;
 
 /**
  * 字典 信息的Service类
@@ -43,6 +45,7 @@ public class DictService {
 	 */
 	public void saveDict(Dict dict) {
 		dictDao.save(dict);
+		CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
 	}
 
 	/**
@@ -62,6 +65,7 @@ public class DictService {
 	 */
 	public void deleteDictByID(Long id) {
 		dictDao.delete(id);
+		CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
 	}
 
 	/**

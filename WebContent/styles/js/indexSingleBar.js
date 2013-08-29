@@ -1,22 +1,19 @@
-var indexSinleBar =function(){
-	return{
-		init:function(){
+var indexSinleBar = function() {
+	return {
+		init : function() {
 			$.post("report/sinlgeBar", function(jsonData, textStatus) {
 				$('#indexSingleBar').highcharts({
 					chart : {
 						type : 'bar',
-						borderColor :'#ABABAB'
+						borderColor : '#ABABAB'
 					},
 					title : {
 						text : '压力表具状态数量分布图'
 					},
 					xAxis : {
-						categories : [ '未入库', '待租', '已租', '在检', '报废' ],
-						title : {
-							text : null
-						}
+						categories : [ '未入库', '待租', '已租', '在检', '报废' ]
 					},
-					colors : [ '#1874CD','#668B8B','#A2CD5A', '#778899' ],
+					colors : [ '#1874CD', '#668B8B', '#A2CD5A', '#778899' ],
 					yAxis : {
 						min : 0,
 						title : {
@@ -24,7 +21,8 @@ var indexSinleBar =function(){
 							align : 'high'
 						},
 						labels : {
-							overflow : 'justify'
+							overflow : 'justify',
+							step : 0.5
 						}
 					},
 					tooltip : {
