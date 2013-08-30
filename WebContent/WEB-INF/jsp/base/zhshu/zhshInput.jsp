@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="../../inc/taglib.jsp"%>
 <link href="${ctx}/styles/css/bill_title.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx}/styles/js/billCommon.js"></script>
 <script type="text/javascript">
 <!--
 	function addTr(value) {
@@ -28,22 +29,6 @@
 			var myTD10 = myTR.insertCell(8);
 			myTD10.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
 		}
-	}
-	function _deleteRow(rowID) {
-		var otable = document.getElementById("mxTable1");
-		var i = rowID.parentNode.parentNode.rowIndex;
-		otable.deleteRow(parseInt(i));
-	}
-	function getMids() {
-		var mids = "";
-		$("#mxTable1").find("input[id=mid]").each(function() {
-			mids += $(this).val() + ",";
-		});
-		return mids;
-	}
-	function getURL() {
-		var url = $("a[class='add']").attr("href");
-		return url;
 	}
 	function setWzInfo(id, name) {
 		$("#wzInfo").val(id);

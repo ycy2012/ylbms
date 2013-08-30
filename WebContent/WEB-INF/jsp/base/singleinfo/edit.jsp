@@ -30,17 +30,19 @@
 					class="combox required">
 					<option value="">请选择规格型号</option>
 					<c:forEach items="${spectypes}" var="sp">
-						<c:if test="${obj.spectype.speId eq ${sp.value} }">
+						<c:if test="${obj.spectype.speId eq sp.value}">
 							<option value="${sp.value}" selected="selected">${sp.text}</option>
 						</c:if>
-						<option value="${sp.value}">${sp.text}</option>
+						<c:if test="${obj.spectype.speId ne sp.value}">
+							<option value="${sp.value}">${sp.text}</option>
+						</c:if>
 					</c:forEach>
 				</select>
 			</p>
 			<p>
 				<label>当前位置：</label> <input name="location.wzId" class="required"
 					value="${obj.location.wzId==null?"
-					00000000000955":obj.loction.wzId}" type="hidden" size="30"
+					00000000000955":obj.location.wzId}" type="hidden" size="30"
 					id="locationId" /> <input type="text" size="30"
 					value="${obj.location.fullName}" readonly="readonly"
 					id="locationName" class="required"> <a class="btnLook"
@@ -51,7 +53,12 @@
 				<label>当前状态：</label> <select name="state.id" class="required combox">
 					<option value="">请选择</option>
 					<c:forEach items="${state}" var="s">
-						<option value="${s.value }">${s.text}</option>
+						<c:if test="${obj.state.id eq s.value}">
+							<option value="${s.value }" selected="selected">${s.text}</option>
+						</c:if>
+						<c:if test="${obj.state.id ne s.value}">
+							<option value="${s.value }">${s.text}</option>
+						</c:if>
 					</c:forEach>
 				</select>
 			</p>
@@ -60,7 +67,12 @@
 					class="required combox">
 					<option value="">请选择</option>
 					<c:forEach items="${fns:getDictList('class_type')}" var="z">
-						<option value="${z.id}">${z.value}</option>
+						<c:if test="${obj.classId.id eq z.id }">
+							<option value="${z.id}">${z.value}</option>
+						</c:if>
+						<c:if test="${obj.classId.id eq z.id }">
+							<option value="${z.id}" selected="selected">${z.value}</option>
+						</c:if>
 					</c:forEach>
 				</select>
 			</p>
@@ -71,13 +83,15 @@
 						<c:if test="${obj.factory.id eq f.id }">
 							<option value="${f.id}" selected="selected">${f.value}</option>
 						</c:if>
-						<option value="${f.id}">${f.value}</option>
+						<c:if test="${obj.factory.id ne f.id }">
+							<option value="${f.id}">${f.value}</option>
+						</c:if>
 					</c:forEach>
 				</select>
 			</p>
 			<p>
 				<label>出厂编号：</label> <input type="text" name="factoryCode"
-					class="required" size="30" />
+					class="required" size="30" value="${obj.factoryCode}" />
 			</p>
 			<p>
 				<label>检测日期：</label> <input type="text" name="jdtime" class="date"
@@ -109,21 +123,23 @@
 						<c:if test="${obj.typeId.id eq v.id }">
 							<option value="${v.id}" selected="selected">${v.value}</option>
 						</c:if>
-						<option value="${v.id}">${v.value}</option>
+						<c:if test="${obj.typeId.id ne v.id }">
+							<option value="${v.id}">${v.value}</option>
+						</c:if>
 					</c:forEach>
 				</select>
 			</p>
 			<p>
 				<label>精确度：</label> <input type="text" size="30" name="zqd"
-					value="${obg.zqd}" />
+					value="${obj.zqd}" />
 			</p>
 			<p>
 				<label>使用次数：</label> <input type="text" size="30" name="userTimes"
-					readonly="readonly" value="${obg.userTimes}" />
+					readonly="readonly" value="${obj.userTimes}" />
 			</p>
 			<p>
 				<label>价格：</label> <input type="text" size="30" name="price"
-					value="${obg.price}" />
+					value="${obj.price}" />
 			</p>
 			<p>
 				<label>是否能源器具：</label> <select name="isnyqj" class="combox">
@@ -134,10 +150,12 @@
 			<p>
 				<label>测量范围：</label> <select name="clfw.id" class="combox">
 					<c:forEach items="${fns:getDictList('clfw_type')}" var="v">
-						<c:if test="${obj.clfw eq v.value}">
-							<option value="${v.value}" selected="selected">${v.value}</option>
+						<c:if test="${obj.clfw.id eq v.id}">
+							<option value="${v.id}" selected="selected">${v.value}</option>
 						</c:if>
-						<option value="${v.id}">${v.value}</option>
+						<c:if test="${obj.clfw.id ne v.id}">
+							<option value="${v.id}">${v.value }</option>
+						</c:if>
 					</c:forEach>
 				</select>
 			</p>

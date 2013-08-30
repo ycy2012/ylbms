@@ -12,7 +12,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.ylbms.base.single.model.SingleInfo;
-import com.ylbms.base.single.model.SpectypeInfo;
 import com.ylbms.common.model.BaseModel;
 
 /**
@@ -59,6 +58,8 @@ public class BillTbodyModel extends BaseModel {
 	private Date tempD1;
 
 	private Date tempD2;
+	
+	
 
 	// 构造函数
 	public BillTbodyModel() {

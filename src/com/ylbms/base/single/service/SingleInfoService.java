@@ -2,8 +2,6 @@ package com.ylbms.base.single.service;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -214,8 +212,8 @@ public class SingleInfoService {
 	 * @param g
 	 */
 	public Boolean isExist(String fcode) {
-		return (singleDao.findUniqueBy("factoryCode", fcode)) == null ? true
-				: false;
+		return (fcode.equals("/") || (singleDao.findUniqueBy("factoryCode",
+				fcode)) == null) ? true : false;
 	}
 
 }

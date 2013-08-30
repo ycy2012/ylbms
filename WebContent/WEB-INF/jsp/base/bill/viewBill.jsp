@@ -20,10 +20,10 @@
 			</tr>
 			<tr valign="bottom">
 				<td width="7%">发出地点:</td>
-				<td width="20%" style="border-bottom: #000 solid 1px">${bh.sendLocation.locationName}</td>
+				<td width="20%" style="border-bottom: #000 solid 1px">${bh.sendLocation.fullName}</td>
 				<td width="8%">&nbsp;</td>
 				<td width="7%">接收地点:</td>
-				<td width="20%" style="border-bottom: #000 solid 1px">${bh.acceptLocation.locationName}</td>
+				<td width="20%" style="border-bottom: #000 solid 1px">${bh.acceptLocation.fullName}</td>
 				<td width="8%">&nbsp;</td>
 				<td width="7%">生效时间:</td>
 				<td width="20%" style="border-bottom: #000 solid 1px">${bh.sxDate}</td>
@@ -45,8 +45,8 @@
 				<td height="20%" align="center"  width="5%">${stauts.count}</td>
 				<td width="20%">${bt.mid.mid}</td>
 				<td width="20%">${bt.mid.wzname}</td>
-				<td width="10%">${bt.mid.spectype.speId}</td>
-				<td width="20%">${tb.mid.factoryCode}</td>
+				<td width="10%">${bt.mid.spectype.speName}</td>
+				<td width="20%">${tb.mid.factoryCode.value}</td>
 				<td width="25%">${bt.mid.remark }</td>
 			</tr>
 					</c:forEach>

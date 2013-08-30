@@ -8,6 +8,7 @@
 <title>入库管理</title>
 <link href="${ctx}/styles/css/bill_title.css" rel="stylesheet"
 	type="text/css" />
+<script type="text/javascript" src="${ctx}/styles/js/billCommon.js"></script>
 <script type="text/javascript">
 <!--
 	function addTr(value) {
@@ -29,26 +30,10 @@
 			myTD6.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
 		}
 	}
-	function _deleteRow(rowID) {
-		var otable = document.getElementById("mxTable");
-		var i = rowID.parentNode.parentNode.rowIndex;
-		otable.deleteRow(parseInt(i));
-	}
-	function getMids() {
-		var mids = "";
-		$("#mxTable").find("input[id=mid]").each(function() {
-			mids += $(this).val() + ",";
-		});
-		return mids;
-	}
-	function getURL() {
-		var url = $("a[class='add']").attr("href");
-		return url;
-	}
-	function setWzInfo(id, name) {
-		$("#wzInfo").val(id);
-		$("#wzName").val(name);
-	}
+function setWzInfo(id, name) {
+	$("#wzInfo").val(id);
+	$("#wzName").val(name);
+}
 //-->
 </script>
 </head>
@@ -77,7 +62,7 @@
 				</tr>
 				<tr>
 					<td>领料人：</td>
-					<td><input name="llren" type="text" alt="领料人信息"
+					<td><input name="llren" type="text" 
 						class="required" size="30" /></td>
 					<!--  
 					<td>领料单位：</td>
@@ -99,7 +84,7 @@
 			<div class="panelBar">
 				<ul class="toolBar">
 					<li class="line">line</li>
-					<li><a class="add" href="${ctx}/new/addMx"
+					<li><a class="add" href="${ctx}/new/addMx" mask="true"
 						target="addMxAjaxTodo" title="添加单件信息" warn="有红色星号标识的选项必填！"><span>添加明细</span></a></li>
 					<li class="line">line</li>
 				</ul>

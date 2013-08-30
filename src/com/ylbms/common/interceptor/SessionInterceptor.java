@@ -91,7 +91,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				StringBuilder builder = new StringBuilder();
 				builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">");
 				builder.append("alert(\"页面过期，请重新登录\");");
-				builder.append("window.location.href=\"");
+				builder.append("window.top.location.href=\"");
 				builder.append(request.getContextPath() + "/a/login");
 				builder.append("\";</script>");
 				out.print(builder.toString());

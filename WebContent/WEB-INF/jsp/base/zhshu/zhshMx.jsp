@@ -17,9 +17,9 @@
 		}
 	}
 	$(document).ready(function() {
-		var mids = window.parent.getMids();
-		var url = window.parent.getURL() + mids;
+		var url=window.parent.getURL();
 		$("#form").attr("action", url);
+		$("#pagerForm").attr("action", url);
 	});
 //-->
 </script>

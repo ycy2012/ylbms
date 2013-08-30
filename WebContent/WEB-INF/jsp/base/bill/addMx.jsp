@@ -17,9 +17,9 @@
 		}
 	}
 	$(document).ready(function() {
-		var mids = window.parent.getMids();
 		var url=window.parent.getURL();
 		$("#form").attr("action", url);
+		$("#pagerForm").attr("action", url);
 	});
 //-->
 </script>
@@ -95,7 +95,7 @@
 				</c:forEach>
 			</select> <span>条，共${page.totalCount}条</span>
 		</div>
-		<div class="pagination" targetType="navTab"
+		<div class="pagination" targetType="dialog"
 			totalCount="${page.totalCount}" numPerPage="${page.numPerPage}"
 			pageNumShown="10" currentPage="${page.pageNum}"></div>
 	</div>

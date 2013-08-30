@@ -9,7 +9,6 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -38,7 +37,7 @@ public class BillTbodyPK implements Serializable {
 	}
 
 	// setter getter
-	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "mid")
 	@NotFound(action=NotFoundAction.EXCEPTION)
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
@@ -50,7 +49,7 @@ public class BillTbodyPK implements Serializable {
 		this.mid = mid;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "dj_id")
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	public BillHeadModel getBillId() {

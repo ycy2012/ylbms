@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>安装记录添加</title>
 <link href="${ctx}/styles/css/bill_title.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${ctx}/styles/js/billCommon.js"></script>
 <script type="text/javascript">
 <!--
 	function addTr(value) {
@@ -27,22 +28,6 @@
 			var myTD6 = myTR.insertCell(5);
 			myTD6.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
 		}
-	}
-	function _deleteRow(rowID) {
-		var otable = document.getElementById("mxTable");
-		var i = rowID.parentNode.parentNode.rowIndex;
-		otable.deleteRow(parseInt(i));
-	}
-	function getMids(){
-		var mids="";
-		$("#mxTable").find("input[id=mid]").each(function(){
-			mids+=$(this).val()+",";
-		});
-		return mids;
-	}
-	function getURL(){
-		var url=$("a[class='add']").attr("href");
-		return url;
 	}
 	function setWzInfo(id,name){
 		$("#wzInfo").val(id);

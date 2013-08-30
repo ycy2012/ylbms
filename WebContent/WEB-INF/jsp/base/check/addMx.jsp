@@ -23,12 +23,12 @@
 	});
 //-->
 </script>
-<form id="pagerForm" method="post" >
+<form id="pagerForm" action="" method="post" >
 	<input type="hidden" name="pageNum" value="${page.pageNum}" /> <input
 		type="hidden" name="numPerPage" value="${page.numPerPage}" />
 </form>
 <div class="pageHeader">
-	<form onsubmit="return dialogSearch(this);" id="pagerForm" method="post">
+	<form  onsubmit="return dialogSearch(this);" id="pagerForm" method="post">
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
@@ -95,7 +95,7 @@
 				</c:forEach>
 			</select> <span>条，共${page.totalCount}条</span>
 		</div>
-		<div class="pagination" targetType="navTab"
+		<div class="pagination" targetType="dialog"
 			totalCount="${page.totalCount}" numPerPage="${page.numPerPage}"
 			pageNumShown="10" currentPage="${page.pageNum}"></div>
 	</div>
