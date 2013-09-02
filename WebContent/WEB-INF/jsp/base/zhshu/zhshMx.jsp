@@ -84,7 +84,7 @@
 	<div class="panelBar">
 		<div class="pages">
 			<span>显示</span> <select class="combox" name="numPerPage"
-				onchange="navTabPageBreak({numPerPage:this.value})">
+				onchange="dialogPageBreak({numPerPage:this.value})">
 				<c:forEach begin="10" end="40" step="10" varStatus="s">
 					<option value="${s.index}"
 						${page.numPerPage eq s.index ? 'selected="selected"' : ''}>${s.index}</option>
