@@ -14,20 +14,22 @@
 	function addTr(value) {
 		var otable = document.getElementById("mxTable");
 		for ( var i = 0, len = value.length; i < len; i++) {
+			alert(j);
 			var temp = value[i].split("#");
 			var myTR = otable.insertRow(otable.rows.length);
 			var myTD1 = myTR.insertCell(0);
-			myTD1.innerHTML = "<input type='text' id='mid'  readonly='readonly'  name='singles["+i+"].mid' value="+temp[0]+">";
+			myTD1.innerHTML = "<input type='text' id='mid'  readonly='readonly'  name='singles["+j+"].mid' value="+temp[0]+">";
 			var myTD2 = myTR.insertCell(1);
 			myTD2.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[2]+">";
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input type='text'  readonly='readonly'  value="+temp[3]+">";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input type='text'  readonly='readonly' value="+temp[4]+"><input  type='hidden'  name='singles["+i+"].location.wzId' value="+temp[5]+">";
+			myTD4.innerHTML = "<input type='text'  readonly='readonly' value="+temp[4]+"><input  type='hidden'  name='singles["+j+"].location.wzId' value="+temp[5]+">";
 			var myTD5 = myTR.insertCell(4);
-			myTD5.innerHTML = "<input type='text' name='singles["+i+"].remark'> <input type='hidden' name='singles["+i+"].state' value="+temp[6]+">";
+			myTD5.innerHTML = "<input type='text' name='singles["+j+"].remark'> <input type='hidden' name='singles["+j+"].state' value="+temp[6]+">";
 			var myTD6 = myTR.insertCell(5);
 			myTD6.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
+			j++;
 		}
 	}
 function setWzInfo(id, name) {

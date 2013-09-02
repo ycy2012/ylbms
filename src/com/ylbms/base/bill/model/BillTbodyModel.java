@@ -21,9 +21,9 @@ import com.ylbms.common.model.BaseModel;
  * @date 2013-6-14
  */
 @Entity
-@IdClass(BillTbodyPK.class)
-// 复合主键
 @Table(name = "ylbms_dj_detail")
+//复合主键
+@IdClass(BillTbodyPK.class)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BillTbodyModel extends BaseModel {
 
@@ -59,7 +59,6 @@ public class BillTbodyModel extends BaseModel {
 
 	private Date tempD2;
 	
-	
 
 	// 构造函数
 	public BillTbodyModel() {
@@ -69,6 +68,7 @@ public class BillTbodyModel extends BaseModel {
 	
 	
 	@Id
+	@Column(name="mid")
 	public SingleInfo getMid() {
 		return mid;
 	}
@@ -77,6 +77,7 @@ public class BillTbodyModel extends BaseModel {
 		this.mid = mid;
 	}
 	@Id
+	@Column(name="dj_id")
 	public BillHeadModel getBillId() {
 		return billId;
 	}

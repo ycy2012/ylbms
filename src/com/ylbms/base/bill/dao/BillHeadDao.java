@@ -1,7 +1,6 @@
 package com.ylbms.base.bill.dao;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ylbms.base.bill.model.BillHeadModel;
 import com.ylbms.common.orm.hibernate.HibernateDao;
@@ -14,5 +13,12 @@ import com.ylbms.common.orm.hibernate.HibernateDao;
  */
 @Repository
 public class BillHeadDao extends HibernateDao<BillHeadModel, String> {
+	
+	@Override
+	public void save(BillHeadModel entity) {
+		this.getSession().save(entity);
+		this.getSession().flush();
+		this.getSession().clear();
+	}
 
 }

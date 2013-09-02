@@ -17,17 +17,18 @@
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input  type='text' style='width:100px;' readonly='true' value="+temp[2]+"> ";
 			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input  type='text' name='detail["+i+"].azLocation'>";
+			myTD4.innerHTML = "<input  type='text' name='detail["+j+"].azLocation'>";
 			var myTD5 = myTR.insertCell(4);
-			myTD5.innerHTML = "<input  type='text' name='detail["+i+"].shbCode'>";
+			myTD5.innerHTML = "<input  type='text' name='detail["+j+"].shbCode'>";
 			var myTD7= myTR.insertCell(5);
-			myTD7.innerHTML = "<input   type='text' style='width:80px;' name='detail["+i+"].grade' >";
+			myTD7.innerHTML = "<input   type='text' style='width:80px;' name='detail["+j+"].grade' >";
 			var myTD8 = myTR.insertCell(6);
-			myTD8.innerHTML = "<input type='text' style='width:80px;'  name='detail[" + i+ "].order' value=" + (i + 1) + ">";
+			myTD8.innerHTML = "<input type='text' style='width:80px;'  name='detail[" + j+ "].order' value=" + (j + 1) + ">";
 			var myTD9 = myTR.insertCell(7);
-			myTD9.innerHTML = "<input  type='text' name='detail["+i+"].remark'> ";
+			myTD9.innerHTML = "<input  type='text' name='detail["+j+"].remark'> ";
 			var myTD10 = myTR.insertCell(8);
 			myTD10.innerHTML = "<a  title='删除'  href='javascript:;' onclick='_deleteRow(this)' class='btnDel'>删除</a>";
+		    j++;
 		}
 	}
 	function setWzInfo(id, name) {

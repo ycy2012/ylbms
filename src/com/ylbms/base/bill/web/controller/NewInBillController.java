@@ -95,8 +95,9 @@ public class NewInBillController extends BaseController {
 			
 			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
 		} catch (Exception e) {
+			e.printStackTrace();
 			if (log.isErrorEnabled()) {
-				log.error("system error"+e.getMessage());
+				log.error("system error! "+e.getMessage());
 			}
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
 					e.getMessage());

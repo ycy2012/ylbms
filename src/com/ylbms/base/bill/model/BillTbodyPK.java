@@ -2,7 +2,6 @@ package com.ylbms.base.bill.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +22,7 @@ import com.ylbms.base.single.model.SingleInfo;
  */
 public class BillTbodyPK implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1190986010439330142L;
 
 	private SingleInfo mid;
 	private BillHeadModel billId;
@@ -31,15 +30,10 @@ public class BillTbodyPK implements Serializable {
 	public BillTbodyPK() {
 	}
 
-	public BillTbodyPK(SingleInfo mid, BillHeadModel billId) {
-		this.mid = mid;
-		this.billId = billId;
-	}
-
 	// setter getter
-	@ManyToOne
-	@JoinColumn(name = "mid")
-	@NotFound(action=NotFoundAction.EXCEPTION)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "mid", referencedColumnName = "mid", unique = false, nullable = false, insertable = false, updatable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	public SingleInfo getMid() {
 		return mid;
@@ -50,7 +44,8 @@ public class BillTbodyPK implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "dj_id")
+	@JoinColumn(name = "dj_id", nullable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 	public BillHeadModel getBillId() {
 		return billId;
@@ -62,7 +57,11 @@ public class BillTbodyPK implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((mid == null) ? 0 : mid.hashCode());
+		result = prime * result + ((billId == null) ? 0 : billId.hashCode());
+		return result;
 	}
 
 	@Override
@@ -74,12 +73,11 @@ public class BillTbodyPK implements Serializable {
 			return true;
 		}
 		BillTbodyPK other = (BillTbodyPK) obj;
-		if (mid == null || other.mid != null && !mid.equals(other.mid)) {
+		if (mid == null && other.mid != null || !mid.equals(other.mid)) {
 			return false;
 		}
-		if (billId == null || other.billId != null
-				&& !billId.equals(other.billId)
-				|| (!billId.getDjId().equals(other.getBillId().getDjId()))) {
+		if (billId == null && other.billId != null
+				|| !billId.equals(other.billId)) {
 			return false;
 		}
 

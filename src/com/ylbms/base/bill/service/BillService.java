@@ -24,7 +24,7 @@ import com.ylbms.system.utils.UserUtils;
  * @date 2013-6-19
  */
 @Service
-@Transactional
+@Transactional(readOnly=true)
 public class BillService {
 
 	@Autowired
@@ -45,7 +45,7 @@ public class BillService {
 	 * @param wzInfo
 	 *            位置信息
 	 */
-	@Transactional(readOnly = false, rollbackFor = Exception.class)
+	@Transactional(readOnly = false,rollbackFor=Exception.class)
 	public void saveBillHeadAndBody(List<SingleInfo> singles,
 			BillHeadModel bhm, String newState, TdmisLocationFullName wzInfo) {
 		bhm.setSxDate(new Date());

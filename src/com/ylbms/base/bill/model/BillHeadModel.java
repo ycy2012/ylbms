@@ -268,6 +268,7 @@ public class BillHeadModel extends BaseModel {
 	}
 
 	@OneToMany(mappedBy = "billId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<BillTbodyModel> getBillTbody() {
 		return billTbody;

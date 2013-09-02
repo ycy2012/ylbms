@@ -1,6 +1,7 @@
 package com.ylbms.base.single.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,6 +28,8 @@ import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.google.common.collect.Lists;
+import com.ylbms.base.bill.model.BillTbodyModel;
 import com.ylbms.base.location.model.TdmisLocationFullName;
 import com.ylbms.common.model.BaseModel;
 import com.ylbms.common.utils.excel.annotation.ExcelField;
@@ -97,8 +101,8 @@ public class SingleInfo extends BaseModel {
 
 	// getter setter
 	@Id
-	@GeneratedValue(generator = "increment")
-	@GenericGenerator(name = "increment", strategy = "com.ylbms.base.single.model.SingleInfoPK")
+	@GeneratedValue(generator = "singleInfoPK")
+	@GenericGenerator(name = "singleInfoPK", strategy = "com.ylbms.base.single.model.SingleInfoPK")
 	@NotNull(message = "主键信息不可以为空！")
 	public String getMid() {
 		return mid;
@@ -376,7 +380,7 @@ public class SingleInfo extends BaseModel {
 	@Where(clause = "type='clfw_type'")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	@ExcelField(title = "测量范围MPa", sort = 13,value="clfw.value")
+	@ExcelField(title = "测量范围MPa", sort = 13, value = "clfw.value")
 	public Dict getClfw() {
 		return clfw;
 	}

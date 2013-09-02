@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
@@ -19,14 +18,17 @@ import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.id.PersistentIdentifierGenerator;
 import org.hibernate.type.Type;
 
+import com.ylbms.common.utils.StringUtils;
+
 /**
+ * 单件主键生成策略
  * 
  * @author JackLiang
  * @version 1.0
  * @date 2013-6-19
  */
 public class SingleInfoPK implements IdentifierGenerator, Configurable {
-	
+
 	private static final Log log = LogFactory.getLog(SingleInfoPK.class);
 	private static final String TILTE = "YLB";
 
@@ -37,10 +39,10 @@ public class SingleInfoPK implements IdentifierGenerator, Configurable {
 	public void configure(Type arg0, Properties params, Dialect arg2)
 			throws MappingException {
 		String table = params.getProperty("table");
-		if (table == null)
+		if (StringUtils.isNotBlank(table))
 			table = params.getProperty(PersistentIdentifierGenerator.TABLE);
 		String column = params.getProperty("column");
-		if (column == null)
+		if (StringUtils.isNotBlank(column))
 			column = params.getProperty(PersistentIdentifierGenerator.PK);
 		String schema = params
 				.getProperty(PersistentIdentifierGenerator.SCHEMA);
