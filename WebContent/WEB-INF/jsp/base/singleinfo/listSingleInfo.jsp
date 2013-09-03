@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../../inc/taglib.jsp"%>
+<script type="text/javascript">
+<!--
+	function setWzInfo(id, name) {
+		$("#locationId").val(id);
+		$("#locationName").val(name);
+	}
+//-->
+</script>
 <form id="pagerForm" method="post" action="${ctx}/single/list">
 	<input type="hidden" name="pageNum" value="${page.pageNum}" /> <input
 		type="hidden" name="numPerPage" value="${page.numPerPage}" />
@@ -13,19 +21,18 @@
 				<tr>
 					<td>物资编码：<input type="text" name="owercode" /></td>
 					<td>物资名称：<input type="text" name="wzname" /></td>
-					<td>当前位置：<input type="text" name="location.id" /></td>
-					<td>当前状态： <select name="status">
+					<td>当前位置：</td>
+					<td><input name="location.wzId" class="required" type="hidden"
+						id="locationId" /> <input type="text" readonly="readonly"
+						id="locationName"></td>
+					<td><a class="btnLook" href="${ctx}/tdmis/commUi" width="300"
+						height="400" mask="true" target="dialog">选择位置信息</a></td>
+					<td>当前状态：</td>
+					<td><select name="status" class="combox">
 							<option value="1">无效</option>
 							<option value="0">有效</option>
 							<option value="" selected>请选择</option>
-					</select>
-					</td>
-					<%--
- 			    	<td>组织机构：<input type="text" name="organization" value="${obj.o.organization}/></td> --%>
-					<%-- 			    	<td>创建人：<input type="text" name="createUser" value="${obj.o.createUser}/></td> --%>
-					<%-- 			    	<td>创建时间：<input type="text" name="createDate" value="${obj.o.createDate}/></td> --%>
-					<%-- 			    	<td>修改人：<input type="text" name="modifyUser" value="${obj.o.modifyUser}/></td> --%>
-					<%-- 			    	<td>修改时间：<input type="text" name="modifyDate" value="${obj.o.modifyDate}/></td> --%>
+					</select></td>
 				</tr>
 			</table>
 			<div class="subBar">
@@ -35,7 +42,7 @@
 								<button type="submit">检索</button>
 							</div>
 						</div></li>
-					<li><a class="button" href="${ctx}/single/advanced"
+					<li><a class="button" href="${ctx}/single/query"
 						target="dialog" mask="true" title="查询框"><span>高级检索</span></a></li>
 				</ul>
 			</div>
@@ -146,8 +153,7 @@
 					<td><shiro:hasPermission name="base:single:delete">
 							<a title="删除单件信息" target="ajaxTodo"
 								href="${ctx}/single/delete/${acc.mid}" class="btnDel">删除单件信息</a>
-						</shiro:hasPermission>
-						 <shiro:hasPermission name="base:single:edit">
+						</shiro:hasPermission> <shiro:hasPermission name="base:single:edit">
 							<a title="编辑单件信息" target="navTab"
 								href="${ctx}/single/edit/${acc.mid}" class="btnEdit">编辑单件信息</a>
 						</shiro:hasPermission></td>

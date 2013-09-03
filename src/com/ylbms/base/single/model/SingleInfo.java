@@ -1,7 +1,6 @@
 package com.ylbms.base.single.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,8 +26,6 @@ import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.google.common.collect.Lists;
-import com.ylbms.base.bill.model.BillTbodyModel;
 import com.ylbms.base.location.model.TdmisLocationFullName;
 import com.ylbms.common.model.BaseModel;
 import com.ylbms.common.utils.excel.annotation.ExcelField;

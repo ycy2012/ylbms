@@ -194,9 +194,10 @@ public class SingleInfoController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/advanced")
+	@RequestMapping(value = "/query")
 	public String advanced(Model model) {
-		return "base/singleinfo/advanced_query";
+		saveInfoToehcacher(model);
+		return "base/singleinfo/query";
 
 	}
 

@@ -16,6 +16,9 @@ import com.ylbms.system.dao.UserDao;
 import com.ylbms.system.model.Menu;
 import com.ylbms.system.model.User;
 import com.ylbms.system.security.SystemRealm.Principal;
+import com.ylbms.system.service.MenuService;
+import com.ylbms.system.service.SystemService;
+import com.ylbms.system.service.UserSerivice;
 
 /**
  * 用户工具类
@@ -32,8 +35,8 @@ public class UserUtils  {
 	public static final String CACHE_AREA_LIST = "areaList";
 	public static final String CACHE_OFFICE_LIST = "officeList";
 
-	private static UserDao userDao=SpringContextHolder.getBean(UserDao.class);
-	private static MenuDao menuDao=SpringContextHolder.getBean(MenuDao.class);
+	private static UserSerivice userService=SpringContextHolder.getBean(UserSerivice.class);
+	private static MenuService menuService=SpringContextHolder.getBean(MenuService.class);
 
 	public static User getUser() {
 		User user = (User) getCache(CACHE_USER);
@@ -41,7 +44,7 @@ public class UserUtils  {
 			Principal principal = (Principal) SecurityUtils.getSubject()
 					.getPrincipal();
 			if (null != principal) {
-				user = userDao.findUniqueBy("loginName",
+				user = userService.findUniqueBy("loginName",
 						principal.getLoginName());
 				putCache(CACHE_USER, user);
 			}
@@ -71,9 +74,9 @@ public class UserUtils  {
 		if (menuList == null) {
 			User user = getUser();
 			if (user.isAdmin()) {
-				menuList = menuDao.getAll();
+				menuList = menuService.getAll();
 			} else {
-				menuList = menuDao.findByUserId(user.getId());
+				menuList = menuService.findByUserId(user.getId());
 			}
 			putCache(CACHE_MENU_LIST, menuList);
 		}

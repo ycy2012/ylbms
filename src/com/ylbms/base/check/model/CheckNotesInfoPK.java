@@ -3,7 +3,6 @@ package com.ylbms.base.check.model;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -26,7 +25,9 @@ public class CheckNotesInfoPK implements Serializable {
 
 	private SingleInfo single;
 	private CheckNotes checkNotes;
-
+    //构造函数
+	public CheckNotesInfoPK() {
+	}
 	// setter getter
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinColumn(name = "mid")

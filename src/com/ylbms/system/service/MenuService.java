@@ -1,5 +1,6 @@
 package com.ylbms.system.service;
 
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,14 +18,13 @@ import com.ylbms.system.model.Menu;
  * @date 2013-5-31
  */
 @Service
-@Transactional(readOnly=true)
+@Transactional(readOnly = true)
 public class MenuService {
 
 	private static final Log log = LogFactory.getLog(MenuService.class);
 
 	@Autowired
 	MenuDao menuDao;
-
 
 	public Menu getMenuById(Long id) {
 		return menuDao.get(id);
@@ -43,5 +43,23 @@ public class MenuService {
 		menuDao.createQuery(delHQL);
 	}
 
+	/**
+	 * get all menus
+	 * 
+	 * @return
+	 */
+	public List<Menu> getAll() {
+		return menuDao.getAll();
+	}
+
+	/**
+	 * 查询菜单信息根据用户ID
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public List<Menu> findByUserId(Long id) {
+		return menuDao.findByUserId(id);
+	}
 
 }

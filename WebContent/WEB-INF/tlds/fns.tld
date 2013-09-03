@@ -3,7 +3,7 @@
 <taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
 	version="2.0">
-	
+
 	<description>JSTL 1.1 functions library</description>
 	<display-name>JSTL functions sys</display-name>
 	<tlib-version>1.1</tlib-version>
@@ -36,7 +36,8 @@
 		<name>getCache</name>
 		<function-class>com.ylbms.system.utils.UserUtils</function-class>
 		<function-signature>java.lang.Object getCache(java.lang.String,
-			java.lang.Object)</function-signature>
+			java.lang.Object)
+		</function-signature>
 		<example>${fns:getCache(cacheName, defaultValue)}</example>
 	</function>
 
@@ -46,7 +47,8 @@
 		<name>getDictLabel</name>
 		<function-class>com.ylbms.system.utils.DictUtils</function-class>
 		<function-signature>java.lang.String getDictLabel(java.lang.String,
-			java.lang.String, java.lang.String)</function-signature>
+			java.lang.String, java.lang.String)
+		</function-signature>
 		<example>${fns:getDictLabel(value, type, defaultValue)}</example>
 	</function>
 
@@ -55,7 +57,8 @@
 		<name>getDictValue</name>
 		<function-class>com.ylbms.system.utils.DictUtils</function-class>
 		<function-signature>java.lang.String getDictValue(java.lang.String,
-			java.lang.String, java.lang.String)</function-signature>
+			java.lang.String, java.lang.String)
+		</function-signature>
 		<example>${fns:getDictValue(label, type, defaultValue)}</example>
 	</function>
 
@@ -66,7 +69,14 @@
 		<function-signature>java.util.List getDictList(java.lang.String)</function-signature>
 		<example>${fns:getDictList(type)}</example>
 	</function>
-
+	<!-- 规格型号信息 -->
+	<function>
+		<description>获取规格型号对象列表</description>
+		<name>getSpectypeList</name>
+		<function-class>com.ylbms.base.utils.SpectypeUtils</function-class>
+		<function-signature>java.util.List getSpectypeList()</function-signature>
+		<example>${fns:getSpectypeList()}</example>
+	</function>
 	<!-- Encodes -->
 	<function>
 		<description>URL编码</description>

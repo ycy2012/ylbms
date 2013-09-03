@@ -44,4 +44,15 @@ public class UserSerivice {
 		userDao.delete(ID);
 	}
 
+	/**
+	 * 根据属性和值来查询USer对象
+	 * 
+	 * @param string
+	 * @param loginName
+	 * @return
+	 */
+	public User findUniqueBy(String string, String loginName) {
+		return userDao.findUniqueBy(string, loginName);
+	}
+
 }
