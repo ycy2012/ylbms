@@ -33,7 +33,7 @@ import com.ylbms.common.web.BaseController;
  * @date 2013-6-18
  */
 @Controller
-@RequestMapping(value = "/new")
+@RequestMapping(value = "new")
 public class NewInBillController extends BaseController {
 
 	private static final Log log = LogFactory.getLog(NewInBillController.class);
@@ -41,10 +41,10 @@ public class NewInBillController extends BaseController {
 	private static final String NAV_TAB_ID = "billgl";
 
 	@Autowired
-	SingleInfoService singleService;
+	private SingleInfoService singleService;
 
 	@Autowired
-	BillService billservice;
+	private BillService billservice;
 
 	/**
 	 * 
@@ -52,7 +52,7 @@ public class NewInBillController extends BaseController {
 	 * @return
 	 */
 	@RequiresPermissions("base:newbill:add")
-	@RequestMapping(value = "/newUi")
+	@RequestMapping(value = "newUi")
 	public String newUi(Model model) {
 		return "base/bill/newInput";
 	}
@@ -66,19 +66,20 @@ public class NewInBillController extends BaseController {
 	 * @return
 	 */
 	@SuppressWarnings("deprecation")
-	@RequestMapping(value = "/addMx")
+	@RequestMapping(value = "addMx")
 	public String addMx(HttpServletRequest request,
-			@RequestParam("mids") String ids,@RequestParam("wz")String wz, Page<SingleInfo> page,
-			Model model) {
-		String wzName=URLDecoder.decode(wz),mids=URLDecoder.decode(ids);
+			@RequestParam("mids") String ids, @RequestParam("wz") String wz,
+			Page<SingleInfo> page, Model model) {
+		String wzName = URLDecoder.decode(wz), mids = URLDecoder.decode(ids);
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
-		Page<SingleInfo> list = singleService.findSingleNotInMids(page, filters, mids, "010",wzName);
+		Page<SingleInfo> list = singleService.findSingleNotInMids(page,
+				filters, mids, "010", wzName);
 		model.addAttribute("page", list);
 
 		return "base/bill/addMx";
 	}
-	
+
 	/**
 	 * 添加单据
 	 * 
@@ -86,22 +87,22 @@ public class NewInBillController extends BaseController {
 	 * @param billHead
 	 * @return
 	 */
-	@RequestMapping(value = "/addBill")
+	@RequestMapping(value = "addBill")
 	@ResponseBody
 	public Map<String, Object> addBill(SingleForm singles, BillHeadModel bill) {
 		try {
+			log.debug("save bill infos");
 			// save billheadInfo
-			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "020",bill.getAcceptLocation());
-			
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
+			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "020",
+					bill.getAcceptLocation());
+			return DwzUtil.dialogAjaxDoneForward(DwzUtil.OK, "bill/list");
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (log.isErrorEnabled()) {
-				log.error("system error! "+e.getMessage());
+				log.error("system error! " + e.getMessage());
 			}
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, NAV_TAB_ID,
 					e.getMessage());
 		}
 	}
-
 }

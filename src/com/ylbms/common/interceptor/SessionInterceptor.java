@@ -81,12 +81,15 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 					&& "XMLHttpRequest".equalsIgnoreCase(request
 							.getHeader("X-Requested-With"))
 					|| request.getParameter("ajax") != null) {
+				log.debug("It's a ajax request");
 				Map<String, Object> ret = DwzUtil.dialogAjaxDoneTimeOut();
 				PrintWriter out = response.getWriter();
 				out.print(JSON.toJSON(ret));
 				out.close();
 				return false;
 			} else {
+				log.debug("It's not a ajax request");
+				
 				PrintWriter out = response.getWriter();
 				StringBuilder builder = new StringBuilder();
 				builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">");
@@ -96,7 +99,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				builder.append("\";</script>");
 				out.print(builder.toString());
 				out.close();
-				// response.sendRedirect(request.getContextPath() + "/a/login");
 				return false;
 			}
 		}

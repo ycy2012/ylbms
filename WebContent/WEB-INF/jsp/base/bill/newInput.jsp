@@ -14,7 +14,6 @@
 	function addTr(value) {
 		var otable = document.getElementById("mxTable");
 		for ( var i = 0, len = value.length; i < len; i++) {
-			alert(j);
 			var temp = value[i].split("#");
 			var myTR = otable.insertRow(otable.rows.length);
 			var myTD1 = myTR.insertCell(0);
@@ -42,7 +41,7 @@ function setWzInfo(id, name) {
 <body class="page">
 	<form action="${ctx}/new/addBill" method="post"
 		class="pageForm required-validate"
-		onsubmit="return validateCallback(this, navTabAjaxDone);">
+		onsubmit="return validateCallback(this, navTabAjaxDone)">
 		<div class="pageFormContent">
 			<div
 				style="width: 90%; text-align: center; font-size: 1.2em; font-weight: bold;">新产品合格入库单</div>

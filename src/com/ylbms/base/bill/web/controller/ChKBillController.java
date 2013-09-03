@@ -69,14 +69,16 @@ public class ChKBillController extends BaseController {
 	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/addMx")
 	public String addMx(HttpServletRequest request,
-			@RequestParam("mids") String mids,@RequestParam("wz") String wzName, Page<SingleInfo> page,
+			@RequestParam("mids") String mids,
+			@RequestParam("wz") String wzName, Page<SingleInfo> page,
 			Model model) {
-		wzName=URLDecoder.decode(wzName);mids=URLDecoder.decode(mids);   //解码处理
-		
+		wzName = URLDecoder.decode(wzName);
+		mids = URLDecoder.decode(mids); // 解码处理
+
 		List<PropertyFilter> filters = PropertyFilter
 				.buildFromHttpRequest(request);
 		Page<SingleInfo> list = singleService.findSingleNotInMids(page,
-				filters, mids, "020",wzName);
+				filters, mids, "020", wzName);
 		model.addAttribute("page", list);
 
 		return "base/bill/addMx";
@@ -95,9 +97,10 @@ public class ChKBillController extends BaseController {
 	public Map<String, Object> addNewBill(SingleForm singles, BillHeadModel bill) {
 		try {
 			// save billheadInfo
-			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "030",bill.getAcceptLocation());
+			billservice.saveBillHeadAndBody(singles.getSingles(), bill, "030",
+					bill.getAcceptLocation());
 
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
+			return DwzUtil.dialogAjaxDoneForward(DwzUtil.OK, "bill/list");
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error("system error", e.getCause());

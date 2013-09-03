@@ -96,7 +96,7 @@ public class RecheckController extends BaseController {
 			billService.saveBillHeadAndBody(singles.getSingles(), bill, "040",
 					bill.getAcceptLocation());
 
-			return DwzUtil.dialogAjaxDone(DwzUtil.OK, NAV_TAB_ID);
+			return DwzUtil.dialogAjaxDoneForward(DwzUtil.OK, "bill/list");
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error("system error", e.getCause());
