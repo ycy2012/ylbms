@@ -28,25 +28,24 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="hashAlgorithmName" value="SHA-1" />
 		<property name="hashIterations" value="1024" />
 	</bean>
-	<!-- 设置shiro 超时时间 
-	<bean id="sessionManager"
-		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-		<property name="globalSessionTimeout" value="1800000" />
-	</bean>
--->
+	<bean id="sessionCheckFilter" class="com.ylbms.common.filter.SesssionCheckFilter" />
 	<!-- Shiro 过滤器 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="${adminPath}/login" />
 		<property name="successUrl" value="${adminPath}" />
+		<property name="filters">
+			<map>
+				<entry key="session" value-ref="sessionCheckFilter" />
+			</map>
+		</property>
 		<property name="filterChainDefinitions">
 			<value>
 				/styles/** = anon
 				/dwz/**=anon
 				/oper/**=anon
-				${adminPath}/login =authc
 				${adminPath}/logout = logout
-				/**=user
+				/**=authc,session
 			</value>
 		</property>
 	</bean>

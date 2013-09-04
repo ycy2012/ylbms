@@ -30,7 +30,7 @@ public class Page<T> {
 	public static final String DESC = "desc";
 	public static final int NON_PAGE = 0;
 
-	private static final int PAGE_SIZE = 20;
+	private static final int PAGE_SIZE = 25;
 
 	// -- 分页参数 --//
 	protected int pageNum = 1;

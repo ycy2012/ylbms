@@ -166,39 +166,6 @@
 								</c:if>
 							</c:forEach>
 						</ul>
-						<!--  <ul id="menuTree"></ul>-->
-						<%-- 
-						<ul class="tree treeFolder">
-							<li><a>用户信息管理</a>
-								<ul>
-									<li><a href="user/list" target="navTab" rel="user">用户信息管理</a></li>
-									<li><a href="menu/list" target="navTab" rel="menu">菜单信息管理</a></li>
-									<li><a href="role/list" target="navTab" rel="role">角色信息管理</a></li>
-									<li><a href="dict/list" target="navTab" rel="dict">字典信息管理</a></li>
-									<li><a href="druid/" target="_blank">数据源管理</a></li>
-								</ul></li>
-							<li><a>基础信息管理</a>
-								<ul>
-									<li><a href="location/listUi" target="navTab"
-										rel="location">位置信息管理</a></li>
-									<li><a href="spec/list" target="navTab" rel="spectype">规格型号管理</a></li>
-									<li><a href="single/list" target="navTab" rel="singleInfo">单件明细管理</a></li>
-									<li><a href="report/barUi" target="navTab" rel="singleBar">单件状态信息</a></li>
-								</ul></li>
-							<li><a>单据信息管理</a>
-								<ul>
-									<li><a href="bill/list" target="navTab" rel="bill">单据信息管理</a></li>
-									<li><a href="new/newUi" target="navTab" rel="billgl">入库单制作</a></li>
-									<li><a href="ckgl/addUi" target="navTab" rel="billgl">出库单制作</a></li>
-									<li><a href="install/inputUi" target="navTab" rel="billgl">安装单制作</a></li>
-									<li><a href="check/checkUi" target="navTab" rel="billgl">回收单制作</a></li>
-								</ul></li>
-							<li><a>检测信息管理</a>
-								<ul>
-									<li><a href="jd/iList" target="navTab" rel="jdnotes">检定台帐信息</a></li>
-									<li><a href="jdzhs/list" target="navTab" rel="jdzhs">检定证书管理</a></li>
-								</ul></li>
-								--%>
 					</div>
 				</div>
 			</div>
@@ -234,7 +201,7 @@
 								<h1>待办事件</h1>
 								<div>
 									<p>
-										温馨提示：<a href="${ctx}/report/list" target="navTab">将有<b
+										温馨提示：<a href="${ctx}/report/list" target="navTab">将有90天<b
 											id="counts" style="color: red;"> ${counts} </b>只压力表到期了!
 										</a>
 									</p>

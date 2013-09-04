@@ -67,13 +67,8 @@
 		</property>
 	</bean>
 
-	<!-- 拦截器 -->
-	<mvc:interceptors>
-		<bean class="com.ylbms.common.interceptor.SessionInterceptor"></bean>
-	</mvc:interceptors>
-
-	<!-- 跳转到首页 -->
-	<mvc:view-controller path="/" view-name="forward:/index" />
+	<!-- 跳转到登录页面 -->
+	<mvc:view-controller path="/" view-name="forward:/index/login" />
 
 	<!-- 当在web.xml 中 DispatcherServlet使用 <url-pattern>/</url-pattern> 映射时，能映射静态资源 -->
 	<mvc:default-servlet-handler />

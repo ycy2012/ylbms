@@ -31,7 +31,7 @@
 		</div>
 		<div id="login_content">
 			<div class="loginForm">
-				<form action="${ctx}/a/login" id="login_form" method="post">
+				<form action="${ctx}/index/login" id="login_form" method="post">
 					<%
 						String error = (String) request
 								.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
