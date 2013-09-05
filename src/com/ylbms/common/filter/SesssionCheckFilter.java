@@ -32,7 +32,7 @@ public class SesssionCheckFilter extends AccessControlFilter {
 				|| request.getParameter("ajax") != null) {
 			log.info("It's an ajax request!");
 			httpServletResponse.addHeader("WWW-Authentication", "ACME-AUTH");
-			httpServletRequest.getRequestDispatcher("/timeout").forward(
+			httpServletRequest.getRequestDispatcher("/index/timeout").forward(
 					httpServletRequest, httpServletResponse);
 		} else {
 			log.info("It's not an ajax request!");
@@ -44,19 +44,30 @@ public class SesssionCheckFilter extends AccessControlFilter {
 	@Override
 	protected boolean isAccessAllowed(ServletRequest servletRequest,
 			ServletResponse servletResponse, Object arg2) throws Exception {
-		HttpServletRequest request=WebUtils.toHttp(servletRequest);
-		HttpServletResponse response=WebUtils.toHttp(servletResponse);
-		log.info("--------------"+request.getRequestURL());
+		HttpServletRequest request = WebUtils.toHttp(servletRequest);
+		HttpServletResponse response = WebUtils.toHttp(servletResponse);
+		log.info(request.getMethod()+"--------------" + request.getRequestURL());
+		log.info(request.getMethod()+"--------------" + request.getRequestURI());
+		log.info("--------------" + request.getHeader("Referer"));
 		if (isLoginRequest(request, response)) {
-            return true;
-        } else {
-            Subject subject = getSubject(request, response);
-            // If principal is not null, then the user is known and should be allowed access.
-            return subject.getPrincipal() != null;
-        }
+			return true;
+		} else {
+			Subject subject = getSubject(request, response);
+			// If principal is not null, then the user is known and should be
+			// allowed access.
+			return subject.getPrincipal() != null;
+		}
 	}
 
-
-
+//	@Override
+//	protected boolean isLoginRequest(ServletRequest request,
+//			ServletResponse response) {
+//		String method = WebUtils.toHttp(request).getMethod();
+//		String url = WebUtils.getPathWithinApplication(WebUtils.toHttp(request));
+//		if (pathMatcher.matches(getLoginUrl(), url) && method.equals("GET")) {
+//			return false;
+//		}
+//		return true;
+//	}
 
 }

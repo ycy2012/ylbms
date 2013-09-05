@@ -116,12 +116,7 @@
 					</a></li>
 					<li><a href="${ctx}/user/editPwdform" target="dialog"
 						width="600">修改密码</a></li>
-					<!--  
-					<li><a href="http://www.cnblogs.com/dwzjs" target="_blank">博客</a></li>
-					<li><a href="http://weibo.com/dwzui" target="_blank">微博</a></li>
-					<li><a href="http://bbs.dwzjs.com" target="_blank">论坛</a></li>
-					-->
-					<li><a href="${ctx}/a/logout">退出</a></li>
+					<li><a href="${ctx}/index/logout">退出</a></li>
 				</ul>
 				<ul class="themeList" id="themeList">
 					<li theme="default"><div class="selected">蓝色</div></li>

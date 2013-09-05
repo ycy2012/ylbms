@@ -1,5 +1,7 @@
 package com.ylbms.system.web.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,15 +17,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.web.BaseController;
+import com.ylbms.system.model.User;
 import com.ylbms.system.utils.UserUtils;
 
 /**
  * LoginController负责打开登录页面(GET请求)和登录出错页面(POST请求)，
  * 
- * @author jack
- * 
+ * @author jackLiang
+ * @date 2013年9月5日 12:58:38
+ * @version 1.0
  */
 @Controller
 @RequestMapping("/index")
@@ -55,6 +61,10 @@ public class LoginController extends BaseController {
 			@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String userName,
 			Model model, HttpServletRequest request,
 			HttpServletResponse response) {
+		User user = UserUtils.getUser();
+		if (user.getId() != null) {
+			return redirect("/index");
+		}
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM,
 				userName);
 		return "sysLogin";
@@ -65,8 +75,11 @@ public class LoginController extends BaseController {
 	 */
 	@RequiresUser
 	@RequestMapping(value = "")
-	public String index(HttpServletRequest request,
-			HttpServletResponse response, Model model) {
+	public String index(HttpServletRequest request,HttpServletResponse response, Model model) {
+		User user = UserUtils.getUser();
+		if (user.getId() == null) {
+			return redirect("/index/login");
+		}
 		log.debug("登录成功！");
 		// 登录成功
 		return "sysIndex";
@@ -95,7 +108,8 @@ public class LoginController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "timeout")
-	public String timeOut() {
-		return redirect("/index/login");
+	@ResponseBody
+	public Map<String, Object> timeOut() {
+		return DwzUtil.dialogAjaxDoneTimeOut();
 	}
 }
