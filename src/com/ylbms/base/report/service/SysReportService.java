@@ -9,7 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.ylbms.base.report.model.SingleBarDTO;
 import com.ylbms.base.single.dao.SingleInfoDao;
-
+/**
+ * 
+ * @author JackLiang
+ * @version 1.0
+ * @date 2013-9-10
+ */
 @Service
 @Transactional
 public class SysReportService {
@@ -49,7 +54,7 @@ public class SysReportService {
 	 */
 	@Transactional(readOnly = true)
 	public Long getCheckCount() {
-		String querySQL = "select count(1) from ylbms_bas_single_info t  where (t.yx_time-t.jd_time) < 2";
+		String querySQL = "select count(1) from ylbms_bas_single_info t  where (t.yx_time-t.jd_time) < 90";
 		Object obj=singleDao.getSession().createSQLQuery(querySQL)
 				.uniqueResult();
 		return Long.parseLong(obj.toString());
