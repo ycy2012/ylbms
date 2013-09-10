@@ -84,9 +84,8 @@ public class DwzUtil {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("statusCode", DwzUtil.TIMEOUT);
 		map.put("message", "会话超时，请重新登录！");
-		map.put("callbackType", "");
-		map.put("forwardUrl", "");
-
+		map.put("callbackType", "forward");
+		map.put("forwardUrl", "/index/login");
 		return map;
 	}
 

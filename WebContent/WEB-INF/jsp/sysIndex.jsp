@@ -71,13 +71,10 @@
 <script src="bin/dwz.min.js" type="text/javascript"></script>
 -->
 <script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
-<script type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="${ctx}/styles/highcharts/js/highcharts.js"></script>
-<script type="text/javascript" src="${ctx}/styles/js/indexSingleBar.js"></script>
 <script type="text/javascript">
 	$(function() {
 		DWZ.init("dwz.frag.xml", {
-			loginUrl : "login_dialog.html",
+			loginUrl : "${ctx}/index/relogin",
 			loginTitle : "重新登录", // 弹出登录对话框
 			statusCode : {
 				ok : 200,
@@ -104,7 +101,6 @@
 	});
 </script>
 </head>
-
 <body scroll="no">
 	<div id="layout">
 		<div id="header">
@@ -219,5 +215,8 @@
 		</div>
 	</div>
 	<div id="footer">Copyright &copy; 2012 塔里木油田工程技术部信息中心</div>
+<script type="text/javascript" src="${ctx}/styles/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${ctx}/styles/highcharts/js/highcharts.js"></script>
+<script type="text/javascript" src="${ctx}/styles/js/indexSingleBar.js"></script>
 </body>
 </html>

@@ -9,8 +9,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresUser;
+import org.apache.shiro.codec.Hex;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +37,10 @@ import com.ylbms.system.utils.UserUtils;
 @Controller
 @RequestMapping("/index")
 public class LoginController extends BaseController {
+
 	private static final Log log = LogFactory.getLog(LoginController.class);
+
+	private static final String NAV_TAB_ID = "indexHome";
 
 	/**
 	 * 登录系统
@@ -75,7 +81,8 @@ public class LoginController extends BaseController {
 	 */
 	@RequiresUser
 	@RequestMapping(value = "")
-	public String index(HttpServletRequest request,HttpServletResponse response, Model model) {
+	public String index(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
 		User user = UserUtils.getUser();
 		if (user.getId() == null) {
 			return redirect("/index/login");
@@ -112,4 +119,16 @@ public class LoginController extends BaseController {
 	public Map<String, Object> timeOut() {
 		return DwzUtil.dialogAjaxDoneTimeOut();
 	}
+
+	/**
+	 * 重新登录
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "relogin", method = RequestMethod.GET)
+	public String reLogin() {
+		log.debug("Session 过期，重新登录");
+		return "login_dialog";
+	}
+
 }

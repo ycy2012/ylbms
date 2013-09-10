@@ -1,0 +1,3 @@
+.reLogin{width: 99.5%;height: 210px;overflow: hidden; background-color: #F8F8FF }
+.reLogin #r1{background-image: url("../images/head.png"); background-repeat: no-repeat; width: 100%; height: 112px;}
+.reLogin #r2{width: 309px;height: 53px;margin-left: 200px; background-image: url("../images/button.png"); margin-right: 5px;margin-top: 20px; cursor: pointer;}

@@ -15,7 +15,9 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="systemRealm" />
 		<property name="cacheManager" ref="cacheManager" />
+		<property name="sessionMode" value="http"></property>
 	</bean>
+
 	<!-- 项目自定义的 Realm （depend-on用来表示一个Bean的实例化依靠另一个Bean先实例化）。 -->
 	<bean id="systemRealm" class="com.ylbms.system.security.SystemRealm"
 		depends-on="userDao,roleDao,menuDao">
@@ -28,7 +30,9 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="hashAlgorithmName" value="SHA-1" />
 		<property name="hashIterations" value="1024" />
 	</bean>
+
 	<bean id="sessionCheckFilter" class="com.ylbms.common.filter.SesssionCheckFilter" />
+	<bean id="myFormAuthenticationFilter" class="com.ylbms.common.filter.MyFormAuthenticationFilter" />
 	<!-- Shiro 过滤器 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
@@ -37,6 +41,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="filters">
 			<map>
 				<entry key="session" value-ref="sessionCheckFilter" />
+				<entry key="myAuthc" value-ref="myFormAuthenticationFilter"></entry>
 			</map>
 		</property>
 		<property name="filterChainDefinitions">
@@ -44,8 +49,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 				/styles/** = anon
 				/dwz/**=anon
 				/oper/**=anon
-				${adminPath}/logout = logout
-				/**=authc,session
+				/index/logout =logout
+				/**=myAuthc,session
 			</value>
 		</property>
 	</bean>
