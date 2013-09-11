@@ -36,6 +36,7 @@ public class ZhShInfosModel extends BaseModel {
 	private SingleInfo clfw; // 不进行持久化
 	private SingleInfo factoryCode; // 不进行持久化
 	private ZhShuMasterModel master;
+	private String sjYl; //实际压力Mpa
 	private Date jdDate;// 检定日期
 	private Date yxDate;// 有效日期
 	private String azLocation;// 安装位置
@@ -132,6 +133,14 @@ public class ZhShInfosModel extends BaseModel {
 
 	public void setYxDate(Date yxDate) {
 		this.yxDate = yxDate;
+	}
+
+	public String getSjYl() {
+		return sjYl;
+	}
+
+	public void setSjYl(String sjYl) {
+		this.sjYl = sjYl;
 	}
 
 	@Column(name = "az_location")

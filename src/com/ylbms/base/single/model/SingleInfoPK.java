@@ -39,15 +39,15 @@ public class SingleInfoPK implements IdentifierGenerator, Configurable {
 	public void configure(Type arg0, Properties params, Dialect arg2)
 			throws MappingException {
 		String table = params.getProperty("table");
-		if (StringUtils.isNotBlank(table))
+		if (!StringUtils.isNotBlank(table))
 			table = params.getProperty(PersistentIdentifierGenerator.TABLE);
 		String column = params.getProperty("column");
-		if (StringUtils.isNotBlank(column))
+		if (!StringUtils.isNotBlank(column))
 			column = params.getProperty(PersistentIdentifierGenerator.PK);
-		String schema = params
-				.getProperty(PersistentIdentifierGenerator.SCHEMA);
-		sql = "select max(" + column + ") from "
-				+ (schema == null ? table : schema + '.' + table);
+		String schema = params.getProperty(PersistentIdentifierGenerator.SCHEMA);
+		
+			sql = "select max(" + column + ") from "
+					+ (schema == null ? table : schema + '.' + table);
 		log.info(sql);
 	}
 
@@ -64,7 +64,6 @@ public class SingleInfoPK implements IdentifierGenerator, Configurable {
 		try {
 			PreparedStatement st = conn.prepareStatement(sql);
 			ResultSet rs = st.executeQuery();
-
 			if (rs.next()) {
 				String old = rs.getString(1);
 				if (StringUtils.isNotBlank(old)) {

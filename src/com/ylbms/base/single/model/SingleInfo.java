@@ -43,8 +43,8 @@ import com.ylbms.system.model.Dict;
  */
 
 @Entity
-@Table(name = "ylbms_bas_single_info")
-@DynamicUpdate(true)
+@Table(name = "YLBMS_BAS_SINGLE_INFO")
+@DynamicUpdate(false)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SingleInfo extends BaseModel {
 
@@ -97,9 +97,9 @@ public class SingleInfo extends BaseModel {
 
 	// getter setter
 	@Id
-	@GeneratedValue(generator = "singleInfoPK")
-	@GenericGenerator(name = "singleInfoPK", strategy = "com.ylbms.base.single.model.SingleInfoPK")
-	@NotNull(message = "主键信息不可以为空！")
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "com.ylbms.base.single.model.SingleInfoPK")
+	@Column(nullable = false)
 	public String getMid() {
 		return mid;
 	}
