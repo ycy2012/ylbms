@@ -44,7 +44,7 @@ import com.ylbms.system.model.Dict;
 
 @Entity
 @Table(name = "YLBMS_BAS_SINGLE_INFO")
-@DynamicUpdate(false)
+@DynamicUpdate(true)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SingleInfo extends BaseModel {
 

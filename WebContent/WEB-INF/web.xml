@@ -127,7 +127,7 @@
 	</error-page>
 	<!-- Session 配置 -->
 	<session-config>
-		<session-timeout>2</session-timeout>
+		<session-timeout>30</session-timeout>
 	</session-config>
 	<!-- welcome file -->
 	<welcome-file-list>

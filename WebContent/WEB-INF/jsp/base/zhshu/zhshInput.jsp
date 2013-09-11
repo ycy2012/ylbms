@@ -16,10 +16,12 @@
 			myTD2.innerHTML = "<input type='text' style='width:100px'  readonly='readonly'  value="+temp[1]+">";
 			var myTD3 = myTR.insertCell(2);
 			myTD3.innerHTML = "<input  type='text' style='width:100px;' readonly='true' value="+temp[2]+"> ";
-			var myTD4 = myTR.insertCell(3);
-			myTD4.innerHTML = "<input  type='text' name='detail["+j+"].azLocation'>";
-			var myTD5 = myTR.insertCell(4);
-			myTD5.innerHTML = "<input  type='text' name='detail["+j+"].shbCode'>";
+			var myTD4 = myTR.insertCell(2);
+			myTD4.innerHTML = "<input  type='text' name='detail["+j+"].sjYl'>";
+			var myTD5 = myTR.insertCell(3);
+			myTD5.innerHTML = "<input  type='text' name='detail["+j+"].azLocation'>";
+			var myTD6 = myTR.insertCell(4);
+			myTD6innerHTML = "<input  type='text' name='detail["+j+"].shbCode'>";
 			var myTD7= myTR.insertCell(5);
 			myTD7.innerHTML = "<input   type='text' style='width:80px;' name='detail["+j+"].grade' >";
 			var myTD8 = myTR.insertCell(6);
@@ -113,6 +115,7 @@
 				    <th>单件虚拟编号</th>
 					<th>物资名称</th>
 					<th>规格型号</th>
+					<th>实际压力Mpa</th>
 					<th>安装位置</th>
 					<th>设备编号</th>
 					<th>等 级</th>
