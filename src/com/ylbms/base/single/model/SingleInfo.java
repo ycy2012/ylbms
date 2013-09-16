@@ -15,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.apache.shiro.SecurityUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicUpdate;
@@ -89,6 +90,7 @@ public class SingleInfo extends BaseModel {
 	public SingleInfo() {
 		this.status = DEL_FLAG_NORMAL;
 		this.isCheck = CHECKED_NO;
+		this.createDate=new Date();
 	}
 
 	public SingleInfo(String mid) {

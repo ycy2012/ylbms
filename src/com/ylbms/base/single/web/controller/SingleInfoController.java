@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,7 @@ import com.ylbms.common.utils.DwzUtil;
 import com.ylbms.common.utils.excel.ExportExcel;
 import com.ylbms.common.utils.excel.ImportExcel;
 import com.ylbms.common.web.BaseController;
+import com.ylbms.system.model.User;
 
 /**
  * 
@@ -214,13 +216,16 @@ public class SingleInfoController extends BaseController {
 	public Map<String, Object> addSpectype(SingleInfo singleInfo) {
 		try {
 			if (singleInfoService.isExist(singleInfo.getFactoryCode())) {
+				User currentUser=(User) SecurityUtils.getSubject().getPrincipal();
+				singleInfo.setCreater(currentUser.getFullname()); //添加创建用户信息
 				singleInfoService.saveSingleInfo(singleInfo);
 				return DwzUtil.dialogAjaxDone(DwzUtil.OK, "singleInfo");
 			}
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "singleInfo","数据重复，请检查数据信息！");
 		} catch (Exception e) {
+			e.printStackTrace();
 			if (log.isErrorEnabled())
-				log.error("system error", e.getMessage());
+				log.error("system error", e.getCause());
 			return DwzUtil.dialogAjaxDone(DwzUtil.FAIL, "singleInfo",
 					e.getMessage());
 		}

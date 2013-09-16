@@ -7,9 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 
@@ -29,8 +26,6 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
 
 		HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
 		HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
-		
-		log.info("---------------------"+httpServletRequest.getRequestURI());
 
 		if (isLoginRequest(request, response)) {
 			// true or false
